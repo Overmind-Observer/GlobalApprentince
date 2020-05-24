@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Publisher.Models
+namespace Global_Intern.Models
 {
     public class Qualification
     {
         public int QualificationId { get; set; }
         public string QualificationSchool { get; set; } // bachelor's,  Masters Phd -> Via a static DropDownList
         public string QualificationTitle { get; set; }
-        public string QualificationFieldofStudy { get; set; }
-        public string QualificationGrade { get; set; }
-        public DateTime QualificationStartDate { get; set; }
-        public DateTime QualificationEndDate { get; set; }
-        public bool QualificationStillStuding { get; set; }
-        public Student Student { get; set; } // StudentId [FK]
+        public string QualificationType { get; set; }
+        public string FieldofStudy { get; set; }
+        public string Grade { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public System.DateTime EndDate { get; set; }
+        public bool QualificationStillStudying { get; set; }
+        public User User { get; set; }
     }
 }

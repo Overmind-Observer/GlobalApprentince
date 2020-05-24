@@ -23,7 +23,7 @@ namespace Global_Intern.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult ContactUs()
         {
             return View();
         }
@@ -33,5 +33,10 @@ namespace Global_Intern.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+    }
+
+    internal class ErrorViewModel
+    {
+        public string RequestId { get; set; }
     }
 }
