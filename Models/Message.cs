@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Publisher.Models
+namespace Global_Intern.Models
 {
     public class Message
     {
-        
         public int MessageId { get; set; }
-        public DateTime MessageDate { get; set; }
-        // Check Dublicate in row for MessageFrom and MessageTo
-        public string MessageFrom { get; set; } // make use of email as an Identifier
-        public string MessageTo { get; set; } // make use of emailas an Identifier
+        public System.DateTime CreatedAt { get; set; }
+        public User MessageFrom { get; set; }
+        public User MessageTo { get; set; }
+
         public string MessageTitle { get; set; }
-        public string MessageBody { get; set; }
+        public string MessageContent { get; set; }
         public bool MessageRead { get; set; }
-        public InternStudent InternStudent { get; set; } // InternStudentId
+
+        public InternStudent InternStudent { get; set;}
     }
 }
