@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Global_Intern.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
-using System.Diagnostics.Eventing.Reader;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 

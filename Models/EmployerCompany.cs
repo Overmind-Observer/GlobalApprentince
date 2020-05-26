@@ -1,10 +1,4 @@
-﻿using Publisher.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Global_Intern.Models
+﻿namespace Global_Intern.Models
 {
     public class EmployerCompany
     {
