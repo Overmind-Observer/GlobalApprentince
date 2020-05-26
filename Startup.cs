@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Global_Intern.Data;
 
 namespace Global_Intern
 {
@@ -23,7 +25,11 @@ namespace Global_Intern
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession();
             services.AddControllersWithViews();
+
+            services.AddDbContext<Global_InternContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("GlobalDBContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
