@@ -55,8 +55,18 @@ namespace Global_Intern.Controllers
                 var theUser = _context.Users.Single(u => u.UserEmail == user.UserEmail && u.UserPassword == user.UserPassword);
                 if (theUser != null)
                 {
+                    
                     HttpContext.Session.SetString("UserSession", JsonConvert.SerializeObject(theUser));
-                    return RedirectToAction("Index", "DashboardEmployer");
+                    // Id 1 for Student & Id 2 for Employer
+                    if (theUser.Role.RoleId == 1) {
+                        // Student
+                        return RedirectToAction("Index", "DashboardStudent");
+                    }
+                    if (theUser.Role.RoleId == 2)
+                    {
+                        // Employer
+                        return RedirectToAction("Index", "DashboardEmployer");
+                    }
                 }
                 else {
                     ModelState.AddModelError("", "Email or Password is wrong.");
