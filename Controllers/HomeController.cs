@@ -20,6 +20,7 @@ namespace Global_Intern.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 

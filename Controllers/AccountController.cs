@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Diagnostics.Eventing.Reader;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Global_Intern.Util;
 
 namespace Global_Intern.Controllers
 {
@@ -30,14 +31,18 @@ namespace Global_Intern.Controllers
         {
             // Password hashed with extra layer (salt) of security
             string password = user.UserPassword;
-            user.UserPassword = passwordHasher(password);
+            CustomPasswordHasher pwd = new CustomPasswordHasher();
+            // increse the size to increase secuirty but lower performance 
+            string salt = pwd.CreateSalt(10);
+            string hashed = pwd.HashPassword(password, salt);
+            user.salt = salt;
+            user.UserPassword = hashed;
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
 
-            if (ModelState.IsValid)
+            using (GlobalDBContext _context = new GlobalDBContext())
             {
-                using (GlobalDBContext _context = new GlobalDBContext()) {
-                    _context.Users.Add(user);
-                    _context.SaveChanges();
-                }
+                _context.Users.Add(user);
+                _context.SaveChanges();
             }
             ModelState.Clear();
             ViewBag.Messsage = user.UserFirstName + " " + user.UserLastName + " successfully registered.";
@@ -54,7 +59,7 @@ namespace Global_Intern.Controllers
         {
             using (GlobalDBContext _context = new GlobalDBContext())
             {
-
+                
                 var theUser = _context.Users.Single(u => u.UserEmail == user.UserEmail && u.UserPassword == user.UserPassword);
                 if (theUser != null)
                 {

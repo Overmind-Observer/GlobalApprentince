@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,13 +9,18 @@ namespace Global_Intern.Models
     public class User
     {
         public int UserId { get; set; }
+        [Required]
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
+        [Required]
         public string UserEmail { get; set; }
         public bool UserEmailVerified { get; set; }
         public string UserHomeCountry { get; set; }
         public string UserCurrentCountry { get; set; }
+        [Required]
         public string UserPassword { get; set; }
+        [Required]
+        public string salt { get; set; }
         public int UserPhone { get; set; }
         public string UserLinks { get; set; }
         public string UserGender { get; set; }
