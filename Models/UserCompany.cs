@@ -11,6 +11,6 @@ namespace Global_Intern.Models
         public string UserCompanyName { get; set; }
         public string UserCompanyType { get; set; }
         public string UserCompanyInfo { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

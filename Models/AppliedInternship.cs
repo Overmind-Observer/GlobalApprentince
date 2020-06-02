@@ -9,7 +9,7 @@ namespace Global_Intern.Models
     {
         public int AppliedInternshipId { get; set; }
         public string EmployerStatus { get; set; }
-        public User User { get; set; } // Who Applied
-        public Internship Internship { get; set; } // which Intership user applied
+        public virtual User User { get; set; } // Who Applied
+        public virtual Internship Internship { get; set; } // which Intership user applied
     }
 }
