@@ -1,4 +1,4 @@
-﻿@model Global_Intern.Models.User
+﻿@model Global_Intern.Models.AccountRegister
 
 @{
     ViewData["Title"] = "Register";
@@ -8,61 +8,56 @@
 
 <h1>Register</h1>
 
-<h4>User</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Register" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="UserFirstName" class="control-label"></label>
-                <input asp-for="UserFirstName" class="form-control" />
-                <span asp-validation-for="UserFirstName" class="text-danger"></span>
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserLastName" class="control-label"></label>
-                <input asp-for="UserLastName" class="form-control" />
-                <span asp-validation-for="UserLastName" class="text-danger"></span>
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserEmail" class="control-label"></label>
-                <input asp-for="UserEmail" class="form-control" />
-                <span asp-validation-for="UserEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="UserEmailVerified" /> @Html.DisplayNameFor(model => model.UserEmailVerified)
-                </label>
+                <label asp-for="Gender" class="control-label">Gender: </label>
+                <input type="radio" asp-for="Gender" value="Male" /> Male
+                <input type="radio" asp-for="Gender" value="Female" /> Female
+                <input type="radio" asp-for="Gender" value="Other" /> Other
+                <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserHomeCountry" class="control-label"></label>
-                <input asp-for="UserHomeCountry" class="form-control" />
-                <span asp-validation-for="UserHomeCountry" class="text-danger"></span>
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserCurrentCountry" class="control-label"></label>
-                <input asp-for="UserCurrentCountry" class="form-control" />
-                <span asp-validation-for="UserCurrentCountry" class="text-danger"></span>
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserPassword" class="control-label"></label>
-                <input asp-for="UserPassword" class="form-control" />
-                <span asp-validation-for="UserPassword" class="text-danger"></span>
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserPhone" class="control-label"></label>
-                <input asp-for="UserPhone" class="form-control" />
-                <span asp-validation-for="UserPhone" class="text-danger"></span>
+                <label asp-for="UserRole" class="control-label"></label>
+                <select asp-for="UserRole">
+                    <option value="">Select the Role</option>
+                    <option value="1">Student</option>
+                    <option value="2">Employer</option>
+                    <option value="3">Teacher</option>
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="UserLinks" class="control-label"></label>
-                <input asp-for="UserLinks" class="form-control" />
-                <span asp-validation-for="UserLinks" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserGender" class="control-label"></label>
-                <input asp-for="UserGender" class="form-control" />
-                <span asp-validation-for="UserGender" class="text-danger"></span>
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
