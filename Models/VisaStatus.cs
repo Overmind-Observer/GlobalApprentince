@@ -5,6 +5,6 @@
         public int VisaStatusId { get; set; }
         public string VisaType { get; set; }
         public int VisaNumber { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }
