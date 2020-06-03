@@ -16,6 +16,6 @@ namespace Global_Intern.Models
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public bool QualificationStillStudying { get; set; }
-        public virtual User User { get; set; }
+        public User User { get; set; }
     }
 }

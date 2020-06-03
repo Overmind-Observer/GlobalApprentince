@@ -20,12 +20,11 @@ namespace Global_Intern.Models
         [Required]
         public string UserPassword { get; set; }
         [Required]
-        public string Salt { get; set; }
+        public string salt { get; set; }
         public int UserPhone { get; set; }
         public string UserLinks { get; set; }
         public string UserGender { get; set; }
-        [Required]
-        public virtual Role Role { get; set; } //FK
+        public Role Role { get; set; } //FK
         public List<Qualification> qualifications { get; set; }
         public List<Experience> experiences { get; set; }
         public List<VisaStatus> visaStatuses { get; set; } // should get one row
@@ -33,18 +32,5 @@ namespace Global_Intern.Models
         public List<Profile> profiles { get; set; } // should get one row
         public List<InternStudent> internStudents { get; set; } // list of students who are working in some internships
         public List<AppliedInternship> appliedInternships { get; set; } // list of user applyed for intership
-
-
-        public void AddFromAccountRegsiter(AccountRegister newUser, Role role, string salt)
-        {
-            this.UserFirstName = newUser.FirstName;
-            this.UserLastName = newUser.LastName;
-            this.UserGender = newUser.Gender;
-            this.UserEmail = newUser.Email;
-            this.UserPassword = newUser.Password;
-            this.Salt = salt;
-            this.UserPhone = newUser.Phone;
-            this.Role = role;
-        }
     }
 }

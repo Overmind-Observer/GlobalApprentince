@@ -14,6 +14,6 @@ namespace Global_Intern.Models
         public DateTime ExperienceStartDate { get; set; }
         public DateTime ExperienceEndDate { get; set; } // If Still working is true
         public bool ExperienceStillWorking { get; set; }
-        public virtual User User { get; set; }
+        public User User { get; set; }
     }
 }
