@@ -13,6 +13,6 @@
         public System.DateTime InternshipExpDate { get; set; }
         public System.DateTime InternshipCreatedAt { get; set; }
         public System.DateTime InternshipUpdatedAt { get; set; }
-        public User User { get; set; } // Poster
+        public virtual User User { get; set; } // Poster
     }
 }

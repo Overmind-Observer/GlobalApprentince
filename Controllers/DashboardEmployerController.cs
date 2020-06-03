@@ -13,7 +13,8 @@ namespace Global_Intern.Controllers
     {
         public DashboardEmployerController()
         {
-            if (HttpContext.Session.GetString("UserSession") == null){
+            var user = HttpContext.Session.GetString("UserSession");
+            if (user == null){
 
                 Console.WriteLine("Not authorized Require Login");
                 RedirectToAction("Index", "Account");
@@ -21,7 +22,7 @@ namespace Global_Intern.Controllers
             }
             else
             {
-                JObject user = JObject.Parse(HttpContext.Session.GetString("UserSession"));
+                
                 // TODO -> CHECK THE ROLE IS Employer
             }
         }

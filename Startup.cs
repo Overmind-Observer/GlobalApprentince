@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Global_Intern.Data;
+using Global_Intern.Models;
 
 namespace Global_Intern
 {
@@ -31,8 +31,8 @@ namespace Global_Intern
                 );
             services.AddControllersWithViews();
 
-            services.AddDbContext<Global_InternContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("GlobalDBContext")));
+            //services.AddDbContext<GlobalDBContext>(options =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("GlobalDBContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
