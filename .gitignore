@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Global Intern/v16/.suo
+/Controllers/InternshipsController.cs
+/obj/Debug/netcoreapp3.1
+/bin/Debug/netcoreapp3.1
+/.vs/Global Intern/config/applicationhost.config
+/obj
