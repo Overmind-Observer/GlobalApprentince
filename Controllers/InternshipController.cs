@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Global_Intern.Models;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Global_Intern.Models.Filters;
+using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace Global_Intern.Controllers
 {
@@ -12,14 +16,31 @@ namespace Global_Intern.Controllers
     {
         // GET: Internship
         private readonly GlobalDBContext _context;
+        private readonly string _table;
         public InternshipController() {
             _context = new GlobalDBContext();
+            _table = "Internships";
         }
-        public ActionResult Index()
+        public ActionResult Index(string search, bool isPaid)
         {
-            var interns = _context.Internships.ToList<Internship>();
-            ViewData["msg"] = "This is Intership";
-            return View(interns);
+            if (String.IsNullOrEmpty(search))
+            {
+                return View(_context.Internships.ToList<Internship>());
+            }
+            string sql = "SELECT * FROM " + _table + " WHERE (InternshipBody like('%" + search + "%') or InternshipType like ('%" + search + "%') or InternshipTitle like('%" + search + "%'))";
+            return View(_context.Internships.FromSqlRaw(sql).ToList());
+            
+        }
+        [HttpPost]
+        public ActionResult Index(IntershipFilter filter)
+        {
+            //ViewBag.NameSortParm = String.IsNullOrEmpty(filter) ? "name_desc" : "";
+            //ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            
+           
+            return View();
+
+            //return View(_context.Internships.ToList<Internship>());
         }
 
         // GET: Internship/Details/5
@@ -37,11 +58,20 @@ namespace Global_Intern.Controllers
         // POST: Internship/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Internship intern)
         {
+            
             try
             {
-                // TODO: Add insert logic here
+                // ToDO-> get User ID from Session
+                // geting menual user
+                User user = _context.Users.Find(2);
+                Internship internship = new Internship();
+                // SetAddorUpdateIntern(Intership - TYPE, User =TYPE, Bool -TYPE)
+                // the above method fill the object with user provided values and bool if it is for update
+                internship.SetAddorUpdateIntern(intern, user);
+                _context.Internships.Add(internship);
+                _context.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
             }

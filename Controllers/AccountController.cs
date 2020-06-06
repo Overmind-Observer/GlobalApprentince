@@ -74,7 +74,7 @@ namespace Global_Intern.Controllers
                     // Check if the user entered password is correct
                     if (hashed == theUser.UserPassword)
                     {
-                        HttpContext.Session.SetString("UserSession", JsonConvert.SerializeObject(theUser.UserEmail));
+                        HttpContext.Session.SetString("UserSession", JsonConvert.SerializeObject(theUser));
                         // Id 1 for Student & Id 2 for Employer
                         if (theUser.Role.RoleId == 1)
                         {

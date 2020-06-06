@@ -12,7 +12,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.InternshipTitle)
             </th>
             <th>
@@ -42,7 +42,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.InternshipUpdatedAt)
             </th>
-            <th></th>
+            <th></th>*@
         </tr>
     </thead>
     <tbody>
@@ -50,21 +50,15 @@
         {
             <tr>
                 <td>
-                    <span>
+                    <h3>
                         @Html.DisplayFor(modelItem => item.InternshipTitle)
-                        |||
+                    </h3>  
+                    <p>
+                        @Html.DisplayFor(modelItem => item.InternshipType)
+                    </p>
+                    <p>
                         @Html.DisplayFor(modelItem => item.InternshipDuration)
-                    </span>
-                    <p>
-                        @Html.DisplayFor(modelItem => item.InternshipType)
                     </p>
-                    <p>
-                        @Html.DisplayFor(modelItem => item.InternshipType)
-                    </p>
-                </td>
-                <td>
-                </td>
-                <td>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.InternshipExperienceLevel)
