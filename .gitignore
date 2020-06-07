@@ -8,3 +8,8 @@
 /bin/Debug/netcoreapp3.1
 /.vs/Global Intern/config/applicationhost.config
 /obj
+/.vs/Global Intern/DesignTimeBuild
+/Global Intern.csproj.user
+/Migrations/GlobalDBContextModelSnapshot.cs
+/Migrations/20200605211310_InitialCreate.Designer.cs
+/Migrations/20200605211310_InitialCreate.cs

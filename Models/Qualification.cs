@@ -1,4 +1,10 @@
-﻿namespace Global_Intern.Models
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Global_Intern.Models
 {
     public class Qualification
     {
@@ -11,6 +17,7 @@
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public bool QualificationStillStudying { get; set; }
+        [Required]
         public virtual User User { get; set; }
     }
 }
