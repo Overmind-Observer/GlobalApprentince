@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Global_Intern.Services;
 using Global_Intern.Models;
-
+using Microsoft.AspNetCore.Http;
 
 namespace Global_Intern
 {
@@ -27,16 +27,20 @@ namespace Global_Intern
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
-
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
             services.AddDistributedMemoryCache();
-            services.AddSession(
-                options =>
-                {
-                    //options.IdleTimeout = TimeSpan.FromSeconds(6600);
-                    //options.Cookie.HttpOnly = true;
-                    //options.Cookie.IsEssential = true;
+            services.AddSession(options => {
+                options.Cookie.Name = ".AspNetCore.Session";
+                options.IdleTimeout = TimeSpan.FromSeconds(4400);
+                options.Cookie.IsEssential = true; // make the session cookie Essential
                 }
-                );
+            );
+
             services.AddControllersWithViews();
 
             //services.AddDbContext<GlobalDBContext>(options =>

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Session;
 using Newtonsoft.Json.Linq;
+using System.Web;
 
 namespace Global_Intern.Controllers
 {
@@ -12,18 +14,10 @@ namespace Global_Intern.Controllers
     {
         public DashboardStudentController()
         {
-            
-            if (HttpContext.Session.GetString("UserSession") == null)
+            var usr = HttpContext.Session.GetString("UserSession");
+            if(usr != null)
             {
-
-                Console.WriteLine("Not authorized Require Login");
-                RedirectToAction("Index", "Account");
-
-            }
-            else
-            {
-                JObject user = JObject.Parse(HttpContext.Session.GetString("UserSession"));
-                // TODO -> CHECK THE ROLE IS Student
+                
             }
         }
         public IActionResult Index()

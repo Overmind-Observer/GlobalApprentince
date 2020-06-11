@@ -12,8 +12,7 @@ using Newtonsoft.Json;
 using Global_Intern.Util;
 using Microsoft.EntityFrameworkCore;
 using Global_Intern.Services;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Session;
 using Microsoft.Extensions.Options;
 
 namespace Global_Intern.Controllers
@@ -92,7 +91,15 @@ namespace Global_Intern.Controllers
                     // Check if the user entered password is correct
                     if (hashed == theUser.UserPassword)
                     {
-                        HttpContext.Session.SetString("UserSession", JsonConvert.SerializeObject(theUser));
+                        string usr = JsonConvert.SerializeObject(theUser, Formatting.None,
+                        new JsonSerializerSettings()
+                        {
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        });
+                        // set Session
+                        HttpContext.Session.SetString("UserSession", usr);
+
+
                         // Id 1 for Student & Id 2 for Employer
                         if (theUser.Role.RoleId == 1)
                         {
@@ -131,6 +138,7 @@ namespace Global_Intern.Controllers
                     // update the EmailVerified to True in the User table
                     theUser.UserEmailVerified = true;
                     _context.Users.Update(theUser);
+                    _context.SaveChanges();
                     return theUser.UserEmail + "is Verifed. Login to our site.";
                 }
                 else
