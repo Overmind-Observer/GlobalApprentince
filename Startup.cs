@@ -1,10 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
+using Global_Intern.Services;
 using Global_Intern.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Global_Intern
 {
@@ -20,15 +26,21 @@ namespace Global_Intern
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
             services.AddDistributedMemoryCache();
-            services.AddSession(
-                options =>
-                {
-                    //options.IdleTimeout = TimeSpan.FromSeconds(6600);
-                    //options.Cookie.HttpOnly = true;
-                    //options.Cookie.IsEssential = true;
+            services.AddSession(options => {
+                options.Cookie.Name = ".AspNetCore.Session";
+                options.IdleTimeout = TimeSpan.FromSeconds(4400);
+                options.Cookie.IsEssential = true; // make the session cookie Essential
                 }
-                );
+            );
+
             services.AddControllersWithViews();
 
             //services.AddDbContext<GlobalDBContext>(options =>
@@ -50,7 +62,7 @@ namespace Global_Intern
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+       
             app.UseRouting();
 
             app.UseAuthorization();

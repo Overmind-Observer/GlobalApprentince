@@ -1,18 +1,32 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Global_Intern.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
+using System.Diagnostics.Eventing.Reader;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Global_Intern.Util;
 using Microsoft.EntityFrameworkCore;
+using Global_Intern.Services;
+using Microsoft.AspNetCore.Session;
+using Microsoft.Extensions.Options;
 
 namespace Global_Intern.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly EmailSettings _emailSettings;
+        
+        public AccountController(IOptions<EmailSettings> emailSetting)
+        {
+            _emailSettings = emailSetting.Value;
+        }
+
+        
         public IActionResult Index()
         {
             return View();
@@ -25,13 +39,15 @@ namespace Global_Intern.Controllers
         }
 
         [HttpPost]
+        [Obsolete]
         public IActionResult Register(AccountRegister new_user)
         {
             using (GlobalDBContext _context = new GlobalDBContext())
             {
+                string _domainurl = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
                 // ->TODO Validation check on clinet side using Jquery or JavaScript
 
-                // Password hashed with extra layer (salt) of security
+                // Password hashed with extra layer of security
                 string password = new_user.Password;
                 CustomPasswordHasher pwd = new CustomPasswordHasher();
                 // increse the size to increase secuirty but lower performance 
@@ -42,10 +58,14 @@ namespace Global_Intern.Controllers
                 // var errors = ModelState.Values.SelectMany(v => v.Errors);
                 Role role = _context.Roles.Find(new_user.UserRole);
                 User theUser = new User();
-                theUser.AddFromAccountRegsiter(new_user, role, salt); 
-
+                theUser.AddFromAccountRegsiter(new_user, role, salt);
                 _context.Users.Add(theUser);
                 _context.SaveChanges();
+                SendEmail email = new SendEmail(_emailSettings);
+                string fullname = theUser.UserFirstName + " " + theUser.UserLastName;
+                string msg = "Please verify you email account for the verification. Click on the link to verify :";
+                msg += _domainurl + "/Account/ConfirmEmail?email=" + theUser.UserEmail + "&token=" + salt;
+                email.SendEmailtoUser(fullname, theUser.UserEmail, "Email Verification", msg);
                 ViewBag.Messsage = new_user.FirstName + " " + new_user.LastName + " successfully registered.";
             }
             return View();
@@ -71,7 +91,15 @@ namespace Global_Intern.Controllers
                     // Check if the user entered password is correct
                     if (hashed == theUser.UserPassword)
                     {
-                        HttpContext.Session.SetString("UserSession", JsonConvert.SerializeObject(theUser));
+                        string usr = JsonConvert.SerializeObject(theUser, Formatting.None,
+                        new JsonSerializerSettings()
+                        {
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        });
+                        // set Session
+                        HttpContext.Session.SetString("UserSession", usr);
+
+
                         // Id 1 for Student & Id 2 for Employer
                         if (theUser.Role.RoleId == 1)
                         {
@@ -98,24 +126,27 @@ namespace Global_Intern.Controllers
             }
         }
 
-
-        public string passwordHasher(string password) {
-            // generate a 128-bit salt using a secure PRNG
-            byte[] salt = new byte[128 / 8];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
+        public string ConfirmEmail(string email, string token)
+        {
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {   
+                // Check given Email and salt(token) are in the same user 
+                User theUser = _context.Users.FirstOrDefault(u => u.UserEmail == email && u.Salt == token);
+                // if we found the user
+                if (theUser != null)
+                {
+                    // update the EmailVerified to True in the User table
+                    theUser.UserEmailVerified = true;
+                    _context.Users.Update(theUser);
+                    _context.SaveChanges();
+                    return theUser.UserEmail + "is Verifed. Login to our site.";
+                }
+                else
+                {
+                    return "Link Expired";
+                }
             }
-            // Console.WriteLine($"Salt: {Convert.ToBase64String(salt)}");
-
-            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));
-            return hashed;
-        } 
+        }
+        
     }
 }
