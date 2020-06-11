@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Controllers",
+    "\\Data",
+    "\\Migrations"
   ],
+  "SelectedNode": "\\Migrations",
   "PreviewInSolutionExplorer": false
 }

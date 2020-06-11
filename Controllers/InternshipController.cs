@@ -2,10 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Global_Intern.Models;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Global_Intern.Models.Filters;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
 
 namespace Global_Intern.Controllers
 {
