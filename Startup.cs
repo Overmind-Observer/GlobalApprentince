@@ -1,10 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
+using Global_Intern.Services;
 using Global_Intern.Models;
+
 
 namespace Global_Intern
 {
@@ -20,6 +26,8 @@ namespace Global_Intern
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+
             services.AddDistributedMemoryCache();
             services.AddSession(
                 options =>
@@ -50,7 +58,7 @@ namespace Global_Intern
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+       
             app.UseRouting();
 
             app.UseAuthorization();
