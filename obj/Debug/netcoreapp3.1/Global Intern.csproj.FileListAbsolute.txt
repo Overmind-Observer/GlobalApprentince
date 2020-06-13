@@ -82,3 +82,4 @@ C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcor
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\bin\Debug\netcoreapp3.1\MailKit.dll
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\bin\Debug\netcoreapp3.1\MimeKit.dll
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
+C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\Global Intern.csprojAssemblyReference.cache
