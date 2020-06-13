@@ -1,5 +1,3 @@
-using System;
-
 namespace Global_Intern.Models
 {
     public class ErrorViewModel
