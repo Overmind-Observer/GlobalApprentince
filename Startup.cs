@@ -11,6 +11,9 @@ using Microsoft.Extensions.Hosting;
 using Global_Intern.Services;
 using Global_Intern.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Global_Intern.Util;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Global_Intern
 {
@@ -26,25 +29,26 @@ namespace Global_Intern
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+            services.AddControllersWithViews();
+            services.AddSession(option =>
+            {
+                option.IdleTimeout = TimeSpan.FromSeconds(1800);
+            });
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => false;
+                options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddDistributedMemoryCache();
-            services.AddSession(options => {
-                options.Cookie.Name = ".AspNetCore.Session";
-                options.IdleTimeout = TimeSpan.FromSeconds(4400);
-                options.Cookie.IsEssential = true; // make the session cookie Essential
-                }
-            );
-
-            services.AddControllersWithViews();
-
-            //services.AddDbContext<GlobalDBContext>(options =>
-            //        options.UseSqlServer(Configuration.GetConnectionString("GlobalDBContext")));
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            });
+            services.AddSingleton<JwtAuth>(new JwtAuth("WWftZe-O7E6uubyNi"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +69,7 @@ namespace Global_Intern
        
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSession();

@@ -7,22 +7,47 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Session;
 using Newtonsoft.Json.Linq;
 using System.Web;
+using Global_Intern.Models;
+using Newtonsoft.Json;
 
 namespace Global_Intern.Controllers
 {
     public class DashboardStudentController : Controller
     {
-        public DashboardStudentController()
+        private readonly User _logedInUser;
+
+        public DashboardStudentController(IHttpContextAccessor httpContextAccessor)
         {
-            var usr = HttpContext.Session.GetString("UserSession");
-            if(usr != null)
+            try
             {
-                
+                _logedInUser = JsonConvert.DeserializeObject<User>(httpContextAccessor.HttpContext.Session.GetString("UserSession"));
+                Authorization(true);
+            }
+            catch (Exception e)
+            {
+                Authorization(false);
             }
         }
         public IActionResult Index()
         {
             return View();
+        }
+
+
+        public IActionResult Authorization(bool _SessionUser)
+        {
+            if (_SessionUser)
+            {
+                if(_logedInUser.Role.RoleId == 2)
+                {
+                    return RedirectToAction("Index", "DashboardEmployer");
+                }
+                return RedirectToAction("Index", "DashboardTeacher");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
     }
 }
