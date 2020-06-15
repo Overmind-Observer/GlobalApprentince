@@ -2,22 +2,32 @@
 using System.Linq;
 using Global_Intern.Models;
 using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Security.Cryptography;
+using System.Diagnostics.Eventing.Reader;
+//using Microsoft.AspNetCore.Http;
+
 using Microsoft.AspNetCore.Http;
+
 using Newtonsoft.Json;
 using Global_Intern.Util;
 using Microsoft.EntityFrameworkCore;
 using Global_Intern.Services;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Http;
 
 namespace Global_Intern.Controllers
 {
     public class AccountController : Controller
     {
         private readonly EmailSettings _emailSettings;
-        
-        public AccountController(IOptions<EmailSettings> emailSetting)
+        private readonly JwtAuth _auth;
+
+        public AccountController(IOptions<EmailSettings> emailSetting, JwtAuth auth)
         {
             _emailSettings = emailSetting.Value;
+            _auth = auth;
         }
 
         
@@ -54,12 +64,12 @@ namespace Global_Intern.Controllers
                 User theUser = new User();
                 theUser.AddFromAccountRegsiter(new_user, role, salt);
                 _context.Users.Add(theUser);
-                _context.SaveChanges();
                 SendEmail email = new SendEmail(_emailSettings);
                 string fullname = theUser.UserFirstName + " " + theUser.UserLastName;
                 string msg = "Please verify you email account for the verification. Click on the link to verify :";
                 msg += _domainurl + "/Account/ConfirmEmail?email=" + theUser.UserEmail + "&token=" + salt;
                 email.SendEmailtoUser(fullname, theUser.UserEmail, "Email Verification", msg);
+                _context.SaveChanges();
                 ViewBag.Messsage = new_user.FirstName + " " + new_user.LastName + " successfully registered.";
             }
             return View();
@@ -85,7 +95,7 @@ namespace Global_Intern.Controllers
                     // Check if the user entered password is correct
                     if (hashed == theUser.UserPassword)
                     {
-                        string usr = JsonConvert.SerializeObject(theUser, Formatting.None,
+                        string usr = JsonConvert.SerializeObject(theUser, Formatting.Indented,
                         new JsonSerializerSettings()
                         {
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -93,6 +103,13 @@ namespace Global_Intern.Controllers
                         // set Session
                         HttpContext.Session.SetString("UserSession", usr);
 
+                        // JWT Authentication geting token
+
+                        var token = _auth.Auth(theUser.UserEmail, theUser.UserPassword);
+                        if (token == null)
+                        {
+                            return Unauthorized();
+                        }
 
                         // Id 1 for Student & Id 2 for Employer
                         if (theUser.Role.RoleId == 1)
