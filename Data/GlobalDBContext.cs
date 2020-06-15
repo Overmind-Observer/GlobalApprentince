@@ -11,8 +11,8 @@ namespace Global_Intern.Models
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder
-                .UseSqlServer(@"Data Source=skynet\sqlexpress;Initial Catalog=GlobalDB;Integrated Security=True");
+            _ = optionsBuilder
+                .UseSqlServer(@"Data Source = (localdb)\ProjectsV13; Initial Catalog = master; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False");
         }
         public DbSet<Admin> Admins { get; set; }
         public DbSet<User> Users { get; set; }

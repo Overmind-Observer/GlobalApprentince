@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.AspNetCore.Session;
 using Newtonsoft.Json.Linq;
 using System.Web;
 using Global_Intern.Models;
 using Newtonsoft.Json;
+
 
 namespace Global_Intern.Controllers
 {
@@ -18,6 +16,7 @@ namespace Global_Intern.Controllers
 
         public DashboardStudentController(IHttpContextAccessor httpContextAccessor)
         {
+
             try
             {
                 _logedInUser = JsonConvert.DeserializeObject<User>(httpContextAccessor.HttpContext.Session.GetString("UserSession"));
@@ -26,6 +25,13 @@ namespace Global_Intern.Controllers
             catch (Exception e)
             {
                 Authorization(false);
+
+            var usr = HttpContext.Session.GetString("UserSession");
+
+            if(usr != null)
+            {
+
+
             }
         }
         public IActionResult Index()

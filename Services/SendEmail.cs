@@ -1,10 +1,6 @@
 ﻿using Global_Intern.Models;
 using MailKit.Net.Smtp;
 using MimeKit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Global_Intern.Services
 {
