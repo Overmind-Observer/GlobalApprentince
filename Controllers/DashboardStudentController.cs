@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-using Microsoft.AspNetCore.Session;
-using Newtonsoft.Json.Linq;
-using System.Web;
 using Global_Intern.Models;
 using Newtonsoft.Json;
 
@@ -26,25 +23,21 @@ namespace Global_Intern.Controllers
             {
                 Authorization(false);
 
-            var usr = HttpContext.Session.GetString("UserSession");
+                var usr = HttpContext.Session.GetString("UserSession");
 
-            if(usr != null)
-            {
+                if (usr != null)
+                {
 
 
+                }
             }
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-
-        public IActionResult Authorization(bool _SessionUser)
+        // fixed last methods, was error with public using.
+        private IActionResult Authorization(bool _SessionUser)
         {
             if (_SessionUser)
             {
-                if(_logedInUser.Role.RoleId == 2)
+                if (_logedInUser.Role.RoleId == 2)
                 {
                     return RedirectToAction("Index", "DashboardEmployer");
                 }
@@ -54,6 +47,11 @@ namespace Global_Intern.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
+        }
+
+        private IActionResult Index()
+        {
+            return View();
         }
     }
 }
