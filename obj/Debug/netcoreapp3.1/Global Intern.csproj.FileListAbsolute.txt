@@ -103,3 +103,6 @@ C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcor
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Internship\Index.cshtml.g.cs
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\staticwebassets\Global Intern.StaticWebAssets.Manifest.cache
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\staticwebassets\Global Intern.StaticWebAssets.xml
+C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\bin\Debug\netcoreapp3.1\MailKit.dll
+C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\bin\Debug\netcoreapp3.1\MimeKit.dll
+C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
