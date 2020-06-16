@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Global_Intern.Models;
+using Global_Intern.Data;
 using Global_Intern.Models.Filters;
 using Microsoft.EntityFrameworkCore;
 

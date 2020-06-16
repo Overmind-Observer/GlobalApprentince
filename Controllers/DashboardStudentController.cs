@@ -1,57 +1,57 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Session;
+using Newtonsoft.Json.Linq;
+using System.Web;
 using Global_Intern.Models;
 using Newtonsoft.Json;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Global_Intern.Controllers
-{
+{   
+    
     public class DashboardStudentController : Controller
     {
         private readonly User _logedInUser;
 
         public DashboardStudentController(IHttpContextAccessor httpContextAccessor)
         {
-
             try
             {
                 _logedInUser = JsonConvert.DeserializeObject<User>(httpContextAccessor.HttpContext.Session.GetString("UserSession"));
-                Authorization(true);
+                //Authorization(true);
             }
             catch (Exception e)
             {
-                Authorization(false);
-
-                var usr = HttpContext.Session.GetString("UserSession");
-
-                if (usr != null)
-                {
-
-
-                }
+                //Authorization(false);
             }
         }
-        // fixed last methods, was error with public using.
-        private IActionResult Authorization(bool _SessionUser)
+        [Authorize(Roles = "student")]
+        public IActionResult Index()
         {
-            if (_SessionUser)
-            {
-                if (_logedInUser.Role.RoleId == 2)
-                {
-                    return RedirectToAction("Index", "DashboardEmployer");
-                }
-                return RedirectToAction("Index", "DashboardTeacher");
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-        }
-
-        private IActionResult Index()
-        {
+            
             return View();
         }
+
+
+        //public IActionResult Authorization(bool _SessionUser)
+        //{
+        //    if (_SessionUser)
+        //    {
+        //        if(_logedInUser.Role.RoleId == 2)
+        //        {
+        //            return RedirectToAction("Index", "DashboardEmployer");
+        //        }
+        //        return RedirectToAction("Index", "DashboardTeacher");
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Login", "Account");
+        //    }
+        //}
     }
 }

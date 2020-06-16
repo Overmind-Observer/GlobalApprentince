@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\Controllers",
-    "\\Data"
+    "\\Data",
+    "\\Migrations"
   ],
-  "SelectedNode": "\\Controllers\\AccountController.cs",
+  "SelectedNode": "\\Migrations",
   "PreviewInSolutionExplorer": false
 }

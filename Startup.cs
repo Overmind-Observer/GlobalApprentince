@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Global_Intern.Util;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Global_Intern
 {
@@ -43,12 +45,8 @@ namespace Global_Intern
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            });
-            services.AddSingleton<JwtAuth>(new JwtAuth("WWftZe-O7E6uubyNi"));
+            services.AddAuthentication("Basic").AddScheme<BasicAuthOptions, CustomAuthHandler>("Basic", null);
+            services.AddSingleton<ICustomAuthManager, CustomAuthManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +71,8 @@ namespace Global_Intern
             app.UseAuthorization();
 
             app.UseSession();
+
+            
 
             app.UseEndpoints(endpoints =>
             {

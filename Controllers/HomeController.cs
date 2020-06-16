@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Global_Intern.Models;
+using Global_Intern.Data;
 using static System.Linq.Enumerable;
 
 namespace Global_Intern.Controllers

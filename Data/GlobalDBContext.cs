@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Configuration;
+using Global_Intern.Models;
 
-namespace Global_Intern.Models
+namespace Global_Intern.Data
 {
     public class GlobalDBContext : DbContext
     {
