@@ -1,29 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Global_Intern.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using System.Security.Cryptography;
-using System.Diagnostics.Eventing.Reader;
 //using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Global_Intern.Util;
 using Microsoft.EntityFrameworkCore;
 using Global_Intern.Services;
-using Microsoft.AspNetCore.Session;
+using Global_Intern.Data;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http;
+using System.Net.Http;
 
 namespace Global_Intern.Controllers
 {
     public class AccountController : Controller
     {
         private readonly EmailSettings _emailSettings;
-        private readonly JwtAuth _auth;
+        private readonly ICustomAuthManager _auth;
 
-        public AccountController(IOptions<EmailSettings> emailSetting, JwtAuth auth)
+        public AccountController(IOptions<EmailSettings> emailSetting, ICustomAuthManager auth)
         {
             _emailSettings = emailSetting.Value;
             _auth = auth;
@@ -99,12 +96,19 @@ namespace Global_Intern.Controllers
                         {
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         });
-                        // set Session
+
+                        // Custom Auth Token
+                        var token = _auth.Authenticate(theUser.UserEmail, theUser.Role.RoleName);
+                        // set Sessions
                         HttpContext.Session.SetString("UserSession", usr);
+                        HttpContext.Session.SetString("UserToken", "Bearer " + token);
 
-                        // JWT Authentication geting token
+                        using (var client = new HttpClient())
+                        {
+                            client.DefaultRequestHeaders.Add("Authorization", token);
+                        }
 
-                        var token = _auth.Auth(theUser.UserEmail, theUser.UserPassword);
+                        //Request.Headers.Add()
                         if (token == null)
                         {
                             return Unauthorized();
