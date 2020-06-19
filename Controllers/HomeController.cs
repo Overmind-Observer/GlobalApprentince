@@ -24,6 +24,7 @@ namespace Global_Intern.Controllers
             
             using (GlobalDBContext _context = new GlobalDBContext())
             {
+
                 if (_context.Roles.ToList().Count != 0)
                 {
                     return View();

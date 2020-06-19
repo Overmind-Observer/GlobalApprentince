@@ -13,9 +13,9 @@ using Global_Intern.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Global_Intern.Util;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Global_Intern.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Global_Intern
 {
@@ -31,6 +31,7 @@ namespace Global_Intern
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<GlobalDBContext>();
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             services.AddSession(option =>
@@ -62,6 +63,16 @@ namespace Global_Intern
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            // Seed Data
+
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var _context = scope.ServiceProvider.GetService<GlobalDBContext>();
+                _context.Database.Migrate();
+                _context.EnsureDataBaseSeeded();
+            }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
        
