@@ -6,6 +6,7 @@ namespace Global_Intern.Models
     {
         public int UserCompanyId { get; set; }
         public string UserCompanyName { get; set; }
+        public string UserCompanyLogo { get; set; }
         public string UserCompanyType { get; set; }
         public string UserCompanyInfo { get; set; }
         [Required]

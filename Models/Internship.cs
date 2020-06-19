@@ -13,8 +13,7 @@ namespace Global_Intern.Models
         [Required]
         public string InternshipBody { get; set; }
         public bool InternshipVirtual { get; set; }
-        public bool InternshipPaid { get; set; }
-        public string InternshipExperienceLevel { get; set; }
+        public string InternshipPaid { get; set; }
 
         // IntershipEmail- to nortify the employer. or inquiry for student
         public string InternshipEmail { get; set; } // For More Queries -- 
@@ -33,7 +32,6 @@ namespace Global_Intern.Models
             this.InternshipBody = intern.InternshipBody;
             this.InternshipVirtual = intern.InternshipVirtual;
             this.InternshipPaid = intern.InternshipPaid;
-            this.InternshipExperienceLevel = intern.InternshipExperienceLevel;
             this.InternshipEmail = intern.InternshipEmail;
             this.InternshipExpDate = intern.InternshipExpDate;
             if (isUpdate)
