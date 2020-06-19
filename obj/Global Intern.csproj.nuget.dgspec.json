@@ -1,30 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\harit\\Source\\Repos\\Global_Intern\\Global Intern.csproj": {}
+    "C:\\Users\\Overmind\\Source\\Repos\\Techexpozed-Global\\Global_Intern\\Global Intern.csproj": {}
   },
   "projects": {
-    "C:\\Users\\harit\\Source\\Repos\\Global_Intern\\Global Intern.csproj": {
+    "C:\\Users\\Overmind\\Source\\Repos\\Techexpozed-Global\\Global_Intern\\Global Intern.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\harit\\Source\\Repos\\Global_Intern\\Global Intern.csproj",
+        "projectUniqueName": "C:\\Users\\Overmind\\Source\\Repos\\Techexpozed-Global\\Global_Intern\\Global Intern.csproj",
         "projectName": "Global Intern",
-        "projectPath": "C:\\Users\\harit\\Source\\Repos\\Global_Intern\\Global Intern.csproj",
-        "packagesPath": "C:\\Users\\harit\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\harit\\Source\\Repos\\Global_Intern\\obj\\",
+        "projectPath": "C:\\Users\\Overmind\\Source\\Repos\\Techexpozed-Global\\Global_Intern\\Global Intern.csproj",
+        "packagesPath": "C:\\Users\\Overmind\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Overmind\\Source\\Repos\\Techexpozed-Global\\Global_Intern\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\harit\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Overmind\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
           "https://www.nuget.org/api/v2/": {}
         },
         "frameworks": {
@@ -41,6 +44,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[2.7.0, )"
+            },
             "Microsoft.AspNetCore.Mvc": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -63,27 +70,35 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.4, )"
+              "version": "[3.1.5, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.4, )"
+              "version": "[3.1.5, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[3.1.4, )"
+              "version": "[3.1.5, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.4, )"
+              "version": "[3.1.5, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[2.8.0, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.3, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.6.0, )"
             }
           },
           "imports": [

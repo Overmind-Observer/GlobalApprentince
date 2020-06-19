@@ -97,3 +97,12 @@ C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\bin\Debug\netcor
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
+C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\DashboardEmployer\Index.cshtml.g.cs
+C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\DashboardStudent\Index.cshtml.g.cs
+C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Internship\Create.cshtml.g.cs
+C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Internship\Index.cshtml.g.cs
+C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\staticwebassets\Global Intern.StaticWebAssets.Manifest.cache
+C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\staticwebassets\Global Intern.StaticWebAssets.xml
+C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\bin\Debug\netcoreapp3.1\MailKit.dll
+C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\bin\Debug\netcoreapp3.1\MimeKit.dll
+C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
