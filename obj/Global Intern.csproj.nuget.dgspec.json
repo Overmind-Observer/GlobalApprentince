@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\harit\\Source\\Repos\\Global_Intern\\Global Intern.csproj": {}
+    "C:\\ASPNET\\2019\\Global_Intern\\Global Intern.csproj": {}
   },
   "projects": {
-    "C:\\Users\\harit\\Source\\Repos\\Global_Intern\\Global Intern.csproj": {
+    "C:\\ASPNET\\2019\\Global_Intern\\Global Intern.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\harit\\Source\\Repos\\Global_Intern\\Global Intern.csproj",
+        "projectUniqueName": "C:\\ASPNET\\2019\\Global_Intern\\Global Intern.csproj",
         "projectName": "Global Intern",
-        "projectPath": "C:\\Users\\harit\\Source\\Repos\\Global_Intern\\Global Intern.csproj",
+        "projectPath": "C:\\ASPNET\\2019\\Global_Intern\\Global Intern.csproj",
         "packagesPath": "C:\\Users\\harit\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\harit\\Source\\Repos\\Global_Intern\\obj\\",
+        "outputPath": "C:\\ASPNET\\2019\\Global_Intern\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -41,6 +41,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[2.7.0, )"
+            },
             "Microsoft.AspNetCore.Mvc": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -63,23 +67,27 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.4, )"
+              "version": "[3.1.5, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.4, )"
+              "version": "[3.1.5, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[3.1.4, )"
+              "version": "[3.1.5, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.4, )"
+              "version": "[3.1.5, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[2.8.0, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
