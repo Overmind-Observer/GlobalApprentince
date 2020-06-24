@@ -5,6 +5,6 @@
     "\\Data",
     "\\Migrations"
   ],
-  "SelectedNode": "\\Migrations",
+  "SelectedNode": "\\Controllers\\AccountController.cs",
   "PreviewInSolutionExplorer": false
 }
