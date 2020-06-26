@@ -66,8 +66,16 @@ namespace Global_Intern
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var _context = scope.ServiceProvider.GetService<GlobalDBContext>();
-                _context.Database.Migrate();
-                _context.EnsureDataBaseSeeded();
+                try
+                {
+                    _context.Database.Migrate();
+                    _context.EnsureDataBaseSeeded();
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Db exits");
+                }
+                
             }
 
             app.UseHttpsRedirection();
