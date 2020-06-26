@@ -1,11 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Configuration;
-using Global_Intern.Models;
-using Microsoft.EntityFrameworkCore.Migrations;
+
+﻿using Global_Intern.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Global_Intern.Data
 {
@@ -13,8 +8,10 @@ namespace Global_Intern.Data
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            string connectionString = @"Data Source=skynet\sqlexpress;Initial Catalog=GlobalDB;Integrated Security=True";
             _ = optionsBuilder
-                .UseSqlServer(@"Data Source=skynet\sqlexpress;Initial Catalog=GlobalDB;Integrated Security=True");
+                .UseSqlServer(connectionString, builder => builder.UseRowNumberForPaging(true));
+
         }
         public DbSet<Admin> Admins { get; set; }
         public DbSet<User> Users { get; set; }
