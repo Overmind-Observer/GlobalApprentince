@@ -84,3 +84,4 @@ C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcor
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\DashboardStudent\Index.cshtml.g.cs
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Internship\Create.cshtml.g.cs
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Internship\Index.cshtml.g.cs
+C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\Global Intern.csprojAssemblyReference.cache
