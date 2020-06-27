@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Global_Intern.Models;
 using Microsoft.AspNetCore.Mvc;

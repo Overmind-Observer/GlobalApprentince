@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Session;
-using Newtonsoft.Json.Linq;
-using System.Web;
 using Global_Intern.Models;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Global_Intern.Controllers
-{   
-    
+{
+
     public class DashboardStudentController : Controller
     {
         private readonly User _logedInUser;
