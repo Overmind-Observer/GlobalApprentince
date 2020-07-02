@@ -1,6 +1,6 @@
-body,
-    {
-    margin: 0;
+body {
+    height: auto;
+    margin: auto, 0, 0, 0;
     padding: 0;
     border: 0;
     font-size: 100%;
@@ -411,6 +411,7 @@ a:hover{
 
 /* Footer */
 #footer {
+    height:auto;
     background-color: #E46854;
     color: #ffffff;
     padding: 4em 0 2em 0;
