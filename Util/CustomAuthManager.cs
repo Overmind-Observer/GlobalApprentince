@@ -7,14 +7,17 @@ namespace Global_Intern.Util
     {
 
 
-        private readonly IDictionary<string, Tuple<string, string>> tokens = new Dictionary<string, Tuple<string, string>>();
-        public IDictionary<string, Tuple<string, string>> Tokens => tokens;
+        private IDictionary<string, Tuple<string, string, int>> tokens = new Dictionary<string, Tuple<string, string, int>>();
+        public IDictionary<string, Tuple<string, string, int>> Tokens => tokens;
 
-        public string Authenticate(string username, string role)
+        public string Authenticate(string username, string role,int id, bool IsAddToken)
         {
             var token = Guid.NewGuid().ToString();
-
-            tokens.Add(token, new Tuple<string, string>(username, role));
+            if (!IsAddToken)
+            {
+                tokens = new Dictionary<string, Tuple<string, string, int>>();
+            }
+            tokens.Add(token, new Tuple<string, string, int>(username, role, id));
 
             return token;
         }

@@ -10,9 +10,11 @@ using Global_Intern.Models;
 using Global_Intern.Util;
 using Global_Intern.Util.pagination;
 using Global_Intern.Models.Filters;
+using Global_Intern.Models.EmployerModels;
 
 namespace Global_Intern.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class InternshipsController : ControllerBase
@@ -20,10 +22,14 @@ namespace Global_Intern.Controllers
         private readonly GlobalDBContext _context;
         private readonly string _table;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ICustomAuthManager _customAuthManager;
 
 
-        public InternshipsController(GlobalDBContext context, IHttpContextAccessor httpContextAccessor)
+        public InternshipsController(GlobalDBContext context, 
+            IHttpContextAccessor httpContextAccessor,
+            ICustomAuthManager auth)
         {
+            _customAuthManager = auth;
             _httpContextAccessor = httpContextAccessor;
             _context = context;
             _table = "Internships";
@@ -72,34 +78,48 @@ namespace Global_Intern.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutInternship(int id, Internship internship)
+        public async Task<IActionResult> PutInternship(int id, InternshipModel internshipModel)
         {
-            if (id != internship.InternshipId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(internship).State = EntityState.Modified;
-
+            //if (id != internship.InternshipId)
+            //{
+            //    return BadRequest();
+            //}
             try
             {
-                await _context.SaveChangesAsync();
-                Internship updated = _context.Internships.Find(id);
-                return Ok(new Response<Internship>(updated));
+                var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+
+                // ToDO-> get User ID from Session
+                User user = _context.Users.Find(User_id);
+                Internship internship = new Internship();
+                // SetAddorUpdateIntern(Intership - TYPE, User =TYPE, Bool -TYPE)
+                // the above method fill the object with user provided values and bool if it is for update
+                internship.SetAddorUpdateIntern(internshipModel, user, true, id);
+                _context.Internships.Update(internship);
+                _context.SaveChanges();
+                return Ok(internship);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!InternshipExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest(e);
             }
 
-            return NoContent();
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
+            //    Internship updated = _context.Internships.Find(id);
+            //    return Ok(new Response<Internship>(updated));
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!InternshipExists(id))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
         }
 
         // POST: api/Internships
@@ -107,20 +127,20 @@ namespace Global_Intern.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [ApiKeyAuth]
         [HttpPost]
-        public ActionResult<Internship> PostInternship(string wstring)
+        public ActionResult<Internship> PostInternship(InternshipModel newInternship)
         {
             try
             {
-                Internship intern;
+                var id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+                
                 // ToDO-> get User ID from Session
-                User user = _context.Users.Find(2);
+                User user = _context.Users.Find(id);
                 Internship internship = new Internship();
                 // SetAddorUpdateIntern(Intership - TYPE, User =TYPE, Bool -TYPE)
                 // the above method fill the object with user provided values and bool if it is for update
-                // internship.SetAddorUpdateIntern(intern, user);
+                internship.SetAddorUpdateIntern(newInternship, user);
                 _context.Internships.Add(internship);
                 _context.SaveChanges();
-
                 return Ok(internship);
             }
             catch (Exception e)

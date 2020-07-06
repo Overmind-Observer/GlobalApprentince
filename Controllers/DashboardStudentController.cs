@@ -11,18 +11,11 @@ namespace Global_Intern.Controllers
     public class DashboardStudentController : Controller
     {
         private readonly User _logedInUser;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public DashboardStudentController(IHttpContextAccessor httpContextAccessor)
         {
-            try
-            {
-                _logedInUser = JsonConvert.DeserializeObject<User>(httpContextAccessor.HttpContext.Session.GetString("UserSession"));
-                //Authorization(true);
-            }
-            catch (Exception e)
-            {
-                //Authorization(false);
-            }
+            _httpContextAccessor = httpContextAccessor;
         }
         [Authorize(Roles = "student")]
         public IActionResult Index()

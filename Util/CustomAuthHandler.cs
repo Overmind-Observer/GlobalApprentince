@@ -51,7 +51,7 @@ namespace Global_Intern.Util
             //    return AuthenticateResult.Fail("UnAuthorize");
             try
             {
-                return validateToken();
+                return  validateToken();
             }
             catch (Exception ex)
             {
