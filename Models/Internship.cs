@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Global_Intern.Models.EmployerModels;
 
 namespace Global_Intern.Models
 {
@@ -25,7 +26,7 @@ namespace Global_Intern.Models
         public virtual User User { get; set; } // Poster
 
 
-        public void SetAddorUpdateIntern(Internship intern, User user, bool isUpdate=false) {
+        public void SetAddorUpdateIntern(InternshipModel intern, User user, bool isUpdate=false, int InternshipID=0) {
             this.InternshipTitle = intern.InternshipTitle;
             this.InternshipType = intern.InternshipType;
             this.InternshipDuration = intern.InternshipDuration;
@@ -34,8 +35,9 @@ namespace Global_Intern.Models
             this.InternshipPaid = intern.InternshipPaid;
             this.InternshipEmail = intern.InternshipEmail;
             this.InternshipExpDate = intern.InternshipExpDate;
-            if (isUpdate)
+            if (isUpdate && InternshipID != 0)
             {
+                this.InternshipId = InternshipID;
                 this.InternshipUpdatedAt = DateTime.Now;
             }
             else

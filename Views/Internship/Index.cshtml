@@ -9,41 +9,10 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<input type="search" id="isearch" name="isearch">
 <table class="table">
     <thead>
-        <tr>
-            @*<th>
-                @Html.DisplayNameFor(model => model.InternshipTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InternshipType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InternshipDuration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InternshipBody)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InternshipVirtual)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InternshipExperienceLevel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InternshipEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InternshipExpDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InternshipCreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InternshipUpdatedAt)
-            </th>
-            <th></th>*@
-        </tr>
+        
     </thead>
     <tbody>
         @foreach (var item in Model)
@@ -77,6 +46,17 @@
     </tbody>
 </table>
 
+<script>
+    const search = document.getElementById('isearch');
+    search.addEventListener('keypress', () => getUrlQuery(search.value));
+    if (e.key === 'Enter') {
+        const getUrlQuery = async searchText => {
+            console.log(window.location.href);
+            window.location.href += '?search=' + searchText;
+        };
+    }
+    
+</script>
 
 
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using Global_Intern.Models;
+using Global_Intern.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,23 +11,23 @@ namespace Global_Intern.Controllers
 
     public class DashboardEmployerController : Controller
     {
-        public DashboardEmployerController()
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ICustomAuthManager _customAuthManager;
+        private readonly string host; 
+        public DashboardEmployerController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth)
         {
-            var user = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("UserSession"));
-            if (user == null){
-
-                Console.WriteLine("Not authorized Require Login");
-                RedirectToAction("Index", "Account");
-            }
-            else
-            {
-                
-                // TODO -> CHECK THE ROLE IS Employer
-            }
+            _httpContextAccessor = httpContextAccessor;
+            host = _httpContextAccessor.HttpContext.Request.Host.Value;
+            _customAuthManager = auth;
         }
 
         [Authorize(Roles = "employer")]
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Internships()
         {
             return View();
         }

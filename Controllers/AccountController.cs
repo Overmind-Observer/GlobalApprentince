@@ -98,14 +98,14 @@ namespace Global_Intern.Controllers
                         });
 
                         // Custom Auth Token
-                        var token = _auth.Authenticate(theUser.UserEmail, theUser.Role.RoleName);
+                        var token = _auth.Authenticate(theUser.UserEmail, theUser.Role.RoleName, theUser.UserId);
                         // set Sessions
                         HttpContext.Session.SetString("UserSession", usr);
                         HttpContext.Session.SetString("UserToken", "Bearer " + token);
 
                         using (var client = new HttpClient())
                         {
-                            client.DefaultRequestHeaders.Add("Authorization", token);
+                            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                         }
 
                         //Request.Headers.Add()
