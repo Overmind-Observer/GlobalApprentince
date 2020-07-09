@@ -42,18 +42,19 @@ namespace Global_Intern.Controllers
             HttpResponseMessage resp;
             string InternshipUrl = host + Internship_url;
             try
+            
             {
                 
                 if (!String.IsNullOrEmpty(search))
                 {
-                    InternshipUrl = Internship_url + "?search=" + search;
+                    InternshipUrl = InternshipUrl + "?search=" + search;
                     if (pageNumber != 0 && pageSize != 0)
                     {
                         InternshipUrl += "&pageNumber=" + pageNumber.ToString() + "&pageSize=" + pageSize.ToString();
                     }
                 }
                 else
-                { 
+                {
                     if (pageNumber != 0 && pageSize != 0)
                     {
                         InternshipUrl += "?pageNumber=" + pageNumber.ToString() + "&pageSize=" + pageSize.ToString();
