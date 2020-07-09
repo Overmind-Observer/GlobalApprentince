@@ -54,6 +54,7 @@ namespace Global_Intern.Controllers
             // Make sensitive info like salt and password null or empty
             var filtered = UserFilter.RemoveUserInfoFromInternship(interns);
             // the Response class will shows if the data is paginated or require token (Auth).
+            
             var response = new Response<List<Internship>>(PaginationQuery<Internship>.CreateAsync(filtered, pageNumber, PageSize), false, true);
             
 
