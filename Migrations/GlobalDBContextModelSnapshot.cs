@@ -15,7 +15,7 @@ namespace Global_Intern.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.4")
+                .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -148,11 +148,8 @@ namespace Global_Intern.Migrations
                     b.Property<DateTime>("InternshipExpDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("InternshipExperienceLevel")
+                    b.Property<string>("InternshipPaid")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("InternshipPaid")
-                        .HasColumnType("bit");
 
                     b.Property<string>("InternshipTitle")
                         .IsRequired()
@@ -241,6 +238,9 @@ namespace Global_Intern.Migrations
                     b.Property<string>("ProfilePersonalStatement")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProfilePic")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ProfileRoleFit")
                         .HasColumnType("nvarchar(max)");
 
@@ -317,6 +317,9 @@ namespace Global_Intern.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
@@ -324,15 +327,22 @@ namespace Global_Intern.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("SoftDelete")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<string>("UserCurrentCountry")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserEmail")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("UserEmailVerified")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("UserFirstName")
                         .IsRequired()
@@ -354,12 +364,15 @@ namespace Global_Intern.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserPhone")
-                        .HasColumnType("int");
+                    b.Property<string>("UserPhone")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("UserEmail")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -372,6 +385,9 @@ namespace Global_Intern.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("UserCompanyInfo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserCompanyLogo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserCompanyName")
@@ -387,7 +403,7 @@ namespace Global_Intern.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserCompanies");
+                    b.ToTable("UserCompany");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.VisaStatus", b =>
@@ -410,7 +426,7 @@ namespace Global_Intern.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("VisaStatuses");
+                    b.ToTable("VisaStatus");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.AppliedInternship", b =>
