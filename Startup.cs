@@ -8,8 +8,6 @@ using Global_Intern.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Global_Intern.Util;
-
-using System.Text;
 using Global_Intern.Data;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Global_Intern.Models;
 using Microsoft.AspNetCore.Mvc;
-//using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Global_Intern.Util;
 using Microsoft.EntityFrameworkCore;
 using Global_Intern.Services;
 using Global_Intern.Data;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Http;
 using System.Net.Http;
 
 namespace Global_Intern.Controllers

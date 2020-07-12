@@ -22,16 +22,16 @@ namespace Global_Intern.Util
 
         private string _logedInUserToken;
         private readonly ICustomAuthManager cAuthManger;
-        private  string _tokenSession;
+        private string _tokenSession;
         public CustomAuthHandler(
             IOptionsMonitor<BasicAuthOptions> options, ILoggerFactory logger, UrlEncoder encode, ISystemClock clock,
             ICustomAuthManager customAuthManager,
             IHttpContextAccessor httpContextAccessor
-            ) : base (options, logger, encode, clock)
+            ) : base(options, logger, encode, clock)
         {
-            
+
             cAuthManger = customAuthManager;
-            
+
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -61,9 +61,10 @@ namespace Global_Intern.Util
         }
 
 
-        private AuthenticateResult validateToken() {
+        private AuthenticateResult validateToken()
+        {
             var validatedToken = cAuthManger.Tokens.FirstOrDefault();
-            if(validatedToken.Key == null)
+            if (validatedToken.Key == null)
             {
                 return AuthenticateResult.Fail("UnAuthorize");
             }
