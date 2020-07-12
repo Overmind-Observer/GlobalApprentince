@@ -103,24 +103,6 @@ namespace Global_Intern.Controllers
             {
                 return BadRequest(e);
             }
-
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //    Internship updated = _context.Internships.Find(id);
-            //    return Ok(new Response<Internship>(updated));
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!InternshipExists(id))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
         }
 
         // POST: api/Internships
@@ -170,5 +152,22 @@ namespace Global_Intern.Controllers
         {
             return _context.Internships.Any(e => e.InternshipId == id);
         }
+
+        [HttpGet("{id}")]
+        [Route("employer/{id:int}")]
+        public async Task<ActionResult<IEnumerable<Internship>>> GetInternshipsbyEmployer(int id)
+        {
+            User user = await _context.Users.FindAsync(id);
+
+            var internship = await _context.Internships.Include(u => u.User).Where(e => e.User == user).ToListAsync();
+
+            if (internship == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(internship);
+        }
+
     }
 }
