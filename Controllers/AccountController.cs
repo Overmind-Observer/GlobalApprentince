@@ -37,7 +37,6 @@ namespace Global_Intern.Controllers
         }
 
         [HttpPost]
-        [Obsolete]
         public IActionResult Register(AccountRegister new_user)
         {
             using (GlobalDBContext _context = new GlobalDBContext())

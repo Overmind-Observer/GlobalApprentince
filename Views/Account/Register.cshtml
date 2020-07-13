@@ -2,70 +2,248 @@
 
 @{
     ViewData["Title"] = "Register";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 
+<div class="container">
+    <div class="img">
+        <img src="/img/login.svg">
+    </div>
+    <div class="login-content">
+        <form id="RegisterForm" asp-action="Register" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <a href="#">Don't have an account? Sign Up</a>
+            <img src="/img/profile.svg">
+            <h3 class="title">Register with Us</h3>
 
-<h1>Register</h1>
-    <div class="container">
-        <div class="col-md-4">
-            <form class="form-signup" asp-action="Register" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <h1 class="h3 mb-3 font-weight-normal">Please register</h1>
-                <div class="form-group">
-                    <label asp-for="FirstName" class="control-label"></label>
-                    <input asp-for="FirstName" class="form-control" />
+            <div class="divUserRole">
+                @*<h5 id="tttUserRole">What Are You</h5>*@
+                <label asp-for="UserRole" class="control-label" style="color: #999;text-align:left;">What Are You</label>
+                <select asp-for="UserRole" id="UserRoleInput">
+                    <option value="">Select the Role</option>
+                    <option value="1">Student</option>
+                    <option value="2">Employer</option>
+                    <option value="3">Teacher</option>
+                </select>
+            </div>
+            <div class="input-div one">
+                <div class="i">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="div">
+                    <h5 id="tttFirst">First Name</h5>
+                    <label asp-for="FirstName" hidden class="control-label"></label>
+                    <input required asp-for="FirstName" id="FirstNameInput" class="form-control" />
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="LastName" class="control-label"></label>
-                    <input asp-for="LastName" class="form-control" />
+            </div>
+            <div class="input-div one">
+                <div class="i">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="div">
+                    <h5 id="tttLast">Last Name</h5>
+                    <label asp-for="LastName" hidden class="control-label"></label>
+                    <input required asp-for="LastName" id="LastNameInput" class="form-control" />
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Gender" class="control-label">Gender: </label>
-                    <input type="radio" asp-for="Gender" value="Male" /> Male
-                    <input type="radio" asp-for="Gender" value="Female" /> Female
-                    <input type="radio" asp-for="Gender" value="Other" /> Other
-                    <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="text-align:left;height: 57px; color: #999;border-bottom: 2px solid #d9d9d9;padding:5px 0;margin-top:0; margin-bottom:25px;">
+                <label asp-for="Gender" class="control-label" style="transform: scale(1.2);">Gender: </label> &nbsp;
+                <input type="radio" asp-for="Gender" value="Male" style="transform: scale(1.2);" /> Male &nbsp;
+                <input type="radio" asp-for="Gender" value="Female" style="transform: scale(1.2);" /> Female &nbsp;
+                <input type="radio" asp-for="Gender" value="Other" style="transform: scale(1.2);" /> Other &nbsp;
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="input-div one">
+                <div class="i">
+                    <i class="fa fa-at" aria-hidden="true"></i>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Email" class="control-label"></label>
-                    <input asp-for="Email" class="form-control" />
+                <div class="div">
+                    <h5 id="tttEmail">Your Email</h5>
+                    <label asp-for="Email" hidden class="control-label"></label>
+                    <input required asp-for="Email" id="EmailInput" type="email" class="form-control" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Password" class="control-label"></label>
-                    <input asp-for="Password" class="form-control" />
+            </div>
+            <div class="input-div pass">
+                <div class="i">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="div">
+                    <h5 id="tttPassword">Your Password</h5>
+                    <label asp-for="Password" hidden class="control-label"></label>
+                    <input required asp-for="Password" id="PasswordInput" type="password" class="form-control" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="ConfirmPassword" class="control-label"></label>
-                    <input asp-for="ConfirmPassword" class="form-control" />
+            </div>
+            <div class="input-div pass">
+                <div class="i">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="div">
+                    <h5 id="tttCPassword">Confirm Password</h5>
+                    <label asp-for="ConfirmPassword" hidden class="control-label"></label>
+                    <input required asp-for="ConfirmPassword" id="ConfirmPasswordInput" type="password" class="form-control" />
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="UserRole" class="control-label"></label>
-                    <select asp-for="UserRole">
-                        <option value="">Select the Role</option>
-                        <option value="1">Student</option>
-                        <option value="2">Employer</option>
-                        <option value="3">Teacher</option>
-                    </select>
+            </div>
+            <div class="input-div one">
+                <div class="i">
+                    <i class="fa fa-phone" aria-hidden="true"></i>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Phone" class="control-label"></label>
-                    <input asp-for="Phone" class="form-control" />
+                <div class="div">
+                    <h5 id="tttPhone">Your phone number</h5>
+                    <label asp-for="Phone" hidden class="control-label"></label>
+                    <input asp-for="Phone" id="PhoneInput" type="email" class="form-control" />
                     <span asp-validation-for="Phone" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-                </div>
-            </form>
             </div>
-        </div>
+            <a href="#">Forgot Password?</a>
+            <button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>
+            <input type="submit" class="btn" value="Regiter">
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById("RegisterForm").onload = function () {
+        FirstName.value = "";
+        LastName.value = "";
+        Email.value = "";
+        Password.value = "";
+        CPassword.value = "";
+        Phone.value = "";
+    }
+
+    var placeHolderFirst = document.getElementById("tttFirst");
+    var placeHolderLast = document.getElementById("tttLast");
+    var placeHolderEmail = document.getElementById("tttEmail");
+    var placeHolderPass = document.getElementById("tttPassword");
+    var placeHolderCPass = document.getElementById("tttCPassword");
+    var placeHolderPhone = document.getElementById("tttPhone");
+
+    var FirstName = document.getElementById("FirstNameInput");
+    var LastName = document.getElementById("LastNameInput");
+    var Email = document.getElementById("EmailInput");
+    var Password = document.getElementById("PasswordInput");
+    var CPassword = document.getElementById("ConfirmPasswordInput");
+    var Phone = document.getElementById("PhoneInput");
+
+
+    FirstName.addEventListener('focus', () => {
+        placeHolderFirst.innerText = "";
+    });
+    LastName.addEventListener('focus', () => {
+        placeHolderLast.innerText = "";
+    });
+    Email.addEventListener('focus', () => {
+        placeHolderEmail.innerText = "";
+    });
+    Password.addEventListener('focus', () => {
+        placeHolderPass.innerText = "";
+    });
+    CPassword.addEventListener('focus', () => {
+        placeHolderCPass.innerText = "";
+    });
+    Phone.addEventListener('focus', () => {
+        placeHolderPhone.innerText = "";
+    });
+
+    FirstName.addEventListener('blur', () => {
+        if (FirstName.value == "") {
+            placeHolderFirst.innerText = "First Name";
+        }
+    });
+    LastName.addEventListener('blur', () => {
+        if (LastName.value == "") {
+            placeHolderLast.innerText = "Last Name";
+        }
+    });
+    Email.addEventListener('blur', () => {
+        if (Email.value == "") {
+            placeHolderEmail.innerText = "Your Email";
+        }
+    });
+    Password.addEventListener('blur', () => {
+        if (Password.value == "") {
+            placeHolderPass.innerText = "Your Password";
+        }
+    });
+    CPassword.addEventListener('blur', () => {
+        if (CPassword.value == "") {
+            placeHolderCPass.innerText = "Confirm Password";
+        }
+    });
+    Phone.addEventListener('blur', () => {
+        if (Phone.value == "") {
+            placeHolderPhone.innerText = "Your Phone";
+        }
+    });
+
+
+</script>
+
+@*<h1>Register</h1>
+<div class="container">
+    <div class="col-md-4">
+        <form class="form-signup" asp-action="Register" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <h1 class="h3 mb-3 font-weight-normal">Please register</h1>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label">Gender: </label>
+                <input type="radio" asp-for="Gender" value="Male" /> Male
+                <input type="radio" asp-for="Gender" value="Female" /> Female
+                <input type="radio" asp-for="Gender" value="Other" /> Other
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserRole" class="control-label"></label>
+                <select asp-for="UserRole">
+                    <option value="">Select the Role</option>
+                    <option value="1">Student</option>
+                    <option value="2">Employer</option>
+                    <option value="3">Teacher</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+            </div>
+        </form>
+    </div>
+</div>
 <div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 

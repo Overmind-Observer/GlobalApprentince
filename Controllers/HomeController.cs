@@ -5,16 +5,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Global_Intern.Models;
 using Global_Intern.Data;
-using static System.Linq.Enumerable;
+using System.Threading.Tasks;
+using System;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http; // for -> IHttpContextAccessor
+using System.Net.Http; // for -> HttpClient to make request to API
 
 namespace Global_Intern.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly string host;
+        private readonly HttpClient _client = new HttpClient();
+        private readonly string Internship_url = "/api/Internships";
+        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor)
         {
+            _httpContextAccessor = httpContextAccessor;
+            host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
             _logger = logger;
         }
 
@@ -43,6 +52,41 @@ namespace Global_Intern.Controllers
             }
             // ENDS
             return View();
+        }
+
+        public async Task<IActionResult> AllInternships([FromQuery]string search, int pageNumber = 0, int pageSize = 0)
+        {
+            IEnumerable<Internship> model;
+            HttpResponseMessage resp;
+            string InternshipUrl = host + Internship_url;
+            try
+            {
+                if (!String.IsNullOrEmpty(search))
+                {
+                    InternshipUrl = InternshipUrl + "?search=" + search;
+                    if (pageNumber != 0 && pageSize != 0)
+                    {
+                        InternshipUrl += "&pageNumber=" + pageNumber.ToString() + "&pageSize=" + pageSize.ToString();
+                    }
+                }
+                else
+                {
+                    if (pageNumber != 0 && pageSize != 0)
+                    {
+                        InternshipUrl += "?pageNumber=" + pageNumber.ToString() + "&pageSize=" + pageSize.ToString();
+                    }
+                }
+                resp = await _client.GetAsync(InternshipUrl);
+                resp.EnsureSuccessStatusCode();
+                string responseBody = await resp.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
+                model = data[0]["data"].ToObject<IEnumerable<Internship>>();
+                return View(model);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public IActionResult ContactUs()

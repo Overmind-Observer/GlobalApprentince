@@ -1,0 +1,129 @@
+﻿<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css"
+          integrity="sha256-x8PYmLKD83R9T/sYmJn1j3is/chhJdySyhet/JuHnfY="
+          crossorigin="anonymous" />
+
+    <title>@ViewBag.Title</title>
+    <style type="text/css" media="screen">
+    	.wrapper {
+    		margin-top: '56px';
+    	}
+    	.sideMenu {
+    		background-color: #D3604E;
+    		position: fixed;
+    		top: 56px;
+    		bottom: 0;
+    		left: 0;
+			margin: '56px' auto auto;
+			width: 250px;
+			border: 1px solid red;
+			transition: all ease 0.25s;
+			transform: translateX(-100%);
+			z-index: 100;
+    	}
+
+    	.content {
+    		width: 100%;
+    		padding: 1em;
+    		margin-left: '0px';
+    		transition: all ease 0.25s;
+    	}
+
+    	.sideMenu .nav-link {
+    		display: block;
+    		white-space: nowrap;
+    	}
+
+    	.sideMenu .nav-link .icon {
+    		margin-right: 4px;
+    		font-size: 30px;
+    		vertical-align: middle;
+    		height: 32px;
+    		width: 32px;
+    		display: inline-flex;
+    		justify-content: center;
+    		align-items: center;
+    	}
+
+    	.sidebarLinks{
+    		color: white;
+    	}
+
+    	.sidebarLinks:hover{
+    		background-color: #303337;
+    		color: white;
+    	}
+
+    	.active .sideMenu{
+    		transform: translateX(0);
+    	}
+
+    	.tttCard {
+    		border: 2px solid black;
+    	}
+
+    	@@media (min-width: 990px){
+
+    		.wrapper .sideMenu {
+    			transform: translateX(0);
+	    	}
+	    	.content {
+	    		margin-left: 250px;
+	    	}
+    	}
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler sideMenuToggler" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">Global Intern</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    @RenderBody()
+</body>
+</html>
