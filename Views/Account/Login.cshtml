@@ -2,32 +2,73 @@
 
 @{
     ViewData["Title"] = "Login";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
-
-<h1>Login</h1>
 <div class="container">
-    <div class="col-md-4">
-        <form class="form-signin" asp-action="Login" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="checkbox mb-3">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="RememberMe" /> @Html.DisplayNameFor(model => model.RememberMe)
-                </label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        </form>
+        <div class="img">
+            <img src="/img/login.svg">
         </div>
-    </div>
+        <div class="login-content">
+            <form asp-action="Login" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <a href="#">Don't have an account? Sign Up</a>
+                <img src="/img/profile.svg">
+                <h2 class="title">Welcome</h2>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <h5 id="tttEmail">Your Email</h5>
+                        <label asp-for="Email" hidden class="control-label"></label>
+                        <input asp-for="Email" id="emailInput" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="input-div pass">
+                    <div class="i">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="div">
+                        <h5 id="tttpassword">Password</h5>
+                        <label asp-for="Password" hidden class="control-label"></label>
+                        <input asp-for="Password" id="passwordInput" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="checkbox mb-3" style="text-align:left;padding-top:15px;">
+                    <label class="form-check-label">
+                        <input class="form-check-input" style="transform: scale(1.5);" asp-for="RememberMe" /> &nbsp;&nbsp; @Html.DisplayNameFor(model => model.RememberMe)
+                    </label>
+                </div>
+                <a href="#">Forgot Password?</a>
+                <button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>
+                <input type="submit" class="btn" value="Login">
+            </form>
+        </div>
+</div>
+
+<script>
+    var placeHolderEmail = document.getElementById("tttEmail");
+    var placeHolderPass = document.getElementById("tttpassword");
+    var inputEmail = document.getElementById("emailInput");
+    var inputPass = document.getElementById("passwordInput");
+    inputEmail.addEventListener('focus', () => {
+        placeHolderEmail.innerText = "";
+    });
+    inputPass.addEventListener('focus', () => {
+        placeHolderPass.innerText = "";
+    });
+    inputEmail.addEventListener('blur', () => {
+        if (inputEmail.value == "") {
+            placeHolderEmail.innerText = "Your Email";
+        }
+        
+    });
+    inputPass.addEventListener('blur', () => {
+        if (inputPass.value == "") {
+            placeHolderPass.innerText = "Password";
+        }
+    });
+
+</script>

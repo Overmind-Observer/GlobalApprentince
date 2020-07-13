@@ -19,15 +19,15 @@ namespace Global_Intern.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICustomAuthManager _customAuthManager;
         private readonly string host;
-        private readonly HttpClient _client;
+        private readonly HttpClient _client = new HttpClient();
         private readonly string Internship_url = "/api/Internships";
         public DashboardEmployerController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth)
         {
             _httpContextAccessor = httpContextAccessor;
             host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
             _customAuthManager = auth;
-            _client = new HttpClient();
-           
+            //https://localhost:44307/api/internships/employer/3
+
         }
 
         [Authorize(Roles = "employer")]
@@ -36,15 +36,13 @@ namespace Global_Intern.Controllers
             return View();
         }
 
-        public async Task<IActionResult> InternshipsAsync([FromQuery]string search, int pageNumber=0, int pageSize=0)
+        public async Task<IActionResult> InternshipsAsync([FromQuery]string search, int pageNumber = 0, int pageSize = 0)
         {
             IEnumerable<Internship> model;
             HttpResponseMessage resp;
             string InternshipUrl = host + Internship_url;
             try
-            
             {
-                
                 if (!String.IsNullOrEmpty(search))
                 {
                     InternshipUrl = InternshipUrl + "?search=" + search;
@@ -63,7 +61,7 @@ namespace Global_Intern.Controllers
                 resp = await _client.GetAsync(InternshipUrl);
                 resp.EnsureSuccessStatusCode();
                 string responseBody = await resp.Content.ReadAsStringAsync();
-                var data = JsonConvert.DeserializeObject<dynamic>("["+responseBody+"]");
+                var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
                 model = data[0]["data"].ToObject<IEnumerable<Internship>>();
             }
             catch (Exception)
