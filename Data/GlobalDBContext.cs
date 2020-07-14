@@ -8,7 +8,7 @@ namespace Global_Intern.Data
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = @"Data Source=(localdb)\ProjectsV13;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            string connectionString = @"Data Source=skynet\sqlexpress;Initial Catalog=GlobalDB;Integrated Security=True";
             _ = optionsBuilder
                 .UseSqlServer(connectionString, builder => builder.UseRowNumberForPaging(true));
 
