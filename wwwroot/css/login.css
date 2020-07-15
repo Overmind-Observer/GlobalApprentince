@@ -214,6 +214,7 @@ a:hover{
 @media screen and (max-width: 1000px){
 	form{
 		width: 290px;
+		margin-right: 55px;
 	}
 
 	.login-content h2{

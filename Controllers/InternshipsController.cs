@@ -103,24 +103,6 @@ namespace Global_Intern.Controllers
             {
                 return BadRequest(e);
             }
-
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //    Internship updated = _context.Internships.Find(id);
-            //    return Ok(new Response<Internship>(updated));
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!InternshipExists(id))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
         }
 
         // POST: api/Internships

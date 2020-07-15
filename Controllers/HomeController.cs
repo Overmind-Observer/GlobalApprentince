@@ -30,7 +30,7 @@ namespace Global_Intern.Controllers
         public IActionResult Index()
         {
             // MENUAL ENTRY for ROLE
-            
+
             using (GlobalDBContext _context = new GlobalDBContext())
             {
 
@@ -89,6 +89,27 @@ namespace Global_Intern.Controllers
             }
         }
 
+        
+        public async Task<IActionResult> Internship(int id)
+        {
+            Internship model;
+            HttpResponseMessage resp;
+            string InternshipUrl = host + Internship_url;
+            try
+            {
+
+                resp = await _client.GetAsync(InternshipUrl + "/" + id.ToString()) ;
+                resp.EnsureSuccessStatusCode();
+                string responseBody = await resp.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
+                model = data[0].ToObject<Internship>();
+                return View(model);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public IActionResult ContactUs()
         {
             return View();
