@@ -104,7 +104,7 @@
                                                 <img src="/img/logo.png" alt="">
                                             </div>
                                             <div class="jobs_conetent">
-                                                <a href="#" style="text-align:left;"><h4>@Html.DisplayFor(modelItem => item.InternshipTitle)</h4></a>
+                                                <a asp-controller="Home" asp-action="Internship" asp-route-id="@item.InternshipId" style="text-align:left;"><h4>@Html.DisplayFor(modelItem => item.InternshipTitle)</h4></a>
                                                 <div class="links_locat d-flex align-items-center">
                                                     <div class="location">
                                                         <p>Auckland, NZ</p>
@@ -131,10 +131,35 @@
                             <div class="col-lg-12">
                                 <div class="pagination_wrap">
                                     <ul>
-                                        <li><a href="#"> ← </a></li>
-                                        <li><a href="#"><span>01</span></a></li>
-                                        <li><a href="#"><span>02</span></a></li>
-                                        <li><a href="#"> → </a></li>
+                                        @{
+                                            int prev = @ViewBag.currentPage - 1;
+                                            int next = @ViewBag.currentPage + 1;
+                                        }
+                                        @if (prev != 0)
+                                        {
+                                            <li><a class="pageLinks" href="/Home/AllInternships?pageNumber=@prev&pageSize=10"> Prev </a></li>
+                                        }
+                                        @for (int i = 1; i < Convert.ToInt32(ViewBag.totalPages) + 1; i++)
+                                        {
+                                            var parms = new Dictionary<string, string>
+                                                                                                                                 {
+                                                { "pageNumber", Convert.ToString(i) },
+                                                { "pageSize", Convert.ToString(ViewBag.pageSize) }
+                                            };
+                                            if (@ViewBag.currentPage == i)
+                                            {
+                                                <li style="background-color:skyblue;"><a class="pageLinks" asp-controller="Home" asp-action="AllInternships" asp-all-route-data="parms"><span>@i</span></a></li>
+                                            }
+                                            else
+                                            {
+                                                <li><a class="pageLinks" asp-controller="Home" asp-action="AllInternships" asp-all-route-data="parms"><span>@i</span></a></li>
+                                            }
+
+                                        }
+                                        @if (ViewBag.totalPages != @ViewBag.currentPage)
+                                        {
+                                            <li><a class="pageLinks" href="/Home/AllInternships?pageNumber=@next&pageSize=10"> Next </a></li>
+                                        }
                                     </ul>
                                 </div>
                             </div>

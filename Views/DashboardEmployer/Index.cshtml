@@ -1,6 +1,7 @@
-﻿
+﻿@*@model IEnumerable<Global_Intern.Models.Internship>*@
+
 @{
-    ViewData["Title"] = "DashBoard";
+    ViewData["Title"] = "Employer DashBoard";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
 }
 
@@ -19,13 +20,13 @@
                 <li class="nav-item">
                     <a href="#" class="nav-link sidebarLinks">
                         <i class="material-icons icon">person</i>
-                        <span class="text">User Profile</span>
+                        <span class="text">Edit Profile</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link sidebarLinks">
                         <i class="material-icons icon">insert_chart</i>
-                        <span class="text">Charts</span>
+                        <span class="text">AllInternships</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -34,34 +35,72 @@
                         <span class="text">Settings</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                @*<li class="nav-item">
                     <a href="#" class="nav-link sidebarLinks">
                         <i class="material-icons icon">view_list</i>
                         <span class="text">Resize</span>
                     </a>
-                </li>
+                </li>*@
             </ul>
         </div>
     </div>
     <div class="content">
         <main>
-            <div class="container-fluid">
+            <div class="container-fluid" style="margin-top:56px;">
                 <div class="row">
-                    <div class="col-md-4 my-3">
+                    <div class=".col-12 col-md-8 my-3">
+                        <div class="p-3 tttCard">
+                            <h1 class="mb-2">Created Internships</h1>
+                            <div class="userInternships">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Role</th>
+                                                <th scope="col">Body</th>
+                                                <th scope="col">Expires</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var intern in ViewBag.IntershipsByLoginedInUser)
+                                            {
+                                                <tr>
+                                                    <th scope="row">@intern.InternshipId</th>
+                                                    <td>
+                                                        <div class="ed_InternTitleView">
+                                                            @intern.InternshipTitle
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="ed_InternBodyView">
+                                                            @intern.InternshipBody
+                                                            <div class="ed_InternBodyViewShadow"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>@intern.InternshipExpDate</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-info" style="width:100%">View</button>
+                                                        <div class="d-flex">
+                                                            <button type="button" class="btn btn-secondary w-75 m-1">Edit</button>
+                                                            <button type="button" class="btn btn-danger w-75 m-1">Delete</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=".col-12 col-md-4 my-3">
                         <div class="p-3 tttCard">
                             <h1 class="mb-2">New Card</h1>
                         </div>
                     </div>
-                    <div class="col-md-4 my-3">
-                        <div class="p-3 tttCard">
-                            <h1 class="mb-2">New Card</h1>
-                        </div>
-                    </div>
-                    <div class="col-md-4 my-3">
-                        <div class="p-3 tttCard">
-                            <h1 class="mb-2">New Card</h1>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </main>

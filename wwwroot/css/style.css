@@ -327,6 +327,11 @@ a{
 	transition: .3s;
 }
 
+.pageLinks {
+    text-align: center;
+}
+
+
 a:hover{
 	color: #E46854;
 }

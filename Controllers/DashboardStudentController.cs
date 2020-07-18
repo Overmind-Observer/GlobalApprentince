@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Global_Intern.Models;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
+using Global_Intern.Data;
+using System.Linq;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Global_Intern.Controllers
 {
@@ -17,10 +21,21 @@ namespace Global_Intern.Controllers
         {
             _httpContextAccessor = httpContextAccessor;
         }
-        [Authorize(Roles = "student")]
+        //[Authorize(Roles = "student")]
         public IActionResult Index()
         {
-            
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+                //var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+                User user = _context.Users.Find(2);
+                var appliedInterns = _context.AppliedInternships.Include(i => i.Internship).Where(e => e.User == user).ToList();
+                List<Internship> interns = new List<Internship>();
+                foreach(var appliedIntern in appliedInterns)
+                {
+                    Internship theIntern = appliedIntern.Internship;
+                    interns.Add(theIntern);
+                }
+            }
             return View();
         }
 

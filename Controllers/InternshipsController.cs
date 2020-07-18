@@ -55,7 +55,7 @@ namespace Global_Intern.Controllers
             var filtered = UserFilter.RemoveUserInfoFromInternship(interns);
             // the Response class will shows if the data is paginated or require token (Auth).
             
-            var response = new Response<List<Internship>>(PaginationQuery<Internship>.CreateAsync(filtered, pageNumber, PageSize), false, true);
+            var response = PaginationQuery<Internship>.CreateAsync(filtered, pageNumber, PageSize);
             
 
             return Ok(response);
@@ -103,24 +103,6 @@ namespace Global_Intern.Controllers
             {
                 return BadRequest(e);
             }
-
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //    Internship updated = _context.Internships.Find(id);
-            //    return Ok(new Response<Internship>(updated));
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!InternshipExists(id))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
         }
 
         // POST: api/Internships

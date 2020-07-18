@@ -1,4 +1,5 @@
-﻿using Global_Intern.Models;
+﻿using Global_Intern.Data;
+using Global_Intern.Models;
 using Global_Intern.Util;
 using Global_Intern.Util.pagination;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +9,7 @@ using Microsoft.CodeAnalysis.Text;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -30,10 +32,16 @@ namespace Global_Intern.Controllers
 
         }
 
-        [Authorize(Roles = "employer")]
+        //[Authorize(Roles = "employer")]
         public IActionResult Index()
         {
-            return View();
+            using(GlobalDBContext _context = new GlobalDBContext())
+            {
+                //var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+                User user = _context.Users.Find(3);
+                ViewBag.IntershipsByLoginedInUser = _context.Internships.Where(e => e.User == user).ToList();
+            }
+                return View();
         }
 
         public async Task<IActionResult> InternshipsAsync([FromQuery]string search, int pageNumber = 0, int pageSize = 0)
