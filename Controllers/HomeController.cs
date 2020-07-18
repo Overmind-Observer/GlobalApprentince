@@ -10,6 +10,9 @@ using System;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http; // for -> IHttpContextAccessor
 using System.Net.Http; // for -> HttpClient to make request to API
+using Global_Intern.Util.pagination;
+using Global_Intern.Util;
+using Global_Intern.Models.StudentModels;
 
 namespace Global_Intern.Controllers
 {
@@ -17,11 +20,13 @@ namespace Global_Intern.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ICustomAuthManager _customAuthManager;
         private readonly string host;
         private readonly HttpClient _client = new HttpClient();
         private readonly string Internship_url = "/api/Internships";
-        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor)
+        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth)
         {
+            _customAuthManager = auth;
             _httpContextAccessor = httpContextAccessor;
             host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
             _logger = logger;
@@ -80,7 +85,11 @@ namespace Global_Intern.Controllers
                 resp.EnsureSuccessStatusCode();
                 string responseBody = await resp.Content.ReadAsStringAsync();
                 var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
+                ViewBag.pageSize = data[0]["pageSize"];
+                ViewBag.totalPages = data[0]["totalPages"];
+                ViewBag.currentPage = data[0]["pageNumber"];
                 model = data[0]["data"].ToObject<IEnumerable<Internship>>();
+                var intern = data[0]["data"][0];
                 return View(model);
             }
             catch (Exception)
@@ -110,6 +119,36 @@ namespace Global_Intern.Controllers
                 throw;
             }
         }
+        [Route("Home/Internship/{id?}/Apply")]
+        public IActionResult InternshipApply(int? id)
+        {
+            return View();
+        }
+        [Route("Home/Internship/{id?}/Apply")]
+        [HttpPost]
+        public IActionResult InternshipApply(int? id, ApplyInternship fromData)
+        {
+            // the User is student
+
+            // Make changes to AppliedInternship table.
+            // make nortfication.
+            try
+            {
+                using (GlobalDBContext _context = new GlobalDBContext())
+                {
+                    Internship intern = _context.Internships.Find(id);
+                    User user = _context.Users.Find(_customAuthManager.Tokens.FirstOrDefault().Value.Item3);
+                    AppliedInternship APP_Intern = new AppliedInternship(user, intern);
+                    _context.AppliedInternships.Add(APP_Intern);
+                    _context.SaveChanges();
+                    return View();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public IActionResult ContactUs()
         {
             return View();
@@ -120,6 +159,12 @@ namespace Global_Intern.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+    }
+
+    public bool IsPostBack()
+    {
+        return false;
+        
     }
 
     internal class ErrorViewModel
