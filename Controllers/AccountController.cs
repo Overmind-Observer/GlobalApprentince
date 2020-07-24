@@ -56,20 +56,24 @@ namespace Global_Intern.Controllers
                 Role role = _context.Roles.Find(new_user.UserRole);
                 User theUser = new User();
                 theUser.AddFromAccountRegsiter(new_user, role, salt);
+                string uniqueToken = Guid.NewGuid().ToString("N").Substring(0, 6);
+                theUser.UniqueToken = uniqueToken;
                 _context.Users.Add(theUser);
+                
                 SendEmail email = new SendEmail(_emailSettings);
                 string fullname = theUser.UserFirstName + " " + theUser.UserLastName;
                 string msg = "Please verify you email account for the verification. Click on the link to verify :";
-                msg += _domainurl + "/Account/ConfirmEmail?email=" + theUser.UserEmail + "&token=" + salt;
+                msg += _domainurl + "/Account/ConfirmEmail?email=" + theUser.UserEmail + "&token=" + uniqueToken;
                 email.SendEmailtoUser(fullname, theUser.UserEmail, "Email Verification", msg);
                 _context.SaveChanges();
-                ViewBag.Messsage = new_user.FirstName + " " + new_user.LastName + " successfully registered.";
+                ViewBag.Messsage = new_user.FirstName + " " + new_user.LastName + " successfully registered. A Email has been sent for the verfication.";
             }
             return View();
         }
 
         public IActionResult Login()
         {
+
             return View();
         }
 
@@ -83,32 +87,36 @@ namespace Global_Intern.Controllers
                 // Check if the user with email exists
                 if (theUser != null)
                 {
+                    //Check email is verified
+                    if(theUser.UserEmailVerified == false)
+                    {
+                        ModelState.AddModelError("", "Email is not verifed you cant login.");
+                        return View();
+                    }
                     CustomPasswordHasher pwd = new CustomPasswordHasher();
                     string hashed = pwd.HashPassword(user.Password, theUser.Salt);
                     // Check if the user entered password is correct
                     if (hashed == theUser.UserPassword)
                     {
-                        string usr = JsonConvert.SerializeObject(theUser, Formatting.Indented,
-                        new JsonSerializerSettings()
+                        
+
+
+                        string usr = JsonConvert.SerializeObject(theUser, Formatting.Indented, new JsonSerializerSettings()
                         {
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         });
 
                         // Custom Auth Token
+                        
                         var token = _auth.Authenticate(theUser.UserEmail, theUser.Role.RoleName, theUser.UserId);
                         // set Sessions
                         HttpContext.Session.SetString("UserSession", usr);
                         HttpContext.Session.SetString("UserToken", "Bearer " + token);
 
+                        // at Genearted token in header
                         using (var client = new HttpClient())
                         {
                             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                        }
-
-                        //Request.Headers.Add()
-                        if (token == null)
-                        {
-                            return Unauthorized();
                         }
 
                         // Id 1 for Student & Id 2 for Employer
@@ -137,27 +145,63 @@ namespace Global_Intern.Controllers
             }
         }
 
-        public string ConfirmEmail(string email, string token)
+        public IActionResult GeneralProfile()
+        {
+            // action when email is verified.
+
+            
+            if(_auth.Tokens.Count == 0)
+            {
+                return BadRequest();
+            }
+
+            ViewBag.Message = TempData["message"];
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+                int userID = _auth.Tokens.FirstOrDefault().Value.Item3;
+
+                User user = _context.Users.Include(p => p.Role).SingleOrDefault(x => x.UserId == userID);
+                return View(user);
+            }
+            
+        }
+        public IActionResult Logout()
+        {
+            string GUIDtoken = _auth.Tokens.FirstOrDefault().Key;
+            _auth.removeToken(GUIDtoken);
+
+            return RedirectToAction("Login");
+        }
+        public IActionResult ConfirmEmail(string email, string token)
         {
             using (GlobalDBContext _context = new GlobalDBContext())
-            {   
+            {
+                // Recuqire Url encode - decode
+                string encoded = System.Net.WebUtility.UrlEncode(token);
+                // prevent cross site scripting.
                 // Check given Email and salt(token) are in the same user 
-                User theUser = _context.Users.FirstOrDefault(u => u.UserEmail == email && u.Salt == token);
+                User theUser = _context.Users.Include(r=>r.Role).Where(u => u.UserEmail == email).FirstOrDefault<User>();
                 // if we found the user
-                if (theUser != null)
+                if (theUser.UniqueToken == token)
                 {
                     // update the EmailVerified to True in the User table
                     theUser.UserEmailVerified = true;
                     _context.Users.Update(theUser);
                     _context.SaveChanges();
-                    return theUser.UserEmail + "is Verifed. Login to our site.";
+                    TempData["compeleteProfileUserId"] = JsonConvert.SerializeObject(theUser.UserId);
+                    TempData["message"] = theUser.UserEmail + "is Verifed. Login to our site.";
+                    _auth.Authenticate(theUser.UserEmail, theUser.Role.RoleName, theUser.UserId);
+                    return RedirectToAction("GeneralProfile");
                 }
                 else
                 {
-                    return "Link Expired";
+                    return Unauthorized();
                 }
             }
         }
+        
+
+
         
     }
 }

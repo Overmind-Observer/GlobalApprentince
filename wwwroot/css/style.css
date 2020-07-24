@@ -568,6 +568,10 @@ p {
     margin-top: 20px;
 }
 
+.ws_message {
+    background-color:lightgreen;
+}
+
 .pagination_wrap li {
     display: inline-block;
     width: 38px;
@@ -584,5 +588,3 @@ p {
     font-size: 14px;
     margin: 0 4px;
 }
-
-

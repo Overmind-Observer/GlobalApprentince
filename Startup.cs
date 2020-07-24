@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Global_Intern.Util;
 using Global_Intern.Data;
+using Global_Intern.Models.Filters;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -66,12 +67,14 @@ namespace Global_Intern
                 var _context = scope.ServiceProvider.GetService<GlobalDBContext>();
                 try
                 {
-                    _context.Database.Migrate();
+                    _context.Database.EnsureCreated();
                     _context.EnsureDataBaseSeeded();
+                    //_context.Database.Migrate();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     Console.WriteLine("Db exits");
+                    Console.WriteLine(e);
                 }
                 
             }

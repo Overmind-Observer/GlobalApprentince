@@ -23,6 +23,7 @@ namespace Global_Intern.Data
         public DbSet<Qualification> Qualifications { get; set; }
         public DbSet<Experience> Experiences { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<UserDocument> UserDocuments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

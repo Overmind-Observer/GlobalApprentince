@@ -40,8 +40,9 @@ namespace Global_Intern.Controllers
                 //var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
                 User user = _context.Users.Find(3);
                 ViewBag.IntershipsByLoginedInUser = _context.Internships.Where(e => e.User == user).ToList();
-            }
+                ViewData["LoggeduserName"] = user.UserFirstName + ' ' + user.UserLastName;
                 return View();
+            }
         }
 
         public async Task<IActionResult> InternshipsAsync([FromQuery]string search, int pageNumber = 0, int pageSize = 0)
