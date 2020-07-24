@@ -24,7 +24,7 @@ using Global_Intern.Models;
 #line default
 #line hidden
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"08bacf910c8210e79365badb83def15f7ffb69ad", @"/Views/Account/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"c2e87f1828dfa7ff15070e030324da20917124c9", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"eaaa5f99b36644f01507f75f47fd6570a2340f35", @"/Views/_ViewImports.cshtml")]
     public class Views_Account_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998
