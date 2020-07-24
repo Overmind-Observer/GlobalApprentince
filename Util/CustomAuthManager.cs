@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Global_Intern.Util
 {
@@ -20,6 +21,19 @@ namespace Global_Intern.Util
             tokens.Add(token, new Tuple<string, string, int>(username, role, id));
 
             return token;
+        }
+
+        public bool removeToken(string gUIDtoken)
+        {
+            if (tokens.FirstOrDefault().Key == gUIDtoken)
+            {
+                tokens.Remove(gUIDtoken);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

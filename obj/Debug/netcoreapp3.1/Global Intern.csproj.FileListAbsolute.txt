@@ -262,5 +262,11 @@ C:\ASPNET\2019\Global_Intern\obj\Debug\netcoreapp3.1\Global Intern.RazorTargetAs
 C:\ASPNET\2019\Global_Intern\obj\Debug\netcoreapp3.1\Global Intern.Views.pdb
 C:\ASPNET\2019\Global_Intern\obj\Debug\netcoreapp3.1\Global Intern.csproj.CopyComplete
 C:\ASPNET\2019\Global_Intern\obj\Debug\netcoreapp3.1\Global Intern.genruntimeconfig.cache
-C:\ASPNET\2019\Global_Intern\obj\Debug\netcoreapp3.1\Global Intern.csprojAssemblyReference.cache
 C:\ASPNET\2019\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutDashBoard.cshtml.g.cs
+C:\ASPNET\2019\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Home\Internship.cshtml.g.cs
+C:\ASPNET\2019\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Home\ContactUs.cshtml.g.cs
+C:\ASPNET\2019\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Home\InternshipApply.cshtml.g.cs
+C:\ASPNET\2019\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Account\GeneralProfile.cshtml.g.cs
+C:\ASPNET\2019\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Account\ProfileView\EmployerProfile.cshtml.g.cs
+C:\ASPNET\2019\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Account\ProfileView\StudentProfile.cshtml.g.cs
+C:\ASPNET\2019\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Account\ProfileView\TeacherProfile.cshtml.g.cs

@@ -24,37 +24,27 @@ namespace Global_Intern.Controllers
         private readonly string host;
         private readonly HttpClient _client = new HttpClient();
         private readonly string Internship_url = "/api/Internships";
+        private User currentUser = null;
         public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth)
         {
             _customAuthManager = auth;
             _httpContextAccessor = httpContextAccessor;
             host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
             _logger = logger;
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+                if(_customAuthManager.Tokens.Count != 0)
+                {
+                    currentUser = _context.Users.Find(_customAuthManager.Tokens.FirstOrDefault().Value.Item3);
+                }
+            }
         }
 
         public IActionResult Index()
         {
-            // MENUAL ENTRY for ROLE
-
-            using (GlobalDBContext _context = new GlobalDBContext())
-            {
-
-                if (_context.Roles.ToList().Count != 0)
-                {
-                    return View();
-                }
-                List<string> roles = new List<string>(3);
-                roles.Add("Student");
-                roles.Add("Employer");
-                roles.Add("Teacher");
-                foreach (var role in roles)
-                {
-                    Role r = new Role();
-                    r.RoleName = role.ToLower();
-                    _context.Roles.Add(r);
-                    _context.SaveChanges();
-                }
-            }
+            
+            // For NavBar to display user is LoggedIn
+            ViewData["LoggeduserName"] = currentUser != null? currentUser.UserFirstName + ' ' + currentUser.UserLastName : null;
             // ENDS
             return View();
         }
@@ -122,7 +112,11 @@ namespace Global_Intern.Controllers
         [Route("Home/Internship/{id?}/Apply")]
         public IActionResult InternshipApply(int? id)
         {
-            return View();
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+                Internship intern = _context.Internships.Find(id);
+            }
+                return View();
         }
         [Route("Home/Internship/{id?}/Apply")]
         [HttpPost]
@@ -159,13 +153,14 @@ namespace Global_Intern.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public bool IsPostBack()
+        {
+            return false;
+
+        }
     }
 
-    public bool IsPostBack()
-    {
-        return false;
-        
-    }
+    
 
     internal class ErrorViewModel
     {

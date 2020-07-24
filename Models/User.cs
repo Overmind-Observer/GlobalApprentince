@@ -7,7 +7,8 @@ namespace Global_Intern.Models
 {
     public class User
     {
-
+        // CP-> Complete Prfile - fields which will be filled after the email has been verfied
+        // Auto -> fields which gets filled by the system
         public User()
         {
             this.CreatedAt = DateTime.UtcNow;
@@ -19,26 +20,30 @@ namespace Global_Intern.Models
         public string UserLastName { get; set; }
         [Required]
         public string UserEmail { get; set; }
-        public bool UserEmailVerified { get; set; }
-        public string UserHomeCountry { get; set; }
-        public string UserCurrentCountry { get; set; }
+        public bool UserEmailVerified { get; set; } // Auto
+        public string UserAddress { get; set; } //CP
+        public string UserCity { get; set; } //CP
+        public string UserState { get; set; } //CP
+        public string UserCountry { get; set; } //CP
+        public int UserZip { get; set; } //CP
         [Required]
         public string UserPassword { get; set; }
         [Required]
-        public string Salt { get; set; }
+        public string Salt { get; set; } // Auto
+        public string UniqueToken { get; set; } // Auto
         public string UserPhone { get; set; }
-        public string UserLinks { get; set; }
-        public string UserGender { get; set; }
+        public string UserImage { get; set; } 
+        public string UserGender { get; set; } // Could be use full for User with student role.
         [Required]
         public virtual Role Role { get; set; } //FK
-        public DateTime CreatedAt { get; set; }
-        public bool SoftDelete { get; set; }
-        public List<Qualification> qualifications { get; set; }
-        public List<Experience> experiences { get; set; }
-        public List<VisaStatus> visaStatuses { get; set; } // should get one row
-        public List<UserCompany> userCompanies { get; set; } // should get one row
-        public List<Profile> profiles { get; set; } // should get one row
-        public List<InternStudent> internStudents { get; set; } // list of students who are working in some internships
+        public DateTime CreatedAt { get; set; } // Auto
+        public bool SoftDelete { get; set; } // Auto
+        public List<Qualification> Qualifications { get; set; }
+        public List<Experience> Experiences { get; set; }
+        public List<UserDocument> UserDocuments { get; set; } // should get one row
+        public List<UserCompany> UserCompanies { get; set; } // should get one row
+        public List<Profile> Profiles { get; set; } // should get one row
+        public List<InternStudent> InternStudents { get; set; } // list of students who are working in some internships
         public List<AppliedInternship> appliedInternships { get; set; } // list of user applyed for intership
 
 

@@ -1,0 +1,45 @@
+﻿@model Global_Intern.Models.EmployerModels.EmployerCompanyModel
+
+@{
+    ViewData["Title"] = "EmployerProfile";
+}
+
+@*This page requre user object to be opened*@
+
+<div class="container" >
+    <div class="ws_message"><p>@ViewBag.Message</p></div>
+    <div>
+        <form id="EmployerProfile" asp-action="CompleteProfile" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="CompanyLogo">Company Logo</label>
+                <input asp-for="CompanyLogo">
+            </div>
+            <div class="form-group">
+                <label for="CompanyName">Company Name</label>
+                <input asp-for="CompanyName">
+                public string CompanyLogo { get; set; }
+                public string CompanyInfo { get; set; }
+                public string CompanyWebsite { get; set; }
+            </div>
+
+            <div class="form-group">
+                <label for="CompanyInfo">Email address</label>
+                <input asp-for="CompanyInfo">
+            </div>
+            <div class="form-group">
+                <label for="CompanyType">Type of Industry</label>
+                <select class="form-control" for="CompanyType" id="CompanyType">
+                    @*SAMPLE DATA*@
+                    <option>Accounting</option>
+                    <option>Call Center & Customer Service</option>
+                    <option>Construction</option>
+                    <option>Information & Communication technologies</option>
+                    <option>Marketing & Communication</option>
+                </select>
+            </div>
+            @*<button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>*@
+            <input type="submit" class="btn" value="Save">
+        </form>
+    </div>
+</div>

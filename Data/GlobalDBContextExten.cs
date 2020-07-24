@@ -8,6 +8,7 @@ namespace Global_Intern.Data
     {
         public static void EnsureDataBaseSeeded(this GlobalDBContext _context)
         {
+            int count = _context.Internships.Count();
             if (!_context.Roles.Any())
             {
                 _context.AddRange(new Role[]
@@ -44,7 +45,6 @@ namespace Global_Intern.Data
                             UserPassword = "da3f80f7d570d16967f59bf5edb3ed745cb367c9ce68786fa338ca63f3bd0a6f",
                             Salt = "ae0dvnxmmhbnvq==",
                             UserPhone = "2352366",
-                            UserLinks = "www.yahoo.com",
                             Role =  RoleEmployer
                         },
                         new User()
@@ -56,7 +56,7 @@ namespace Global_Intern.Data
                             UserPassword = "da3f80f7d570d16967f59bf5edb3ed745cb367c9ce68786fa338ca63f3bd0a6f",
                             Salt = "ae0dvnxmmhbnvq==",
                             UserPhone = "24626",
-                            UserLinks = "www.yahoo.com",
+                            
                             Role = RoleStudent
                         },
                         new User()
@@ -68,7 +68,7 @@ namespace Global_Intern.Data
                             UserPassword = "da3f80f7d570d16967f59bf5edb3ed745cb367c9ce68786fa338ca63f3bd0a6f",
                             Salt = "ae0dvnxmmhbnvq==",
                             UserPhone = "24626",
-                            UserLinks = "www.yahoo.com",
+                            
                             Role = RoleStudent
                         },
                         new User
@@ -80,19 +80,20 @@ namespace Global_Intern.Data
                             UserPassword = "da3f80f7d570d16967f59bf5edb3ed745cb367c9ce68786fa338ca63f3bd0a6f",
                             Salt = "ae0dvnxmmhbnvq==",
                             UserPhone = "23526236",
-                            UserLinks = "www.yahoo.com",
+                           
                             Role = RoleTeacher
                         }
                 });
                 _context.SaveChanges();
             }
+
+            var stduent1 = _context.Users.SingleOrDefault(a => a.UserFirstName.Equals("Sameer"));
+            var stduent2 = _context.Users.SingleOrDefault(a => a.UserFirstName.Equals("Cara"));
+            var employer1 = _context.Users.SingleOrDefault(a => a.UserFirstName.Equals("Harit"));
+            var teacher1 = _context.Users.SingleOrDefault(a => a.UserFirstName.Equals("Deepak"));
+
             if (!_context.Internships.Any())
             {
-                var stduent1 = _context.Users.SingleOrDefault(a => a.UserFirstName.Equals("Sameer"));
-                var stduent2 = _context.Users.SingleOrDefault(a => a.UserFirstName.Equals("Cara"));
-                var employer1 = _context.Users.SingleOrDefault(a => a.UserFirstName.Equals("Harit"));
-                var teacher1 = _context.Users.SingleOrDefault(a => a.UserFirstName.Equals("Deepak"));
-
                 _context.AddRange(new Internship[] {
                     new Internship
                     {
@@ -109,7 +110,7 @@ namespace Global_Intern.Data
                         InternshipPaid = "IsPaid",
                         InternshipCreatedAt = DateTime.UtcNow,
                         InternshipEmail = "nnjkawd@g.com",
-                        InternshipExpDate = DateTime.UtcNow.AddDays(30),
+                        InternshipExpDate = DateTime.UtcNow.AddDays(21),
                         User = employer1
                     },
                     new Internship
@@ -123,7 +124,7 @@ namespace Global_Intern.Data
                         InternshipVirtual = false,
                         InternshipCreatedAt = DateTime.UtcNow,
                         InternshipEmail = "nnjkawd@g.com",
-                        InternshipExpDate = DateTime.UtcNow.AddDays(30),
+                        InternshipExpDate = DateTime.UtcNow.AddDays(12),
                         User = employer1
                     },
                     new Internship
@@ -141,7 +142,7 @@ namespace Global_Intern.Data
                         InternshipPaid = "IsPaid",
                         InternshipCreatedAt = DateTime.UtcNow,
                         InternshipEmail = "nnjkawd@g.com",
-                        InternshipExpDate = DateTime.UtcNow.AddDays(30),
+                        InternshipExpDate = DateTime.UtcNow.AddDays(34),
                         User = employer1
                     },
                     new Internship
@@ -214,7 +215,7 @@ namespace Global_Intern.Data
                         InternshipPaid = "NotPaid",
                         InternshipCreatedAt = DateTime.UtcNow,
                         InternshipEmail = "nnjkawd@g.com",
-                        InternshipExpDate = DateTime.UtcNow.AddDays(30),
+                        InternshipExpDate = DateTime.UtcNow.AddDays(12),
                         User = employer1
                     },
                     new Internship
@@ -231,7 +232,7 @@ namespace Global_Intern.Data
                         InternshipVirtual = false,
                         InternshipCreatedAt = DateTime.UtcNow,
                         InternshipEmail = "nnjkawd@g.com",
-                        InternshipExpDate = DateTime.UtcNow.AddDays(30),
+                        InternshipExpDate = DateTime.UtcNow.AddDays(14),
                         User = employer1
                     },
                     new Internship
@@ -261,13 +262,63 @@ namespace Global_Intern.Data
                         InternshipPaid = "NotPaid",
                         InternshipCreatedAt = DateTime.UtcNow,
                         InternshipEmail = "nnjkawd@g.com",
-                        InternshipExpDate = DateTime.UtcNow.AddDays(30),
+                        InternshipExpDate = DateTime.UtcNow.AddDays(7),
                         User = employer1
                     }
                 });
 
                 _context.SaveChanges();
             }
+
+            var Intern1 = _context.Internships.Find(1);
+            var Intern2 = _context.Internships.Find(2);
+            var Intern3 = _context.Internships.Find(3);
+            var Intern4 = _context.Internships.Find(4);
+            var Intern5 = _context.Internships.Find(5);
+            var Intern6 = _context.Internships.Find(6);
+
+            if (!_context.AppliedInternships.Any())
+            {
+                _context.AddRange(new AppliedInternship[] {
+                    new AppliedInternship
+                    {
+                        EmployerStatus = "Viewing",
+                        User = stduent1,
+                        Internship = Intern3
+                    },
+                    new AppliedInternship
+                    {
+                        EmployerStatus = "Viewing",
+                        User = stduent1,
+                        Internship = Intern1
+                    },
+                    new AppliedInternship
+                    {
+                        EmployerStatus = "Viewing",
+                        User = stduent2,
+                        Internship = Intern1
+                    },
+                    new AppliedInternship
+                    {
+                        EmployerStatus = "Selected",
+                        User = stduent1,
+                        Internship = Intern4
+                    },
+                    new AppliedInternship
+                    {
+                        EmployerStatus = "Viewing",
+                        User = stduent1,
+                        Internship = Intern1
+                    },
+                    new AppliedInternship
+                    {
+                        EmployerStatus = "Not Seleted",
+                        User = stduent1,
+                        Internship = Intern6
+                    }
+                });
+            }
+            _context.SaveChanges();
         }
     }
 }

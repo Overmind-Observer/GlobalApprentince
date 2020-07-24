@@ -14,7 +14,7 @@
             <a href="#">Don't have an account? Sign Up</a>
             <img src="/img/profile.svg">
             <h3 class="title">Register with Us</h3>
-
+            <h3 style="color:green;">@ViewBag.Messsage</h3>
             <div class="divUserRole">
                 @*<h5 id="tttUserRole">What Are You</h5>*@
                 <label asp-for="UserRole" class="control-label" style="color: #999;text-align:left;">What Are You</label>
@@ -94,7 +94,7 @@
                 <div class="div">
                     <h5 id="tttPhone">Your phone number</h5>
                     <label asp-for="Phone" hidden class="control-label"></label>
-                    <input asp-for="Phone" id="PhoneInput" type="email" class="form-control" />
+                    <input asp-for="Phone" id="PhoneInput" type="text" class="form-control" />
                     <span asp-validation-for="Phone" class="text-danger"></span>
                 </div>
             </div>
