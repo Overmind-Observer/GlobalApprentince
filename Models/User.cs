@@ -61,5 +61,13 @@ namespace Global_Intern.Models
             this.CreatedAt = DateTime.UtcNow;
             this.SoftDelete = false;
         }
+
+        public void AddFromAccountGeneralProfile(Global_Intern.Models.GeneralProfile.GeneralProfile updatedInfo, string UserImagePATH) {
+            this.UserFirstName = updatedInfo.UserFirstName;
+            this.UserLastName = updatedInfo.UserLastName;
+            this.UserGender = updatedInfo.UserGender;
+            this.UserPhone = updatedInfo.UserPhone.ToString();
+            this.UserImage = UserImagePATH;
+        }
     }
 }
