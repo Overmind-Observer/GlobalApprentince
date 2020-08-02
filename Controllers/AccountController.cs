@@ -10,6 +10,10 @@ using Global_Intern.Services;
 using Global_Intern.Data;
 using Microsoft.Extensions.Options;
 using System.Net.Http;
+using Global_Intern.Models.GeneralProfile;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Global_Intern.Controllers
 {
@@ -17,11 +21,13 @@ namespace Global_Intern.Controllers
     {
         private readonly EmailSettings _emailSettings;
         private readonly ICustomAuthManager _auth;
+        IWebHostEnvironment _env;
 
-        public AccountController(IOptions<EmailSettings> emailSetting, ICustomAuthManager auth)
+        public AccountController(IOptions<EmailSettings> emailSetting, ICustomAuthManager auth, IWebHostEnvironment env)
         {
             _emailSettings = emailSetting.Value;
             _auth = auth;
+            _env = env;
         }
 
         
@@ -144,25 +150,85 @@ namespace Global_Intern.Controllers
                 return View();
             }
         }
-
+        [HttpGet]
         public IActionResult GeneralProfile()
         {
             // action when email is verified.
 
             
-            if(_auth.Tokens.Count == 0)
-            {
-                return BadRequest();
-            }
+            //if(_auth.Tokens.Count == 0)
+            //{
+            //    return Unauthorized();
+            //}
 
-            ViewBag.Message = TempData["message"];
+            //ViewBag.Message = TempData["message"];
             using (GlobalDBContext _context = new GlobalDBContext())
             {
-                int userID = _auth.Tokens.FirstOrDefault().Value.Item3;
+                //int userID = _auth.Tokens.FirstOrDefault().Value.Item3;
 
-                User user = _context.Users.Include(p => p.Role).SingleOrDefault(x => x.UserId == userID);
-                return View(user);
+                User user = _context.Users.Include(p => p.Role).SingleOrDefault(x => x.UserId == 2);
+                GeneralProfile gen = new GeneralProfile(user);
+                return View(gen);
             }
+            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadUserImage(IFormFile UserImage)
+        {
+            if(UserImage != null && UserImage.Length > 0)
+            {
+                var imagePath = @"\uploads\UserImage\";
+                var uploadPath = _env.WebRootPath + imagePath;
+
+                if (!Directory.Exists(uploadPath))
+                {
+                    Directory.CreateDirectory(uploadPath);
+                }
+
+                var uniqueFileName = Guid.NewGuid().ToString();
+                var fileName = Path.GetFileName(uniqueFileName + "." + UserImage.FileName.Split(".")[1].ToLower());
+                string fullPath = uploadPath + fileName;
+
+                imagePath = imagePath + @"\";
+                var filePath = @".." + Path.Combine(imagePath, fileName);
+
+                using (var fileStream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await UserImage.CopyToAsync(fileStream);
+                }
+                ViewData["FileLocation"] = filePath;
+                using (GlobalDBContext _context = new GlobalDBContext()) {
+                    User user = _context.Users.Find(2);
+                    user.UserImage = filePath;
+                    _context.Users.Update(user);
+                    _context.SaveChanges();
+                }
+            }
+            return RedirectToAction("GeneralProfile");
+        }
+
+        [HttpPost]
+        public IActionResult GeneralProfile(GeneralProfile generalProfile) {
+            if (generalProfile.UserImage != null && generalProfile.UserImage.Length > 0) {
+                //var imagePath = @"\uploads\UserImage\";
+                //var uploadPath = _env.WebRootPath + imagePath;
+                string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + generalProfile.UserImage.FileName;
+                string filePath = uploadFolder + uniqueFileName;
+                generalProfile.UserImage.CopyTo(new FileStream(filePath, FileMode.Create));
+                using (GlobalDBContext _context = new GlobalDBContext())
+                {
+                    //User user = _context.Users.Find(_auth.Tokens.FirstOrDefault().Value.Item3);
+                    User user = _context.Users.Find(2);
+                    user.AddFromAccountGeneralProfile(generalProfile, uniqueFileName);
+                    _context.Users.Update(user);
+                    _context.SaveChanges();
+                    GeneralProfile gen = new GeneralProfile(user);
+                    return View(gen);
+                }
+            }
+            return View();
             
         }
         public IActionResult Logout()
