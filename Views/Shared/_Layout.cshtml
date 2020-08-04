@@ -66,19 +66,8 @@
     <main>
 
         @RenderBody()
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        @RenderSection("Scripts", required: false)
+
     </main>
-    <div>
-        @ViewData["msg"]
-        <br>
-        @ViewData["user"]
-        <br>
-        @ViewData["ctor"]
-    </div>
-    
     <footer class="footer text-muted">
         <div class="container">
             <form class="form-inline" style="float:left">
@@ -90,5 +79,9 @@
             </form>
         </div>
     </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -1,21 +1,9 @@
-﻿@model Global_Intern.Models.User
+﻿@model Global_Intern.Models.GeneralProfile.GeneralProfile;
 @{
     ViewData["Title"] = "CompleteProfile";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
 }
-@*
-     UserFirstName { get; set; }
-     UserLastName { get; set; }
-     UserEmail { get; set; }
-     UserAddress { get; set; } //CP
-     UserCity { get; set; } //CP
-     UserState { get; set; } //CP
-     UserCountry { get; set; } //CP
-     UserZip { get; set; } //CP
-     UserPhone { get; set; }
-     UserImage { get; set; }
-     UserGender { get; set; } // Could be use full for User with student role.
-    Role Role { get; set; } //FK*@
+
 
 <div class="wrapper d-flex">
     <div class="sideMenu">
@@ -45,63 +33,96 @@
                         <span class="text">Settings</span>
                     </a>
                 </li>
-                @*<li class="nav-item">
-                        <a href="#" class="nav-link sidebarLinks">
-                            <i class="material-icons icon">view_list</i>
-                            <span class="text">Resize</span>
-                        </a>
-                    </li>*@
             </ul>
         </div>
     </div>
     <div class="content">
         <main>
             <div class="container-fluid" style="margin-top:56px;">
-                <form id="EmployerProfile" asp-action="CompleteProfile" enctype="multipart/form-data" method="post">
+                <form id="GeneralProfile" asp-action="UploadUserImage" asp-controller="Account" enctype="multipart/form-data" method="post">
+                    
+                </form>
+                <form id="GeneralProfile" asp-action="GeneralProfile" asp-controller="Account" enctype="multipart/form-data" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Upload</span>
+
+                    <div class="form-group">
+                        <div class="row py-4">
+                            <div class="col-lg-6">
+                                @{
+                                    <!-- Uploaded image area-->
+                                    if (Model.UserImageName == null)
+                                    {
+
+                                        <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
+                                        <div class="image-area mt-4">
+                                            <img id="imageResult" src="~/uploads/defaut-person.png" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
+                                        <div class="image-area mt-4">
+                                            <img id="imageResult" src="~/uploads/UserImage/@Model.UserImageName" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
+                                        </div>
+                                    }
+                                }
+                                <!-- Upload image input-->
+                                <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+                                    <input id="upload" asp-for="UserImage" onchange="readURL(this);" class="form-control border-0">
+                                    <label id="upload-label" asp-for="UserImage" class="font-weight-light text-muted">Choose file</label>
+                                    <div class="input-group-append">
+                                        <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="custom-file">
-                            <input type="file" asp-for="UserImage">
-                            <label class="custom-file-label" for="UserImage">Choose file</label>
-                        </div>
+                        @*<input type="submit" class="btn btn-info" value="Upload" />*@
                     </div>
-                    <div>
-                        <label for="UserFirstName">UserFirstNameo</label>
+
+                    <div class="form-group">
+                        <label for="UserFirstName">First Name</label>
                         <input class="form-control" asp-for="UserFirstName">
                     </div>
                     <div class="form-group">
-                        <label for="UserLastName">UserLastName</label>
+                        <label for="UserLastName">Last Name</label>
                         <input class="form-control" asp-for="UserLastName">
                     </div>
+
                     <div class="form-group">
-                        <label for="UserGender">UserLastName</label>
-                        <input class="form-control" asp-for="UserGender">
+                        <label asp-for="UserGender" class="control-label" style="transform: scale(1.2);">Gender: </label> &nbsp;
+                        <input type="radio" asp-for="UserGender" value="Male" style="transform: scale(1.2);" /> Male &nbsp;
+                        <input type="radio" asp-for="UserGender" value="Female" style="transform: scale(1.2);" /> Female &nbsp;
+                        <input type="radio" asp-for="UserGender" value="Other" style="transform: scale(1.2);" /> Other &nbsp;
+                        <span asp-validation-for="UserGender" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="UserAddress">UserAddress</label>
-                        <input class="form-control" asp-for="UserAddress">
+                        <label for="UserAddress">You Current Address</label>
+                        <textarea class="form-control" asp-for="UserAddress"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="UserCity">UserCity</label>
+                        <label asp-for="UserCountry" class="control-label" >Select your Country</label>
+                        <select asp-for="UserCountry" onchange="getStates()" id="dd_counties" class="form-control">
+                            <option value="">Select Country</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserState" class="control-label">Select your State</label>
+                        <select asp-for="UserState" id="dd_states" class="form-control">
+                            <option value="">Select State</option>
+                        </select>
+                        @*<label for="UserState">State</label>
+                        <input class="form-control" asp-for="UserState">*@
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserCity">City</label>
                         <input class="form-control" asp-for="UserCity">
                     </div>
                     <div class="form-group">
-                        <label for="UserState">UserState</label>
-                        <input class="form-control" asp-for="UserState">
+                        <label for="UserZip">Zip Code</label>
+                        <input class="form-control" asp-for="UserZip" value="">
                     </div>
                     <div class="form-group">
-                        <label for="UserCountry">UserCountry</label>
-                        <input class="form-control" asp-for="UserCountry">
-                    </div>
-                    <div class="form-group">
-                        <label for="UserZip">UserZip</label>
-                        <input class="form-control" asp-for="UserZip">
-                    </div>
-                    <div class="form-group">
-                        <label for="UserPhone">UserPhone</label>
+                        <label for="UserPhone">Phone Number</label>
                         <input class="form-control" type="number" asp-for="UserPhone">
                     </div>
                     @*<button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>*@
@@ -112,30 +133,173 @@
     </div>
 </div>
 
+@section Scripts {
+    <script>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.js" integrity="sha512-37SbZHAnGzLuZV850k61DfQdZ5cnahfloYHizjpEwDgZGw49+D6oswdI8EX3ogzKelDLjckhvlK0QZsY/7oxYg==" crossorigin="anonymous"></script>
-<script type="text/javascript" charset="utf-8">
-    $(document).ready(function () {
+        // Script to fecth Country -> State -> City
+        var auth_token = ""; 
+        var selCountries = document.getElementById('dd_counties');
+        var selState = document.getElementById('dd_states');
+        let uri = "https://www.universal-tutorial.com/api/getaccesstoken";
+        let h = new Headers();
+        h.append("Accept", "application/json");
+        h.append("api-token", "4k9BmJ0DVwUi_ktFlyDvchDFXS3Mz7BAetCqdJjJI6sDmfoIHigqUonf3PQufBB5i3g");
+        h.append("user-email", "haritjangwal89@protonmail.com");
 
-        $('.sideMenuToggler').on('click', function () {
-            console.log("clicked");
-            $('.wrapper').toggleClass('active');
+        // Get auth_token -> exp every 24 hours
+        let req = new Request(uri, {
+            method: 'GET',
+            headers: h,
+            mode:'cors'
         });
+        fetch(req)
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                else {
+                    throw new Error('BAD Request');
+                }
+            })
+            .then((jsonData) => {
+                auth_token = jsonData["auth_token"];
+                let uri_country = "https://www.universal-tutorial.com/api/countries/";
+                let h = new Headers();
+                h.append("Accept", "application/json");
+                h.append("Authorization", "Bearer " + auth_token);
 
-        var adjustSidebar = function () {
-            $('.sidebar').slimScroll({
-                height: document.documentElement.clientHeight - $('.navbar').outerHeight()
+                // Get auth_token -> exp every 24 hours
+                let req = new Request(uri_country, {
+                    method: 'GET',
+                    headers: h,
+                    mode:'cors'
+                });
+
+                fetch(req)
+                    .then((res) => {
+                        if (res.ok) {
+                            return res.json();
+                        }
+                        else {
+                            throw new Error('BAD Request');
+                        }
+                    })
+                    .then((jsonData) => {
+                        populateCountries(jsonData);
+                    })
+                    .catch((err) => {
+                        console.log('ERROR:', err.message);
+                    });
+            })
+            .catch((err) => {
+                console.log('ERROR:', err.message);
             });
-        };
 
-        adjustSidebar();
-        $(window).resize(function () {
-            adjustSidebar();
+        $('#dd_counties').on('change', function () {
+            let uri = "https://www.universal-tutorial.com/api/states/" + this.value;
+            let h = new Headers();
+            h.append("Accept", "application/json");
+            h.append("Authorization", "Bearer " + auth_token);
+
+            // Get auth_token -> exp every 24 hours
+            let req = new Request(uri, {
+                method: 'GET',
+                headers: h,
+                mode: 'cors'
+            });
+
+            fetch(req)
+                .then((res) => {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                    else {
+                        throw new Error('BAD Request');
+                    }
+                })
+                .then((jsonData) => {
+                    populateStates(jsonData);
+                })
+                .catch((err) => {
+                    console.log('ERROR:', err.message);
+                });
+
         });
-    });
-</script>
+
+        function populateStates(json) {
+            json.forEach((element) => {
+                console.log("state", element['state_name'])
+                var opt = document.createElement('option');
+                opt.appendChild(document.createTextNode(element['state_name']));
+                opt.value = element['state_name'];
+                selState.appendChild(opt);
+            })
+        }
+
+        function populateCountries(json) {
+            json.forEach((element) => {
+                //console.log("got single", element['country_name'])
+                var opt = document.createElement('option');
+                opt.appendChild(document.createTextNode(element['country_name']));
+                opt.value = element['country_name']; 
+                selCountries.appendChild(opt);
+            })
+        }
+
+        // Script to fecth Country -> State -> City ENDSS
+
+        // Dashboard menu for mobile view
+        $(document).ready(function () {
+
+
+            $('.sideMenuToggler').on('click', function () {
+                
+                $('.wrapper').toggleClass('active');
+            });
+
+            var adjustSidebar = function () {
+                $('.sidebar').slimScroll({
+                    height: document.documentElement.clientHeight - $('.navbar').outerHeight()
+                });
+            };
+
+            adjustSidebar();
+            $(window).resize(function () {
+                adjustSidebar();
+            });
+        });
+
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imageResult')
+                        .attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(function () {
+            $('#upload').on('change', function () {
+                readURL(input);
+            });
+        });
+
+        /*  ==========================================
+            SHOW UPLOADED IMAGE NAME
+        * ========================================== */
+        var input = document.getElementById('upload');
+        var infoArea = document.getElementById('upload-label');
+
+        input.addEventListener('change', showFileName);
+        function showFileName(event) {
+            var input = event.srcElement;
+            var fileName = input.files[0].name;
+            infoArea.textContent = 'File name: ' + fileName;
+        }
+
+    </script>
+}

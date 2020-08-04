@@ -10,75 +10,120 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css"
           integrity="sha256-x8PYmLKD83R9T/sYmJn1j3is/chhJdySyhet/JuHnfY="
           crossorigin="anonymous" />
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>@ViewBag.Title</title>
     <style type="text/css" media="screen">
-    	.wrapper {
-    		margin-top: '56px';
-    	}
-    	.sideMenu {
-    		background-color: #D3604E;
-    		position: fixed;
-    		top: 56px;
-    		bottom: 0;
-    		left: 0;
-			margin: '56px' auto auto;
-			width: 250px;
-			border: 1px solid red;
-			transition: all ease 0.25s;
-			transform: translateX(-100%);
-			z-index: 100;
-    	}
+        /*CUSTOM image CSS*/
+        #imageResult {
+            display:none;
+            width:300px;
+            height:300px;
+            object-fit:cover;
+        }
+        #upload {
+            opacity: 0;
+        }
 
-    	.content {
-    		width: 100%;
-    		padding: 1em;
-    		margin-left: '0px';
-    		transition: all ease 0.25s;
-    	}
+        #upload-label {
+            position: absolute;
+            top: 50%;
+            left: 1rem;
+            transform: translateY(-50%);
+        }
 
-    	.sideMenu .nav-link {
-    		display: block;
-    		white-space: nowrap;
-    	}
+        .image-area {
+            border: 2px dashed rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            position: relative;
+        }
 
-    	.sideMenu .nav-link .icon {
-    		margin-right: 4px;
-    		font-size: 30px;
-    		vertical-align: middle;
-    		height: 32px;
-    		width: 32px;
-    		display: inline-flex;
-    		justify-content: center;
-    		align-items: center;
-    	}
+            .image-area::before {
+                content: 'Uploaded image result';
+                color: #fff;
+                font-weight: bold;
+                text-transform: uppercase;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 0.8rem;
+                z-index: 1;
+            }
 
-    	.sidebarLinks{
-    		color: white;
-    	}
+            .image-area img {
+                z-index: 2;
+                position: relative;
+            }
+        /*CUSTOM image CSS ENDS*/
 
-    	.sidebarLinks:hover{
-    		background-color: #303337;
-    		color: white;
-    	}
+        .wrapper {
+            margin-top: '56px';
+        }
 
-    	.active .sideMenu{
-    		transform: translateX(0);
-    	}
+        .sideMenu {
+            background-color: #D3604E;
+            position: fixed;
+            top: 56px;
+            bottom: 0;
+            left: 0;
+            margin: '56px' auto auto;
+            width: 250px;
+            border: 1px solid red;
+            transition: all ease 0.25s;
+            transform: translateX(-100%);
+            z-index: 100;
+        }
 
-    	.tttCard {
-    		border: 2px solid black;
-    	}
+        .content {
+            width: 100%;
+            padding: 1em;
+            margin-left: '0px';
+            transition: all ease 0.25s;
+        }
 
-    	@@media (min-width: 990px){
+        .sideMenu .nav-link {
+            display: block;
+            white-space: nowrap;
+        }
 
-    		.wrapper .sideMenu {
-    			transform: translateX(0);
-	    	}
-	    	.content {
-	    		margin-left: 250px;
-	    	}
-    	}
+            .sideMenu .nav-link .icon {
+                margin-right: 4px;
+                font-size: 30px;
+                vertical-align: middle;
+                height: 32px;
+                width: 32px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+        .sidebarLinks {
+            color: white;
+        }
+
+            .sidebarLinks:hover {
+                background-color: #303337;
+                color: white;
+            }
+
+        .active .sideMenu {
+            transform: translateX(0);
+        }
+
+        .tttCard {
+            border: 2px solid black;
+        }
+
+        @@media (min-width: 990px) {
+
+            .wrapper .sideMenu {
+                transform: translateX(0);
+            }
+
+            .content {
+                margin-left: 250px;
+            }
+        }
 
         .ed_InternTitleView {
             min-width: 200px;
@@ -161,6 +206,23 @@
             </form>
         </div>
     </nav>
-    @RenderBody()
+    <main>
+        @RenderBody()
+    </main>
+    <footer class="footer text-muted">
+        <div class="container">
+            <form class="form-inline" style="float:left">
+                <a asp-area="" asp-controller="Home" asp-action="Privacy">&copy; 2020 - Global Intern - Privacy</a>
+            </form>
+            <form class="form-inline my-2 my-lg-0" style="float:right">
+                <input class="form-control mr-sm-2" type="search" placeholder="Your Email" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Subscribe</button>
+            </form>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
