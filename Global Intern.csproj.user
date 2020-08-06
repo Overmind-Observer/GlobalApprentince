@@ -15,5 +15,6 @@
     <WebStackScaffolding_DbContextTypeFullName>Global_Intern.Data.GlobalDBContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_ViewDialogWidth>600</WebStackScaffolding_ViewDialogWidth>
+    <NameOfLastUsedPublishProfile>Test</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Global_Intern</RootNamespace>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+    <UserSecretsId>aa3fd808-5ec1-4b81-8479-0a6dcb73c15c</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

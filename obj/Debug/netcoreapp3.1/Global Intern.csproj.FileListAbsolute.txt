@@ -234,8 +234,6 @@ C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcor
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Home\InternshipApply.cshtml.g.cs
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutDashBoard.cshtml.g.cs
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutLogin.cshtml.g.cs
-C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\staticwebassets\Global Intern.StaticWebAssets.Manifest.cache
-C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\staticwebassets\Global Intern.StaticWebAssets.xml
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\Global Intern.csproj.CoreCompileInputs.cache
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\obj\Debug\netcoreapp3.1\Global Intern.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Overmind\Source\Repos\Techexpozed-Global\Global_Intern\bin\Debug\netcoreapp3.1\MailKit.dll
