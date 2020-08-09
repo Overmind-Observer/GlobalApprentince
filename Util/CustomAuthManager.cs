@@ -23,11 +23,11 @@ namespace Global_Intern.Util
             return token;
         }
 
-        public bool removeToken(string gUIDtoken)
+        public bool removeToken(string gUIDtokenKey)
         {
-            if (tokens.FirstOrDefault().Key == gUIDtoken)
+            if (tokens.FirstOrDefault().Key == gUIDtokenKey)
             {
-                tokens.Remove(gUIDtoken);
+                tokens.Remove(gUIDtokenKey);
                 return true;
             }
             else
