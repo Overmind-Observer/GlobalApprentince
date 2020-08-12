@@ -25,6 +25,15 @@
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                 </div>
+                
+                  <!-- From here is my code that fix of login user input repeat with "placeholder"-->
+                <div class="form-group">
+				    <input type="email" name="email" class="form-control" placeholder="Email" id="pass_email" required>
+				</div>
+				<div class="form-group">
+				    <input type="password" name="password" id="rpass"class="form-control" placeholder="Password" required minlength="6">
+				</div>
+
                 <div class="input-div pass">
                     <div class="i">
                         <i class="fas fa-lock"></i>
