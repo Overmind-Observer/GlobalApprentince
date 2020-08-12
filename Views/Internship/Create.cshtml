@@ -1,13 +1,16 @@
-﻿@model Global_Intern.Models.Internship
+@model Global_Intern.Models.Internship
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1> Create An Internship </h1>
 
-<h4>Internship</h4>
-<hr />
+
+<!--
+    <hr />
+-->
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -24,32 +27,52 @@
                         <option value="">Select the Work Type</option>
                         <option value="Full time">Full time</option>
                         <option value="Part time">Part time</option>
-                        @*<option value="Contract/Temp">Contract/Temp</option>*@
+                        <option value="Contract/Temp">Contract/Temp</option>
                     </select>
                     <span asp-validation-for="InternshipType" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group">
+                <p> A minimum THREE months is required.</p>
                 <label asp-for="InternshipDuration" class="control-label"></label>
                 <input asp-for="InternshipDuration" class="form-control" />
                 <span asp-validation-for="InternshipDuration" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="InternshipBody" class="control-label"></label>
-                <textarea class="class="form-control" asp-for="InternshipBody" rows="6" cols="100" ></textarea>
+                <textarea class="class=" form-control asp-for="InternshipBody" rows="6" cols="100"></textarea>
                 <span asp-validation-for="InternshipBody" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" style="transform:scale(1.5)" asp-for="InternshipVirtual" /> &nbsp Is Remote/Virtual Internship 
-                </label>
+                   <!-- 
+					   <input class="form-check-input" style="transform:scale(1.5)" asp-for="InternshipVirtual" /> &nbsp Is Remote/Virtual Internship
+					-->
+					<input type="checkbox" name="rem" class="custom-control-input" id="customCheck">
+					<label for="customCheck" class="custom-control-label">Online Remote</label>
+					<input type="checkbox" name="rem" class="custom-control-input" id="customCheck">
+					<label for="customCheck" class="custom-control-label">Virtual Internship</label>
+				
+				</label>
+				
+
+
+
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" style="transform:scale(1.5)" asp-for="InternshipPaid" />  &nbsp Is Paid Internship
-                </label>
+				<!--	
+					<input class="form-check-input" style="transform:scale(1.5)" asp-for="InternshipPaid" />  &nbsp Is Paid Internship
+				-->
+					<input type="checkbox" name="rem" class="custom-control-input" id="customCheck">
+					<label for="customCheck" class="custom-control-label">Paid internship</label>
+					<input type="checkbox" name="rem" class="custom-control-input" id="customCheck">
+					<label for="customCheck" class="custom-control-label">Unpaid Internship</label>
+				
+				
+				</label>
             </div>
-           
+
             <div class="form-group">
                 <label asp-for="InternshipEmail" class="control-label"></label>
                 <input asp-for="InternshipEmail" class="form-control" />
@@ -57,14 +80,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="InternshipExpDate" class="control-label"></label>
-                <input asp-for="InternshipExpDate" type="datetime-local"  class="form-control" />
+                <input asp-for="InternshipExpDate" type="datetime-local" class="form-control" />
                 <span asp-validation-for="InternshipExpDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input asp-for="InternshipCreatedAt" type="hidden"  class="form-control" />
+                <input asp-for="InternshipCreatedAt" type="hidden" class="form-control" />
             </div>
             <div class="form-group">
-                <input asp-for="InternshipUpdatedAt" type="hidden"  class="form-control" />
+                <input asp-for="InternshipUpdatedAt" type="hidden" class="form-control" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -74,7 +97,12 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <!-- 
+        <a asp-action="Index">Back to List</a>  
+    -->
+
+	<input type="submit" value="Back to List" class="btn btn-primary" />
+	
 </div>
 
 @section Scripts {
