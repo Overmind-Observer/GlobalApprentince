@@ -101,10 +101,26 @@
             color: white;
         }
 
-            .sidebarLinks:hover {
-                background-color: #303337;
-                color: white;
-            }
+        .sidebarLinks:hover {
+            background-color: #303337;
+            color: white;
+        }
+
+        .ulsubmenu {
+            background-color: #e58272;
+        }
+
+        .sidebarSubLinks {
+            padding: 0px 0px;
+            padding-left: 10px;
+            color: white;
+            font-size: .8em;
+        }
+
+        .sidebarSubLinks:hover {
+            background-color: #303337;
+            color: white;
+        }
 
         .active .sideMenu {
             transform: translateX(0);
@@ -207,7 +223,42 @@
         </div>
     </nav>
     <main>
-        @RenderBody()
+        <div class="wrapper d-flex">
+            <div class="sideMenu">
+                <div class="sidebar">
+                    <ul class="navbar-nav">
+
+                        @foreach (var each in @ViewData["menuItems"] as dynamic)
+                        {
+
+                            <li class="nav-item">
+                                <a href="#" class="nav-link sidebarLinks">
+                                    <i class="material-icons icon">@each["icon"]</i>
+                                    <span class="text">@each["field"]</span>
+                                </a>
+                            </li>
+                            if (@each["subfields"] != null)
+                            {
+                                <li class="nav-item">
+                                    <ul class="navbar-nav ulsubmenu">
+                                        @foreach (var subItem in @each["subfields"] as dynamic)
+                                        {
+                                            <li class="nav-item">
+                                                <a href="#" style="padding-left:15px;" class="sidebarSubLinks nav-link">
+                                                    <i class="material-icons icon">play_arrow</i>
+                                                    <span class="text">@subItem</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                             }
+                          }
+                    </ul>
+                </div>
+            </div>
+            @RenderBody()
+        </div>
     </main>
     <footer class="footer text-muted">
         <div class="container">

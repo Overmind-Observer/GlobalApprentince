@@ -19,23 +19,24 @@ namespace Global_Intern.Util
 
     public class CustomAuthHandler : AuthenticationHandler<BasicAuthOptions>
     {
-
-        private string _logedInUserToken;
         private readonly ICustomAuthManager cAuthManger;
+        private readonly IHttpContextAccessor httpContextAccessor;
         private string _tokenSession;
         public CustomAuthHandler(
             IOptionsMonitor<BasicAuthOptions> options, ILoggerFactory logger, UrlEncoder encode, ISystemClock clock,
             ICustomAuthManager customAuthManager,
-            IHttpContextAccessor httpContextAccessor
+            IHttpContextAccessor _httpContextAccessor
             ) : base(options, logger, encode, clock)
         {
 
             cAuthManger = customAuthManager;
-
+            httpContextAccessor = _httpContextAccessor;
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
+            
+
             //if (!Request.Headers.ContainsKey("Authorization"))
             //    return AuthenticateResult.Fail("UnAuthorized");
 
@@ -51,6 +52,11 @@ namespace Global_Intern.Util
             //    return AuthenticateResult.Fail("UnAuthorize");
             try
             {
+                // The "UserToken" session get created when login 
+                if (httpContextAccessor.HttpContext.Session.GetString("UserToken") != null)
+                {
+                    _tokenSession = httpContextAccessor.HttpContext.Session.GetString("UserToken");
+                }
                 return  validateToken();
             }
             catch (Exception ex)
@@ -63,7 +69,7 @@ namespace Global_Intern.Util
 
         private AuthenticateResult validateToken()
         {
-            var validatedToken = cAuthManger.Tokens.FirstOrDefault();
+            var validatedToken = cAuthManger.Tokens.FirstOrDefault(t => t.Key == _tokenSession);
             if (validatedToken.Key == null)
             {
                 return AuthenticateResult.Fail("UnAuthorize");

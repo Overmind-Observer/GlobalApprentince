@@ -14,6 +14,8 @@ using Global_Intern.Models.GeneralProfile;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 
 namespace Global_Intern.Controllers
 {
@@ -105,8 +107,6 @@ namespace Global_Intern.Controllers
                     if (hashed == theUser.UserPassword)
                     {
                         
-
-
                         string usr = JsonConvert.SerializeObject(theUser, Formatting.Indented, new JsonSerializerSettings()
                         {
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -115,9 +115,19 @@ namespace Global_Intern.Controllers
                         // Custom Auth Token
                         
                         var token = _auth.Authenticate(theUser.UserEmail, theUser.Role.RoleName, theUser.UserId);
-                        // set Sessions
-                        HttpContext.Session.SetString("UserSession", usr);
-                        HttpContext.Session.SetString("UserToken", "Bearer " + token);
+                        // Create Sessions
+                        //HttpContext.Session.SetString("UserSession", usr);
+                        HttpContext.Session.SetString("UserToken", token);
+
+                        // Delete Existing cookie
+                        Response.Cookies.Delete("UserToken");
+                        //Create Cookie
+                        if (user.RememberMe)
+                        {
+                            CookieOptions cookieOptions = new CookieOptions();
+                            cookieOptions.Expires = DateTime.Now.AddDays(7);
+                            Response.Cookies.Append("UserToken", token, cookieOptions);
+                        }
 
                         // at Genearted token in header
                         using (var client = new HttpClient())
@@ -150,24 +160,20 @@ namespace Global_Intern.Controllers
                 return View();
             }
         }
+        //[Authorize]
         [HttpGet]
         public IActionResult GeneralProfile()
         {
             // action when email is verified.
 
-            
-            //if(_auth.Tokens.Count == 0)
-            //{
-            //    return Unauthorized();
-            //}
-
-            //ViewBag.Message = TempData["message"];
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 //int userID = _auth.Tokens.FirstOrDefault().Value.Item3;
 
-                User user = _context.Users.Include(p => p.Role).SingleOrDefault(x => x.UserId == 2);
+                User user = _context.Users.Include(p => p.Role).SingleOrDefault(x => x.UserId == 3);
                 GeneralProfile gen = new GeneralProfile(user);
+                string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+                ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(user.UserId, path);
                 return View(gen);
             }
             
@@ -210,6 +216,8 @@ namespace Global_Intern.Controllers
 
         [HttpPost]
         public IActionResult GeneralProfile(GeneralProfile generalProfile) {
+
+            // When Save button is clicked
             if (generalProfile.UserImage != null && generalProfile.UserImage.Length > 0) {
                 //var imagePath = @"\uploads\UserImage\";
                 //var uploadPath = _env.WebRootPath + imagePath;
@@ -235,6 +243,7 @@ namespace Global_Intern.Controllers
         {
             string GUIDtoken = _auth.Tokens.FirstOrDefault().Key;
             _auth.removeToken(GUIDtoken);
+            Response.Cookies.Delete("UserToken");
 
             return RedirectToAction("Login");
         }

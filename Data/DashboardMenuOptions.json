@@ -1,0 +1,55 @@
+{
+  "Roles": [
+    {
+      "Employer": [
+        {
+          "icon": "dashboard",
+          "field": "Dashboard"
+        },
+        {
+          "icon": "person",
+          "field": "Profile",
+          "subfields": ["General Profile", "Company Info"]
+        },
+        {
+          "icon": "settings",
+          "field": "Settings"
+        }
+      ]
+    },
+    {
+      "Student": [
+        {
+          "icon": "dashboard",
+          "field": "Dashboard"
+        },
+        {
+          "icon": "person",
+          "field": "Profile",
+          "subfields": [ "General Profile", "Documents", "Qualifications", "Experience" ]
+        },
+        {
+          "icon": "settings",
+          "field": "Settings"
+        }
+      ]
+    },
+    {
+      "Teacher": [
+        {
+          "icon": "dashboard",
+          "field": "Dashboard"
+        },
+        {
+          "icon": "person",
+          "field": "Profile",
+          "subfields": [ "General Profile", "Cources", "Subscribers" ]
+        },
+        {
+          "icon": "settings",
+          "field": "Settings"
+        }
+      ]
+    }
+  ]
+}

@@ -79,6 +79,8 @@ namespace Global_Intern
                 
             }
 
+            app.UseSession();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
        
@@ -87,7 +89,7 @@ namespace Global_Intern
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSession();
+            
 
             
 

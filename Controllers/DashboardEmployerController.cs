@@ -3,6 +3,7 @@ using Global_Intern.Models;
 using Global_Intern.Util;
 using Global_Intern.Util.pagination;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Text;
@@ -23,8 +24,11 @@ namespace Global_Intern.Controllers
         private readonly string host;
         private readonly HttpClient _client = new HttpClient();
         private readonly string Internship_url = "/api/Internships";
-        public DashboardEmployerController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth)
+        IWebHostEnvironment _env;
+
+        public DashboardEmployerController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth, IWebHostEnvironment env)
         {
+            _env = env;
             _httpContextAccessor = httpContextAccessor;
             host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
             _customAuthManager = auth;
@@ -32,13 +36,15 @@ namespace Global_Intern.Controllers
 
         }
 
-        //[Authorize(Roles = "employer")]
+        [Authorize(Roles = "employer")]
         public IActionResult Index()
         {
             using(GlobalDBContext _context = new GlobalDBContext())
             {
-                //var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
-                User user = _context.Users.Find(3);
+                var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+                User user = _context.Users.Find(User_id);
+                string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+                ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(user.UserId, path);
                 ViewBag.IntershipsByLoginedInUser = _context.Internships.Where(e => e.User == user).ToList();
                 ViewData["LoggeduserName"] = user.UserFirstName + ' ' + user.UserLastName;
                 return View();

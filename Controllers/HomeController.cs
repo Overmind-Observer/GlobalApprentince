@@ -23,28 +23,23 @@ namespace Global_Intern.Controllers
         private readonly string host;
         private readonly HttpClient _client = new HttpClient();
         private readonly string Internship_url = "/api/Internships";
-        private User currentUser = null;
+        private User LoggedIn_User = null;
         public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth)
         {
             _customAuthManager = auth;
             _httpContextAccessor = httpContextAccessor;
             host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
             _logger = logger;
-            using (GlobalDBContext _context = new GlobalDBContext())
-            {
-                if(_customAuthManager.Tokens.Count != 0)
-                {
-                    currentUser = _context.Users.Find(_customAuthManager.Tokens.FirstOrDefault().Value.Item3);
-                }
-            }
         }
 
         public IActionResult Index()
         {
             
+            CookieLogin();
+            
             // For NavBar to display user is LoggedIn
-            ViewData["LoggeduserName"] = currentUser != null? currentUser.UserFirstName + ' ' + currentUser.UserLastName : null;
-            // ENDS
+            ViewData["LoggeduserName"] = LoggedIn_User != null? LoggedIn_User.UserFirstName + ' ' + LoggedIn_User.UserLastName : null;
+            
             return View();
         }
 
@@ -156,6 +151,33 @@ namespace Global_Intern.Controllers
         {
             return false;
 
+        }
+
+        public void CookieLogin() {
+            // Check if Cookie Exists and if true create a Session
+           var cookie = Request.Cookies["UserToken"];
+            if (cookie != null)
+            {
+                _httpContextAccessor.HttpContext.Session.SetString("UserToken", cookie);
+                if (_customAuthManager.Tokens.Count != 0)
+                {
+                    int userID = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == cookie).Value.Item3;
+                    using (GlobalDBContext _context = new GlobalDBContext())
+                    {
+                        LoggedIn_User = _context.Users.Find(userID);
+                    }
+                }
+            }
+            else {
+                string tokenFromSession = Response.HttpContext.Session.GetString("UserToken");
+                if (tokenFromSession != null) {
+                    int userID = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == tokenFromSession).Value.Item3;
+                    using (GlobalDBContext _context = new GlobalDBContext())
+                    {
+                        LoggedIn_User = _context.Users.Find(userID);
+                    }
+                }            
+            }
         }
     }
 
