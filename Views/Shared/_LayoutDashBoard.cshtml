@@ -241,10 +241,10 @@
                             {
                                 <li class="nav-item">
                                     <ul class="navbar-nav ulsubmenu">
-                                        @foreach (var subItem in @each["subfields"] as dynamic)
+                                        @foreach (string subItem in @each["subfields"] as dynamic)
                                         {
                                             <li class="nav-item">
-                                                <a href="#" style="padding-left:15px;" class="sidebarSubLinks nav-link">
+                                                <a asp-action="@subItem.Replace(" ", "")" style="padding-left:15px;" class="sidebarSubLinks nav-link">
                                                     <i class="material-icons icon">play_arrow</i>
                                                     <span class="text">@subItem</span>
                                                 </a>

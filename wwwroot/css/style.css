@@ -588,3 +588,17 @@ p {
     font-size: 14px;
     margin: 0 4px;
 }
+
+.EmailMsg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+}
+
+.EmailMsg > a{
+    text-align:center;
+    font-family:poppins;
+    font-size:2em;
+}

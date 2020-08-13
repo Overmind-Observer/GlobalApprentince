@@ -62,12 +62,15 @@ namespace Global_Intern.Models
             this.SoftDelete = false;
         }
 
-        public void AddFromAccountGeneralProfile(Global_Intern.Models.GeneralProfile.GeneralProfile updatedInfo, string UserImagePATH) {
+        public void AddFromAccountGeneralProfile(Global_Intern.Models.GeneralProfile.GeneralProfile updatedInfo, string UserImagePATH="") {
             this.UserFirstName = updatedInfo.UserFirstName;
             this.UserLastName = updatedInfo.UserLastName;
             this.UserGender = updatedInfo.UserGender;
             this.UserPhone = updatedInfo.UserPhone.ToString();
-            this.UserImage = UserImagePATH;
+            if(UserImagePATH != "")
+            {
+                this.UserImage = UserImagePATH;
+            }
         }
     }
 }
