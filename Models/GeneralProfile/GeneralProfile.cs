@@ -17,7 +17,6 @@ namespace Global_Intern.Models.GeneralProfile
         {
             UserFirstName = user.UserFirstName;
             UserLastName = user.UserLastName;
-            //UserEmail = user.UserEmail;
             UserAddress = user.UserAddress;
             UserCity = user.UserCity;
             UserState = user.UserState;

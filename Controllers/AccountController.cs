@@ -71,9 +71,10 @@ namespace Global_Intern.Controllers
                 SendEmail email = new SendEmail(_emailSettings);
                 string fullname = theUser.UserFirstName + " " + theUser.UserLastName;
                 string msg = "Please verify you email account for the verification. Click on the link to verify :";
-                msg += _domainurl + "/Account/ConfirmEmail?email=" + theUser.UserEmail + "&token=" + uniqueToken;
-                email.SendEmailtoUser(fullname, theUser.UserEmail, "Email Verification", msg);
+                msg += _domainurl + "/Account/ConfirmEmail?email=" + theUser.UserEmail + "&token=" + theUser.UniqueToken;
+                
                 _context.SaveChanges();
+                email.SendEmailtoUser(fullname, theUser.UserEmail, "Email Verification", msg);
                 ViewBag.Messsage = new_user.FirstName + " " + new_user.LastName + " successfully registered. A Email has been sent for the verfication.";
             }
             return View();
@@ -107,10 +108,10 @@ namespace Global_Intern.Controllers
                     if (hashed == theUser.UserPassword)
                     {
                         
-                        string usr = JsonConvert.SerializeObject(theUser, Formatting.Indented, new JsonSerializerSettings()
-                        {
-                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                        });
+                        //string usr = JsonConvert.SerializeObject(theUser, Formatting.Indented, new JsonSerializerSettings()
+                        //{
+                        //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        //});
 
                         // Custom Auth Token
                         
@@ -160,85 +161,7 @@ namespace Global_Intern.Controllers
                 return View();
             }
         }
-        //[Authorize]
-        [HttpGet]
-        public IActionResult GeneralProfile()
-        {
-            // action when email is verified.
-
-            using (GlobalDBContext _context = new GlobalDBContext())
-            {
-                //int userID = _auth.Tokens.FirstOrDefault().Value.Item3;
-
-                User user = _context.Users.Include(p => p.Role).SingleOrDefault(x => x.UserId == 3);
-                GeneralProfile gen = new GeneralProfile(user);
-                string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-                ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(user.UserId, path);
-                return View(gen);
-            }
-            
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> UploadUserImage(IFormFile UserImage)
-        {
-            if(UserImage != null && UserImage.Length > 0)
-            {
-                var imagePath = @"\uploads\UserImage\";
-                var uploadPath = _env.WebRootPath + imagePath;
-
-                if (!Directory.Exists(uploadPath))
-                {
-                    Directory.CreateDirectory(uploadPath);
-                }
-
-                var uniqueFileName = Guid.NewGuid().ToString();
-                var fileName = Path.GetFileName(uniqueFileName + "." + UserImage.FileName.Split(".")[1].ToLower());
-                string fullPath = uploadPath + fileName;
-
-                imagePath = imagePath + @"\";
-                var filePath = @".." + Path.Combine(imagePath, fileName);
-
-                using (var fileStream = new FileStream(fullPath, FileMode.Create))
-                {
-                    await UserImage.CopyToAsync(fileStream);
-                }
-                ViewData["FileLocation"] = filePath;
-                using (GlobalDBContext _context = new GlobalDBContext()) {
-                    User user = _context.Users.Find(2);
-                    user.UserImage = filePath;
-                    _context.Users.Update(user);
-                    _context.SaveChanges();
-                }
-            }
-            return RedirectToAction("GeneralProfile");
-        }
-
-        [HttpPost]
-        public IActionResult GeneralProfile(GeneralProfile generalProfile) {
-
-            // When Save button is clicked
-            if (generalProfile.UserImage != null && generalProfile.UserImage.Length > 0) {
-                //var imagePath = @"\uploads\UserImage\";
-                //var uploadPath = _env.WebRootPath + imagePath;
-                string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + generalProfile.UserImage.FileName;
-                string filePath = uploadFolder + uniqueFileName;
-                generalProfile.UserImage.CopyTo(new FileStream(filePath, FileMode.Create));
-                using (GlobalDBContext _context = new GlobalDBContext())
-                {
-                    //User user = _context.Users.Find(_auth.Tokens.FirstOrDefault().Value.Item3);
-                    User user = _context.Users.Find(2);
-                    user.AddFromAccountGeneralProfile(generalProfile, uniqueFileName);
-                    _context.Users.Update(user);
-                    _context.SaveChanges();
-                    GeneralProfile gen = new GeneralProfile(user);
-                    return View(gen);
-                }
-            }
-            return View();
-            
-        }
+        
         public IActionResult Logout()
         {
             string GUIDtoken = _auth.Tokens.FirstOrDefault().Key;
@@ -264,9 +187,11 @@ namespace Global_Intern.Controllers
                     _context.Users.Update(theUser);
                     _context.SaveChanges();
                     TempData["compeleteProfileUserId"] = JsonConvert.SerializeObject(theUser.UserId);
-                    TempData["message"] = theUser.UserEmail + "is Verifed. Login to our site.";
-                    _auth.Authenticate(theUser.UserEmail, theUser.Role.RoleName, theUser.UserId);
-                    return RedirectToAction("GeneralProfile");
+                    ViewBag.message = theUser.UserEmail + " is Verifed. Now your can login to our site.";
+                    // Uncommnet below line to
+                    // login user came via email link.
+                    //_auth.Authenticate(theUser.UserEmail, theUser.Role.RoleName, theUser.UserId);
+                    return View();
                 }
                 else
                 {

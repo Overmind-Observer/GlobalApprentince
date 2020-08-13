@@ -75,6 +75,10 @@ namespace Global_Intern.Controllers
                 ViewBag.currentPage = data[0]["pageNumber"];
                 model = data[0]["data"].ToObject<IEnumerable<Internship>>();
                 var intern = data[0]["data"][0];
+
+                // Display User is LoggedIn
+                ViewData["LoggeduserName"] = LoggedIn_User != null ? LoggedIn_User.UserFirstName + ' ' + LoggedIn_User.UserLastName : null;
+
                 return View(model);
             }
             catch (Exception)
@@ -89,6 +93,10 @@ namespace Global_Intern.Controllers
             Internship model;
             HttpResponseMessage resp;
             string InternshipUrl = host + Internship_url;
+
+            // Display User is LoggedIn
+            ViewData["LoggeduserName"] = LoggedIn_User != null ? LoggedIn_User.UserFirstName + ' ' + LoggedIn_User.UserLastName : null;
+
             try
             {
 
