@@ -198,6 +198,53 @@ namespace Global_Intern.Controllers
                 _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
             }
         }
+        
+        
+        
+        //Create CreateInternController  
+
+        public IActionResult CreateInternController()
+        {
+            return View();
+        }
+
+        public IActionResult CreateInternController(AccountRegister new_user)
+        {
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+                
+                public int InternshipId;
+                public string InternshipTitle;
+                public string InternshipType;
+                public string InternshipDuration;
+                public string InternshipBody;
+                public bool InternshipVirtual;
+                public string InternshipPaid;
+                public string InternshipEmail;
+                public System.DateTime InternshipExpDate;
+                public System.DateTime InternshipCreatedAt;
+                public System.DateTime InternshipUpdatedAt;
+
+
+                int InternshipID = new id;
+
+            
+                Console.Write("Internship Title: ");
+                InternshipTitle = Console.ReadLine();
+
+                Console.Write("Internship Type: ");
+                InternshipType = Console.ReadLine();
+
+                Console.Write("Internship Duration: ");
+                InternshipDuration = Console.ReadLine();
+
+                Console.Write("Internship Body: ");
+                InternshipBody = Console.ReadLine();
+
+            return View();
+        }
+
+        
 
     }
 }
