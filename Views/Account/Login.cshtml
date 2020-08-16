@@ -1,60 +1,52 @@
-﻿@model Global_Intern.Models.AccountLogin
+@model Global_Intern.Models.AccountLogin
 
 @{
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 <div class="container">
-        <div class="img">
-            <img src="/img/login.svg">
-        </div>
-        <div class="login-content">
-            <form asp-action="Login" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <a href="#">Don't have an account? Sign Up</a>
-                <img src="/img/profile.svg">
-                <h2 class="title">Welcome</h2>
-                <div class="input-div one">
-                    <div class="i">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="div">
-                        <h5 id="tttEmail">Your Email</h5>
-                        <label asp-for="Email" hidden class="control-label"></label>
-                        <input asp-for="Email" id="emailInput" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
+    <div class="img">
+        <img src="/img/login.svg">
+    </div>
+    <div class="login-content">
+        <form asp-action="Login" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <a href="#">Don't have an account? Sign Up</a>
+            <img src="/img/profile.svg">
+            <h2 class="title">Welcome</h2>
+            <div class="input-div one">
+                <div class="i">
+                    <i class="fas fa-user"></i>
                 </div>
-                
-                  <!-- From here is my code that fix of login user input repeat with "placeholder"-->
-                <div class="form-group">
-				    <input type="email" name="email" class="form-control" placeholder="Email" id="pass_email" required>
-				</div>
-				<div class="form-group">
-				    <input type="password" name="password" id="rpass"class="form-control" placeholder="Password" required minlength="6">
-				</div>
+                <div class="div">
+                    <h5 id="tttEmail"></h5>
+                    <input type="email" placeholder="Email">
+                    <label asp-for="Email" hidden class="control-label"></label>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
 
-                <div class="input-div pass">
-                    <div class="i">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <div class="div">
-                        <h5 id="tttpassword">Password</h5>
-                        <label asp-for="Password" hidden class="control-label"></label>
-                        <input asp-for="Password" type="password" id="passwordInput" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
+            <div class="input-div pass">
+                <div class="i">
+                    <i class="fas fa-lock"></i>
                 </div>
-                <div class="checkbox mb-3" style="text-align:left;padding-top:15px;">
-                    <label class="form-check-label">
-                        <input class="form-check-input" style="transform: scale(1.5);" asp-for="RememberMe" /> &nbsp;&nbsp; @Html.DisplayNameFor(model => model.RememberMe)
-                    </label>
+                <div class="div">
+                    <h5 id="tttpassword"></h5>
+                    <input type="password" placeholder="Password">
+                    <label asp-for="Password" hidden class="control-label"></label>
+                    <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
-                <a href="#">Forgot Password?</a>
-                <button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>
-                <input type="submit" class="btn" value="Login">
-            </form>
-        </div>
+            </div>
+            <div class="checkbox mb-3" style="text-align:left;padding-top:15px;">
+                <label class="form-check-label">
+                    <input class="form-check-input" style="transform: scale(1.5);" asp-for="RememberMe" /> &nbsp;&nbsp; @Html.DisplayNameFor(model => model.RememberMe)
+                </label>
+            </div>
+            <a href="#">Forgot Password?</a>
+            <button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>
+            <input type="submit" class="btn" value="Login">
+        </form>
+    </div>
 </div>
 
 <script>
@@ -72,12 +64,11 @@
         if (inputEmail.value == "") {
             placeHolderEmail.innerText = "Your Email";
         }
-        
+
     });
     inputPass.addEventListener('blur', () => {
         if (inputPass.value == "") {
             placeHolderPass.innerText = "Password";
         }
     });
-
 </script>
