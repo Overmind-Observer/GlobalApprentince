@@ -22,7 +22,7 @@ namespace Global_Intern.Models
         public System.DateTime CourseCreatedAt { get; set; }
         public System.DateTime CourseUpdatedAt { get; set; }
 
-
+        /*
         public void SetAddorUpdateIntern(CourseModel course) {
             this.CourseTitle = course.CourseTitle;
             this.CourseType = course.CourseType;
@@ -43,6 +43,7 @@ namespace Global_Intern.Models
             }
             
         }
+        */
     }
 }
 
