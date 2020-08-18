@@ -1,4 +1,4 @@
-﻿@model Global_Intern.Models.AccountRegister
+@model Global_Intern.Models.AccountRegister
 
 @{
     ViewData["Title"] = "Register";
@@ -30,9 +30,9 @@
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="div">
-                    <h5 id="tttFirst">First Name</h5>
+                    <h5 id="tttFirst"></h5>
                     <label asp-for="FirstName" hidden class="control-label"></label>
-                    <input required asp-for="FirstName" id="FirstNameInput" class="form-control" />
+                    <input required asp-for="FirstName" id="FirstNameInput" class="form-control" placeholder="FirstName" />
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
             </div>
@@ -41,9 +41,9 @@
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="div">
-                    <h5 id="tttLast">Last Name</h5>
+                    <h5 id="tttLast"></h5>
                     <label asp-for="LastName" hidden class="control-label"></label>
-                    <input required asp-for="LastName" id="LastNameInput" class="form-control" />
+                    <input required asp-for="LastName" id="LastNameInput" class="form-control" placeholder="LastName" />
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
             </div>
@@ -59,9 +59,9 @@
                     <i class="fa fa-at" aria-hidden="true"></i>
                 </div>
                 <div class="div">
-                    <h5 id="tttEmail">Your Email</h5>
+                    <h5 id="tttEmail"></h5>
                     <label asp-for="Email" hidden class="control-label"></label>
-                    <input required asp-for="Email" id="EmailInput" type="email" class="form-control" />
+                    <input required asp-for="Email" id="EmailInput" type="email" class="form-control" placeholder="Your Email"/>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
             </div>
@@ -70,9 +70,9 @@
                     <i class="fas fa-lock"></i>
                 </div>
                 <div class="div">
-                    <h5 id="tttPassword">Your Password</h5>
+                    <h5 id="tttPassword"></h5>
                     <label asp-for="Password" hidden class="control-label"></label>
-                    <input required asp-for="Password" id="PasswordInput" type="password" class="form-control" />
+                    <input required asp-for="Password" id="PasswordInput" type="password" class="form-control" placeholder="Your Password"/>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
             </div>
@@ -81,9 +81,9 @@
                     <i class="fas fa-lock"></i>
                 </div>
                 <div class="div">
-                    <h5 id="tttCPassword">Confirm Password</h5>
+                    <h5 id="tttCPassword"></h5>
                     <label asp-for="ConfirmPassword" hidden class="control-label"></label>
-                    <input required asp-for="ConfirmPassword" id="ConfirmPasswordInput" type="password" class="form-control" />
+                    <input required asp-for="ConfirmPassword" id="ConfirmPasswordInput" type="password" class="form-control" placeholder="Confirm Password"/>
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
             </div>
@@ -92,9 +92,9 @@
                     <i class="fa fa-phone" aria-hidden="true"></i>
                 </div>
                 <div class="div">
-                    <h5 id="tttPhone">Your phone number</h5>
+                    <h5 id="tttPhone"></h5>
                     <label asp-for="Phone" hidden class="control-label"></label>
-                    <input asp-for="Phone" id="PhoneInput" type="text" class="form-control" />
+                    <input asp-for="Phone" id="PhoneInput" type="text" class="form-control" placeholder="Your phone number"/>
                     <span asp-validation-for="Phone" class="text-danger"></span>
                 </div>
             </div>
@@ -244,5 +244,4 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>*@
-
 
