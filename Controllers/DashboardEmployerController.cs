@@ -208,6 +208,7 @@ namespace Global_Intern.Controllers
             return View();
         }
 
+/*
         public IActionResult CreateInternController(AccountRegister new_user)
         {
             using (GlobalDBContext _context = new GlobalDBContext())
@@ -240,10 +241,10 @@ namespace Global_Intern.Controllers
 
                 Console.Write("Internship Body: ");
                 InternshipBody = Console.ReadLine();
-
+            }
             return View();
         }
-
+        */
         
 
     }
