@@ -1,0 +1,26 @@
+<div class="content">
+    <main>
+        <div class="container-fluid" style="margin-top:56px;">
+            <div id="GeneralProfile" asp-action="GeneralProfile" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                <p>Upload your Resume File here:</p>
+                <form action="/action_page.php">
+                    <input type="file" id="myFile" name="filename">
+                </form>
+
+
+                <p>Upload your Covering Letter Here:</p>
+                <form action="/action_page.php">
+                    <input type="file" id="myFile" name="filename">
+                </form>
+                <button type="submit" onclick="alert('Data be saved, Thank you!')">Submit</button>
+
+
+
+            </div>
+        /div>
+    </main>
+</div>
+
