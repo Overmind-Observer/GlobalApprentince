@@ -3,3 +3,94 @@
     ViewData["Title"] = "CompleteProfile";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
 }
+
+
+@model Global_Intern.Models.GeneralProfile.GeneralProfile;
+@{
+    ViewData["Title"] = "CompleteProfile";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+
+<div class="content">
+    <main>
+        <div class="container-fluid" style="margin-top:56px;">
+            <div id="GeneralProfile" asp-action="GeneralProfile" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+
+
+                <h2>"Username" Experience</h2>
+
+                <p>Add your relevant experience here.</p>
+
+                <div class="form-group">
+                    <label>Experience Title</label>
+                    <input class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>Experience Company</label>
+                    <input class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>Experience Location</label>
+                    <input class="form-control" placeholder="city,state,country">
+                </div>
+
+                <div class="form-group">
+                    <label>Work Start Date</label>
+                    <input class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Work End Date</label>
+                    <input class="form-control">
+                </div>
+
+                <form action="/action_page.php">
+                    <input type="checkbox" id="StillWorking" name="StillWorking" value="StillWorking">
+                    <label for="ExperienceStillWorking"> I Still Working on This Position</label><br>
+                </form>
+
+
+
+                <h3>Have an additional Experience?</h3>
+
+                <div class="form-group">
+                    <label>Experience Title</label>
+                    <input class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>Experience Company</label>
+                    <input class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>Experience Location</label>
+                    <input class="form-control" placeholder="city,state,country">
+                </div>
+
+                <div class="form-group">
+                    <label>Work Start Date</label>
+                    <input class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Work End Date</label>
+                    <input class="form-control">
+                </div>
+
+                <form action="/action_page.php">
+                    <input type="checkbox" id="StillWorking" name="StillWorking" value="StillWorking">
+                    <label for="ExperienceStillWorking"> I Still Working on This Position</label><br>
+                </form>
+
+                <button type="submit" onclick="alert('Data be saved, Thank you!')">Submit</button>
+                </div>
+
+            </div>
+        /div>
+    </main>
+</div>
