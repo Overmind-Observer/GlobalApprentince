@@ -690,6 +690,14 @@ body {
 .apply1 {
     text-align: center;
 }
+/* 25-08-2020 new added CSS */
+table, th, td {
+    border: 1px solid black;
+  }
+  
+  .title {
+    text-align: center;
+  }
 
 
 
