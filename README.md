@@ -1,0 +1,81 @@
+# GlobalApprentince
+
+### This file is just make a instruction of what does our website use for and what pages included & what's attributes in ####
+
+
+ Global Intern Web Pages Blueprint
+Our project is a kind of public usage website. 
+Our users have FIVE classifications that students, employers, institutions, supervisors & ADMIN. 
+
+[17:31, 27/08/2020] +64 274 888 069: 
+hi guys just  checking a few posts, I see your questions.
+So kind of like seek and Summer of Tech sites (I gave login, so we can see structure, but not student details and skillsets until I pay for it) 
+employers with accounts can see interns apprentices.
+
+[17:33, 27/08/2020] +64 274 888 069: 
+but also the students owner/tertiary can apply skills learnt to student and supervisor, 
+there will then be hours captured and report from student and supervisor and employer.
+
+[17:35, 27/08/2020] +64 274 888 069: 
+I would say five login levels maybe.
+Admin, Student, Supervisor, Institute, Employer.       Given by Will.
+
+   WITHOUT LOGIN
+1	Home Page 
+Controller -> Home Controller.cs
+Views -> Home -> Index.cshtml
+
+2	Programs -> All Internships Page -> Single Internship View page -> Internship Apply page.
+
+
+
+4	Programs -> Courses Page
+
+
+5	Create Internship Page
+
+6	About Page
+
+
+7	Contact Page
+
+GO TO LOGIN & AFTER LOGIN
+
+8	Register Page/ Sign Up
+
+9	Login Page
+
+
+AFTER LOGIN
+
+10	Student Dashboard Page
+
+
+11	Student General Profile Page
+
+
+12	Student Documents Page
+
+13	Student Qualifications Page
+
+
+14	Student Experience Page
+
+
+15	Student Settings Page
+
+
+
+16	Employer Dashboard Page
+
+
+17	Employer General Profile Page
+
+
+18	Employer Company Info Page
+
+
+19	Employer Settings Page
+
+
+20	Teacher Pages????
