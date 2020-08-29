@@ -20,60 +20,74 @@ there will then be hours captured and report from student and supervisor and emp
 I would say five login levels maybe.
 Admin, Student, Supervisor, Institute, Employer.       Given by Will.
 
-   WITHOUT LOGIN
+
+
+###  Pages introduce ###
+###   WITHOUT LOGIN ###
 1	Home Page 
 Controller -> Home Controller.cs
-Views -> Home -> Index.cshtml
+Views Folder -> Home Folder -> Index.cshtml
 
-2	Programs -> All Internships Page -> Single Internship View page -> Internship Apply page.
+2	Programs -> All Internships Page
+Views Folder -> Home Folder -> AllInternship.cshtml
 
+2	Programs -> All Internships Page -> Single Internship View page
+Views Folder -> Home Folder -> Internship.cshtml
+
+3	Programs -> All Internships Page -> Single Internship View page -> Internship Apply page.
+Views Folder -> Home Folder -> InternshipApply.cshtml
 
 
 4	Programs -> Courses Page
-
+Views Folder -> Home Folder -> AllCourses.cshtml  ### NOT RUN NEW Build ###
 
 5	Create Internship Page
+Views Folder -> Internship Folder -> create.cshtml  ### NOT RUN ###
 
 6	About Page
 
 
 7	Contact Page
+Views Folder -> Home Folder -> ContactUs.cshtml ### NOT RUN ###
 
-GO TO LOGIN & AFTER LOGIN
+### GO TO LOGIN & AFTER LOGIN ###
 
 8	Register Page/ Sign Up
+Views Folder -> Account Folder -> Register.cshtml
 
 9	Login Page
+Views Folder -> Account Folder -> Login.cshtml
 
 
-AFTER LOGIN
+### AFTER LOGIN ###
 
 10	Student Dashboard Page
-
+Views Folder ->DashboardStudent Folder -> index.cshtml
 
 11	Student General Profile Page
-
+Views Folder ->DashboardStudent Folder -> GeneralProfile.cshtml
 
 12	Student Documents Page
+Views Folder ->DashboardStudent Folder -> Documents.cshtml  ### NOT RUN NEW Build ###
 
 13	Student Qualifications Page
-
+Views Folder ->DashboardStudent Folder -> Qualifications.cshtml  ### NOT RUN NEW Build ###
 
 14	Student Experience Page
-
+Views Folder ->DashboardStudent Folder -> Experience.cshtml  ### NOT RUN NEW Build ###
 
 15	Student Settings Page
 
 
 
 16	Employer Dashboard Page
-
+Views Folder ->DashboardEmployer Folder -> index.cshtml
 
 17	Employer General Profile Page
-
+Views Folder ->DashboardEmployer Folder -> GeneralProfile.cshtml
 
 18	Employer Company Info Page
-
+Views Folder ->DashboardEmployer Folder -> CompanyInfo.cshtml
 
 19	Employer Settings Page
 
