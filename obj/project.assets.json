@@ -10335,11 +10335,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Overmind\\Source\\Repos\\Techexpozed-Global\\Global_Intern\\Global Intern.csproj",
+      "projectUniqueName": "C:\\Users\\Overmind\\Source\\Repos\\Overmind-Observer\\GlobalApprentince\\Global Intern.csproj",
       "projectName": "Global Intern",
-      "projectPath": "C:\\Users\\Overmind\\Source\\Repos\\Techexpozed-Global\\Global_Intern\\Global Intern.csproj",
+      "projectPath": "C:\\Users\\Overmind\\Source\\Repos\\Overmind-Observer\\GlobalApprentince\\Global Intern.csproj",
       "packagesPath": "C:\\Users\\Overmind\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Overmind\\Source\\Repos\\Techexpozed-Global\\Global_Intern\\obj\\",
+      "outputPath": "C:\\Users\\Overmind\\Source\\Repos\\Overmind-Observer\\GlobalApprentince\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",

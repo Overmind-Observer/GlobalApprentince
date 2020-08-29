@@ -9,7 +9,7 @@ namespace Global_Intern.Data
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = @"Data Source=(localdb)\ProjectsV13;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Overmind\Documents\GlobalDB.mdf;Integrated Security=True;Connect Timeout=30";
             _ = optionsBuilder
                 .UseSqlServer(connectionString, builder => builder.UseRowNumberForPaging(true));
 

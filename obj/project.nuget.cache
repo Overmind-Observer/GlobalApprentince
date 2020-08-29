@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+7FXadQljabzlWE3LKrNgHm39jbJQTNkuv6gvGFuX/fTJQe20cwJwIEcw4uRuyJVxgioxbdjebcosmWENjgP+w==",
+  "dgSpecHash": "jkOT/Gh9Qnu2+L1vJS0In7O1ccb3veeyhJaNlQwWbG0/ZeA8Le7gtNL5CIc/SNv9wPQtm61cS7eoriW+xg0pbg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Overmind\\Source\\Repos\\Techexpozed-Global\\Global_Intern\\Global Intern.csproj",
+  "projectFilePath": "C:\\Users\\Overmind\\Source\\Repos\\Overmind-Observer\\GlobalApprentince\\Global Intern.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Overmind\\.nuget\\packages\\mailkit\\2.7.0\\mailkit.2.7.0.nupkg.sha512",
     "C:\\Users\\Overmind\\.nuget\\packages\\microsoft.aspnetcore.antiforgery\\2.2.0\\microsoft.aspnetcore.antiforgery.2.2.0.nupkg.sha512",
