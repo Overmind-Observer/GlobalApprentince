@@ -4,55 +4,94 @@
     ViewData["Title"] = "InternshipApply";
 }
 
+@{
+    Internship intern = ViewData["intern"] as Internship;
+}
 
-	 <body>
-
-    <h1 class="dpt"> Apply This Positon</h1>
-
-        <h3> Software Developer</h3>
-        <p>@@UserFirstName + @@UserLastName </p>
-        <p>@@UserPhone </p>
-        <p>@@UserEmail </p>
-
-        <!-- Here is section of Resume -->
-        <div class="row">
-            <div class="side">
-                <h3>Resumé</h3>
-                <form>
-                    <label for="cv">Choose a resume:</label>
-                    <select name="cv" id="cv">
-                        <option value="select">Select a resume on our website</option>
-                        <option value="upload">Upload a new resume</option>
-                        <option value="dont">Do not include a resume</option>
-                    </select>
-                    <br><br>
-                </form>
+<div class="topAplyBnr container-fluid">
+    <h6>Applying to </h6>
+    <h1>@intern.InternshipTitle</h1>
+</div>
+<div class="container">
+    <form id="ApplyInternFrom" method="post" enctype="multipart/form-data">
+        <h1>Please select your documents to apply with</h1>
+        <div class="input-group mb-3">
+            @* UPLOAD *@
+            <div class="custom-file">
+                <input required class="custom-file-input" id="TemporaryCV" asp-for="TemporaryCV">
+                <label class="custom-file-label" for="TemporaryCV">Choose CV</label>
             </div>
         </div>
-        <form action="/action_page.php">
-            <input type="file" id="myFile" name="filename">
-        </form>
-
-        <!-- Here is section of Covering letter -->
-        <div class="row">
-            <div class="side">
-                <h3>Cover Letter</h3>
-                <form>
-                    <label for="cl">Choose a covering letter:</label>
-                    <select name="cl" id="cl">
-                        <option value="select">Select a cover letter on our website</option>
-                        <option value="upload">Upload a new cover letter</option>
-                        <option value="dont">Do not include a cover letter</option>
-                    </select>
-                    <br><br>
-                </form>
+        <div class="form-group form-check">
+            @* CHECKBOX *@
+            <input type="checkbox" class="form-check-input" id="isCVExisting" asp-for="isCVExisting">
+            <label class="form-check-label" for="isCVExisting">Use Existing CV.</label>
+        </div>
+        <div class="input-group mb-3">
+            @* UPLOAD *@
+            <div class="custom-file">
+                <input required class="custom-file-input" id="TemporaryCL" asp-for="TemporaryCL">
+                <label class="custom-file-label" for="TemporaryCL">Choose Cover Letter</label>
             </div>
         </div>
-        <form action="/action_page.php">
-            <input type="file" id="myFile" name="filename">
-        </form>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="isCLExisting" asp-for="isCLExisting">
+            <label class="form-check-label" for="isCLExisting">Use existing Cover Letter.</label>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="isCLTextArea" asp-for="isCLTextArea">
+            <label class="form-check-label" for="isCLExisting">Write Cover letter here</label>
+        </div>
+        <div class="form-group form-check">
+            <textarea style="width:100%; padding:10px; display:none;" class="WrittenCL" id="WrittenCL" rows="20" asp-for="WrittenCL"></textarea>
+        </div>
+        <div class="input-group mb-3">
+            <input type="submit" class="btn btn-primary" value="Submit Application" />
+        </div>
+    </form>
 
-        <input type="submit" value="Submit">
+</div>
 
-</body>
 
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#isCLTextArea').change(function () {
+                if (this.checked) {
+                    $('#WrittenCL').prop("disabled", false);
+                    $('#WrittenCL').show();
+                    $('#TemporaryCL').prop("disabled", true);
+                    $('#isCLExisting').prop("disabled", true);
+                }
+                else {
+                    $('#WrittenCL').prop("disabled", true);
+                    $('#WrittenCL').hide();
+                    $('#TemporaryCL').prop("disabled", false);
+                    $('#isCLExisting').prop("disabled", false);
+                }
+
+            });
+
+            $('#isCVExisting').change(function () {
+                if (this.checked) {
+                    $('#TemporaryCV').prop("disabled", true);
+                }
+                else {
+                    $('#TemporaryCV').prop("disabled", false);
+                }
+
+            });
+            $('#isCLExisting').change(function () {
+                if (this.checked) {
+                    $('#TemporaryCL').prop("disabled", true);
+                    $('#isCLTextArea').prop("disabled", true);
+                }
+                else {
+                    $('#TemporaryCL').prop("disabled", false);
+                    $('#isCLTextArea').prop("disabled", false);
+                }
+            });
+        });
+    </script>
+}

@@ -12,6 +12,8 @@ using System.Net.Http; // for -> HttpClient to make request to API
 using Global_Intern.Util;
 using Global_Intern.Models.StudentModels;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 
 namespace Global_Intern.Controllers
 {
@@ -23,28 +25,37 @@ namespace Global_Intern.Controllers
         private readonly string host;
         private readonly HttpClient _client = new HttpClient();
         private readonly string Internship_url = "/api/Internships";
-        private User LoggedIn_User = null;
-        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth)
+        private User _user = null;
+        IWebHostEnvironment _env;
+        public HomeController(ILogger<HomeController> logger,
+            IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth,
+            IWebHostEnvironment env)
         {
             _customAuthManager = auth;
             _httpContextAccessor = httpContextAccessor;
             host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
             _logger = logger;
+            _env = env;
         }
 
         public IActionResult Index()
         {
-            
+
             CookieLogin();
-            
+
             // For NavBar to display user is LoggedIn
-            ViewData["LoggeduserName"] = LoggedIn_User != null? LoggedIn_User.UserFirstName + ' ' + LoggedIn_User.UserLastName : null;
-            
+            if (_user != null)
+            {
+                ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+            }
+
+
             return View();
         }
 
         public async Task<IActionResult> AllInternships([FromQuery]string search, int pageNumber = 0, int pageSize = 0)
         {
+            CookieLogin();
             IEnumerable<Internship> model;
             HttpResponseMessage resp;
             string InternshipUrl = host + Internship_url;
@@ -74,10 +85,6 @@ namespace Global_Intern.Controllers
                 ViewBag.currentPage = data[0]["pageNumber"];
                 model = data[0]["data"].ToObject<IEnumerable<Internship>>();
                 var intern = data[0]["data"][0];
-
-                // Display User is LoggedIn
-                ViewData["LoggeduserName"] = LoggedIn_User != null ? LoggedIn_User.UserFirstName + ' ' + LoggedIn_User.UserLastName : null;
-
                 return View(model);
             }
             catch (Exception)
@@ -89,17 +96,14 @@ namespace Global_Intern.Controllers
         
         public async Task<IActionResult> Internship(int id)
         {
+            CookieLogin();
             Internship model;
             HttpResponseMessage resp;
             string InternshipUrl = host + Internship_url;
-
-            // Display User is LoggedIn
-            ViewData["LoggeduserName"] = LoggedIn_User != null ? LoggedIn_User.UserFirstName + ' ' + LoggedIn_User.UserLastName : null;
-
             try
             {
 
-                resp = await _client.GetAsync(InternshipUrl + "/" + id.ToString()) ;
+                resp = await _client.GetAsync(InternshipUrl + "/" + id.ToString());
                 resp.EnsureSuccessStatusCode();
                 string responseBody = await resp.Content.ReadAsStringAsync();
                 var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
@@ -114,35 +118,98 @@ namespace Global_Intern.Controllers
         [Route("Home/Internship/{id?}/Apply")]
         public IActionResult InternshipApply(int? id)
         {
+            //CookieLogin();
+            //if (_user == null)
+            //{
+            //    return RedirectToAction("Login", "Account", new { redirect = "Home/Internship/" + id + "/Apply" });
+            //    //return RedirectToAction("Login?redirectUrl=Home/Internship/"+id+"}/Apply", "Account");
+            //}
+            //if(_user.Role.RoleName != "student")
+            //{
+            //    // To-Do Display message -> Your role does not suit the action.
+            //    return Unauthorized();
+            //}
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 Internship intern = _context.Internships.Find(id);
-            }
+                ViewData["intern"] = intern;
                 return View();
+            }
         }
         [Route("Home/Internship/{id?}/Apply")]
         [HttpPost]
         public IActionResult InternshipApply(int? id, ApplyInternship fromData)
         {
             // the User is student
-
             // Make changes to AppliedInternship table.
-            // make nortfication.
-            try
+            //  make nortfication.
+            using (GlobalDBContext _context = new GlobalDBContext())
             {
-                using (GlobalDBContext _context = new GlobalDBContext())
+                string FinalCVPath;
+                string FinalCLPath;
+                string FinalCLString = null;
+                // CV
+                if (fromData.TemporaryCV != null && fromData.TemporaryCV.Length > 0)
                 {
-                    Internship intern = _context.Internships.Find(id);
-                    User user = _context.Users.Find(_customAuthManager.Tokens.FirstOrDefault().Value.Item3);
-                    AppliedInternship APP_Intern = new AppliedInternship(user, intern);
-                    _context.AppliedInternships.Add(APP_Intern);
-                    _context.SaveChanges();
-                    return View();
+                    string UserCVFolder = _env.WebRootPath + @"\uploads\UserCV\";
+                    // File of code need to be Tested
+                    FinalCVPath = HelpersFunctions.StoreFile(UserCVFolder, fromData.TemporaryCV);
                 }
-            }
-            catch (Exception)
-            {
-                throw;
+                else
+                {
+                    if (fromData.isCVExisting)
+                    {
+                        UserDocument Doc = _context.UserDocuments.Include(u => u.User).FirstOrDefault(p =>
+                        p.User.UserId == _user.UserId && p.DocumentType == "CV");
+                        FinalCVPath = Doc.DocumentPath;
+                    }
+                    else
+                    {
+                        FinalCVPath = null;
+                    }
+                }
+                // COVER Letter
+                if (fromData.TemporaryCL != null && fromData.TemporaryCL.Length > 0)
+                {
+                    string UserCLFolder = _env.WebRootPath + @"\uploads\UserCL\";
+                    // File of code need to be Tested
+                    FinalCLPath = HelpersFunctions.StoreFile(UserCLFolder, fromData.TemporaryCL);
+                }
+                else
+                {
+                    if (fromData.isCLExisting)
+                    {
+                        UserDocument Doc = _context.UserDocuments.Include(u => u.User).FirstOrDefault(p =>
+                        p.User.UserId == _user.UserId && p.DocumentType == "CL");
+                        FinalCLPath = Doc.DocumentPath;
+                    }
+                    else
+                    {
+                        FinalCLPath = null;
+                        if (fromData.isCLTextArea)
+                        {
+                            FinalCLString = fromData.WrittenCL;
+                        }
+                        else
+                        {
+                            FinalCLString = null;
+                        }
+                    }
+
+                }
+                Internship intern = _context.Internships.Find(id);
+                // AppliedInternship constructor takes User and Internship object to create AppliedInternship object
+                AppliedInternship APP_Intern = new AppliedInternship(_user, intern)
+                {
+                    TempCVPath = FinalCVPath,
+                    TempCLPath = FinalCLPath,
+                    CoverLetterText = FinalCLString,
+                    EmployerStatus = "Pending"
+                };
+                // Adding who applied the intership
+                _context.AppliedInternships.Add(APP_Intern);
+                _context.SaveChanges();
+                return View();
             }
         }
         public IActionResult ContactUs()
@@ -163,7 +230,8 @@ namespace Global_Intern.Controllers
 
         public void CookieLogin() {
             // Check if Cookie Exists and if true create a Session
-           var cookie = Request.Cookies["UserToken"];
+            // Check if Cookie Exists and if true create a Session
+            var cookie = _httpContextAccessor.HttpContext.Request.Cookies["UserToken"];
             if (cookie != null)
             {
                 _httpContextAccessor.HttpContext.Session.SetString("UserToken", cookie);
@@ -172,19 +240,21 @@ namespace Global_Intern.Controllers
                     int userID = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == cookie).Value.Item3;
                     using (GlobalDBContext _context = new GlobalDBContext())
                     {
-                        LoggedIn_User = _context.Users.Find(userID);
+                        _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userID);
                     }
                 }
             }
-            else {
+            else
+            {
                 string tokenFromSession = Response.HttpContext.Session.GetString("UserToken");
-                if (tokenFromSession != null) {
+                if (tokenFromSession != null)
+                {
                     int userID = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == tokenFromSession).Value.Item3;
                     using (GlobalDBContext _context = new GlobalDBContext())
                     {
-                        LoggedIn_User = _context.Users.Find(userID);
+                        _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userID);
                     }
-                }            
+                }
             }
         }
     }

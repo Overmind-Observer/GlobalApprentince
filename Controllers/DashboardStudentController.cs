@@ -46,7 +46,7 @@ namespace Global_Intern.Controllers
         public IActionResult Index()
         {
             // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = _user.UserFirstName + ' ' + _user.UserLastName;
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
 
             // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
@@ -57,7 +57,7 @@ namespace Global_Intern.Controllers
                 // Geting internshps student applied for using his/her userID
                 var appliedInterns = _context.AppliedInternships.Include(i => i.Internship).Where(e => e.User == _user).ToList();
                 List<Internship> interns = new List<Internship>();
-                foreach(var appliedIntern in appliedInterns)
+                foreach (var appliedIntern in appliedInterns)
                 {
                     Internship theIntern = appliedIntern.Internship;
                     interns.Add(theIntern);
@@ -72,7 +72,7 @@ namespace Global_Intern.Controllers
         public IActionResult GeneralProfile()
         {
             // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = _user.UserFirstName + ' ' + _user.UserLastName;
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
 
             // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
@@ -82,52 +82,17 @@ namespace Global_Intern.Controllers
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 GeneralProfile gen = new GeneralProfile(_user);
-                
+
                 return View(gen);
             }
 
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> UploadUserImage(IFormFile UserImage)
-        //{
-        //    if(UserImage != null && UserImage.Length > 0)
-        //    {
-        //        var imagePath = @"\uploads\UserImage\";
-        //        var uploadPath = _env.WebRootPath + imagePath;
-
-        //        if (!Directory.Exists(uploadPath))
-        //        {
-        //            Directory.CreateDirectory(uploadPath);
-        //        }
-
-        //        var uniqueFileName = Guid.NewGuid().ToString();
-        //        var fileName = Path.GetFileName(uniqueFileName + "." + UserImage.FileName.Split(".")[1].ToLower());
-        //        string fullPath = uploadPath + fileName;
-
-        //        imagePath = imagePath + @"\";
-        //        var filePath = @".." + Path.Combine(imagePath, fileName);
-
-        //        using (var fileStream = new FileStream(fullPath, FileMode.Create))
-        //        {
-        //            await UserImage.CopyToAsync(fileStream);
-        //        }
-        //        ViewData["FileLocation"] = filePath;
-        //        using (GlobalDBContext _context = new GlobalDBContext()) {
-        //            User user = _context.Users.Find(2);
-        //            user.UserImage = filePath;
-        //            _context.Users.Update(user);
-        //            _context.SaveChanges();
-        //        }
-        //    }
-        //    return RedirectToAction("GeneralProfile");
-        //}
-
         [HttpPost]
         public IActionResult GeneralProfile(GeneralProfile generalProfile)
         {
             // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = _user.UserFirstName + ' ' + _user.UserLastName;
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
 
             // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
@@ -162,8 +127,19 @@ namespace Global_Intern.Controllers
                 _context.SaveChanges();
                 GeneralProfile gen = new GeneralProfile(_user);
                 return View(gen);
-            }
 
+            }
+        }
+        public IActionResult Qualifications()
+        {
+            // TODO
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Qualifications(Qualification qualification)
+        {
+            // TODO
+            return View();
         }
 
         public void setUser(string token) {
