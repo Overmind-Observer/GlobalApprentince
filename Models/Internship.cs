@@ -26,7 +26,8 @@ namespace Global_Intern.Models
         public virtual User User { get; set; } // Poster
 
 
-        public void SetAddorUpdateIntern(InternshipModel intern, User user, bool isUpdate=false, int InternshipID=0) {
+        public void SetAddorUpdateIntern(InternshipModel intern, User user, bool isUpdate = false, int InternshipID = 0)
+        {
             this.InternshipTitle = intern.InternshipTitle;
             this.InternshipType = intern.InternshipType;
             this.InternshipDuration = intern.InternshipDuration;
@@ -44,7 +45,7 @@ namespace Global_Intern.Models
             {
                 this.InternshipCreatedAt = DateTime.Now;
             }
-            
+
             this.User = user;
         }
     }

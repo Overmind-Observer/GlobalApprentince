@@ -14,7 +14,6 @@
         "outputPath": "C:\\Users\\Overmind\\Source\\Repos\\Overmind-Observer\\GlobalApprentince\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
@@ -27,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
           "https://www.nuget.org/api/v2/": {}
         },
         "frameworks": {

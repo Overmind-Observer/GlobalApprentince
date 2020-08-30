@@ -24,15 +24,20 @@ namespace Global_Intern.Controllers
         private readonly EmailSettings _emailSettings;
         private readonly ICustomAuthManager _auth;
         IWebHostEnvironment _env;
+        string host;
+        IHttpContextAccessor _httpContextAccessor;
 
-        public AccountController(IOptions<EmailSettings> emailSetting, ICustomAuthManager auth, IWebHostEnvironment env)
+        public AccountController(IOptions<EmailSettings> emailSetting, ICustomAuthManager auth,
+            IWebHostEnvironment env, IHttpContextAccessor httpContextAccessor)
         {
             _emailSettings = emailSetting.Value;
             _auth = auth;
             _env = env;
+            _httpContextAccessor = httpContextAccessor;
+            host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
         }
 
-        
+
         public IActionResult Index()
         {
             return View();
@@ -80,9 +85,12 @@ namespace Global_Intern.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        public IActionResult Login([FromQuery] string redirect)
         {
-
+            if (redirect != null)
+            {
+                TempData["redirect"] = redirect;
+            }
             return View();
         }
 
@@ -134,6 +142,12 @@ namespace Global_Intern.Controllers
                         using (var client = new HttpClient())
                         {
                             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                        }
+                        if (TempData.ContainsKey("redirect"))
+                        {
+                            string redirectUrl = TempData["redirect"].ToString();
+                            string fullPath = host + "/" + redirectUrl;
+                            return Redirect(fullPath);
                         }
 
                         // Id 1 for Student & Id 2 for Employer
