@@ -34,6 +34,17 @@ namespace Global_Intern.Models
         public string UserPhone { get; set; }
         public string UserImage { get; set; } 
         public string UserGender { get; set; } // Could be use full for User with student role.
+        
+        public string UserStudentType { get; set; }
+        public string UserWorkingRight { get; set; }
+        public string UserVisaType { get; set; }
+        public string UserVisaExpire { get; set; }
+        public string UserIndustryCertificates { get; set; }
+        public string UserDriverType { get; set; }
+        public string UserDob { get; set; }
+        public string UserEthnic { get; set; } 
+
+        
         [Required]
         public virtual Role Role { get; set; } //FK
         public DateTime CreatedAt { get; set; } // Auto
