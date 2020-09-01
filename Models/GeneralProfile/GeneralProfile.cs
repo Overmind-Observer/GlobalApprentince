@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,7 +25,7 @@ namespace Global_Intern.Models.GeneralProfile
             UserPhone = user.UserPhone;
             UserImageName = user.UserImage;
             UserGender = user.UserGender;
-          //Add on 1st September 2020
+// Add on 1/09/2020
             UserStudentType = user.UserStudentType;
             UserWorkingRight = user.UserWorkingRight;
             UserVisaType = user.UserVisaType;
@@ -33,9 +33,7 @@ namespace Global_Intern.Models.GeneralProfile
             UserIndustryCertificates = user.UserIndustryCertificates;
             UserDriverType = user.UserDriverType;
             UserDob = user.UserDob;
-            UserEthnic = user.UserEthnic;
-            
-            
+            UserEthnic = user.UserEthnic;            
     }
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
@@ -57,8 +55,6 @@ namespace Global_Intern.Models.GeneralProfile
         public string UserIndustryCertificates { get; set; }
         public string UserDriverType { get; set; }
         public string UserDob { get; set; }
-        public string UserEthnic { get; set; }
-        
-        
+        public string UserEthnic { get; set; }       
     }
 }
