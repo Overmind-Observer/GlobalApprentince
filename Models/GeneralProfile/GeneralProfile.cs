@@ -25,6 +25,9 @@ namespace Global_Intern.Models.GeneralProfile
             UserPhone = user.UserPhone;
             UserImageName = user.UserImage;
             UserGender = user.UserGender;
+            
+            
+            
     }
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
@@ -38,5 +41,8 @@ namespace Global_Intern.Models.GeneralProfile
         public string UserImageName { get; set; }
         public IFormFile UserImage { get; set; }
         public string UserGender { get; set; } 
+        
+        
+        
     }
 }
