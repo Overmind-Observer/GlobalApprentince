@@ -603,10 +603,19 @@ p {
     font-size:2em;
 }
 
+
+.circleImg {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 /* New Added on 22/ Agu/ 2020, for User view company Infomation, but temporary in CompanyInfo.cshtml */
 * {
   box-sizing: border-box;
 }
+
+
 
 body {
   margin: 0;

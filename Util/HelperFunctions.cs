@@ -69,5 +69,13 @@ namespace Global_Intern.Util
             return str.ToUpper();
         }
 
+        public static string StoreFile(string path, IFormFile file)
+        {
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+            string filePath = path + uniqueFileName;
+            file.CopyTo(new FileStream(filePath, FileMode.Create));
+            return filePath;
+        }
+
     }
 }

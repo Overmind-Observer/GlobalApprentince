@@ -30,7 +30,7 @@ namespace Global_Intern.Controllers
         private readonly string host;
         private readonly HttpClient _client = new HttpClient();
         private readonly string Internship_url = "/api/Internships";
-        IWebHostEnvironment _env;
+        private readonly IWebHostEnvironment _env;
         private User _user;
 
         public DashboardEmployerController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth, IWebHostEnvironment env)
@@ -83,61 +83,37 @@ namespace Global_Intern.Controllers
             }
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> UploadUserImage(IFormFile UserImage)
-        //{
-        //    if(UserImage != null && UserImage.Length > 0)
-        //    {
-        //        var imagePath = @"\uploads\UserImage\";
-        //        var uploadPath = _env.WebRootPath + imagePath;
-
-        //        if (!Directory.Exists(uploadPath))
-        //        {
-        //            Directory.CreateDirectory(uploadPath);
-        //        }
-
-        //        var uniqueFileName = Guid.NewGuid().ToString();
-        //        var fileName = Path.GetFileName(uniqueFileName + "." + UserImage.FileName.Split(".")[1].ToLower());
-        //        string fullPath = uploadPath + fileName;
-
-        //        imagePath = imagePath + @"\";
-        //        var filePath = @".." + Path.Combine(imagePath, fileName);
-
-        //        using (var fileStream = new FileStream(fullPath, FileMode.Create))
-        //        {
-        //            await UserImage.CopyToAsync(fileStream);
-        //        }
-        //        ViewData["FileLocation"] = filePath;
-        //        using (GlobalDBContext _context = new GlobalDBContext()) {
-        //            _user.UserImage = filePath;
-        //            _context.Users.Update(user);
-        //            _context.SaveChanges();
-        //        }
-        //    }
-        //    return RedirectToAction("GeneralProfile");
-        //}
-
         [HttpPost]
         public IActionResult GeneralProfile(GeneralProfile generalProfile)
         {
-            
+
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 if (generalProfile.UserImage != null && generalProfile.UserImage.Length > 0)
                 {
                     string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
+
+                    // File of code need to be Tested
+                    //string file_Path = HelpersFunctions.StoreFile(uploadFolder, generalProfile.UserImage);
+
                     string uniqueFileName = Guid.NewGuid().ToString() + "_" + generalProfile.UserImage.FileName;
                     string filePath = uploadFolder + uniqueFileName;
                     generalProfile.UserImage.CopyTo(new FileStream(filePath, FileMode.Create));
-                    // if new image is uploaded with other user info
-                    _user.AddFromAccountGeneralProfile(generalProfile, uniqueFileName);
-                    
+
                     // Delete previous uploaded Image
                     if (!String.IsNullOrEmpty(_user.UserImage))
                     {
                         string imagePath = uploadFolder + _user.UserImage;
                         Directory.Delete(imagePath);
                     }
+                    // if new image is uploaded with other user info
+                    _user.AddFromAccountGeneralProfile(generalProfile, uniqueFileName);
+
                 }
                 else
                 {
@@ -147,8 +123,7 @@ namespace Global_Intern.Controllers
                 _context.Users.Update(_user);
                 _context.SaveChanges();
                 GeneralProfile gen = new GeneralProfile(_user);
-                string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-                ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
                 return View(gen);
             }
 
