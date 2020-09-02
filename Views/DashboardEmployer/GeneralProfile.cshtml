@@ -14,83 +14,136 @@
                     <div class="form-group">
                         <div class="row py-4">
                             <div class="col-lg-6">
-                                @{
-                                    <!-- Uploaded image area-->
-                                    if (@Model.UserImageName == null)
-                                    {
 
-                                        <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
-                                        <div class="image-area mt-4">
-                                            <img id="imageResult" src="~/uploads/defaut-person.png" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
-                                        </div>
+                                <h1>Employer Profile</h1>
+                                <section class="personalDETAILS">
+                                    <h2>Employer NAME AND CONTACT DETAILS</h2>
+                                    @{
+                                        <!-- Uploaded Company Logo -->
+                                        if (@Model.UserImageName == null)
+                                        {
+
+                                            <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
+                                            <div class="image-area mt-4">
+                                                <img id="imageResult" src="~/uploads/defaut-person.png" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
+                                            <div class="image-area mt-4">
+                                                <img id="imageResult" src="~/uploads/UserImage/@Model.UserImageName" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
+                                            </div>
+                                        }
                                     }
-                                    else
-                                    {
-                                        <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
-                                        <div class="image-area mt-4">
-                                            <img id="imageResult" src="~/uploads/UserImage/@Model.UserImageName" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
+                                    <!-- Upload image input-->
+                                    <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+                                        <input id="upload" asp-for="UserImage" onchange="readURL(this);" class="form-control border-0">
+                                        <label id="upload-label" asp-for="UserImage" class="font-weight-light text-muted">Choose file</label>
+                                        <div class="input-group-append">
+                                            <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
                                         </div>
-                                    }
-                                }
-                                <!-- Upload image input-->
-                                <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
-                                    <input id="upload" asp-for="UserImage" onchange="readURL(this);" class="form-control border-0">
-                                    <label id="upload-label" asp-for="UserImage" class="font-weight-light text-muted">Choose file</label>
-                                    <div class="input-group-append">
-                                        <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
                                     </div>
-                                </div>
                             </div>
                         </div>
                         @*<input type="submit" class="btn btn-info" value="Upload" />*@
                     </div>
 
                     <div class="form-group">
-                        <label for="UserFirstName">First Name</label>
-                        <input class="form-control" asp-for="UserFirstName">
+                        <label for="EmployerFirstName">First Name</label>
+                        <input class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="UserLastName">Last Name</label>
-                        <input class="form-control" asp-for="UserLastName">
+                        <label for="EmployerLastName">Last Name</label>
+                        <input class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="EmployerPosition"> Position at Company </label>
+                        <input class="form-control">
                     </div>
 
+                    <!--
+            <div class="form-group">
+                <label asp-for="UserGender" class="control-label" style="transform: scale(1.2);">Gender: </label> &nbsp;
+                <input type="radio" asp-for="UserGender" value="Male" style="transform: scale(1.2);" /> Male &nbsp;
+                <input type="radio" asp-for="UserGender" value="Female" style="transform: scale(1.2);" /> Female &nbsp;
+                <input type="radio" asp-for="UserGender" value="Other" style="transform: scale(1.2);" /> Other &nbsp;
+                <span asp-validation-for="UserGender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="UserAddress">You Current Address</label>
+                <textarea class="form-control" asp-for="UserAddress"></textarea>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserCountry" class="control-label">Select your Country</label>
+                <select asp-for="UserCountry" onchange="getStates()" id="dd_counties" class="form-control">
+                    <option value="">Select Country</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserState" class="control-label">Select your State</label>
+                <select asp-for="UserState" id="dd_states" class="form-control">
+                    <option value="">Select State</option>
+                </select>
+                @*<label for="UserState">State</label>
+    <input class="form-control" asp-for="UserState">*@
+            </div>
+            <div class="form-group">
+                <label asp-for="UserCity">City</label>
+                <input class="form-control" asp-for="UserCity">
+            </div>
+          -->
+
                     <div class="form-group">
-                        <label asp-for="UserGender" class="control-label" style="transform: scale(1.2);">Gender: </label> &nbsp;
-                        <input type="radio" asp-for="UserGender" value="Male" style="transform: scale(1.2);" /> Male &nbsp;
-                        <input type="radio" asp-for="UserGender" value="Female" style="transform: scale(1.2);" /> Female &nbsp;
-                        <input type="radio" asp-for="UserGender" value="Other" style="transform: scale(1.2);" /> Other &nbsp;
-                        <span asp-validation-for="UserGender" class="text-danger"></span>
+                        <label for="EmployerZip">Zip Code</label>
+                        <input class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="UserAddress">You Current Address</label>
-                        <textarea class="form-control" asp-for="UserAddress"></textarea>
+                        <label for="CompanyPhone">Phone Number</label>
+                        <input class="form-control" type="number">
                     </div>
-                    <div class="form-group">
-                        <label asp-for="UserCountry" class="control-label" >Select your Country</label>
-                        <select asp-for="UserCountry" onchange="getStates()" id="dd_counties" class="form-control">
-                            <option value="">Select Country</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="UserState" class="control-label">Select your State</label>
-                        <select asp-for="UserState" id="dd_states" class="form-control">
-                            <option value="">Select State</option>
-                        </select>
-                        @*<label for="UserState">State</label>
-                        <input class="form-control" asp-for="UserState">*@
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="UserCity">City</label>
-                        <input class="form-control" asp-for="UserCity">
-                    </div>
-                    <div class="form-group">
-                        <label for="UserZip">Zip Code</label>
-                        <input class="form-control" asp-for="UserZip" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="UserPhone">Phone Number</label>
-                        <input class="form-control" type="number" asp-for="UserPhone">
-                    </div>
+                    </section>
+
+
+                    <section class="EmployerCompanyDETAILS">
+                        <h2>Employer Company Details</h2>
+                        <p>
+                            These employer company details will dispaly on job detail site that students who want to read more details about comapny.
+                        </p>
+
+                        <div class="form-group">
+                            <label for="CompanyName"> Company Name </label>
+                            <textarea class="form-control"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="CompanyLocation"> Company Location </label>
+                            <textarea placeholder="Full Address: Street + State + Country" class="form-control" asp-for="CompanyLocation"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="CompanyInfo"> Company Description </label>
+                            <textarea class="form-control"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="CompanyWebsite"> Company Website URL </label>
+                            <textarea class="form-control"></textarea>
+                        </div>
+
+
+                        <button onclick="myFunction()"> Click Me to See Official Website </button>
+
+                        <script>
+                            function myFunction() {
+                                location.replace("https://techexpozed.co.nz/")
+                            }
+                        </script>
+
+
+
+                    </section>
+
                     @*<button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>*@
                     <input type="submit" class="btn btn-info" value="Save">
                 </form>
