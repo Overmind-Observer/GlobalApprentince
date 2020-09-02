@@ -1,0 +1,161 @@
+﻿/*CUSTOM image CSS*/
+#imageResult {
+    display: none;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.circleImg {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#upload {
+    opacity: 0;
+}
+
+#upload-label {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+}
+
+.image-area {
+    border: 2px dashed rgba(255, 255, 255, 0.7);
+    padding: 1rem;
+    position: relative;
+}
+
+.image-area::before {
+    content: 'Uploaded image result';
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+    z-index: 1;
+}
+
+.image-area img {
+    z-index: 2;
+    position: relative;
+}
+/*CUSTOM image CSS ENDS*/
+
+.wrapper {
+    margin-top: 56px;
+}
+
+.sideMenu {
+    background-color: #D3604E;
+    position: fixed;
+    top: 56px;
+    bottom: 0;
+    left: 0;
+    margin: 56px auto auto;
+    width: 250px;
+    border: 1px solid red;
+    transition: all ease 0.25s;
+    transform: translateX(-100%);
+    z-index: 100;
+}
+
+.content {
+    width: 100%;
+    padding: 1em;
+    margin-left: '0px';
+    transition: all ease 0.25s;
+}
+
+.sideMenu .nav-link {
+    display: block;
+    white-space: nowrap;
+}
+
+    .sideMenu .nav-link .icon {
+        margin-right: 4px;
+        font-size: 30px;
+        vertical-align: middle;
+        height: 32px;
+        width: 32px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+.sidebarLinks {
+    color: white;
+}
+
+    .sidebarLinks:hover {
+        background-color: #303337;
+        color: white;
+    }
+
+.ulsubmenu {
+    background-color: #e58272;
+}
+
+.sidebarSubLinks {
+    padding: 0px 0px;
+    padding-left: 10px;
+    color: white;
+    font-size: .8em;
+}
+
+    .sidebarSubLinks:hover {
+        background-color: #303337;
+        color: white;
+    }
+
+.active .sideMenu {
+    transform: translateX(0);
+}
+
+.tttCard {
+    border: 2px solid black;
+}
+
+@media (min-width: 990px) {
+
+    .wrapper .sideMenu {
+        transform: translateX(0);
+    }
+
+    .content {
+        margin-left: 250px;
+    }
+}
+
+.ed_InternTitleView {
+    min-width: 200px;
+    max-width: 300px;
+    font-weight: bold;
+}
+
+.ed_InternBodyView {
+    position: relative;
+    max-height: 75px;
+    min-width: 200px;
+    overflow: hidden;
+}
+
+.ed_InternBodyViewShadow {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 25px 0;
+    border-radius: 5px;
+    /* "transparent" only works here because == rgba(0,0,0,0) */
+    background-image: linear-gradient(to bottom, transparent, #D8D8D8);
+}

@@ -54,6 +54,13 @@ namespace Global_Intern.Controllers
         {
             using (GlobalDBContext _context = new GlobalDBContext())
             {
+                User user = _context.Users.FirstOrDefault(u => u.UserEmail == new_user.Email);
+                if (user != null)
+                {
+                    ViewBag.Messsage = new_user.FirstName + " " + new_user.LastName + " successfully registered. A Email has been sent for the verfication.";
+                    return View();
+                }
+
                 string _domainurl = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
                 // ->TODO Validation check on clinet side using Jquery or JavaScript
 

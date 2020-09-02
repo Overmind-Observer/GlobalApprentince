@@ -25,9 +25,7 @@ namespace Global_Intern.Models
         public string CoverLetterText { get; set; }
         public DateTime ExpDate { get; set; } // Automatic
         public bool SoftDelete { get; set; }
-        [Required]
         public virtual User User { get; set; } // Who Applied
-        [Required]
         public virtual Internship Internship { get; set; } // which Intership user applied
     }
 }
