@@ -11,7 +11,7 @@
     <div class="login-content">
         <form asp-action="Register" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <a href="#">Don't have an account? Sign Up</a>
+           <!--  <a href="#">Don't have an account? Sign Up</a>  -->
             <img src="/img/profile.svg">
             <h3 class="title">Register with Us</h3>
             <h3 style="color:green;">@ViewBag.Messsage</h3>
@@ -32,7 +32,7 @@
                 <div class="div">
                     <h5 id="tttFirst"></h5>
                     <label asp-for="FirstName" hidden class="control-label"></label>
-                    <input required asp-for="FirstName" id="FirstNameInput" class="form-control" placeholder="FirstName" />
+                    <input  asp-for="FirstName" id="FirstNameInput" class="form-control" placeholder="FirstName" />
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <div class="div">
                     <h5 id="tttLast"></h5>
                     <label asp-for="LastName" hidden class="control-label"></label>
-                    <input required asp-for="LastName" id="LastNameInput" class="form-control" placeholder="LastName" />
+                    <input asp-for="LastName" id="LastNameInput" class="form-control" placeholder="LastName" />
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                 <div class="div">
                     <h5 id="tttEmail"></h5>
                     <label asp-for="Email" hidden class="control-label"></label>
-                    <input required asp-for="Email" id="EmailInput" type="email" class="form-control" placeholder="Your Email"/>
+                    <input  asp-for="Email" id="EmailInput" type="email" class="form-control" placeholder="Your Email"/>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                 <div class="div">
                     <h5 id="tttPassword"></h5>
                     <label asp-for="Password" hidden class="control-label"></label>
-                    <input required asp-for="Password" id="PasswordInput" type="password" class="form-control" placeholder="Your Password"/>
+                    <input  asp-for="Password" id="PasswordInput" type="password" class="form-control" placeholder="Your Password"/>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                 <div class="div">
                     <h5 id="tttCPassword"></h5>
                     <label asp-for="ConfirmPassword" hidden class="control-label"></label>
-                    <input required asp-for="ConfirmPassword" id="ConfirmPasswordInput" type="password" class="form-control" placeholder="Confirm Password"/>
+                    <input asp-for="ConfirmPassword" id="ConfirmPasswordInput" type="password" class="form-control" placeholder="Confirm Password"/>
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
             </div>
@@ -98,7 +98,7 @@
                     <span asp-validation-for="Phone" class="text-danger"></span>
                 </div>
             </div>
-            <a href="#">Forgot Password?</a>
+           <!-- <a href="#">Forgot Password?</a> -->
             <button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>
             <input type="submit" class="btn" value="Regiter">
         </form>
