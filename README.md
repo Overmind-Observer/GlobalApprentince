@@ -42,7 +42,7 @@ Views Folder -> Home Folder -> InternshipApply.cshtml
 Views Folder -> Home Folder -> AllCourses.cshtml  ### NOT RUN NEW Build ###
 
 5	Create Internship Page
-Views Folder -> Internship Folder -> create.cshtml  ### NOT RUN ###
+Views Folder -> Internship Folder -> create.cshtml  ### NOT RUN ### DELETE
 
 6	About Page
 
