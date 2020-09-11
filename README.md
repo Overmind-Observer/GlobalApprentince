@@ -91,4 +91,8 @@ Views Folder ->DashboardEmployer Folder -> CompanyInfo.cshtml
 19	Employer Settings Page
 
 
-20	Teacher Pages????
+20	DashboardTeacher Folder -> Index page
+
+
+21	DashboardTeacher Folder -> GeneralProfile page
+
