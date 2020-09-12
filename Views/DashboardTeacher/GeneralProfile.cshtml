@@ -1,16 +1,35 @@
 
 
+<div class="content">
+    <main>
+        <div class="container-fluid" style="margin-top:56px;">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+            <!-- This is for individual teacher view. In this view page, people can see the teacher's image, name,
+            lastest Job position, short introction as well as people want to contact him, click "Contact" button,
+             then is send email to him, also can click to teacher's LinkedIn page to see more history of him.-->
 
-<h2>Teacher Details</h2>
+            <h2>Teacher Details</h2>
+            <div class="card">
+                <img src="/w3images/team2.jpg" alt="John" style="width:100%">
+                <div class="container">
+                    <h4><b>John Doe</b></h4>
+                    <p>Architect & Engineer</p>
+                    <p> More than 10 years expeience as ASP.NET core developer at God IT. </p>
 
-<div class="card">
-    <img src="/w3images/team2.jpg" alt="John" style="width:100%">
-    <div class="container">
-        <h4><b>John Doe</b></h4>
-        <p>Architect & Engineer</p>
-        <p> More than 10 years expeience as ASP.NET core developer at God IT. </p>
+                    <a class="bb" href="mailto:someone@example.com?Subject=Hello%20again" target="_top"> Contact </a>
+                </div>
+            </div>
+            <form>
+                <input type="button" value="Get to Know John?" onclick="openWin()">
+            </form>
 
-        <a class="bb" href="mailto:someone@example.com?Subject=Hello%20again" target="_top"> Contact </a>
-    </div>
+            <script>
+                function openWin() {
+                    window.open("https://www.linkedin.com/in/techexpozed/");
+                }
+            </script>
+
+        </div>
+    </main>
 </div>
