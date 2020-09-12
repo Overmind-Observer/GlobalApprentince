@@ -41,8 +41,7 @@ Views Folder -> Home Folder -> InternshipApply.cshtml
 4	Programs -> Courses Page
 Views Folder -> Home Folder -> AllCourses.cshtml  ### NOT RUN NEW Build ###
 
-5	Create Internship Page
-Views Folder -> Internship Folder -> create.cshtml  ### NOT RUN ###
+
 
 6	About Page
 
@@ -92,4 +91,8 @@ Views Folder ->DashboardEmployer Folder -> CompanyInfo.cshtml
 19	Employer Settings Page
 
 
-20	Teacher Pages????
+20	DashboardTeacher Folder -> Index page
+
+
+21	DashboardTeacher Folder -> GeneralProfile page
+
