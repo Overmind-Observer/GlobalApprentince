@@ -11,6 +11,6 @@
         public string MessageContent { get; set; }
         public bool MessageRead { get; set; }
 
-        public virtual InternStudent InternStudent { get; set;}
+        public virtual InternStudent InternStudent { get; set; }
     }
 }

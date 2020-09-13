@@ -1,19 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using Global_Intern.Data;
+using Global_Intern.Models;
+using Global_Intern.Models.StudentModels;
+using Global_Intern.Util;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http; // for -> IHttpContextAccessor
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Global_Intern.Models;
-using Global_Intern.Data;
-using System.Threading.Tasks;
-using System;
-using Microsoft.AspNetCore.Http; // for -> IHttpContextAccessor
 using System.Net.Http; // for -> HttpClient to make request to API
-using Global_Intern.Util;
-using Global_Intern.Models.StudentModels;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Global_Intern.Controllers
 {
@@ -53,7 +53,7 @@ namespace Global_Intern.Controllers
             return View();
         }
 
-        public async Task<IActionResult> AllInternships([FromQuery]string search, int pageNumber = 0, int pageSize = 0)
+        public async Task<IActionResult> AllInternships([FromQuery] string search, int pageNumber = 0, int pageSize = 0)
         {
             CookieLogin();
             IEnumerable<Internship> model;
@@ -93,7 +93,7 @@ namespace Global_Intern.Controllers
             }
         }
 
-        
+
         public async Task<IActionResult> Internship(int id)
         {
             CookieLogin();
@@ -228,7 +228,8 @@ namespace Global_Intern.Controllers
 
         }
 
-        public void CookieLogin() {
+        public void CookieLogin()
+        {
             // Check if Cookie Exists and if true create a Session
             // Check if Cookie Exists and if true create a Session
             var cookie = _httpContextAccessor.HttpContext.Request.Cookies["UserToken"];

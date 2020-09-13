@@ -10,7 +10,7 @@ namespace Global_Intern.Util
     //}
     public interface ICustomAuthManager
     {
-        string Authenticate(string username, string role,int id, bool IsAddToken=false);
+        string Authenticate(string username, string role, int id, bool IsAddToken = false);
         IDictionary<string, Tuple<string, string, int>> Tokens { get; }
 
         bool removeToken(string gUIDtoken);

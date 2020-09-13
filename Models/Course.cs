@@ -1,6 +1,4 @@
-using System;
 using System.ComponentModel.DataAnnotations;
-using Global_Intern.Models.EmployerModels;
 
 
 
@@ -22,12 +20,12 @@ namespace Global_Intern.Models
         public string CourseBody { get; set; }     // course short intro
         public string CourseFees { get; set; }    // web development 20$ per hour; software tester 25$ per hour
 
-     
+
         public System.DateTime CourseExpDate { get; set; }
         public System.DateTime CourseCreatedAt { get; set; }
         public System.DateTime CourseUpdatedAt { get; set; }
 
-       
+
     }
 }
 

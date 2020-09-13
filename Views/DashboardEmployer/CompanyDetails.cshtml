@@ -1,0 +1,121 @@
+@model Global_Intern.Models.EmployerModels.EmployerCompanyModel;
+@{
+    ViewData["Title"] = "CompleteProfile";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+
+<div class="content">
+    <main>
+        <div class="container-fluid">
+            <form id="GeneralProfile" asp-action="CompanyDetails" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <h1>Company/Business Details</h1>
+                <section class="CompanyDetails">
+                    <div class="form-group row">
+                        <label asp-for="CompanyName" class="control-label col-12">Company/business Name</label>
+                        <input class="form-control col-12 col-md-6" asp-for="CompanyName">
+                    </div>
+                    <div class="form-group">
+                        <div class="row py-4">
+                            <div class="col-lg-3">
+                                @{
+                                    <!-- Uploaded Company Logo -->
+                                    if (@Model.CompanyLogoName == null)
+                                    {
+                                        <div class="image-area">
+                                            <img id="imageResult" src="~/uploads/default-company.png" alt="" class="img-fluid rounded shadow-sm d-block">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="image-area">
+                                            <img id="imageResult" src="~/uploads/CompanyLogos/@Model.CompanyLogoName" alt="" class="img-fluid rounded shadow-sm d-block">
+                                        </div>
+                                    }
+                                }
+                                <!-- Upload image input-->
+                                
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group mb-3 px-2 py-2 bg-white shadow">
+                                    <input id="upload" asp-for="CompanyLogo" onchange="readURL(this);" class="form-control border-0">
+                                    <label id="upload-label" asp-for="CompanyLogo" class="font-weight-light text-muted">Choose file</label>
+                                    <div class="input-group-append">
+                                        <label for="upload" class="btn btn-light m-0 px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<input type="submit" class="btn btn-info" value="Upload" />*@
+                        </div>
+                     </div>
+                    <div class="form-group row">
+                        <label asp-for="CompanyType" class="control-label col-12">Select Industry Type</label>
+                        <select asp-for="CompanyType" onchange="getStates()" id="dd_type" class="form-control col-12 col-md-6">
+                            <option value="">Select Type</option>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="CompanyInfo" class="control-label col-12">About the company</label>
+                        <textarea class="form-control col-12 col-md-10"  asp-for="CompanyInfo"></textarea>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="CompanyWebsite" class="control-label col-12">Company Website</label>
+                        <input class="form-control col-12 col-md-8" asp-for="CompanyWebsite">
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="CompanyLocation" class="control-label col-12">Full Company Address</label>
+                        <textarea class="form-control col-12 col-md-10" asp-for="CompanyLocation"></textarea>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="CompanyCountry" class="control-label col-12">Country</label>
+                        <select asp-for="CompanyCountry" onchange="getStates()" id="dd_type" class="form-control col-12 col-md-5">
+                            <option value="">Select Country</option>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="CompanyState" class="control-label col-12">Select State</label>
+                        <select asp-for="CompanyState" id="dd_type" class="form-control col-12 col-md-5">
+                            <option value="">Select State</option>
+                        </select>
+                    </div>
+                </section>
+                <input type="submit" class="btn btn-info" value="Save">
+            </form>
+        </div>
+    </main>
+</div>
+@section Scripts {
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imageResult')
+                        .attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(function () {
+            $('#upload').on('change', function () {
+                readURL(input);
+            });
+        });
+
+        /*  ==========================================
+            SHOW UPLOADED IMAGE NAME
+        * ========================================== */
+        var input = document.getElementById('upload');
+        var infoArea = document.getElementById('upload-label');
+
+        input.addEventListener('change', showFileName);
+        function showFileName(event) {
+            var input = event.srcElement;
+            var fileName = input.files[0].name;
+            infoArea.textContent = 'File name: ' + fileName;
+        }
+    </script>
+}

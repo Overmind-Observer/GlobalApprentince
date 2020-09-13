@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Global_Intern.Models;
+using System;
 using System.Linq;
-using Global_Intern.Models;
 
 namespace Global_Intern.Data
 {
@@ -29,7 +29,8 @@ namespace Global_Intern.Data
 
                 _context.SaveChanges();
             }
-            if (!_context.Users.Any()) {
+            if (!_context.Users.Any())
+            {
                 var RoleStudent = _context.Roles.SingleOrDefault(a => a.RoleName.Equals("student"));
                 var RoleEmployer = _context.Roles.SingleOrDefault(a => a.RoleName.Equals("employer"));
                 var RoleTeacher = _context.Roles.SingleOrDefault(a => a.RoleName.Equals("teacher"));
@@ -56,7 +57,7 @@ namespace Global_Intern.Data
                             UserPassword = "da3f80f7d570d16967f59bf5edb3ed745cb367c9ce68786fa338ca63f3bd0a6f",
                             Salt = "ae0dvnxmmhbnvq==",
                             UserPhone = "24626",
-                            
+
                             Role = RoleStudent
                         },
                         new User()
@@ -68,7 +69,7 @@ namespace Global_Intern.Data
                             UserPassword = "da3f80f7d570d16967f59bf5edb3ed745cb367c9ce68786fa338ca63f3bd0a6f",
                             Salt = "ae0dvnxmmhbnvq==",
                             UserPhone = "24626",
-                            
+
                             Role = RoleStudent
                         },
                         new User
@@ -80,7 +81,7 @@ namespace Global_Intern.Data
                             UserPassword = "da3f80f7d570d16967f59bf5edb3ed745cb367c9ce68786fa338ca63f3bd0a6f",
                             Salt = "ae0dvnxmmhbnvq==",
                             UserPhone = "23526236",
-                           
+
                             Role = RoleTeacher
                         }
                 });

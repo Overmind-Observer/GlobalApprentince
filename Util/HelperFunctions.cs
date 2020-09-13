@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Global_Intern.Data;
 using Global_Intern.Models;
-using Global_Intern.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using System.IO;
 using Newtonsoft.Json;
-using Microsoft.AspNetCore.Http; 
+using System;
+using System.IO;
+using System.Linq;
 
 namespace Global_Intern.Util
 {
@@ -18,14 +15,14 @@ namespace Global_Intern.Util
         public static T GetCSharpObject<T>(string JsonString)
         {
             JsonString = "[" + JsonString + "]";
-            
+
             var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(JsonString);
             T t = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(JsonString);//Code to create instance
-            
+
             return t;
         }
         // GetMenuOptionsForUser -> return an dynamic object
-        public static dynamic GetMenuOptionsForUser(int user_id,string path)
+        public static dynamic GetMenuOptionsForUser(int user_id, string path)
         {
             using (GlobalDBContext _context = new GlobalDBContext())
             {
@@ -54,7 +51,7 @@ namespace Global_Intern.Util
                     return null;
                 }
             }
-            
+
 
         }
 

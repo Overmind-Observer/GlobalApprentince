@@ -11,7 +11,7 @@ namespace Global_Intern.Util
         private IDictionary<string, Tuple<string, string, int>> tokens = new Dictionary<string, Tuple<string, string, int>>();
         public IDictionary<string, Tuple<string, string, int>> Tokens => tokens;
 
-        public string Authenticate(string username, string role,int id, bool IsAddToken)
+        public string Authenticate(string username, string role, int id, bool IsAddToken)
         {
             var token = Guid.NewGuid().ToString();
             if (!IsAddToken)

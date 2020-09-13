@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Global_Intern.Util
+﻿namespace Global_Intern.Util
 {
     public class Response<T>
     {
@@ -16,7 +11,7 @@ namespace Global_Intern.Util
             Data = response;
         }
 
-        public Response(T response,bool tokenRequired,bool paginated)
+        public Response(T response, bool tokenRequired, bool paginated)
         {
             Data = response;
             Paginated = paginated;
