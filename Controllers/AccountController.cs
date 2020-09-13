@@ -1,16 +1,21 @@
-﻿using Global_Intern.Data;
-using Global_Intern.Models;
-using Global_Intern.Services;
-using Global_Intern.Util;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Linq;
+using Global_Intern.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Global_Intern.Util;
+using Microsoft.EntityFrameworkCore;
+using Global_Intern.Services;
+using Global_Intern.Data;
+using Microsoft.Extensions.Options;
 using System.Net.Http;
+using Global_Intern.Models.GeneralProfile;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 
 namespace Global_Intern.Controllers
 {
@@ -74,12 +79,12 @@ namespace Global_Intern.Controllers
                 string uniqueToken = Guid.NewGuid().ToString("N").Substring(0, 6);
                 theUser.UniqueToken = uniqueToken;
                 _context.Users.Add(theUser);
-
+                
                 SendEmail email = new SendEmail(_emailSettings);
                 string fullname = theUser.UserFirstName + " " + theUser.UserLastName;
                 string msg = "Please verify you email account for the verification. Click on the link to verify :";
                 msg += _domainurl + "/Account/ConfirmEmail?email=" + theUser.UserEmail + "&token=" + theUser.UniqueToken;
-
+                
                 _context.SaveChanges();
                 email.SendEmailtoUser(fullname, theUser.UserEmail, "Email Verification", msg);
                 ViewBag.Messsage = new_user.FirstName + " " + new_user.LastName + " successfully registered. A Email has been sent for the verfication.";
@@ -107,7 +112,7 @@ namespace Global_Intern.Controllers
                 if (theUser != null)
                 {
                     //Check email is verified
-                    if (theUser.UserEmailVerified == false)
+                    if(theUser.UserEmailVerified == false)
                     {
                         ModelState.AddModelError("", "Email is not verifed you cant login.");
                         return View();
@@ -117,14 +122,14 @@ namespace Global_Intern.Controllers
                     // Check if the user entered password is correct
                     if (hashed == theUser.UserPassword)
                     {
-
+                        
                         //string usr = JsonConvert.SerializeObject(theUser, Formatting.Indented, new JsonSerializerSettings()
                         //{
                         //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         //});
 
                         // Custom Auth Token
-
+                        
                         var token = _auth.Authenticate(theUser.UserEmail, theUser.Role.RoleName, theUser.UserId);
                         // Create Sessions
                         //HttpContext.Session.SetString("UserSession", usr);
@@ -169,16 +174,15 @@ namespace Global_Intern.Controllers
                         ModelState.AddModelError("", "Wrong Credentials.");
                     }
                 }
-                else
-                {
+                else {
                     ModelState.AddModelError("", "No user exists with the given email.");
                     ModelState.AddModelError("", "Wrong Credentials.");
                 }
-
+                
                 return View();
             }
         }
-
+        
         public IActionResult Logout()
         {
             string GUIDtoken = _auth.Tokens.FirstOrDefault().Key;
@@ -195,7 +199,7 @@ namespace Global_Intern.Controllers
                 string encoded = System.Net.WebUtility.UrlEncode(token);
                 // prevent cross site scripting.
                 // Check given Email and salt(token) are in the same user 
-                User theUser = _context.Users.Include(r => r.Role).Where(u => u.UserEmail == email).FirstOrDefault<User>();
+                User theUser = _context.Users.Include(r=>r.Role).Where(u => u.UserEmail == email).FirstOrDefault<User>();
                 // if we found the user
                 if (theUser.UniqueToken == token)
                 {
@@ -216,9 +220,36 @@ namespace Global_Intern.Controllers
                 }
             }
         }
+        
+        // new add for Forget Password 2020-09-09. 
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string token, string email)
+        {
+            var model = new ResetPasswordModel { Token = token, Email = email };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
+
+        
 
 
-
-
+        
     }
 }

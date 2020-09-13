@@ -565,6 +565,53 @@ C:\Users\harit\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Int
 C:\Users\harit\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.dll
 C:\Users\harit\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.pdb
 C:\Users\harit\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.genruntimeconfig.cache
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.AssemblyInfoInputs.cache
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.AssemblyInfo.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.csproj.CoreCompileInputs.cache
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.RazorAssemblyInfo.cache
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.RazorAssemblyInfo.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.TagHelpers.input.cache
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.TagHelpers.output.cache
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.RazorCoreGenerate.cache
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\ConfirmEmail.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\GeneralProfile.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\Index.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\ProfileView\EmployerProfile.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\ProfileView\StudentProfile.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\ProfileView\TeacherProfile.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardEmployer\GeneralProfile.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardEmployer\Index.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardEmployer\Internships.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardEmployer\InternshipsAsync.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardStudent\Documents.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardStudent\Experience.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardStudent\GeneralProfile.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardStudent\Index.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardStudent\Qualification.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\AllCourses.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\AllInternships.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\ApplyIntern.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\ContactUs.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\ForgotPassword.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\Internship.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\InternshipApply.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\SingleIntern.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutDashBoard.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutLogin.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\WebInstructions.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.RazorTargetAssemblyInfo.cache
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.RazorTargetAssemblyInfo.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.dll
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.pdb
 C:\Users\Gaming PC\Source\Repos\GlobalApprentince\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\Gaming PC\Source\Repos\GlobalApprentince\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\Gaming PC\Source\Repos\GlobalApprentince\bin\Debug\netcoreapp3.1\Data\DashboardMenuOptions.json
@@ -710,55 +757,8 @@ C:\Users\Gaming PC\Source\Repos\GlobalApprentince\bin\Debug\netcoreapp3.1\runtim
 C:\Users\Gaming PC\Source\Repos\GlobalApprentince\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\Gaming PC\Source\Repos\GlobalApprentince\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\Gaming PC\Source\Repos\GlobalApprentince\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.csprojAssemblyReference.cache
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.AssemblyInfoInputs.cache
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.AssemblyInfo.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.csproj.CoreCompileInputs.cache
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.RazorAssemblyInfo.cache
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.RazorAssemblyInfo.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.TagHelpers.input.cache
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.TagHelpers.output.cache
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.RazorCoreGenerate.cache
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\ConfirmEmail.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\GeneralProfile.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\Index.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\ProfileView\EmployerProfile.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\ProfileView\StudentProfile.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\ProfileView\TeacherProfile.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardEmployer\CompanyInfo.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardEmployer\GeneralProfile.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardEmployer\Index.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardEmployer\Internships.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardEmployer\InternshipsAsync.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardStudent\Documents.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardStudent\Experience.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardStudent\GeneralProfile.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardStudent\Index.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardStudent\Qualification.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\AllCourses.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\AllInternships.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\ApplyIntern.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\ContactUs.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\ForgotPassword.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\Internship.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\InternshipApply.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\SingleIntern.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutDashBoard.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutLogin.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\WebInstructions.cshtml.g.cs
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.RazorTargetAssemblyInfo.cache
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.RazorTargetAssemblyInfo.cs
 C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.Views.pdb
 C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.csproj.CopyComplete
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.dll
-C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.pdb
 C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.genruntimeconfig.cache
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardEmployer\CompanyDetails.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.csprojAssemblyReference.cache
