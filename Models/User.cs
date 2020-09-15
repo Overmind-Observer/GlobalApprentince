@@ -35,6 +35,7 @@ namespace Global_Intern.Models
         public string UserGender { get; set; } // Could be use full for User with student role.
 
 
+
         [Required]
         public virtual Role Role { get; set; } //FK
         public DateTime CreatedAt { get; set; } // Auto
@@ -63,32 +64,12 @@ namespace Global_Intern.Models
             this.SoftDelete = false;
         }
 
-        public void AddFromStudentProfileView(Global_Intern.Models.GeneralProfile.ProfileViewStudent updatedInfo, string UserImagePATH = "")
+        public void AddFromAccountGeneralProfile(Global_Intern.Models.GeneralProfile.GeneralProfile updatedInfo, string UserImagePATH = "")
         {
-            UserFirstName = updatedInfo.UserFirstName;
-            UserLastName = updatedInfo.UserLastName;
-            UserGender = updatedInfo.UserGender;
-            UserPhone = updatedInfo.UserPhone.ToString();
-            UserAddress = updatedInfo.UserAddress;
-            UserCity = updatedInfo.UserCity;
-            UserState = updatedInfo.UserState;
-            UserCountry = updatedInfo.UserCountry;
-            if (UserImagePATH != "")
-            {
-                this.UserImage = UserImagePATH;
-            }
-        }
-
-        public void AddFromEmployerProfileView(Global_Intern.Models.GeneralProfile.ProfileViewEmployer updatedInfo, string UserImagePATH = "")
-        {
-            UserFirstName = updatedInfo.UserFirstName;
-            UserLastName = updatedInfo.UserLastName;
-            UserGender = updatedInfo.UserGender;
-            UserPhone = updatedInfo.UserPhone.ToString();
-            UserAddress = updatedInfo.UserAddress;
-            UserCity = updatedInfo.UserCity;
-            UserState = updatedInfo.UserState;
-            UserCountry = updatedInfo.UserCountry;
+            this.UserFirstName = updatedInfo.UserFirstName;
+            this.UserLastName = updatedInfo.UserLastName;
+            this.UserGender = updatedInfo.UserGender;
+            this.UserPhone = updatedInfo.UserPhone.ToString();
             if (UserImagePATH != "")
             {
                 this.UserImage = UserImagePATH;
