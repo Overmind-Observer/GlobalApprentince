@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Global_Intern.Models.EmployerModels;
+using System;
 using System.ComponentModel.DataAnnotations;
-using Global_Intern.Models.EmployerModels;
 
 namespace Global_Intern.Models
 {

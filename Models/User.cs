@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Global_Intern.Models
 {
@@ -32,19 +31,10 @@ namespace Global_Intern.Models
         public string Salt { get; set; } // Auto
         public string UniqueToken { get; set; } // Auto
         public string UserPhone { get; set; }
-        public string UserImage { get; set; } 
+        public string UserImage { get; set; }
         public string UserGender { get; set; } // Could be use full for User with student role.
-        
-        public string UserStudentType { get; set; }
-        public string UserWorkingRight { get; set; }
-        public string UserVisaType { get; set; }
-        public string UserVisaExpire { get; set; }
-        public string UserIndustryCertificates { get; set; }
-        public string UserDriverType { get; set; }
-        public string UserDob { get; set; }
-        public string UserEthnic { get; set; } 
 
-        
+
         [Required]
         public virtual Role Role { get; set; } //FK
         public DateTime CreatedAt { get; set; } // Auto
@@ -60,25 +50,46 @@ namespace Global_Intern.Models
 
         public void AddFromAccountRegsiter(AccountRegister newUser, Role role, string salt)
         {
-            this.UserFirstName  = newUser.FirstName;
-            this.UserLastName   = newUser.LastName;
-            this.UserGender     = newUser.Gender;
-            this.UserEmail      = newUser.Email;
+            this.UserFirstName = newUser.FirstName;
+            this.UserLastName = newUser.LastName;
+            this.UserGender = newUser.Gender;
+            this.UserEmail = newUser.Email;
             this.UserEmailVerified = false;
-            this.UserPassword   = newUser.Password;
-            this.Salt           = salt;
-            this.UserPhone      =  newUser.Phone.ToString();
-            this.Role           = role;
+            this.UserPassword = newUser.Password;
+            this.Salt = salt;
+            this.UserPhone = newUser.Phone.ToString();
+            this.Role = role;
             this.CreatedAt = DateTime.UtcNow;
             this.SoftDelete = false;
         }
 
-        public void AddFromAccountGeneralProfile(Global_Intern.Models.GeneralProfile.GeneralProfile updatedInfo, string UserImagePATH="") {
-            this.UserFirstName = updatedInfo.UserFirstName;
-            this.UserLastName = updatedInfo.UserLastName;
-            this.UserGender = updatedInfo.UserGender;
-            this.UserPhone = updatedInfo.UserPhone.ToString();
-            if(UserImagePATH != "")
+        public void AddFromStudentProfileView(Global_Intern.Models.GeneralProfile.ProfileViewStudent updatedInfo, string UserImagePATH = "")
+        {
+            UserFirstName = updatedInfo.UserFirstName;
+            UserLastName = updatedInfo.UserLastName;
+            UserGender = updatedInfo.UserGender;
+            UserPhone = updatedInfo.UserPhone.ToString();
+            UserAddress = updatedInfo.UserAddress;
+            UserCity = updatedInfo.UserCity;
+            UserState = updatedInfo.UserState;
+            UserCountry = updatedInfo.UserCountry;
+            if (UserImagePATH != "")
+            {
+                this.UserImage = UserImagePATH;
+            }
+        }
+
+        public void AddFromEmployerProfileView(Global_Intern.Models.GeneralProfile.ProfileViewEmployer updatedInfo, string UserImagePATH = "")
+        {
+            UserFirstName = updatedInfo.UserFirstName;
+            UserLastName = updatedInfo.UserLastName;
+            UserGender = updatedInfo.UserGender;
+            UserPhone = updatedInfo.UserPhone.ToString();
+            UserAddress = updatedInfo.UserAddress;
+            UserCity = updatedInfo.UserCity;
+            UserState = updatedInfo.UserState;
+            UserCountry = updatedInfo.UserCountry;
+            if (UserImagePATH != "")
             {
                 this.UserImage = UserImagePATH;
             }

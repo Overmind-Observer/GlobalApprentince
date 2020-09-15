@@ -9,7 +9,7 @@ namespace Global_Intern.Data
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Overmind\Documents\GlobalDB.mdf;Integrated Security=True;Connect Timeout=30";
+            string connectionString = @"Data Source=localhost\sqlexpress;Initial Catalog=GlobalDB;Integrated Security=True";
             _ = optionsBuilder
                 .UseSqlServer(connectionString, builder => builder.UseRowNumberForPaging(true));
 
@@ -25,10 +25,11 @@ namespace Global_Intern.Data
         public DbSet<Experience> Experiences { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<UserDocument> UserDocuments { get; set; }
+        public DbSet<UserCompany> UserCompany { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-        
+
 
             // User table modification
             modelBuilder.Entity<User>().

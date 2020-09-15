@@ -20,7 +20,7 @@
                 </div>
                 <div class="div">
                     <h5 id="tttEmail"></h5>
-                    <input  asp-for="Email" id="EmailInput" type="email" class="form-control" placeholder="Your Email"/>
+                    <input required asp-for="Email" id="EmailInput" type="email" class="form-control" placeholder="Your Email" />
                     <label asp-for="Email" hidden class="control-label"></label>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="div">
                     <h5 id="tttpassword"></h5>
-                    <input  asp-for="Password" id="PasswordInput" type="password" class="form-control" placeholder="Your Password"/>
+                    <input required asp-for="Password" id="PasswordInput" type="password" class="form-control" placeholder="Your Password" />
                     <label asp-for="Password" hidden class="control-label"></label>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
@@ -42,9 +42,9 @@
                     <input class="form-check-input" style="transform: scale(1.5);" asp-for="RememberMe" /> &nbsp;&nbsp; @Html.DisplayNameFor(model => model.RememberMe)
                 </label>
             </div>
-            <a href="ForgotPassword">Forgot Password?</a>
-            <button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>
+            <a href="#">Forgot Password?</a>
             <input type="submit" class="btn" value="Login">
+            <a style="text-align:center;padding: 10px;" class="btn btn-back" asp-controller="Home" asp-action="Index">Back to Home</a>
         </form>
     </div>
 </div>

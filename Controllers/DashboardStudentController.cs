@@ -1,18 +1,17 @@
-﻿using System;
+﻿using Global_Intern.Data;
+using Global_Intern.Models;
+using Global_Intern.Models.GeneralProfile;
+using Global_Intern.Util;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Global_Intern.Models;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Authorization;
-using Global_Intern.Data;
-using System.Linq;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Global_Intern.Util;
-using System.Net.Http;
-using Microsoft.AspNetCore.Hosting;
-using Global_Intern.Models.GeneralProfile;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Net.Http;
 
 namespace Global_Intern.Controllers
 {
@@ -35,7 +34,7 @@ namespace Global_Intern.Controllers
             // gets Session or host name 
             _httpContextAccessor = httpContextAccessor;
             host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
-            
+
             // To Access runtime tokens
             _customAuthManager = auth;
 
@@ -81,7 +80,7 @@ namespace Global_Intern.Controllers
 
             using (GlobalDBContext _context = new GlobalDBContext())
             {
-                GeneralProfile gen = new GeneralProfile(_user);
+                ProfileViewStudent gen = new ProfileViewStudent(_user);
 
                 return View(gen);
             }
@@ -89,7 +88,7 @@ namespace Global_Intern.Controllers
         }
 
         [HttpPost]
-        public IActionResult GeneralProfile(GeneralProfile generalProfile)
+        public IActionResult GeneralProfile(ProfileViewStudent fromData)
         {
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
@@ -101,12 +100,12 @@ namespace Global_Intern.Controllers
             // When Save button is clicked
             using (GlobalDBContext _context = new GlobalDBContext())
             {
-                if (generalProfile.UserImage != null && generalProfile.UserImage.Length > 0)
+                if (fromData.UserImage != null && fromData.UserImage.Length > 0)
                 {
                     string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
-                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + generalProfile.UserImage.FileName;
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + fromData.UserImage.FileName;
                     string filePath = uploadFolder + uniqueFileName;
-                    generalProfile.UserImage.CopyTo(new FileStream(filePath, FileMode.Create));
+                    fromData.UserImage.CopyTo(new FileStream(filePath, FileMode.Create));
 
                     // Delete previous uploaded Image
                     if (!String.IsNullOrEmpty(_user.UserImage))
@@ -116,16 +115,16 @@ namespace Global_Intern.Controllers
                     }
 
                     // if new image is uploaded with other user info
-                    _user.AddFromAccountGeneralProfile(generalProfile, uniqueFileName);
+                    _user.AddFromStudentProfileView(fromData, uniqueFileName);
                 }
                 else
                 {
                     // Adding generalProfile attr to user without image
-                    _user.AddFromAccountGeneralProfile(generalProfile);
+                    _user.AddFromStudentProfileView(fromData);
                 }
                 _context.Users.Update(_user);
                 _context.SaveChanges();
-                GeneralProfile gen = new GeneralProfile(_user);
+                ProfileViewStudent gen = new ProfileViewStudent(_user);
                 return View(gen);
 
             }
@@ -142,7 +141,8 @@ namespace Global_Intern.Controllers
             return View();
         }
 
-        public void setUser(string token) {
+        public void setUser(string token)
+        {
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;

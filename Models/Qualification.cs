@@ -15,7 +15,7 @@ namespace Global_Intern.Models
         public bool QualificationStillStudying { get; set; }
         [Required]
         public virtual User User { get; set; }
-        
+
         public string QualificationLevel { get; set; }
     }
 }

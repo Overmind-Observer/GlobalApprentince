@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Global_Intern.Models.EmployerModels
 {
+
+    // What employer will send to add Internship
     public class InternshipModel
     {
         [Required]
@@ -16,7 +14,7 @@ namespace Global_Intern.Models.EmployerModels
         public string InternshipBody { get; set; }
         public bool InternshipVirtual { get; set; }
         public string InternshipPaid { get; set; }
-        public string InternshipEmail { get; set; } 
+        public string InternshipEmail { get; set; }
         public System.DateTime InternshipExpDate { get; set; }
     }
 }

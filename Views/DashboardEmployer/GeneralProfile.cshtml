@@ -1,4 +1,4 @@
-﻿@model Global_Intern.Models.GeneralProfile.GeneralProfile;
+﻿@model Global_Intern.Models.GeneralProfile.ProfileViewEmployer;
 @{
     ViewData["Title"] = "CompleteProfile";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
@@ -11,13 +11,11 @@
                 <form id="GeneralProfile" asp-action="GeneralProfile" enctype="multipart/form-data" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <div class="form-group">
-                        <div class="row py-4">
-                            <div class="col-lg-6">
-
-                                <h1>Employer Profile</h1>
-                                <section class="personalDETAILS">
-                                    <h2>Employer NAME AND CONTACT DETAILS</h2>
+                    <section class="personalDETAILS">
+                        <div class="form-group">
+                            <div class="row py-4">
+                                <div class="col-lg-6">
+                                    <h1>General Profile</h1>
                                     @{
                                         <!-- Uploaded Company Logo -->
                                         if (@Model.UserImageName == null)
@@ -44,107 +42,53 @@
                                             <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
-                        @*<input type="submit" class="btn btn-info" value="Upload" />*@
-                    </div>
-
-                    <div class="form-group">
-                        <label for="EmployerFirstName">First Name</label>
-                        <input class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="EmployerLastName">Last Name</label>
-                        <input class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="EmployerPosition"> Position at Company </label>
-                        <input class="form-control">
-                    </div>
-
-                    <!--
-            <div class="form-group">
-                <label asp-for="UserGender" class="control-label" style="transform: scale(1.2);">Gender: </label> &nbsp;
-                <input type="radio" asp-for="UserGender" value="Male" style="transform: scale(1.2);" /> Male &nbsp;
-                <input type="radio" asp-for="UserGender" value="Female" style="transform: scale(1.2);" /> Female &nbsp;
-                <input type="radio" asp-for="UserGender" value="Other" style="transform: scale(1.2);" /> Other &nbsp;
-                <span asp-validation-for="UserGender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label for="UserAddress">You Current Address</label>
-                <textarea class="form-control" asp-for="UserAddress"></textarea>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserCountry" class="control-label">Select your Country</label>
-                <select asp-for="UserCountry" onchange="getStates()" id="dd_counties" class="form-control">
-                    <option value="">Select Country</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserState" class="control-label">Select your State</label>
-                <select asp-for="UserState" id="dd_states" class="form-control">
-                    <option value="">Select State</option>
-                </select>
-                @*<label for="UserState">State</label>
-    <input class="form-control" asp-for="UserState">*@
-            </div>
-            <div class="form-group">
-                <label asp-for="UserCity">City</label>
-                <input class="form-control" asp-for="UserCity">
-            </div>
-          -->
-
-                    <div class="form-group">
-                        <label for="EmployerZip">Zip Code</label>
-                        <input class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="CompanyPhone">Phone Number</label>
-                        <input class="form-control" type="number">
-                    </div>
-                    </section>
-
-
-                    <section class="EmployerCompanyDETAILS">
-                        <h2>Employer Company Details</h2>
-                        <p>
-                            These employer company details will dispaly on job detail site that students who want to read more details about comapny.
-                        </p>
 
                         <div class="form-group">
-                            <label for="CompanyName"> Company Name </label>
-                            <textarea class="form-control"></textarea>
+                            <label for="UserFirstName">First Name</label>
+                            <input class="form-control" asp-for="UserFirstName">
                         </div>
-
                         <div class="form-group">
-                            <label for="CompanyLocation"> Company Location </label>
-                            <textarea placeholder="Full Address: Street + State + Country" class="form-control" asp-for="CompanyLocation"></textarea>
+                            <label for="UserLastName">Last Name</label>
+                            <input class="form-control" asp-for="UserLastName">
                         </div>
-
                         <div class="form-group">
-                            <label for="CompanyInfo"> Company Description </label>
-                            <textarea class="form-control"></textarea>
+                            <label asp-for="UserGender" class="control-label" style="transform: scale(1.2);">Gender: </label> &nbsp;
+                            <input type="radio" asp-for="UserGender" value="Male" style="transform: scale(1.2);" /> Male &nbsp;
+                            <input type="radio" asp-for="UserGender" value="Female" style="transform: scale(1.2);" /> Female &nbsp;
+                            <input type="radio" asp-for="UserGender" value="Other" style="transform: scale(1.2);" /> Other &nbsp;
+                            <span asp-validation-for="UserGender" class="text-danger"></span>
                         </div>
-
                         <div class="form-group">
-                            <label for="CompanyWebsite"> Company Website URL </label>
-                            <textarea class="form-control"></textarea>
+                            <label for="UserAddress">Your Current Address</label>
+                            <textarea class="form-control" asp-for="UserAddress"></textarea>
                         </div>
-
-
-                        <button onclick="myFunction()"> Click Me to See Official Website </button>
-
-                        <script>
-                            function myFunction() {
-                                location.replace("https://techexpozed.co.nz/")
-                            }
-                        </script>
-
-
+                        <div class="form-group">
+                            <label asp-for="UserCity">City</label>
+                            <input class="form-control" asp-for="UserCity">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserCountry" class="control-label">Select your Country</label>
+                            <select asp-for="UserCountry" onchange="getStates()" id="dd_counties" class="form-control">
+                                <option value="">Select Country</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserState" class="control-label">Select your State</label>
+                            <select asp-for="UserState" id="dd_states" class="form-control">
+                                <option value="">Select State</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserPhone">Phone</label>
+                            <input class="form-control" asp-for="UserPhone">
+                        </div>
 
                     </section>
 
-                    @*<button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>*@
+                    <button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>
                     <input type="submit" class="btn btn-info" value="Save">
                 </form>
             </div>

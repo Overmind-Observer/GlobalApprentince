@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Global_Intern.Data;
+using Global_Intern.Models;
+using Global_Intern.Models.EmployerModels;
+using Global_Intern.Models.Filters;
+using Global_Intern.Util;
+using Global_Intern.Util.pagination;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Global_Intern.Data;
-using Global_Intern.Models;
-using Global_Intern.Util;
-using Global_Intern.Util.pagination;
-using Global_Intern.Models.Filters;
-using Global_Intern.Models.EmployerModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Global_Intern.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     public class InternshipsController : ControllerBase
@@ -25,7 +25,7 @@ namespace Global_Intern.Controllers
         private readonly ICustomAuthManager _customAuthManager;
 
 
-        public InternshipsController(GlobalDBContext context, 
+        public InternshipsController(GlobalDBContext context,
             IHttpContextAccessor httpContextAccessor,
             ICustomAuthManager auth)
         {
@@ -37,26 +37,26 @@ namespace Global_Intern.Controllers
 
         // GET: api/Internships
         [HttpGet]
-        public ActionResult<IEnumerable<Internship>> GetInternships([FromQuery]string search, int pageNumber = 1, int PageSize = 10)
+        public ActionResult<IEnumerable<Internship>> GetInternships([FromQuery] string search, int pageNumber = 1, int PageSize = 10)
         {
             List<Internship> interns;
 
             if (!String.IsNullOrEmpty(search))
             {
                 string sql = "SELECT * FROM " + _table + " WHERE (InternshipBody like('%" + search + "%') or InternshipType like ('%" + search + "%') or InternshipTitle like('%" + search + "%'))";
-                interns =  _context.Internships.FromSqlRaw(sql).Include(u => u.User).OrderBy(x => x.InternshipExpDate).ToList();
+                interns = _context.Internships.FromSqlRaw(sql).Include(u => u.User).OrderBy(x => x.InternshipExpDate).ToList();
             }
             else
             {
                 interns = _context.Internships.Include(u => u.User).OrderBy(x => x.InternshipCreatedAt).ToList();
             }
-            
+
             // Make sensitive info like salt and password null or empty
             var filtered = UserFilter.RemoveUserInfoFromInternship(interns);
             // the Response class will shows if the data is paginated or require token (Auth).
-            
+
             var response = PaginationQuery<Internship>.CreateAsync(filtered, pageNumber, PageSize);
-            
+
 
             return Ok(response);
         }
@@ -115,7 +115,7 @@ namespace Global_Intern.Controllers
             try
             {
                 var id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
-                
+
                 // ToDO-> get User ID from Session
                 User user = _context.Users.Find(id);
                 Internship internship = new Internship();
