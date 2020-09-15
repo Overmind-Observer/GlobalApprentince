@@ -25,15 +25,7 @@ namespace Global_Intern.Models.GeneralProfile
             UserPhone = user.UserPhone;
             UserImageName = user.UserImage;
             UserGender = user.UserGender;
-// Add on 1/09/2020
-            UserStudentType = user.UserStudentType;
-            UserWorkingRight = user.UserWorkingRight;
-            UserVisaType = user.UserVisaType;
-            UserVisaExpire = user.UserVisaExpire;
-            UserIndustryCertificates = user.UserIndustryCertificates;
-            UserDriverType = user.UserDriverType;
-            UserDob = user.UserDob;
-            UserEthnic = user.UserEthnic;            
+            
     }
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
