@@ -73,6 +73,7 @@ namespace Global_Intern.Models
             UserCity = updatedInfo.UserCity;
             UserState = updatedInfo.UserState;
             UserCountry = updatedInfo.UserCountry;
+            // if user upload new image
             if (UserImagePATH != "")
             {
                 this.UserImage = UserImagePATH;
