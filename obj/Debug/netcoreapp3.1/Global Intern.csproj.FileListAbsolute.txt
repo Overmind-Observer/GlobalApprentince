@@ -762,3 +762,5 @@ C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global
 C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.genruntimeconfig.cache
 C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardEmployer\CompanyDetails.cshtml.g.cs
 C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.csprojAssemblyReference.cache
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardTeacher\GeneralProfile.cshtml.g.cs
+C:\Users\Gaming PC\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\DashboardTeacher\Index.cshtml.g.cs
