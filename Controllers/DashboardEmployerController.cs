@@ -85,14 +85,6 @@ namespace Global_Intern.Controllers
         [HttpPost]
         public IActionResult GeneralProfile(ProfileViewEmployer fromData)
         {
-
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
-            //-------------------- END
-
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 if (fromData.UserImage != null && fromData.UserImage.Length > 0)
@@ -121,7 +113,6 @@ namespace Global_Intern.Controllers
                     }
                     // if new image is uploaded with other user info
                     _user.AddFromEmployerProfileView(fromData, uniqueFileName);
-
                 }
                 else
                 {
@@ -131,6 +122,14 @@ namespace Global_Intern.Controllers
                 _context.Users.Update(_user);
                 _context.SaveChanges();
                 fromData.UserImageName = _user.UserImage;
+
+                // Display User name on the right-top corner - shows user is logedIN
+                ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+                // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+                string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+                ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+                //-------------------- END
+
                 return View(fromData);
             }
 
@@ -221,10 +220,10 @@ namespace Global_Intern.Controllers
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 /// TESTING
-                _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == 3);
+                ///_user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == 3);
                 
-                //int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
-                //_user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
+                int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
+                _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
             }
         }
 
