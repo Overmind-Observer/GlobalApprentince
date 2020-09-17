@@ -221,9 +221,12 @@ namespace Global_Intern.Controllers
             {
                 /// TESTING
                 ///_user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == 3);
+                if(_customAuthManager.Tokens.Count > 0)
+                {
+                    int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
+                    _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
+                }
                 
-                int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
-                _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
             }
         }
 
