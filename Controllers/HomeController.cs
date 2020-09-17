@@ -36,14 +36,17 @@ namespace Global_Intern.Controllers
             host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
             _logger = logger;
             _env = env;
+
+            // Check if cookie exits and create a session.
+            CreateUserSessionFromCookie();
+            // fetch user from the database using session.
+            setUser();
         }
 
         public IActionResult Index()
         {
 
-            CookieLogin();
-
-            // For NavBar to display user is LoggedIn
+            
             if (_user != null)
             {
                 ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
@@ -55,7 +58,6 @@ namespace Global_Intern.Controllers
 
         public async Task<IActionResult> AllInternships([FromQuery] string search, int pageNumber = 0, int pageSize = 0)
         {
-            CookieLogin();
             IEnumerable<Internship> model;
             HttpResponseMessage resp;
             string InternshipUrl = host + Internship_url;
@@ -96,7 +98,7 @@ namespace Global_Intern.Controllers
 
         public async Task<IActionResult> Internship(int id)
         {
-            CookieLogin();
+            
             Internship model;
             HttpResponseMessage resp;
             string InternshipUrl = host + Internship_url;
@@ -228,37 +230,35 @@ namespace Global_Intern.Controllers
 
         }
 
-        public void CookieLogin()
+        public void setUser()
+        {
+            string token = _httpContextAccessor.HttpContext.Session.GetString("UserToken");
+            
+            if(_customAuthManager.Tokens.Count > 0)
+            {
+                int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
+                using (GlobalDBContext _context = new GlobalDBContext())
+                {
+                    _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
+                }
+            }
+            
+        }
+
+        public void CreateUserSessionFromCookie()
         {
             // Check if Cookie Exists and if true create a Session
-            // Check if Cookie Exists and if true create a Session
+            
             var cookie = _httpContextAccessor.HttpContext.Request.Cookies["UserToken"];
             if (cookie != null)
             {
                 _httpContextAccessor.HttpContext.Session.SetString("UserToken", cookie);
-                if (_customAuthManager.Tokens.Count != 0)
-                {
-                    int userID = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == cookie).Value.Item3;
-                    using (GlobalDBContext _context = new GlobalDBContext())
-                    {
-                        _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userID);
-                    }
-                }
-            }
-            else
-            {
-                string tokenFromSession = Response.HttpContext.Session.GetString("UserToken");
-                if (tokenFromSession != null)
-                {
-                    int userID = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == tokenFromSession).Value.Item3;
-                    using (GlobalDBContext _context = new GlobalDBContext())
-                    {
-                        _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userID);
-                    }
-                }
             }
         }
     }
+
+    
+
 
     internal class ErrorViewModel
     {

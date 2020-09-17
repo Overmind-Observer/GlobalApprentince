@@ -682,7 +682,7 @@ body {
     }
 
 /* Set a style for the submit button */
-.btn {
+/*.btn {
     background-color: dodgerblue;
     color: white;
     padding: 15px 20px;
@@ -690,7 +690,7 @@ body {
     cursor: pointer;
     width: 100%;
     opacity: 0.9;
-}
+}*/
 
     .btn:hover {
         opacity: 1;
@@ -737,7 +737,7 @@ table, th, td {
 
 a {
   text-decoration: none;
-  font-size: 22px;
+  
   color: black;
 }
 
