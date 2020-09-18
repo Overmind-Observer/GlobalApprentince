@@ -49,27 +49,29 @@
                 </ul>
                 <div class="userControlles">
                     @if (ViewData["LoggeduserName"] != null)
-                    {
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item d-flex">
-                                @{
-                                    var userInfo = ViewData["LoggeduserName"] as List<string>;
-                                }
+                     {
+                        <div class="d-flex">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item d-flex">
+                                    @{
+                                        var userInfo = ViewData["LoggeduserName"] as List<string>;
+                                    }
 
-                                @if (userInfo[1] != null)
-                                {
-                                    <img class="circleImg" src="~/uploads/UserImage/@userInfo[1]" alt="Avatar">
-                                }
-                                else
-                                {
-                                    <img class="circleImg" src="~/uploads/defaut-person.png" alt="Avatar">
-                                }
+                                    @if (userInfo[1] != null)
+                                    {
+                                        <img class="circleImg" src="~/uploads/UserImage/@userInfo[1]" alt="Avatar">
+                                    }
+                                    else
+                                    {
+                                        <img class="circleImg" src="~/uploads/defaut-person.png" alt="Avatar">
+                                    }
 
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@userInfo[0]</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@userInfo[0]</a>
 
-                            </li>
-                        </ul>
-                        <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Logout">Logout</button>
+                                </li>
+                            </ul>
+                            <button class="btn btn-success my-2 my-sm-0"  asp-controller="Account" asp-action="Logout">Logout</button>
+                        </div>
                     }
                     else
                     {

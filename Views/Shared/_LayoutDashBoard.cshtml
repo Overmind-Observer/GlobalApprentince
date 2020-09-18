@@ -97,13 +97,24 @@
 
                         @foreach (var each in @ViewData["menuItems"] as dynamic)
                         {
-
-                            <li class="nav-item">
-                                <a href="#" class="nav-link sidebarLinks">
-                                    <i class="material-icons icon">@each["icon"]</i>
-                                    <span class="text">@each["field"]</span>
-                                </a>
-                            </li>
+                            if (@each["field"] == "Dashboard")
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="Index" class="nav-link sidebarLinks">
+                                        <i class="material-icons icon">@each["icon"]</i>
+                                        <span class="text">@each["field"]</span>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="@each["field"]" class="nav-link sidebarLinks">
+                                        <i class="material-icons icon">@each["icon"]</i>
+                                        <span class="text">@each["field"]</span>
+                                    </a>
+                                </li>
+                            }
                             if (@each["subfields"] != null)
                             {
                                 <li class="nav-item">
@@ -119,8 +130,8 @@
                                         }
                                     </ul>
                                 </li>
-                             }
-                          }
+                            }
+                        }
                     </ul>
                 </div>
             </div>

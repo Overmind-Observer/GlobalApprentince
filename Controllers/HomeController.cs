@@ -233,8 +233,13 @@ namespace Global_Intern.Controllers
         public void setUser()
         {
             string token = _httpContextAccessor.HttpContext.Session.GetString("UserToken");
-            
-            if(_customAuthManager.Tokens.Count > 0)
+            if(token == null)
+            {
+                return;
+            }
+
+
+            if (_customAuthManager.Tokens.Count > 0)
             {
                 int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
                 using (GlobalDBContext _context = new GlobalDBContext())

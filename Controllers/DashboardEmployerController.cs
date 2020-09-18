@@ -16,7 +16,7 @@ using System.Net.Http;
 
 namespace Global_Intern.Controllers
 {
-
+    [Authorize(Roles = "employer")]
     public class DashboardEmployerController : Controller
     {
 
@@ -32,6 +32,7 @@ namespace Global_Intern.Controllers
         private User _user;
         private UserCompany _company;
 
+
         public DashboardEmployerController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth, IWebHostEnvironment env)
         {
             _env = env;
@@ -41,12 +42,12 @@ namespace Global_Intern.Controllers
 
 
             // sets User _user using session
-            string token = _httpContextAccessor.HttpContext.Session.GetString("UserToken");
-            setUser(token);
+            
+            setUser();
             setUserCompany();
         }
 
-        [Authorize(Roles = "employer")]
+        
         public IActionResult Index()
         {
             // Display User name on the right-top corner - shows user is logedIN
@@ -214,13 +215,16 @@ namespace Global_Intern.Controllers
         }
 
 
-        public void setUser(string token)
+        public void setUser()
         {
-            
+            string token = _httpContextAccessor.HttpContext.Session.GetString("UserToken");
+            if(token == null)
+            {
+                return;
+            }
             using (GlobalDBContext _context = new GlobalDBContext())
             {
-                /// TESTING
-                ///_user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == 3);
+                
                 if(_customAuthManager.Tokens.Count > 0)
                 {
                     int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
@@ -230,20 +234,21 @@ namespace Global_Intern.Controllers
             }
         }
 
-        // User should be initialized before using this method
+        // User should be initialized (setUser()) before using this method
         public void setUserCompany()
         {
+            if (_user == null) {
+                return; 
+            }
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 _company = _context.UserCompany.Include(r => r.User).FirstOrDefault(u => u.User.UserId == _user.UserId);
-                if(_company == null)
+
+                if(_company == null)  // If no record is found on user company
                 {
-                    // inserting compnay 
+                    // inserting company with user ID 
                     UserCompany userCompany = new UserCompany();
                     User user = _context.Users.Find(_user.UserId);
-                    //user.Role = null;
-                    //userCompany.UserCompanyId = null;
-                    //userCompany.User = user;
                     userCompany.User = user;
                     _context.UserCompany.Add(userCompany);
                     _context.SaveChanges();
