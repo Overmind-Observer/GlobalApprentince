@@ -8,4 +8,7 @@ packages
 /bin
 /obj
 
+/wwwroot/uploads/UserImage
+/wwwroot/uploads/CompanyLogos
+
 .vs
