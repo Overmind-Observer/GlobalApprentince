@@ -13,14 +13,20 @@ namespace Global_Intern.Util
 
         public string CreateSalt(int size)
         {
+            // Salt is like a key. Loosing a key (salt) you can't access a door (hash).
+            
             var rng = new System.Security.Cryptography.RNGCryptoServiceProvider();
+            // With increased size, complexity increases
             var buff = new byte[size];
             rng.GetBytes(buff);
             return Convert.ToBase64String(buff);
         }
-
+        /// <summary>
+        /// This Mehod is access on registration of user. To create unique hash using user given password and developer given securty type
+        /// </summary>
         public string GenerateSHA256Hash(string input, string salt)
         {
+
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(input + salt);
             System.Security.Cryptography.SHA256Managed sha256HashString =
                 new System.Security.Cryptography.SHA256Managed();

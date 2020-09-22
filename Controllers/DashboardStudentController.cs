@@ -20,12 +20,16 @@ namespace Global_Intern.Controllers
     {
         ////https://localhost:44307/api/internships/employer/3
 
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor; // Accessor allows access to session and cookies
         private readonly ICustomAuthManager _customAuthManager;
         private readonly string host;
-        private readonly HttpClient _client = new HttpClient();
+
+        private readonly HttpClient _client = new HttpClient(); // Used to access API -> Internship.
         private readonly string Internship_url = "/api/Internships";
-        IWebHostEnvironment _env;
+        IWebHostEnvironment _env; // to access the Content PATH aka wwwroot
+        /// <summary>
+        /// User object is quite important here. without accessing database again and again on every action. User is set on constructor level.
+        /// </summary>
         private User _user;
         public DashboardStudentController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth, IWebHostEnvironment env)
         {
@@ -38,9 +42,7 @@ namespace Global_Intern.Controllers
             // To Access runtime tokens
             _customAuthManager = auth;
 
-            // sets User _user using session
-            string token = _httpContextAccessor.HttpContext.Session.GetString("UserToken");
-            setUser(token);
+            setUser();
         }
         public IActionResult Index()
         {
@@ -141,12 +143,26 @@ namespace Global_Intern.Controllers
             return View();
         }
 
-        public void setUser(string token)
+        public void setUser()
         {
+            ///  Access "UserToken" Session. 
+            /// NOTE:  Session get created when user login with unique id. This id is also used to identify the user from number of Auth Tokens
+            string token = _httpContextAccessor.HttpContext.Session.GetString("UserToken");
+            if (token == null) // if null user has not loggedIn
+            {
+                return;
+            }
             using (GlobalDBContext _context = new GlobalDBContext())
             {
-                int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
-                _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
+
+                if (_customAuthManager.Tokens.Count > 0)
+                {
+                    // check weather the unique id is in AuthManager
+                    int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
+                    // User is found in the AuthManager
+                    _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
+                }
+
             }
         }
     }

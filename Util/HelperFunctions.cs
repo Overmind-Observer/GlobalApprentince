@@ -22,6 +22,8 @@ namespace Global_Intern.Util
             return t;
         }
         // GetMenuOptionsForUser -> return an dynamic object
+        // PATH ->> GlobalApprentince\Data\DashboardMenuOptions.json
+        // below mehod access the file and create a dynamic object
         public static dynamic GetMenuOptionsForUser(int user_id, string path)
         {
             using (GlobalDBContext _context = new GlobalDBContext())
@@ -68,6 +70,7 @@ namespace Global_Intern.Util
 
         public static string StoreFile(string path, IFormFile file)
         {
+            // This method can store any type of file.
             string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
             string filePath = path + uniqueFileName;
             file.CopyTo(new FileStream(filePath, FileMode.Create));

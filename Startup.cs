@@ -59,12 +59,13 @@ namespace Global_Intern
             }
 
             // Seed Data
-
+            // If you your system SQL server don't have databse. It will create Automatically  
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var _context = scope.ServiceProvider.GetService<GlobalDBContext>();
                 try
                 {
+                    
                     _context.Database.EnsureCreated();
                     _context.EnsureDataBaseSeeded();
                     //_context.Database.Migrate();

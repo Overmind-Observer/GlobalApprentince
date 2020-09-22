@@ -26,6 +26,8 @@ namespace Global_Intern.Data
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<UserDocument> UserDocuments { get; set; }
         public DbSet<UserCompany> UserCompany { get; set; }
+        public DbSet<UserCL> UserCL { get; set; }
+        public DbSet<UserCV> UserCV { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

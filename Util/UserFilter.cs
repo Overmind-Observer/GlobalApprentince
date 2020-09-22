@@ -6,7 +6,7 @@ namespace Global_Intern.Util
 {
     public class UserFilter
     {
-
+        // Created to remove vital info like salt from the user.
         public static List<Internship> RemoveUserInfoFromInternship(List<Internship> source)
         {
 

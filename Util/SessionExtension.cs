@@ -3,6 +3,7 @@ using System.Text.Json;
 
 namespace Global_Intern.Util
 {
+    // NOT BEING USED FOR NOW
     public static class SessionExtension
     {
         public static void Set<T>(this ISession session, string key, T value)

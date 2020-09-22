@@ -69,6 +69,7 @@ namespace Global_Intern.Util
 
         private AuthenticateResult validateToken()
         {
+            // Making Claim with Identity 
             var validatedToken = cAuthManger.Tokens.FirstOrDefault(t => t.Key == _tokenSession);
             if (validatedToken.Key == null)
             {

@@ -185,8 +185,10 @@ namespace Global_Intern.Controllers
         
         public IActionResult Logout()
         {
-            string GUIDtoken = _auth.Tokens.FirstOrDefault().Key;
-            _auth.removeToken(GUIDtoken);
+
+            // This Remove token from Authmanager
+            string token = _httpContextAccessor.HttpContext.Session.GetString("UserToken");
+            _auth.removeToken(token);
             Response.Cookies.Delete("UserToken");
 
             return RedirectToAction("Login");
