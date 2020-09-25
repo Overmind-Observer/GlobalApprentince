@@ -108,6 +108,25 @@ namespace Global_Intern.Models
                 this.UserImage = UserImagePATH;
             }
         }
+        
+        
+        // for Dashboard Teacher
+        public void AddFromTeacherProfileView(Global_Intern.Models.GeneralProfile.ProfileViewTeacher updatedInfo, string UserImagePATH = "")
+        {
+            UserFirstName = updatedInfo.UserFirstName;
+            UserLastName = updatedInfo.UserLastName;
+            UserGender = updatedInfo.UserGender;
+            UserPhone = updatedInfo.UserPhone.ToString();
+            UserAddress = updatedInfo.UserAddress;
+            UserCity = updatedInfo.UserCity;
+            UserState = updatedInfo.UserState;
+            UserCountry = updatedInfo.UserCountry;
+            if (UserImagePATH != "")
+            {
+                this.UserImage = UserImagePATH;
+            }
+        }
+
    
         
         
