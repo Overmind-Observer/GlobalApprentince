@@ -147,6 +147,11 @@ namespace Global_Intern.Controllers
                             // Employer
                             return RedirectToAction("Index", "DashboardEmployer");
                         }
+                        if (theUser.Role.RoleId == 3)
+                        {
+                            // Teacher
+                            return RedirectToAction("Index", "DashboardTeacher");
+                        }
                     }
                     else
                     {
