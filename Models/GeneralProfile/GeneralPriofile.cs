@@ -20,8 +20,8 @@ namespace Global_Intern.Models.GeneralProfile
             UserPhone = user.UserPhone;
             UserImageName = user.UserImage;
             UserGender = user.UserGender;
-
-        }
+            
+    }
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
         //public string UserEmail { get; set; }
