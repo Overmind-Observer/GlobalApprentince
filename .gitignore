@@ -8,4 +8,20 @@ packages
 /bin
 /obj
 
+/wwwroot/uploads/UserImage
+/wwwroot/uploads/CompanyLogos
+
 .vs
+<<<<<<< Updated upstream
+.vs/Global Intern/v16/.suo
+.vs/Global Intern/v16/.suo
+obj/Debug/netcoreapp3.1/Global Intern.assets.cache
+*.cache
+*.cache
+*.cache
+=======
+.vs/Global Intern/DesignTimeBuild/.dtbcache.v2
+.vs/Global Intern/v16/.suo
+>>>>>>> Stashed changes
+.vs/Global Intern/DesignTimeBuild/.dtbcache.v2
+.vs/Global Intern/v16/.suo

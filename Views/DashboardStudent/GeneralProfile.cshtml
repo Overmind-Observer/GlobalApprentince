@@ -1,4 +1,4 @@
-@model Global_Intern.Models.GeneralProfile.GeneralProfile;
+@model Global_Intern.Models.GeneralProfile.ProfileViewStudent;
 @{
     ViewData["Title"] = "CompleteProfile";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
@@ -7,16 +7,14 @@
 
 <div class="content">
     <main>
-        <div class="container-fluid" style="margin-top:56px;">
+        <div class="container-fluid">
             <form id="GeneralProfile" asp-action="GeneralProfile" enctype="multipart/form-data" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <div class="form-group">
-                    <div class="row py-4">
-                        <div class="col-lg-6">
-                            <h1>My Profile</h1>
-                            <section class="personalDETAILS">
-                                <h2>NAME AND CONTACT DETAILS</h2>
+                <h1>General Profile</h1>
+                <section class="personalDETAILS">
+                    <div class="form-group">
+                        <div class="row py-4">
+                            <div class="col-lg-6">
                                 <!-- Uploaded image area-->
                                 @{ if (@Model.UserImageName == null)
                                     {
@@ -42,35 +40,35 @@
                                         <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
                                     </div>
                                 </div>
+                            </div>
                         </div>
+                        @*<input type="submit" class="btn btn-info" value="Upload" />*@
                     </div>
-                    @*<input type="submit" class="btn btn-info" value="Upload" />*@
-                </div>
 
-                <div class="form-group">
-                    <label for="UserFirstName">First Name</label>
-                    <input class="form-control" asp-for="UserFirstName">
-                </div>
-                <div class="form-group">
-                    <label for="UserLastName">Last Name</label>
-                    <input class="form-control" asp-for="UserLastName">
-                </div>
+                    <div class="form-group">
+                        <label for="UserFirstName">First Name</label>
+                        <input class="form-control" asp-for="UserFirstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="UserLastName">Last Name</label>
+                        <input class="form-control" asp-for="UserLastName">
+                    </div>
 
-                <div class="form-group">
-                    <label asp-for="UserGender" class="control-label" style="transform: scale(1.2);">Gender: </label> &nbsp;
-                    <input type="radio" asp-for="UserGender" value="Male" style="transform: scale(1.2);" /> Male &nbsp;
-                    <input type="radio" asp-for="UserGender" value="Female" style="transform: scale(1.2);" /> Female &nbsp;
-                    <input type="radio" asp-for="UserGender" value="Other" style="transform: scale(1.2);" /> Other &nbsp;
-                    <span asp-validation-for="UserGender" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label for="UserAddress">You Current Address</label>
-                    <textarea class="form-control" asp-for="UserAddress"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="UserPhone">Phone Number</label>
-                    <input class="form-control" type="number" asp-for="UserPhone">
-                </div>
+                    <div class="form-group">
+                        <label asp-for="UserGender" class="control-label" style="transform: scale(1.2);">Gender: </label> &nbsp;
+                        <input type="radio" asp-for="UserGender" value="Male" style="transform: scale(1.2);" /> Male &nbsp;
+                        <input type="radio" asp-for="UserGender" value="Female" style="transform: scale(1.2);" /> Female &nbsp;
+                        <input type="radio" asp-for="UserGender" value="Other" style="transform: scale(1.2);" /> Other &nbsp;
+                        <span asp-validation-for="UserGender" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="UserAddress">You Current Address</label>
+                        <textarea class="form-control" asp-for="UserAddress"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="UserPhone">Phone Number</label>
+                        <input class="form-control" type="number" asp-for="UserPhone">
+                    </div>
                 </section>
 
 
@@ -79,40 +77,32 @@
                     <h2>BACKGROUND AND STUDY DETAILS</h2>
 
                     <h4>Are you a Domestic or International student?</h4>
-                    <form action="/action_page.php" method="get">
-                        <input type="radio" id="domestic" name="type" value="domestic">
-                        <label for="domestic">Domestic</label><br>
-                        <input type="radio" id="international" name="type" value="international">
-                        <label for="international">International</label><br>
-                    </form>
+                    <input type="radio" id="domestic" name="type" value="domestic">
+                    <label for="domestic">Domestic</label><br>
+                    <input type="radio" id="international" name="type" value="international">
+                    <label for="international">International</label><br>
 
                     <h4>Do you legally have the right to work in New Zealand?</h4>
-                    <form action="/action_page.php" method="get">
-                        <input type="radio" id="yes" name="type" value="yes">
-                        <label for="yes">YES</label><br>
-                        <input type="radio" id="no" name="type" value="no">
-                        <label for="no">NO</label><br>
-                    </form>
+                    <input type="radio" id="yes" name="type" value="yes">
+                    <label for="yes">YES</label><br>
+                    <input type="radio" id="no" name="type" value="no">
+                    <label for="no">NO</label><br>
 
                     <h4>What type of visa do you currently hold?</h4>
-                    <form action="/action_page.php" method="get">
-                        <input type="checkbox" name="studyvisa" value="studyvisa">
-                        <label for="studyvisa"> Student Visa with 20 Hours </label><br>
-                        <input type="checkbox" name="workvisa" value="workvisa">
-                        <label for="workvisa"> Open Work Visa </label><br>
-                        <input type="checkbox" name="workvisa" value="workvisa">
-                        <label for="workvisa"> Essential Work Visa </label><br>
-                        <input type="checkbox" name="vehicle2" value="workvisa">
-                        <label for="workvisa"> Working Holiday Visa </label><br>
-                        <input type="checkbox" name="other" value="other">
-                        <label for="other"> Other Visa Type </label><br>
-                    </form>
+                    <input type="checkbox" name="studyvisa" value="studyvisa">
+                    <label for="studyvisa"> Student Visa with 20 Hours </label><br>
+                    <input type="checkbox" name="workvisa" value="workvisa">
+                    <label for="workvisa"> Open Work Visa </label><br>
+                    <input type="checkbox" name="workvisa" value="workvisa">
+                    <label for="workvisa"> Essential Work Visa </label><br>
+                    <input type="checkbox" name="vehicle2" value="workvisa">
+                    <label for="workvisa"> Working Holiday Visa </label><br>
+                    <input type="checkbox" name="other" value="other">
+                    <label for="other"> Other Visa Type </label><br>
 
 
                     <h4>Visa expiry date</h4>
-                    <form action="/action_page.php">
-                        <input type="date" id="birthday" name="birthday">
-                    </form>
+                    <input type="date" id="birthday" name="birthday">
 
                     <h4> Industry Certifications and Licences </h4>
                     <textarea rows="10" cols="50" name="comment" form="usrform" placeholder="Enter line by line here">
@@ -132,61 +122,59 @@
                 </section>
 
 
-                    <section class="otherDETAILS">
-                        <h2>OTHER DETAILS</h2>
-                        <form action="/action_page.php">
-                            <label for="birthday">Date of Birth:</label>
-                            <input type="date" id="birthday" name="birthday">
-                        </form>
+                <section class="otherDETAILS">
+                    <h2>OTHER DETAILS</h2>
+                    <label for="birthday">Date of Birth:</label>
+                    <input type="date" id="birthday" name="birthday">
+
+                    <div class="form-group">
+                        <label class="control-label">Ethnicity</label>
+                        <select onchange="getStates()" id="dd_counties" class="form-control">
+                            <option value="">European</option>
+                            <option value="">Maori</option>
+                            <option value="">Asian</option>
+                            <option value="">Other</option>
+                            <option value="">I'd prefer not to say</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserCountry" class="control-label">Select your Country</label>
+                        <select asp-for="UserCountry" onchange="getStates()" id="dd_counties" class="form-control">
+                            <option value="">New Zealand</option>
+                            <option value="">Russia</option>
+                            <option value="">India</option>
+                            <option value="">China</option>
+                        </select>
+                    </div>
+                    <!--
+        <div class="form-group">
+            <label asp-for="UserState" class="control-label">Select your State</label>
+            <select asp-for="UserState" id="dd_states" class="form-control">
+                <option value="">Select State</option>
+            </select>
+            @*<label for="UserState">State</label>
+            <input class="form-control" asp-for="UserState">*@
+        </div>
+        -->
+                    <div class="form-group">
+                        <label asp-for="UserState">State</label>
 
                         <div class="form-group">
-                            <label class="control-label">Ethnicity</label>
-                            <select onchange="getStates()" id="dd_counties" class="form-control">
-                                <option value="">European</option>
-                                <option value="">Maori</option>
-                                <option value="">Asian</option>
-                                <option value="">Other</option>
-                                <option value="">I'd prefer not to say</option>
-                            </select>
+                            <label asp-for="UserState"></label>
+                            <input class="form-control" asp-for="UserState">
                         </div>
                         <div class="form-group">
-                            <label asp-for="UserCountry" class="control-label">Select your Country</label>
-                            <select asp-for="UserCountry" onchange="getStates()" id="dd_counties" class="form-control">
-                                <option value="">New Zealand</option>
-                                <option value="">Russia</option>
-                                <option value="">India</option>
-                                <option value="">China</option>
-                            </select>
+                            <label asp-for="UserCity">City</label>
+                            <input class="form-control" asp-for="UserCity">
                         </div>
-                        <!--
-            <div class="form-group">
-                <label asp-for="UserState" class="control-label">Select your State</label>
-                <select asp-for="UserState" id="dd_states" class="form-control">
-                    <option value="">Select State</option>
-                </select>
-                @*<label for="UserState">State</label>
-                <input class="form-control" asp-for="UserState">*@
-            </div>
-            -->
                         <div class="form-group">
-                            <label asp-for="UserState">State</label>
+                            <label for="UserZip">Zip Code</label>
+                            <input class="form-control" asp-for="UserZip" value="">
+                        </div>
+                </section>
 
-                            <div class="form-group">
-                                <label asp-for="UserState"></label>
-                                <input class="form-control" asp-for="UserState">
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="UserCity">City</label>
-                                <input class="form-control" asp-for="UserCity">
-                            </div>
-                            <div class="form-group">
-                                <label for="UserZip">Zip Code</label>
-                                <input class="form-control" asp-for="UserZip" value="">
-                            </div>
-                    </section>
-
-                    <button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>
-                    <input type="submit" class="btn btn-info" value="Save">
+                <button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>
+                <input type="submit" class="btn btn-info" value="Save">
             </form>
         </div>
     </main>

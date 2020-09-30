@@ -1,16 +1,14 @@
-using System;
+using Global_Intern.Data;
+using Global_Intern.Models;
+using Global_Intern.Util;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Global_Intern.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Global_Intern.Util;
-using Global_Intern.Data;
-using Global_Intern.Models.Filters;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using System;
 
 
 namespace Global_Intern
@@ -61,12 +59,13 @@ namespace Global_Intern
             }
 
             // Seed Data
-
+            // If you your system SQL server don't have databse. It will create Automatically  
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var _context = scope.ServiceProvider.GetService<GlobalDBContext>();
                 try
                 {
+                    
                     _context.Database.EnsureCreated();
                     _context.EnsureDataBaseSeeded();
                     //_context.Database.Migrate();
@@ -76,22 +75,22 @@ namespace Global_Intern
                     Console.WriteLine("Db exits");
                     Console.WriteLine(e);
                 }
-                
+
             }
 
             app.UseSession();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-       
+
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            
 
-            
+
+
 
             app.UseEndpoints(endpoints =>
             {

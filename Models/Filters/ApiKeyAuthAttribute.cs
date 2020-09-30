@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace Global_Intern.Models.Filters
 {
-    [AttributeUsage( validOn:AttributeTargets.Class | AttributeTargets.Method)]
+    [AttributeUsage(validOn: AttributeTargets.Class | AttributeTargets.Method)]
     public class ApiKeyAuthAttribute : Attribute, IAsyncActionFilter
     {
         private const string ApiKeyHeaderName = "ApiKey";
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             // before
-            if (!context.HttpContext.Request.Headers.TryGetValue(ApiKeyHeaderName, out var potentailKey)) {
+            if (!context.HttpContext.Request.Headers.TryGetValue(ApiKeyHeaderName, out var potentailKey))
+            {
                 context.Result = new UnauthorizedResult();
                 return;
             }

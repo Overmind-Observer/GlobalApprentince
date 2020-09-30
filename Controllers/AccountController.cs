@@ -24,15 +24,20 @@ namespace Global_Intern.Controllers
         private readonly EmailSettings _emailSettings;
         private readonly ICustomAuthManager _auth;
         IWebHostEnvironment _env;
+        string host;
+        IHttpContextAccessor _httpContextAccessor;
 
-        public AccountController(IOptions<EmailSettings> emailSetting, ICustomAuthManager auth, IWebHostEnvironment env)
+        public AccountController(IOptions<EmailSettings> emailSetting, ICustomAuthManager auth,
+            IWebHostEnvironment env, IHttpContextAccessor httpContextAccessor)
         {
             _emailSettings = emailSetting.Value;
             _auth = auth;
             _env = env;
+            _httpContextAccessor = httpContextAccessor;
+            host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
         }
 
-        
+
         public IActionResult Index()
         {
             return View();
@@ -49,6 +54,13 @@ namespace Global_Intern.Controllers
         {
             using (GlobalDBContext _context = new GlobalDBContext())
             {
+                User user = _context.Users.FirstOrDefault(u => u.UserEmail == new_user.Email);
+                if (user != null)
+                {
+                    ViewBag.Messsage = new_user.FirstName + " " + new_user.LastName + " successfully registered. A Email has been sent for the verfication.";
+                    return View();
+                }
+
                 string _domainurl = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
                 // ->TODO Validation check on clinet side using Jquery or JavaScript
 
@@ -80,9 +92,12 @@ namespace Global_Intern.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        public IActionResult Login([FromQuery] string redirect)
         {
-
+            if (redirect != null)
+            {
+                TempData["redirect"] = redirect;
+            }
             return View();
         }
 
@@ -135,6 +150,12 @@ namespace Global_Intern.Controllers
                         {
                             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                         }
+                        if (TempData.ContainsKey("redirect"))
+                        {
+                            string redirectUrl = TempData["redirect"].ToString();
+                            string fullPath = host + "/" + redirectUrl;
+                            return Redirect(fullPath);
+                        }
 
                         // Id 1 for Student & Id 2 for Employer
                         if (theUser.Role.RoleId == 1)
@@ -169,8 +190,10 @@ namespace Global_Intern.Controllers
         
         public IActionResult Logout()
         {
-            string GUIDtoken = _auth.Tokens.FirstOrDefault().Key;
-            _auth.removeToken(GUIDtoken);
+
+            // This Remove token from Authmanager
+            string token = _httpContextAccessor.HttpContext.Session.GetString("UserToken");
+            _auth.removeToken(token);
             Response.Cookies.Delete("UserToken");
 
             return RedirectToAction("Login");

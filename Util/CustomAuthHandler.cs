@@ -35,7 +35,7 @@ namespace Global_Intern.Util
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            
+
 
             //if (!Request.Headers.ContainsKey("Authorization"))
             //    return AuthenticateResult.Fail("UnAuthorized");
@@ -57,7 +57,7 @@ namespace Global_Intern.Util
                 {
                     _tokenSession = httpContextAccessor.HttpContext.Session.GetString("UserToken");
                 }
-                return  validateToken();
+                return validateToken();
             }
             catch (Exception ex)
             {
@@ -69,6 +69,7 @@ namespace Global_Intern.Util
 
         private AuthenticateResult validateToken()
         {
+            // Making Claim with Identity 
             var validatedToken = cAuthManger.Tokens.FirstOrDefault(t => t.Key == _tokenSession);
             if (validatedToken.Key == null)
             {

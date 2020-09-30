@@ -9,7 +9,11 @@ namespace Global_Intern.Data
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+<<<<<<< HEAD
+            string connectionString = @"Data Source=localhost\sqlexpress;Initial Catalog=GlobalDB;Integrated Security=True";
+=======
             string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Overmind\Documents\GlobalDB.mdf;Integrated Security=True;Connect Timeout=30";
+>>>>>>> haritjangwal3-master
             _ = optionsBuilder
                 .UseSqlServer(connectionString, builder => builder.UseRowNumberForPaging(true));
 
@@ -25,10 +29,13 @@ namespace Global_Intern.Data
         public DbSet<Experience> Experiences { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<UserDocument> UserDocuments { get; set; }
+        public DbSet<UserCompany> UserCompany { get; set; }
+        public DbSet<UserCL> UserCL { get; set; }
+        public DbSet<UserCV> UserCV { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-        
+
 
             // User table modification
             modelBuilder.Entity<User>().

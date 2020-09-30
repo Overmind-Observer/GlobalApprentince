@@ -12,12 +12,15 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Global Intern</a>
-
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <button class="navbar-toggler sideMenuToggler" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">Global Intern</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
@@ -45,22 +48,42 @@
                     </li>
 
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
+                <div class="userControlles">
                     @if (ViewData["LoggeduserName"] != null)
-                    {
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@ViewData["LoggeduserName"]</a>
-                            </li>
-                        </ul>
-                        <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Logout">Logout</button>
+                     {
+                        <div class="d-flex">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item d-flex">
+                                    @{
+                                        var userInfo = ViewData["LoggeduserName"] as List<string>;
+                                    }
+
+                                    @if (userInfo[1] != null)
+                                    {
+                                        <img class="circleImg" src="~/uploads/UserImage/@userInfo[1]" alt="Avatar">
+                                    }
+                                    else
+                                    {
+                                        <img class="circleImg" src="~/uploads/defaut-person.png" alt="Avatar">
+                                    }
+
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@userInfo[0]</a>
+
+                                </li>
+                            </ul>
+                            <button class="btn btn-success my-2 my-sm-0"  asp-controller="Account" asp-action="Logout">Logout</button>
+                        </div>
                     }
                     else
                     {
-                        <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Login">Log In</button>
-                        <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Register">Sign Up</button>
+                        <div class="d-flex">
+                    
+                            <a style="width:100px;" class="btn btn-primary mr-1"  asp-controller="Account" asp-action="Login">Log In</a>
+
+                            <a style="width:100px;" class="btn btn-primary"  asp-controller="Account" asp-action="Register">Sign Up</a>
+                        </div>
                     }
-                </form>
+                </div>
             </div>
         </nav>
     </header>

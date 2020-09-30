@@ -1,14 +1,12 @@
 ﻿using Global_Intern.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Global_Intern.Util
 {
     public class UserFilter
     {
-        
+        // Created to remove vital info like salt from the user.
         public static List<Internship> RemoveUserInfoFromInternship(List<Internship> source)
         {
 

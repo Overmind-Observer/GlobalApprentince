@@ -12,160 +12,9 @@
           crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/dashboard.css">
     <style type="text/css" media="screen">
-        /*CUSTOM image CSS*/
-        #imageResult {
-            display:none;
-            width:300px;
-            height:300px;
-            object-fit:cover;
-        }
-        #upload {
-            opacity: 0;
-        }
-
-        #upload-label {
-            position: absolute;
-            top: 50%;
-            left: 1rem;
-            transform: translateY(-50%);
-        }
-
-        .image-area {
-            border: 2px dashed rgba(255, 255, 255, 0.7);
-            padding: 1rem;
-            position: relative;
-        }
-
-            .image-area::before {
-                content: 'Uploaded image result';
-                color: #fff;
-                font-weight: bold;
-                text-transform: uppercase;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                font-size: 0.8rem;
-                z-index: 1;
-            }
-
-            .image-area img {
-                z-index: 2;
-                position: relative;
-            }
-        /*CUSTOM image CSS ENDS*/
-
-        .wrapper {
-            margin-top: '56px';
-        }
-
-        .sideMenu {
-            background-color: #D3604E;
-            position: fixed;
-            top: 56px;
-            bottom: 0;
-            left: 0;
-            margin: '56px' auto auto;
-            width: 250px;
-            border: 1px solid red;
-            transition: all ease 0.25s;
-            transform: translateX(-100%);
-            z-index: 100;
-        }
-
-        .content {
-            width: 100%;
-            padding: 1em;
-            margin-left: '0px';
-            transition: all ease 0.25s;
-        }
-
-        .sideMenu .nav-link {
-            display: block;
-            white-space: nowrap;
-        }
-
-            .sideMenu .nav-link .icon {
-                margin-right: 4px;
-                font-size: 30px;
-                vertical-align: middle;
-                height: 32px;
-                width: 32px;
-                display: inline-flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-        .sidebarLinks {
-            color: white;
-        }
-
-        .sidebarLinks:hover {
-            background-color: #303337;
-            color: white;
-        }
-
-        .ulsubmenu {
-            background-color: #e58272;
-        }
-
-        .sidebarSubLinks {
-            padding: 0px 0px;
-            padding-left: 10px;
-            color: white;
-            font-size: .8em;
-        }
-
-        .sidebarSubLinks:hover {
-            background-color: #303337;
-            color: white;
-        }
-
-        .active .sideMenu {
-            transform: translateX(0);
-        }
-
-        .tttCard {
-            border: 2px solid black;
-        }
-
-        @@media (min-width: 990px) {
-
-            .wrapper .sideMenu {
-                transform: translateX(0);
-            }
-
-            .content {
-                margin-left: 250px;
-            }
-        }
-
-        .ed_InternTitleView {
-            min-width: 200px;
-            max-width: 300px;
-            font-weight: bold;
-        }
-
-        .ed_InternBodyView {
-            position: relative;
-            max-height: 75px;
-            min-width: 200px;
-            overflow: hidden;
-        }
-
-        .ed_InternBodyViewShadow {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            margin: 0;
-            padding: 25px 0;
-            border-radius: 5px;
-            /* "transparent" only works here because == rgba(0,0,0,0) */
-            background-image: linear-gradient(to bottom, transparent, #D8D8D8);
-        }
+        
     </style>
 </head>
 <body>
@@ -209,16 +58,34 @@
                 @if (ViewData["LoggeduserName"] != null)
                 {
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@ViewData["LoggeduserName"]</a>
+                        <li class="nav-item d-flex">
+                            @{
+                                var userInfo = ViewData["LoggeduserName"] as List<string>;
+                            }
+
+                            @if (userInfo[1] != null)
+                            {
+                                <img class="circleImg" src="~/uploads/UserImage/@userInfo[1]" alt="Avatar">
+                            }
+                            else
+                            {
+                                <img class="circleImg" src="~/uploads/defaut-person.png" alt="Avatar">
+                            }
+
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@userInfo[0]</a>
+
                         </li>
                     </ul>
                     <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Logout">Logout</button>
                 }
                 else
                 {
-                    <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Login">Log In</button>
-                    <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Register">Sign Up</button>
+                    <div class="d-flex">
+                        <button class="btn btn-outline-success my-2 my-sm-0 mr-1" asp-area="" asp-controller="Account" asp-action="Login">Log In</button>
+
+                        <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Register">Sign Up</button>
+                    </div>
+
                 }
             </form>
         </div>
@@ -231,13 +98,24 @@
 
                         @foreach (var each in @ViewData["menuItems"] as dynamic)
                         {
-
-                            <li class="nav-item">
-                                <a href="#" class="nav-link sidebarLinks">
-                                    <i class="material-icons icon">@each["icon"]</i>
-                                    <span class="text">@each["field"]</span>
-                                </a>
-                            </li>
+                            if (@each["field"] == "Dashboard")
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="Index" class="nav-link sidebarLinks">
+                                        <i class="material-icons icon">@each["icon"]</i>
+                                        <span class="text">@each["field"]</span>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="@each["field"]" class="nav-link sidebarLinks">
+                                        <i class="material-icons icon">@each["icon"]</i>
+                                        <span class="text">@each["field"]</span>
+                                    </a>
+                                </li>
+                            }
                             if (@each["subfields"] != null)
                             {
                                 <li class="nav-item">
@@ -253,8 +131,8 @@
                                         }
                                     </ul>
                                 </li>
-                             }
-                          }
+                            }
+                        }
                     </ul>
                 </div>
             </div>

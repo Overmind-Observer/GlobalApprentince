@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Global_Intern.Data;
 using Global_Intern.Models;
-using Global_Intern.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using System.IO;
 using Newtonsoft.Json;
-using Microsoft.AspNetCore.Http; 
+using System;
+using System.IO;
+using System.Linq;
 
 namespace Global_Intern.Util
 {
@@ -18,14 +15,16 @@ namespace Global_Intern.Util
         public static T GetCSharpObject<T>(string JsonString)
         {
             JsonString = "[" + JsonString + "]";
-            
+
             var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(JsonString);
             T t = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(JsonString);//Code to create instance
-            
+
             return t;
         }
         // GetMenuOptionsForUser -> return an dynamic object
-        public static dynamic GetMenuOptionsForUser(int user_id,string path)
+        // PATH ->> GlobalApprentince\Data\DashboardMenuOptions.json
+        // below mehod access the file and create a dynamic object
+        public static dynamic GetMenuOptionsForUser(int user_id, string path)
         {
             using (GlobalDBContext _context = new GlobalDBContext())
             {
@@ -54,7 +53,7 @@ namespace Global_Intern.Util
                     return null;
                 }
             }
-            
+
 
         }
 
@@ -67,6 +66,15 @@ namespace Global_Intern.Util
                 return char.ToUpper(str[0]) + str.Substring(1);
 
             return str.ToUpper();
+        }
+
+        public static string StoreFile(string path, IFormFile file)
+        {
+            // This method can store any type of file.
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+            string filePath = path + uniqueFileName;
+            file.CopyTo(new FileStream(filePath, FileMode.Create));
+            return filePath;
         }
 
     }

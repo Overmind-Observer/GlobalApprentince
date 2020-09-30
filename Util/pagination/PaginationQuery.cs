@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Global_Intern.Util.pagination
 {
@@ -17,8 +15,9 @@ namespace Global_Intern.Util.pagination
         {
 
         }
-        public PaginationQuery(List<T> items,int count, int pageNumber, int pageSize)
+        public PaginationQuery(List<T> items, int count, int pageNumber, int pageSize)
         {
+            // embedding new properties to the response
             PageNumber = pageNumber;
             PageSize = pageSize;
 
@@ -26,8 +25,10 @@ namespace Global_Intern.Util.pagination
             data = items;
         }
 
-        public bool PreviousPage {
-            get {
+        public bool PreviousPage
+        {
+            get
+            {
                 return (PageNumber > 1);
             }
         }
@@ -42,9 +43,10 @@ namespace Global_Intern.Util.pagination
 
         public static PaginationQuery<T> CreateAsync(List<T> source, int pageNumber, int pageSize)
         {
+            // Paging calculation
             var count = source.Count();
             var skip = (pageNumber - 1) * pageSize;
-            
+
             var items = source.Skip(skip).Take(pageSize).ToList();
 
             return new PaginationQuery<T>(items, count, pageNumber, pageSize);

@@ -10,8 +10,12 @@ namespace Global_Intern.Util
 
         private IDictionary<string, Tuple<string, string, int>> tokens = new Dictionary<string, Tuple<string, string, int>>();
         public IDictionary<string, Tuple<string, string, int>> Tokens => tokens;
+        /// <summary>
+        /// A Token can have multiple info stored. For Now I'm storing [User Name, User Role and ID]
+        /// In future to can also store Data type to tell server about the token expiry date.
+        /// </summary>
 
-        public string Authenticate(string username, string role,int id, bool IsAddToken)
+        public string Authenticate(string username, string role, int id, bool IsAddToken)
         {
             var token = Guid.NewGuid().ToString();
             if (!IsAddToken)

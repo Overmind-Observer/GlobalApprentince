@@ -1,17 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using Global_Intern.Data;
+using Global_Intern.Models;
+using Global_Intern.Models.StudentModels;
+using Global_Intern.Util;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http; // for -> IHttpContextAccessor
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Global_Intern.Models;
-using Global_Intern.Data;
-using System.Threading.Tasks;
-using System;
-using Microsoft.AspNetCore.Http; // for -> IHttpContextAccessor
 using System.Net.Http; // for -> HttpClient to make request to API
-using Global_Intern.Util;
-using Global_Intern.Models.StudentModels;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace Global_Intern.Controllers
 {
@@ -23,28 +26,43 @@ namespace Global_Intern.Controllers
         private readonly string host;
         private readonly HttpClient _client = new HttpClient();
         private readonly string Internship_url = "/api/Internships";
-        private User LoggedIn_User = null;
-        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth)
+        private User _user = null;
+        IWebHostEnvironment _env;
+        public HomeController(ILogger<HomeController> logger,
+            IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth,
+            IWebHostEnvironment env)
         {
             _customAuthManager = auth;
             _httpContextAccessor = httpContextAccessor;
             host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
             _logger = logger;
+            _env = env;
+
+            // Check if cookie exits and create a session.
+            CreateUserSessionFromCookie();
+            // fetch user from the database using session.
+            setUser();
         }
 
         public IActionResult Index()
         {
+
             
-            CookieLogin();
-            
-            // For NavBar to display user is LoggedIn
-            ViewData["LoggeduserName"] = LoggedIn_User != null? LoggedIn_User.UserFirstName + ' ' + LoggedIn_User.UserLastName : null;
-            
+            if (_user != null)
+            {
+                ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+            }
+
+
             return View();
         }
 
-        public async Task<IActionResult> AllInternships([FromQuery]string search, int pageNumber = 0, int pageSize = 0)
+        public async Task<IActionResult> AllInternships([FromQuery] string search, int pageNumber = 0, int pageSize = 0)
         {
+            /// What is happening How you get Internship -> Database to API. Api to you as a JSON response. when you can do something with that response
+            /// In my custom response you get number of items, also you get what page you are on. And how many page to expect.
+            /// Using QueryString, you can tell api what page you want, and how many internship info you want.
+
             IEnumerable<Internship> model;
             HttpResponseMessage resp;
             string InternshipUrl = host + Internship_url;
@@ -74,10 +92,6 @@ namespace Global_Intern.Controllers
                 ViewBag.currentPage = data[0]["pageNumber"];
                 model = data[0]["data"].ToObject<IEnumerable<Internship>>();
                 var intern = data[0]["data"][0];
-
-                // Display User is LoggedIn
-                ViewData["LoggeduserName"] = LoggedIn_User != null ? LoggedIn_User.UserFirstName + ' ' + LoggedIn_User.UserLastName : null;
-
                 return View(model);
             }
             catch (Exception)
@@ -86,20 +100,17 @@ namespace Global_Intern.Controllers
             }
         }
 
-        
+
         public async Task<IActionResult> Internship(int id)
         {
+            
             Internship model;
             HttpResponseMessage resp;
             string InternshipUrl = host + Internship_url;
-
-            // Display User is LoggedIn
-            ViewData["LoggeduserName"] = LoggedIn_User != null ? LoggedIn_User.UserFirstName + ' ' + LoggedIn_User.UserLastName : null;
-
             try
             {
-
-                resp = await _client.GetAsync(InternshipUrl + "/" + id.ToString()) ;
+                // In the API response you get internship
+                resp = await _client.GetAsync(InternshipUrl + "/" + id.ToString());
                 resp.EnsureSuccessStatusCode();
                 string responseBody = await resp.Content.ReadAsStringAsync();
                 var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
@@ -111,38 +122,92 @@ namespace Global_Intern.Controllers
                 throw;
             }
         }
+        // Uncommnet below line if you want only logedIn user can apply.
+        //[Authorize(Roles = "student")]
         [Route("Home/Internship/{id?}/Apply")]
         public IActionResult InternshipApply(int? id)
         {
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 Internship intern = _context.Internships.Find(id);
-            }
+                ViewData["intern"] = intern;
                 return View();
+            }
         }
         [Route("Home/Internship/{id?}/Apply")]
         [HttpPost]
         public IActionResult InternshipApply(int? id, ApplyInternship fromData)
         {
             // the User is student
-
             // Make changes to AppliedInternship table.
-            // make nortfication.
-            try
+            //  make nortfication.
+            using (GlobalDBContext _context = new GlobalDBContext())
             {
-                using (GlobalDBContext _context = new GlobalDBContext())
+                string FinalCVPath;
+                string FinalCLPath;
+                string FinalCLString = null;
+                // CV
+                if (fromData.TemporaryCV != null && fromData.TemporaryCV.Length > 0)
                 {
-                    Internship intern = _context.Internships.Find(id);
-                    User user = _context.Users.Find(_customAuthManager.Tokens.FirstOrDefault().Value.Item3);
-                    AppliedInternship APP_Intern = new AppliedInternship(user, intern);
-                    _context.AppliedInternships.Add(APP_Intern);
-                    _context.SaveChanges();
-                    return View();
+                    string UserCVFolder = _env.WebRootPath + @"\uploads\UserCV\";
+                    // File of code need to be Tested
+                    FinalCVPath = HelpersFunctions.StoreFile(UserCVFolder, fromData.TemporaryCV);
                 }
-            }
-            catch (Exception)
-            {
-                throw;
+                else
+                {
+                    if (fromData.isCVExisting)
+                    {
+                        UserDocument Doc = _context.UserDocuments.Include(u => u.User).FirstOrDefault(p =>
+                        p.User.UserId == _user.UserId && p.DocumentType == "CV");
+                        FinalCVPath = Doc.DocumentPath;
+                    }
+                    else
+                    {
+                        FinalCVPath = null;
+                    }
+                }
+                // COVER Letter
+                if (fromData.TemporaryCL != null && fromData.TemporaryCL.Length > 0)
+                {
+                    string UserCLFolder = _env.WebRootPath + @"\uploads\UserCL\";
+                    // File of code need to be Tested
+                    FinalCLPath = HelpersFunctions.StoreFile(UserCLFolder, fromData.TemporaryCL);
+                }
+                else
+                {
+                    if (fromData.isCLExisting)
+                    {
+                        UserDocument Doc = _context.UserDocuments.Include(u => u.User).FirstOrDefault(p =>
+                        p.User.UserId == _user.UserId && p.DocumentType == "CL");
+                        FinalCLPath = Doc.DocumentPath;
+                    }
+                    else
+                    {
+                        FinalCLPath = null;
+                        if (fromData.isCLTextArea)
+                        {
+                            FinalCLString = fromData.WrittenCL;
+                        }
+                        else
+                        {
+                            FinalCLString = null;
+                        }
+                    }
+
+                }
+                Internship intern = _context.Internships.Find(id);
+                // AppliedInternship constructor takes User and Internship object to create AppliedInternship object
+                AppliedInternship APP_Intern = new AppliedInternship(_user, intern)
+                {
+                    TempCVPath = FinalCVPath,
+                    TempCLPath = FinalCLPath,
+                    CoverLetterText = FinalCLString,
+                    EmployerStatus = "Pending"
+                };
+                // Adding who applied the intership
+                _context.AppliedInternships.Add(APP_Intern);
+                _context.SaveChanges();
+                return View();
             }
         }
         public IActionResult ContactUs()
@@ -161,33 +226,40 @@ namespace Global_Intern.Controllers
 
         }
 
-        public void CookieLogin() {
+        public void setUser()
+        {
+            string token = _httpContextAccessor.HttpContext.Session.GetString("UserToken");
+            if(token == null)
+            {
+                return;
+            }
+
+
+            if (_customAuthManager.Tokens.Count > 0)
+            {
+                int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
+                using (GlobalDBContext _context = new GlobalDBContext())
+                {
+                    _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
+                }
+            }
+            
+        }
+
+        public void CreateUserSessionFromCookie()
+        {
             // Check if Cookie Exists and if true create a Session
-           var cookie = Request.Cookies["UserToken"];
+            
+            var cookie = _httpContextAccessor.HttpContext.Request.Cookies["UserToken"];
             if (cookie != null)
             {
                 _httpContextAccessor.HttpContext.Session.SetString("UserToken", cookie);
-                if (_customAuthManager.Tokens.Count != 0)
-                {
-                    int userID = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == cookie).Value.Item3;
-                    using (GlobalDBContext _context = new GlobalDBContext())
-                    {
-                        LoggedIn_User = _context.Users.Find(userID);
-                    }
-                }
-            }
-            else {
-                string tokenFromSession = Response.HttpContext.Session.GetString("UserToken");
-                if (tokenFromSession != null) {
-                    int userID = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == tokenFromSession).Value.Item3;
-                    using (GlobalDBContext _context = new GlobalDBContext())
-                    {
-                        LoggedIn_User = _context.Users.Find(userID);
-                    }
-                }            
             }
         }
     }
+
+    
+
 
     internal class ErrorViewModel
     {

@@ -9,9 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace Global_Intern.Controllers
 {
@@ -20,29 +18,55 @@ namespace Global_Intern.Controllers
     {
         ////https://localhost:44307/api/internships/employer/3
 
-        private readonly IHttpContextAccessor _httpContextAccessor; // Accessor allows access to session and cookies
-        private readonly ICustomAuthManager _customAuthManager;
-        private readonly string host;
+        public int UserId { get; set; }
+        [Required]
+        public string UserFirstName { get; set; }
+        public string UserLastName { get; set; }
+        [Required]
+        public string UserEmail { get; set; }
+        public bool UserEmailVerified { get; set; } // Auto
+        public string UserAddress { get; set; } //CP
+        public string UserCity { get; set; } //CP
+        public string UserState { get; set; } //CP
+        public string UserCountry { get; set; } //CP
+        public int UserZip { get; set; } //CP
+        [Required]
+        public string UserPassword { get; set; }
+        [Required]
+        public string Salt { get; set; } // Auto
+        public string UniqueToken { get; set; } // Auto
+        public string UserPhone { get; set; }
+        public string UserImage { get; set; }
+        public string UserGender { get; set; } // Could be use full for User with student role.
+        
 
-        private readonly HttpClient _client = new HttpClient(); // Used to access API -> Internship.
-        private readonly string Internship_url = "/api/Internships";
-        IWebHostEnvironment _env; // to access the Content PATH aka wwwroot
-        /// <summary>
-        /// User object is quite important here. without accessing database again and again on every action. User is set on constructor level.
-        /// </summary>
-        private User _user;
-        public DashboardStudentController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth, IWebHostEnvironment env)
+
+        [Required]
+        public virtual Role Role { get; set; } //FK
+        public DateTime CreatedAt { get; set; } // Auto
+        public bool SoftDelete { get; set; } // Auto
+        public List<Qualification> Qualifications { get; set; }
+        public List<Experience> Experiences { get; set; }
+        public List<UserDocument> UserDocuments { get; set; } // should get one row
+        public List<UserCompany> UserCompanies { get; set; } // should get one row
+        public List<Profile> Profiles { get; set; } // should get one row
+        public List<InternStudent> InternStudents { get; set; } // list of students who are working in some internships
+        public List<AppliedInternship> appliedInternships { get; set; } // list of user applyed for intership
+
+
+        public void AddFromAccountRegsiter(AccountRegister newUser, Role role, string salt)
         {
-            _env = env;
-
-            // gets Session or host name 
-            _httpContextAccessor = httpContextAccessor;
-            host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
-
-            // To Access runtime tokens
-            _customAuthManager = auth;
-
-            setUser();
+            this.UserFirstName = newUser.FirstName;
+            this.UserLastName = newUser.LastName;
+            this.UserGender = newUser.Gender;
+            this.UserEmail = newUser.Email;
+            this.UserEmailVerified = false;
+            this.UserPassword = newUser.Password;
+            this.Salt = salt;
+            this.UserPhone = newUser.Phone.ToString();
+            this.Role = role;
+            this.CreatedAt = DateTime.UtcNow;
+            this.SoftDelete = false;
         }
         public IActionResult Index()
         {
@@ -53,7 +77,18 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-            using (GlobalDBContext _context = new GlobalDBContext())
+        public void AddFromStudentProfileView(Global_Intern.Models.GeneralProfile.ProfileViewStudent updatedInfo, string UserImagePATH = "")
+        {
+            UserFirstName = updatedInfo.UserFirstName;
+            UserLastName = updatedInfo.UserLastName;
+            UserGender = updatedInfo.UserGender;
+            UserPhone = updatedInfo.UserPhone.ToString();
+            UserAddress = updatedInfo.UserAddress;
+            UserCity = updatedInfo.UserCity;
+            UserState = updatedInfo.UserState;
+            UserCountry = updatedInfo.UserCountry;
+            // if user upload new image
+            if (UserImagePATH != "")
             {
                 // Geting internshps student applied for using his/her userID
                 var appliedInterns = _context.AppliedInternships.Include(i => i.Internship).Where(e => e.User == _user).ToList();
