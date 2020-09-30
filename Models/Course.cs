@@ -14,7 +14,7 @@ namespace Global_Intern.Models
         public string CourseType { get; set; }      // evening class; 1 to 1 class
         public string CourseDuration { get; set; }   // 10 hours; 50 hours
         [Required]
-        public string CourseBody { get; set; }     // course short intro
+        public string CourseInfo { get; set; }      // course short intro
         public string CourseFees { get; set; }    // web development 20$ per hour; software tester 25$ per hour
 
      
