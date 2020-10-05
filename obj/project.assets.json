@@ -10326,35 +10326,27 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Overmind\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\thom\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Overmind\\Source\\Repos\\Overmind-Observer\\GlobalApprentince\\Global Intern.csproj",
+      "projectUniqueName": "C:\\Users\\thom\\Source\\Repos\\GlobalApprentince\\Global Intern.csproj",
       "projectName": "Global Intern",
-      "projectPath": "C:\\Users\\Overmind\\Source\\Repos\\Overmind-Observer\\GlobalApprentince\\Global Intern.csproj",
-      "packagesPath": "C:\\Users\\Overmind\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Overmind\\Source\\Repos\\Overmind-Observer\\GlobalApprentince\\obj\\",
+      "projectPath": "C:\\Users\\thom\\Source\\Repos\\GlobalApprentince\\Global Intern.csproj",
+      "packagesPath": "C:\\Users\\thom\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\thom\\Source\\Repos\\GlobalApprentince\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Overmind\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\thom\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {},
-        "https://www.nuget.org/api/v2/": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.1": {
@@ -10449,7 +10441,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
       }
     }
   }
