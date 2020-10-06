@@ -24,6 +24,9 @@ namespace Global_Intern.Models
         public System.DateTime CourseExpDate { get; set; }
         public System.DateTime CourseCreatedAt { get; set; }
         public System.DateTime CourseUpdatedAt { get; set; }
+        
+        // add on 6th 10 2020
+        public virtual User User { get; set; }
 
 
     }
