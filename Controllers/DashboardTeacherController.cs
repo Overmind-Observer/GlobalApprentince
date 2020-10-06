@@ -113,7 +113,7 @@ namespace Global_Intern.Controllers
 
         }
 
-
+/*
         public IActionResult TeacherGeneralProfile(ProfileViewTeacher fromData)
         {
             // Display User name on the right-top corner - shows user is logedIN
@@ -155,7 +155,7 @@ namespace Global_Intern.Controllers
 
             }
         }
-
+*/
 
 
 
