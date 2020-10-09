@@ -909,7 +909,6 @@ C:\Users\thom\Source\Repos\GlobalApprentince\bin\Debug\netcoreapp3.1\runtimes\wi
 C:\Users\thom\Source\Repos\GlobalApprentince\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\thom\Source\Repos\GlobalApprentince\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\thom\Source\Repos\GlobalApprentince\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\thom\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.csprojAssemblyReference.cache
 C:\Users\thom\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.AssemblyInfoInputs.cache
 C:\Users\thom\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.AssemblyInfo.cs
 C:\Users\thom\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.csproj.CoreCompileInputs.cache
@@ -964,3 +963,4 @@ C:\Users\thom\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Inte
 C:\Users\thom\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.dll
 C:\Users\thom\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.pdb
 C:\Users\thom\Source\Repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.genruntimeconfig.cache
+C:\Users\thom\source\repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.csprojAssemblyReference.cache

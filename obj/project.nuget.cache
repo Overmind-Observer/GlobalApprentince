@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "00Wx5zFQOZ3pfh0U6M8Zpx2L51j7gPMXl0c4eR2qpIDXA3ggV23DnTNKWXh9mi+5Y4RxfQmY9MGzxL6ypTTSTQ==",
+  "dgSpecHash": "AIB9C7TvnN4mLCo6FLYCiiDHoeYQanwrQ9Ege5ypk0a7LbZ0jNrxfDKTKwaZT0xAC4NDpDiGb6yGBwtvepA9/Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\thom\\Source\\Repos\\GlobalApprentince\\Global Intern.csproj",
+  "projectFilePath": "C:\\Users\\thom\\source\\repos\\GlobalApprentince\\Global Intern.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\thom\\.nuget\\packages\\mailkit\\2.7.0\\mailkit.2.7.0.nupkg.sha512",
     "C:\\Users\\thom\\.nuget\\packages\\microsoft.aspnetcore.antiforgery\\2.2.0\\microsoft.aspnetcore.antiforgery.2.2.0.nupkg.sha512",
