@@ -317,6 +317,7 @@ form.search-box .search-form a {
 	margin-bottom: 4px;
 }
 
+
 a{
 	display: block;
 	text-align: center;
@@ -415,6 +416,12 @@ a:hover{
 }
 
 /* Footer */
+
+.footer-icons {
+	text-align: center;
+	align-content: center;
+	color: dodgerblue;
+}
 #footer {
 	height:auto;
 	background-color: #E46854;
