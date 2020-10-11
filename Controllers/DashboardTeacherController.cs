@@ -16,8 +16,9 @@ using System.Net.Http;
 
 namespace Global_Intern.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    //[Route("api/[controller]")]
+    //[ApiController]
+    [Authorize(Roles = "teacher")]
     public class DashboardTeacherController : Controller
     {
 
@@ -42,10 +43,37 @@ namespace Global_Intern.Controllers
 
             // sets User _user using session
             string token = _httpContextAccessor.HttpContext.Session.GetString("UserToken");
-            
-            
+            // To Access runtime tokens
+            _customAuthManager = auth;
+
+            setUser();
         }
 
+        // setUser() method continue for above.
+        public void setUser()
+        {
+            ///  Access "UserToken" Session. 
+            /// NOTE:  Session get created when user login with unique id. This id is also used to identify the user from number of Auth Tokens
+            string token = _httpContextAccessor.HttpContext.Session.GetString("UserToken");
+            if (token == null) // if null user has not loggedIn
+            {
+                return;
+            }
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+
+                if (_customAuthManager.Tokens.Count > 0)
+                {
+                    // check weather the unique id is in AuthManager
+                    int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
+                    // User is found in the AuthManager
+                    _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
+                }
+
+            }
+        }
+
+        // This is for Dashboard Teacher Page 
         [Authorize(Roles = "teacher")]
         public IActionResult Index()
         {
@@ -63,12 +91,6 @@ namespace Global_Intern.Controllers
                 return View();
             }
         }
-
-
-
-
-
-
 
 
         // Dashboard Teacher controller start here.
@@ -91,7 +113,7 @@ namespace Global_Intern.Controllers
 
         }
 
-
+/*
         public IActionResult TeacherGeneralProfile(ProfileViewTeacher fromData)
         {
             // Display User name on the right-top corner - shows user is logedIN
@@ -133,7 +155,7 @@ namespace Global_Intern.Controllers
 
             }
         }
-
+*/
 
 
 
