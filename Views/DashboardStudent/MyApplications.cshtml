@@ -3,3 +3,51 @@
 *@
 @{
 }
+
+
+<div class="content">
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+
+                <h2>My Applications</h2>
+
+
+                <div class="tab">
+                    <button class="tablinks" onclick="openpage(event, 'Active')">Active</button>
+                    <button class="tablinks" onclick="openpage(event, 'Inactive')">Inactive</button>
+                    <button class="tablinks" onclick="openpage(event, 'All')">All Applications</button>
+                </div>
+
+                <div id="Active" class="tabcontent">
+                    <p>Still active applications.</p>
+                </div>
+
+                <div id="Inactive" class="tabcontent">
+                    <p>Applications expired, good luck for future.</p>
+                </div>
+
+                <div id="All" class="tabcontent">
+                    <p>Whole views.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+<script>
+    function openpage(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
