@@ -1,4 +1,4 @@
-﻿using Global_Intern.Data;
+using Global_Intern.Data;
 using Global_Intern.Models;
 using Global_Intern.Models.GeneralProfile;
 using Global_Intern.Util;
@@ -92,9 +92,8 @@ namespace Global_Intern.Controllers
             }
         }
 
-
-        // Dashboard Teacher controller start here.
-        public IActionResult TeacherGeneralProfile()
+        // Dashboard Teacher General Profile Page.
+        public IActionResult GeneralProfile()
         {
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
@@ -112,9 +111,8 @@ namespace Global_Intern.Controllers
             }
 
         }
-
-/*
-        public IActionResult TeacherGeneralProfile(ProfileViewTeacher fromData)
+        /*
+        public IActionResult GeneralProfile(ProfileViewTeacher fromData)
         {
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
@@ -150,12 +148,40 @@ namespace Global_Intern.Controllers
                 }
                 _context.Users.Update(_user);
                 _context.SaveChanges();
-                ProfileViewStudent gen = new ProfileViewStudent(_user);
+                ProfileViewTeacher gen = new ProfileViewTeacher(_user);
                 return View(gen);
 
             }
         }
-*/
+
+        */
+        public IActionResult CoursesDetails()
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+
+                Course CourseInfo = _context.Course.Include(u => u.User).FirstOrDefault(e => e.User.UserId == _user.UserId);
+                Global_Intern.Models.TeacherModels.TeacherCourseModel model = new Models.TeacherModels.TeacherCourseModel();
+                if (CourseInfo != null)
+                {
+                    model = new Models.TeacherModels.TeacherCourseModel(CourseInfo);
+                }
+                return View(model);
+            }
+
+        }
+
+
+
+
+
 
 
 
