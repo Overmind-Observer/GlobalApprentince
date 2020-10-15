@@ -11,6 +11,8 @@ packages
 /wwwroot/uploads/UserImage
 /wwwroot/uploads/CompanyLogos
 
+
+/.vs
 .vs
 <<<<<<< Updated upstream
 .vs/Global Intern/v16/.suo
