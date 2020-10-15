@@ -32,6 +32,8 @@ namespace Global_Intern.Data
         public DbSet<UserCompany> UserCompany { get; set; }
         public DbSet<UserCL> UserCL { get; set; }
         public DbSet<UserCV> UserCV { get; set; }
+        
+        public DbSet<Course> Course { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

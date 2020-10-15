@@ -9,7 +9,7 @@
         {
           "icon": "person",
           "field": "Profile",
-          "subfields": [ "General Profile", "Company Details" ]
+          "subfields": [ "General Profile", "Company Details", "Create Internships", "Intern Applications" ]
         },
         {
           "icon": "settings",
@@ -26,7 +26,7 @@
         {
           "icon": "person",
           "field": "Profile",
-          "subfields": [ "General Profile", "Documents", "Qualifications", "Experience" ]
+          "subfields": [ "General Profile", "Documents", "Qualifications", "Experience", "My Applications" ]
         },
         {
           "icon": "settings",
@@ -43,7 +43,7 @@
         {
           "icon": "person",
           "field": "Profile",
-          "subfields": [ "General Profile", "Cources", "Subscribers" ]
+          "subfields": [ "General Profile", "Cources", "Subscribers", "Create Courses" ]
         },
         {
           "icon": "settings",
