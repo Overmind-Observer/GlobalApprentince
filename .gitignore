@@ -18,3 +18,5 @@ obj/project.nuget.cache
 /obj
 
 .vs
+./vs
+*.vs
