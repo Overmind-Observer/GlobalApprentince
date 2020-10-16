@@ -1,39 +1,21 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
-    "C:\\Users\\Gaming PC\\Source\\Repos\\GlobalApprentince\\Global Intern.csproj": {}
-=======
-    "C:\\Users\\Overmind\\Source\\Repos\\Overmind-Observer\\GlobalApprentince\\Global Intern.csproj": {}
->>>>>>> haritjangwal3-master
+    "C:\\Users\\thom\\source\\repos\\GlobalApprentince\\Global Intern.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Gaming PC\\Source\\Repos\\GlobalApprentince\\Global Intern.csproj": {
+    "C:\\Users\\thom\\source\\repos\\GlobalApprentince\\Global Intern.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Gaming PC\\Source\\Repos\\GlobalApprentince\\Global Intern.csproj",
+        "projectUniqueName": "C:\\Users\\thom\\source\\repos\\GlobalApprentince\\Global Intern.csproj",
         "projectName": "Global Intern",
-<<<<<<< HEAD
-        "projectPath": "C:\\Users\\Gaming PC\\Source\\Repos\\GlobalApprentince\\Global Intern.csproj",
-        "packagesPath": "C:\\Users\\Gaming PC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Gaming PC\\Source\\Repos\\GlobalApprentince\\obj\\",
-=======
-        "projectPath": "C:\\Users\\Overmind\\Source\\Repos\\Overmind-Observer\\GlobalApprentince\\Global Intern.csproj",
-        "packagesPath": "C:\\Users\\Overmind\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Overmind\\Source\\Repos\\Overmind-Observer\\GlobalApprentince\\obj\\",
->>>>>>> haritjangwal3-master
+        "projectPath": "C:\\Users\\thom\\source\\repos\\GlobalApprentince\\Global Intern.csproj",
+        "packagesPath": "C:\\Users\\thom\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thom\\source\\repos\\GlobalApprentince\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-<<<<<<< HEAD
-          "C:\\Users\\Gaming PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
-          "C:\\Users\\Overmind\\AppData\\Roaming\\NuGet\\NuGet.Config",
->>>>>>> haritjangwal3-master
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\thom\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -135,7 +117,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

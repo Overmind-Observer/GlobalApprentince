@@ -2,7 +2,6 @@
 using Global_Intern.Models;
 using Global_Intern.Models.StudentModels;
 using Global_Intern.Util;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http; // for -> IHttpContextAccessor
 using Microsoft.AspNetCore.Mvc;
@@ -59,10 +58,6 @@ namespace Global_Intern.Controllers
 
         public async Task<IActionResult> AllInternships([FromQuery] string search, int pageNumber = 0, int pageSize = 0)
         {
-            /// What is happening How you get Internship -> Database to API. Api to you as a JSON response. when you can do something with that response
-            /// In my custom response you get number of items, also you get what page you are on. And how many page to expect.
-            /// Using QueryString, you can tell api what page you want, and how many internship info you want.
-
             IEnumerable<Internship> model;
             HttpResponseMessage resp;
             string InternshipUrl = host + Internship_url;
@@ -109,7 +104,7 @@ namespace Global_Intern.Controllers
             string InternshipUrl = host + Internship_url;
             try
             {
-                // In the API response you get internship
+
                 resp = await _client.GetAsync(InternshipUrl + "/" + id.ToString());
                 resp.EnsureSuccessStatusCode();
                 string responseBody = await resp.Content.ReadAsStringAsync();
@@ -122,11 +117,20 @@ namespace Global_Intern.Controllers
                 throw;
             }
         }
-        // Uncommnet below line if you want only logedIn user can apply.
-        //[Authorize(Roles = "student")]
         [Route("Home/Internship/{id?}/Apply")]
         public IActionResult InternshipApply(int? id)
         {
+            //CookieLogin();
+            //if (_user == null)
+            //{
+            //    return RedirectToAction("Login", "Account", new { redirect = "Home/Internship/" + id + "/Apply" });
+            //    //return RedirectToAction("Login?redirectUrl=Home/Internship/"+id+"}/Apply", "Account");
+            //}
+            //if(_user.Role.RoleName != "student")
+            //{
+            //    // To-Do Display message -> Your role does not suit the action.
+            //    return Unauthorized();
+            //}
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 Internship intern = _context.Internships.Find(id);
@@ -215,6 +219,11 @@ namespace Global_Intern.Controllers
             return View();
         }
 
+        public IActionResult About()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -229,13 +238,8 @@ namespace Global_Intern.Controllers
         public void setUser()
         {
             string token = _httpContextAccessor.HttpContext.Session.GetString("UserToken");
-            if(token == null)
-            {
-                return;
-            }
-
-
-            if (_customAuthManager.Tokens.Count > 0)
+            
+            if(_customAuthManager.Tokens.Count > 0)
             {
                 int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
                 using (GlobalDBContext _context = new GlobalDBContext())
