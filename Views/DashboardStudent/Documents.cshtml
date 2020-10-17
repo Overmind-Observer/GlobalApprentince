@@ -1,28 +1,46 @@
-<div class="content">
-    <main>
+@*@model Global_Intern.Models.GeneralProfile.GeneralProfile;*@
+@{
+    ViewData["Title"] = "CompleteProfile";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+
+
+
+<main>
+    <div class="content">
         <div class="container-fluid" style="margin-top:56px;">
             <div id="GeneralProfile" asp-action="GeneralProfile" enctype="multipart/form-data" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+                <div class="content">
+                    <main>
+                        <div class="container-fluid" style="margin-top:56px;">
+                            <div id="GeneralProfile" asp-action="GeneralProfile" enctype="multipart/form-data" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                                <label for="CV">Upload your Resume File here :</label>
+                                <form action="/action_page.php">
+                                    <input type="file" id="myFile" name="filename">
+                                </form>
+
+
+                                <label for="CL">Upload your Covering Letter Here:</label>
+                                <form action="/action_page.php">
+                                    <input type="file" id="myFile" name="filename">
+                                </form>
+                                <button type="submit" onclick="alert('Data be saved, Thank you!')">Submit</button>
 
 
 
-                <label for="CV">Upload your Resume File here :</label>
-                <form action="/action_page.php">
-                    <input type="file" id="myFile" name="filename">
-                </form>
-
-
-                
-                <label for="CL">Upload your Covering Letter Here:</label>
-                <form action="/action_page.php">
-                    <input type="file" id="myFile" name="filename">
-                </form>
-                <button type="submit" onclick="alert('Data be saved, Thank you!')">Submit</button>
-
+                            </div>
+                        </div>
+                    </main>
+                </div>
 
 
             </div>
         </div>
-    </main>
-</div>
+    </div>
+</main>
