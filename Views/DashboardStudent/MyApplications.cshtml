@@ -1,39 +1,49 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+@*@model Global_Intern.Models.GeneralProfile.GeneralProfile;*@
 @{
+    ViewData["Title"] = "CompleteProfile";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
 }
 
 
-<div class="content">
-    <main>
-        <div class="container-fluid">
-            <div class="row">
+<main>
+    <div class="content">
+        <div class="container-fluid" style="margin-top:56px;">
+            <div id="GeneralProfile" asp-action="GeneralProfile" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <h2>My Applications</h2>
+                <div class="content">
+                    <main>
+                        <div class="container-fluid">
+                            <div class="row">
+
+                                <h2>My Applications</h2>
 
 
-                <div class="tab">
-                    <button class="tablinks" onclick="openpage(event, 'Active')">Active</button>
-                    <button class="tablinks" onclick="openpage(event, 'Inactive')">Inactive</button>
-                    <button class="tablinks" onclick="openpage(event, 'All')">All Applications</button>
-                </div>
+                                <div class="tab">
+                                    <button class="tablinks" onclick="openpage(event, 'Active')">Active</button>
+                                    <button class="tablinks" onclick="openpage(event, 'Inactive')">Inactive</button>
+                                    <button class="tablinks" onclick="openpage(event, 'All')">All Applications</button>
+                                </div>
 
-                <div id="Active" class="tabcontent">
-                    <p>Still active applications.</p>
-                </div>
+                                <div id="Active" class="tabcontent">
+                                    <p>Still active applications.</p>
+                                </div>
 
-                <div id="Inactive" class="tabcontent">
-                    <p>Applications expired, good luck for future.</p>
-                </div>
+                                <div id="Inactive" class="tabcontent">
+                                    <p>Applications expired, good luck for future.</p>
+                                </div>
 
-                <div id="All" class="tabcontent">
-                    <p>Whole views.</p>
+                                <div id="All" class="tabcontent">
+                                    <p>Whole views.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
                 </div>
             </div>
         </div>
-    </main>
-</div>
+    </div>
+</main>
 
 
 <script>
