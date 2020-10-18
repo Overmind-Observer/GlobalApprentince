@@ -259,12 +259,19 @@ namespace Global_Intern.Controllers
 
 
         //Create CreateInternController  
-
-        public IActionResult CreateInternship()
+        public IActionResult CreateInternships()
         {
+
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
             return View();
         }
-        
+
+
         
         
         //From here is Intern Applications methods
