@@ -264,44 +264,24 @@ namespace Global_Intern.Controllers
         {
             return View();
         }
+        
+        
+        
+        //From here is Intern Applications methods
+        public IActionResult InternApplications()
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
 
-        /*
-                public IActionResult CreateInternController(AccountRegister new_user)
-                {
-                    using (GlobalDBContext _context = new GlobalDBContext())
-                    {
-
-                        public int InternshipId;
-                        public string InternshipTitle;
-                        public string InternshipType;
-                        public string InternshipDuration;
-                        public string InternshipBody;
-                        public bool InternshipVirtual;
-                        public string InternshipPaid;
-                        public string InternshipEmail;
-                        public System.DateTime InternshipExpDate;
-                        public System.DateTime InternshipCreatedAt;
-                        public System.DateTime InternshipUpdatedAt;
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
 
-                        int InternshipID = new id;
-
-
-                        Console.Write("Internship Title: ");
-                        InternshipTitle = Console.ReadLine();
-
-                        Console.Write("Internship Type: ");
-                        InternshipType = Console.ReadLine();
-
-                        Console.Write("Internship Duration: ");
-                        InternshipDuration = Console.ReadLine();
-
-                        Console.Write("Internship Body: ");
-                        InternshipBody = Console.ReadLine();
-                    }
-                    return View();
-                }
-                */
+            return View();
+        }
+        
+      
 
 
     }
