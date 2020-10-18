@@ -1,5 +1,21 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+@model Global_Intern.Models.EmployerModels.EmployerCompanyModel;
 @{
+    ViewData["Title"] = "CompleteProfile";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
 }
+
+
+<div class="content">
+    <main>
+        <div class="container-fluid">
+            <form id="GeneralProfile" asp-action="CompanyDetails" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <h1> Create A Course </h1>
+                <p> This page is for teachers create a course, fill in course details, 
+                     and ready for post for students. </p>
+
+            </form>
+        </div>
+    </main>
+</div>
