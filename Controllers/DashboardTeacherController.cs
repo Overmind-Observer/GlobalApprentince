@@ -127,6 +127,38 @@ namespace Global_Intern.Controllers
 
             return View();
         }
+        
+        
+        
+        
+        public IActionResult CreateCourses()
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+
+            return View();
+        }
+
+
+
+        public IActionResult Subscribers()
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+
+            return View();
+        }
+
 
 
 
