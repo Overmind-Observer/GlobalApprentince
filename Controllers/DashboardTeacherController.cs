@@ -94,7 +94,7 @@ namespace Global_Intern.Controllers
 
 
         // Dashboard Teacher controller start here.
-        public IActionResult TeacherGeneralProfile()
+        public IActionResult GeneralProfile()
         {
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
@@ -112,9 +112,10 @@ namespace Global_Intern.Controllers
             }
 
         }
-
-/*
-        public IActionResult TeacherGeneralProfile(ProfileViewTeacher fromData)
+        
+        
+        
+        public IActionResult Courses()
         {
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
@@ -123,39 +124,11 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-            // When Save button is clicked
-            using (GlobalDBContext _context = new GlobalDBContext())
-            {
-                if (fromData.UserImage != null && fromData.UserImage.Length > 0)
-                {
-                    string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
-                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + fromData.UserImage.FileName;
-                    string filePath = uploadFolder + uniqueFileName;
-                    fromData.UserImage.CopyTo(new FileStream(filePath, FileMode.Create));
 
-                    // Delete previous uploaded Image
-                    if (!String.IsNullOrEmpty(_user.UserImage))
-                    {
-                        string imagePath = uploadFolder + _user.UserImage;
-                        System.IO.File.Delete(imagePath);
-                    }
-
-                    // if new image is uploaded with other user info
-                    _user.AddFromTeacherProfileView(fromData, uniqueFileName);
-                }
-                else
-                {
-                    // Adding generalProfile attr to user without image
-                    _user.AddFromTeacherProfileView(fromData);
-                }
-                _context.Users.Update(_user);
-                _context.SaveChanges();
-                ProfileViewStudent gen = new ProfileViewStudent(_user);
-                return View(gen);
-
-            }
+            return View();
         }
-*/
+
+
 
 
 
