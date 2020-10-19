@@ -131,17 +131,6 @@ namespace Global_Intern.Controllers
 
             }
         }
-        public IActionResult Qualifications()
-        {
-            // TODO
-            return View();
-        }
-        [HttpPost]
-        public IActionResult Qualifications(Qualification qualification)
-        {
-            // TODO
-            return View();
-        }
 
         public void setUser()
         {
@@ -165,5 +154,75 @@ namespace Global_Intern.Controllers
 
             }
         }
+        
+        
+        
+        // Qualifications page works on 17 Oct 2020.
+        public IActionResult Qualifications()
+        {
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            return View();
+
+        }
+        [HttpPost]
+        public IActionResult Qualifications(Qualification qualification)
+        {
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+                // additional codes?
+            }
+
+            return View();
+        }
+
+
+        // Documents page works on 17 Oct 2020.
+        public IActionResult Documents()
+        {
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            return View();
+        }
+
+
+
+
+        // Experience page works on 17 Oct 2020.
+        public IActionResult Experience()
+        {
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            return View();
+        }
+
+
+
+        // MyApplications page works on 17 Oct 2020.
+        public IActionResult MyApplications()
+        {
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            return View();
+        }
+        
+        
+        
     }
 }

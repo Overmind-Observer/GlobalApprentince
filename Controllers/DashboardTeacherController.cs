@@ -151,7 +151,7 @@ namespace Global_Intern.Controllers
                 ProfileViewTeacher gen = new ProfileViewTeacher(_user);
                 return View(gen);
 
-            }
+            return View();
         }
 
         */
@@ -175,15 +175,6 @@ namespace Global_Intern.Controllers
                 }
                 return View(model);
             }
-
         }
-
-
-
-
-
-
-
-
     }
 }
