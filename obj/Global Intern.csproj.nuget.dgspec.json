@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\thom\\source\\repos\\GlobalApprentince\\Global Intern.csproj": {}
+    "C:\\Users\\thom\\Source\\Repos\\GlobalApprentince\\Global Intern.csproj": {}
   },
   "projects": {
-    "C:\\Users\\thom\\source\\repos\\GlobalApprentince\\Global Intern.csproj": {
+    "C:\\Users\\thom\\Source\\Repos\\GlobalApprentince\\Global Intern.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thom\\source\\repos\\GlobalApprentince\\Global Intern.csproj",
+        "projectUniqueName": "C:\\Users\\thom\\Source\\Repos\\GlobalApprentince\\Global Intern.csproj",
         "projectName": "Global Intern",
-        "projectPath": "C:\\Users\\thom\\source\\repos\\GlobalApprentince\\Global Intern.csproj",
+        "projectPath": "C:\\Users\\thom\\Source\\Repos\\GlobalApprentince\\Global Intern.csproj",
         "packagesPath": "C:\\Users\\thom\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thom\\source\\repos\\GlobalApprentince\\obj\\",
+        "outputPath": "C:\\Users\\thom\\Source\\Repos\\GlobalApprentince\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\thom\\AppData\\Roaming\\NuGet\\NuGet.Config",

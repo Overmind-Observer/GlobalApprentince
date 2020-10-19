@@ -969,3 +969,4 @@ C:\Users\thom\source\repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Inte
 C:\Users\thom\source\repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.dll
 C:\Users\thom\source\repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.pdb
 C:\Users\thom\source\repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Global Intern.genruntimeconfig.cache
+C:\Users\thom\source\repos\GlobalApprentince\obj\Debug\netcoreapp3.1\Razor\Views\Home\About.cshtml.g.cs

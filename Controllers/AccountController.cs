@@ -57,7 +57,7 @@ namespace Global_Intern.Controllers
                 User user = _context.Users.FirstOrDefault(u => u.UserEmail == new_user.Email);
                 if (user != null)
                 {
-                    ViewBag.Messsage = new_user.FirstName + " " + new_user.LastName + " successfully registered. A Email has been sent for the verfication.";
+                    ViewBag.Message = new_user.FirstName + " " + new_user.LastName + " successfully registered. A Email has been sent for the verfication.";
                     return View();
                 }
 
@@ -67,6 +67,7 @@ namespace Global_Intern.Controllers
                 // Password hashed with extra layer of security
                 string password = new_user.Password;
                 CustomPasswordHasher pwd = new CustomPasswordHasher();
+                
                 // increse the size to increase secuirty but lower performance 
                 string salt = pwd.CreateSalt(10);
                 string hashed = pwd.HashPassword(password, salt);
@@ -74,6 +75,7 @@ namespace Global_Intern.Controllers
                 new_user.Password = hashed;
                 // var errors = ModelState.Values.SelectMany(v => v.Errors);
                 Role role = _context.Roles.Find(new_user.UserRole);
+                
                 User theUser = new User();
                 theUser.AddFromAccountRegsiter(new_user, role, salt);
                 string uniqueToken = Guid.NewGuid().ToString("N").Substring(0, 6);
@@ -97,6 +99,7 @@ namespace Global_Intern.Controllers
             if (redirect != null)
             {
                 TempData["redirect"] = redirect;
+                
             }
             return View();
         }
@@ -120,7 +123,7 @@ namespace Global_Intern.Controllers
                     CustomPasswordHasher pwd = new CustomPasswordHasher();
                     string hashed = pwd.HashPassword(user.Password, theUser.Salt);
                     // Check if the user entered password is correct
-                    if (hashed == theUser.UserPassword)
+                    if (hashed != theUser.UserPassword)
                     {
                         
                         //string usr = JsonConvert.SerializeObject(theUser, Formatting.Indented, new JsonSerializerSettings()

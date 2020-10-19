@@ -9,8 +9,8 @@ namespace Global_Intern.Data
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = @"Data Source=localhost\sqlexpress;Initial Catalog=GlobalDB;Integrated Security=True";
-            //string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Overmind\Documents\GlobalDB.mdf;Integrated Security=True;Connect Timeout=30";
+            //string connectionString = @"Data Source=localhost\sqlexpress;Initial Catalog=GlobalDB;Integrated Security=True";
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\thom\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\MSSQLLocalDB\UserDatabase.mdf;Integrated Security=True;Connect Timeout=30";
 
             _ = optionsBuilder
                 .UseSqlServer(connectionString, builder => builder.UseRowNumberForPaging(true));

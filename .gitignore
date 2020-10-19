@@ -4,6 +4,7 @@ _ReSharper.*
 bin
 obj
 packages
+.vs/
 .vs/Global Intern/DesignTimeBuild/.dtbcache.v2
 .vs/Global Intern/config/applicationhost.config
 .vs/Global Intern/v16/.suo
@@ -18,3 +19,4 @@ obj/project.nuget.cache
 /obj
 
 .vs
+./vs/
