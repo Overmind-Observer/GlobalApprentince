@@ -157,8 +157,5 @@ namespace Global_Intern.Controllers
 
             return View();
         }
-        
-        
-        
     }
 }
