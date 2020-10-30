@@ -80,12 +80,14 @@ namespace Global_Intern.Controllers
                 theUser.AddFromAccountRegsiter(new_user, role, salt);
                 string uniqueToken = Guid.NewGuid().ToString("N").Substring(0, 6);
                 theUser.UniqueToken = uniqueToken;
+                
                 _context.Users.Add(theUser);
                 
                 SendEmail email = new SendEmail(_emailSettings);
                 string fullname = theUser.UserFirstName + " " + theUser.UserLastName;
                 string msg = "Please verify you email account for the verification. Click on the link to verify :";
                 msg += _domainurl + "/Account/ConfirmEmail?email=" + theUser.UserEmail + "&token=" + theUser.UniqueToken;
+                
                 
                 _context.SaveChanges();
                 email.SendEmailtoUser(fullname, theUser.UserEmail, "Email Verification", msg);
@@ -123,7 +125,7 @@ namespace Global_Intern.Controllers
                     CustomPasswordHasher pwd = new CustomPasswordHasher();
                     string hashed = pwd.HashPassword(user.Password, theUser.Salt);
                     // Check if the user entered password is correct
-                    if (hashed != theUser.UserPassword)
+                    if (hashed == theUser.UserPassword)
                     {
                         
                         //string usr = JsonConvert.SerializeObject(theUser, Formatting.Indented, new JsonSerializerSettings()

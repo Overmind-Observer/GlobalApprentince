@@ -15,25 +15,26 @@ namespace Global_Intern.Models.TeacherModels
 		public string CourseDuration { get; set; }   // 10 hours; 50 hours
 		public string CourseInfo { get; set; }     // course short intro
 		public string CourseFees { get; set; }    // web development 20$ per hour; software tester 25$ per hour
-		public System.DateTime CourseExpDate { get; set; }
-		public System.DateTime CourseCreatedAt { get; set; }
-		public System.DateTime CourseUpdatedAt { get; set; }
+		//public System.DateTime CourseExpDate { get; set; }
+		//public System.DateTime CourseCreatedAt { get; set; }
+		//public System.DateTime CourseUpdatedAt { get; set; }
 
 
 		// add on 6th 10 2020 matching dashboard teacher.
-		public TeacherCourseModel()
-		{
+		//public TeacherCourseModel()
+		//{
 
-		}
+		//}
 	 
-		public TeacherCourseModel(Course course)
-		{
-			CourseTitle = course.CourseTitle;
-			CourseType = course.CourseType;
-			CourseDuration = course.CourseDuration;
-			CourseFees = course.CourseFees;
-
-		}
-
+		//public TeacherCourseModel(Course course)
+		//{
+		//	this.CourseTitle = course.CourseTitle;
+		//	this.CourseType = course.CourseType;
+		//	this.CourseDuration = course.CourseDuration;
+		//	this.CourseInfo = course.CourseInfo;
+		//	this.CourseFees = course.CourseFees;
+		//	this.CourseExpDate = course.CourseExpDate;
+		//	this.CourseUpdatedAt = course.CourseUpdatedAt;
+		//}
 	}
 }

@@ -52,9 +52,14 @@ namespace Global_Intern.Controllers
                 ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
             }
 
+            ConsoleLogs consoleLogs = new ConsoleLogs(_env);
+
+            consoleLogs.WriteErrorLog("This is a test to see if his function is working");
+
 
             return View();
         }
+
 
         public async Task<IActionResult> AllInternships([FromQuery] string search, int pageNumber = 0, int pageSize = 0)
         {

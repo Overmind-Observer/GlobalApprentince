@@ -1,6 +1,7 @@
 using Global_Intern.Data;
 using Global_Intern.Models;
 using Global_Intern.Models.GeneralProfile;
+using Global_Intern.Models.TeacherModels;
 using Global_Intern.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -28,17 +29,19 @@ namespace Global_Intern.Controllers
         private readonly string host;
         private readonly HttpClient _client = new HttpClient();
         private readonly string Internship_url = "/api/Internships";
+        //private readonly GlobalDBContext _context;
         IWebHostEnvironment _env;
         private User _user;
 
 
 
-        public DashboardTeacherController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth, IWebHostEnvironment env)
+        public DashboardTeacherController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth, IWebHostEnvironment env, GlobalDBContext context)
         {
             _env = env;
             _httpContextAccessor = httpContextAccessor;
             host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
             _customAuthManager = auth;
+            
 
 
             // sets User _user using session
@@ -127,8 +130,6 @@ namespace Global_Intern.Controllers
             return View();
         }
 
-
-
         public IActionResult CreateCourses()
         {
             // Display User name on the right-top corner - shows user is logedIN
@@ -138,7 +139,38 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
+            return View();
+        }
 
+        [HttpPost]
+        public IActionResult CreateCourses(TeacherCourseModel NewCourse)
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+
+                Course nCourse = new Course();
+
+                User user = _context.Users.Find(User_id);
+
+                //this creates new course
+                nCourse.CreateNewCourse(NewCourse,user);
+
+                _context.Course.Add(nCourse);
+
+                _context.SaveChanges();
+
+                ViewBag.Message = NewCourse.CourseTitle + "successfully created check the courses table to see if it has been created";
+
+            }
             return View();
         }
 

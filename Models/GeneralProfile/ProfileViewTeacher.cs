@@ -13,7 +13,7 @@ namespace Global_Intern.Models.GeneralProfile
         public int UserZip { get; set; }
         public string UserPhone { get; set; }
         public string UserImageName { get; set; }
-        public IFormFile UserImage { get; set; } // From POST
+        public IFormFile UserImage { get; set; } // From POST 
         public string UserGender { get; set; }
 
         public ProfileViewTeacher(User user)
