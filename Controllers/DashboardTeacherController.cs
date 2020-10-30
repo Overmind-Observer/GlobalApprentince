@@ -168,7 +168,7 @@ namespace Global_Intern.Controllers
 
                 _context.SaveChanges();
 
-                ViewBag.Message = NewCourse.CourseTitle + "successfully created check the courses table to see if it has been created";
+                ViewBag.Message = NewCourse.CourseTitle + " successfully created check the courses table to see if it has been created";
 
             }
             return View();

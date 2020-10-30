@@ -54,7 +54,9 @@ namespace Global_Intern.Controllers
 
             ConsoleLogs consoleLogs = new ConsoleLogs(_env);
 
-            consoleLogs.WriteErrorLog("This is a test to see if his function is working");
+            GlobalDBContext context = new GlobalDBContext();
+
+            consoleLogs.WriteErrorLog(context.GeneratePath());
 
 
             return View();
