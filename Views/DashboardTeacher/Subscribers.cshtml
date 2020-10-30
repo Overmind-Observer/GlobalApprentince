@@ -11,8 +11,39 @@
             <form id="GeneralProfile" asp-action="CompanyDetails" enctype="multipart/form-data" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <h1> Subscribers of Courses </h1>
+                <h2>Subscribers of Courses</h2>
                 <p>This page is a view of every course has how many subscribers.</p>
+
+                <div class="card">
+                    <img src="img_avatar.png" alt="Avatar" style="width:100%">
+                    <div class="container">
+                        <h4><b>Course 1   .NET Core</b></h4>
+
+                        <details>
+                            <!-- Format -->
+                            <summary>Subscriber's Name Here</summary>
+                            <p>Subscriber's Qualifications details + Experience details.</p>
+                        </details>
+
+                        <details>
+                            <summary>Jackson Liu</summary>
+                            <p>NZ Diploma in IT Support & Bachelor of Applied IT. 3 Months Full-Stack developer intern.</p>
+                        </details>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="img_avatar.png" alt="Avatar" style="width:100%">
+                    <div class="container">
+                        <h4><b>Course 2  DBA</b></h4>
+
+                        <details>
+                            <summary>Jackson Liu</summary>
+                            <p>NZ Diploma in IT Support & Bachelor of Applied IT. 3 Months Full-Stack developer intern.</p>
+                        </details>
+
+                    </div>
+                </div>
 
             </form>
         </div>
