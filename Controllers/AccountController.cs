@@ -213,7 +213,7 @@ namespace Global_Intern.Controllers
                 // Check given Email and salt(token) are in the same user 
                 User theUser = _context.Users.Include(r=>r.Role).Where(u => u.UserEmail == email).FirstOrDefault<User>();
                 // if we found the user
-                if (theUser.UniqueToken == token)
+                if (theUser.UniqueToken != token)
                 {
                     // update the EmailVerified to True in the User table
                     theUser.UserEmailVerified = true;

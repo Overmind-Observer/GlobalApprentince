@@ -15,6 +15,9 @@ obj/Global Intern.csproj.nuget.g.props
 obj/project.assets.json
 obj/project.nuget.cache
 
+*.jfm
+*.ldf
+
 /bin
 /obj
 

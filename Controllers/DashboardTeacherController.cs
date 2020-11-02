@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Global_Intern.Controllers
 {
@@ -32,6 +33,7 @@ namespace Global_Intern.Controllers
         //private readonly GlobalDBContext _context;
         IWebHostEnvironment _env;
         private User _user;
+        GlobalDBContext context = new GlobalDBContext();
 
 
 
@@ -105,18 +107,57 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-
-            using (GlobalDBContext _context = new GlobalDBContext())
+            using (GlobalDBContext context = new GlobalDBContext())
             {
-                ProfileViewTeacher gen = new ProfileViewTeacher(_user);
 
-                return View(gen);
+                User user = new User();
+
+                return View(_user);
+
             }
 
+
         }
-        
-        
-        
+
+        //public async Task<IActionResult> Kopl()
+        [HttpPost]
+        public IActionResult GeneralProfile(User UpdateDetails)
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+
+            GlobalDBContext _context = new GlobalDBContext();
+
+                //assigns the new values to the updated ones
+                _user.UserFirstName = UpdateDetails.UserFirstName;
+                _user.UserLastName = UpdateDetails.UserLastName;
+                _user.UserAddress = UpdateDetails.UserAddress;
+                _user.UserCity = UpdateDetails.UserCity;
+                _user.CreatedAt = UpdateDetails.CreatedAt;
+                _user.UserState = UpdateDetails.UserState;
+                _user.UserCountry = UpdateDetails.UserCountry;
+                _user.UserZip = UpdateDetails.UserZip;
+                _user.UserImage = UpdateDetails.UserImage;
+                _user.UserGender = UpdateDetails.UserGender;               
+
+                _context.Users.Update(_user);
+
+                _context.SaveChanges();
+
+                ViewBag.Message = _user.UserFirstName + " " + _user.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
+
+                return View(_user);
+            
+        }
+
+
+
         public IActionResult Courses()
         {
             // Display User name on the right-top corner - shows user is logedIN
@@ -143,7 +184,7 @@ namespace Global_Intern.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCourses(TeacherCourseModel NewCourse)
+        public IActionResult CreateCourses(Course NewCourse)
         {
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
@@ -154,10 +195,18 @@ namespace Global_Intern.Controllers
 
             var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
 
+            var WhatIsThis = _customAuthManager.Tokens.FirstOrDefault().Value.Item1;
+
+            var WhatIsThis1 = _customAuthManager.Tokens.FirstOrDefault().Value.Item2;
+
+            //var WhatIsThis2 = _customAuthManager.Tokens.FirstOrDefault().Value.GetType;
+
             using (GlobalDBContext _context = new GlobalDBContext())
             {
 
                 Course nCourse = new Course();
+
+                //User user = _context.Users.Find(User_id);
 
                 User user = _context.Users.Find(User_id);
 
@@ -168,7 +217,7 @@ namespace Global_Intern.Controllers
 
                 _context.SaveChanges();
 
-                ViewBag.Message = NewCourse.CourseTitle + " successfully created check the courses table to see if it has been created";
+                ViewBag.Message = NewCourse.CourseTitle + " successfully created check the courses table to see if it has been created"+WhatIsThis+"//"+WhatIsThis1;
 
             }
             return View();

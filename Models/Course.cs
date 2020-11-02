@@ -28,7 +28,9 @@ namespace Global_Intern.Models
         // add on 6th 10 2020
         public virtual User User { get; set; }
 
-        public void CreateNewCourse(TeacherCourseModel NewCourse, User user)
+
+
+        public void CreateNewCourse(Course NewCourse, User user)
         {
             this.CourseTitle = NewCourse.CourseTitle;
             this.CourseType = NewCourse.CourseType;

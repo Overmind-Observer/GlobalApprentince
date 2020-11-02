@@ -54,11 +54,17 @@ namespace Global_Intern.Controllers
 
             ConsoleLogs consoleLogs = new ConsoleLogs(_env);
 
-            GlobalDBContext context = new GlobalDBContext();
+            using (GlobalDBContext context = new GlobalDBContext()) { 
 
-            consoleLogs.WriteErrorLog(context.GeneratePath());
+                //consoleLogs.WriteErrorLog(context.GeneratePath());
 
 
+
+            //var WhatIsThis = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+
+            ViewBag.Message = "Looks like this is a ";
+                 
+            }
             return View();
         }
 
