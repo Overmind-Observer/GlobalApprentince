@@ -107,6 +107,16 @@
                                     </a>
                                 </li>
                             }
+                            else if (@each["field"] == "Profile")
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="GeneralProfile" class="nav-link sidebarLinks">
+                                        <i class="material-icons icon">@each["icon"]</i>
+                                        <span class="text">@each["field"]</span>
+                                    </a>
+
+                                </li>
+                            }
                             else
                             {
                                 <li class="nav-item">

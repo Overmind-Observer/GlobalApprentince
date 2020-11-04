@@ -7,10 +7,14 @@ namespace Global_Intern.Models
 {
     public class User
     {
+        public User()
+        {
+            this.CreatedAt = DateTime.UtcNow;
+        }
         // CP-> Complete Prfile - fields which will be filled after the email has been verfied
         // Auto -> fields which gets filled by the system
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int UserId { get; set; }
         [Required]
         public string UserFirstName { get; set; }

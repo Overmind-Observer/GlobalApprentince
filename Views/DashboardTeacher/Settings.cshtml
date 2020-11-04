@@ -1,0 +1,35 @@
+﻿@model Global_Intern.Models.User;
+@{
+    ViewData["Title"] = "CreateCourse";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+
+<div class="container">
+    <main>
+        <div class="settings-content">
+            <form id="Settings" asp-action="DeleteUser" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="content">
+                    <main>
+                        <section class="setting-section">
+                            <div class="form-group">
+                                <div class="row py-4">
+                                    <div class="col-lg-6">
+                                        <h1>Settings</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <input type="submit" class="btn btn-info" onclick="validate();" value="Delete Account">
+                    </main>
+                </div>
+            </form>
+            <script>
+                function validate() {
+                    confirm(" Are you sure you want to delete this user ");
+                }
+            </script>
+        </div>
+    </main>
+</div>
