@@ -74,6 +74,12 @@ namespace Global_Intern.Controllers
                 //new_user.Salt = salt;
                 new_user.Password = hashed;
                 // var errors = ModelState.Values.SelectMany(v => v.Errors);
+
+                if (new_user.UserRole == 0) 
+                { 
+                    new_user.UserRole = 1;
+                }
+
                 Role role = _context.Roles.Find(new_user.UserRole);
                 
                 User theUser = new User();
