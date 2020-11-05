@@ -21,15 +21,20 @@
                                 </div>
                             </div>
                         </section>
-                        <input type="submit" class="btn btn-info" onclick="validate();" value="Delete Account">
+                        <input type="submit" class="btn btn-info" onclick="return validate();"  value="Delete Account">
                     </main>
                 </div>
             </form>
-            <script>
-                function validate() {
-                    confirm(" Are you sure you want to delete this user ");
-                }
-            </script>
         </div>
     </main>
+    <script type="text/javascript">
+       function validate(){
+           if (confirm("@ViewBag.Message") == true) {
+               return true;
+           }
+           else {
+               return false;
+           }
+        }
+    </script>
 </div>
