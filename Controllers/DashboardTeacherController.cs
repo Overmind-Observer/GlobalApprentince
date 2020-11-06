@@ -107,6 +107,8 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
+            
+
             using (GlobalDBContext context = new GlobalDBContext())
             {
 
@@ -167,6 +169,11 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
+            Course course = new Course();
+
+            ViewData["CoursesModel"] = course;
+
+            GlobalDBContext context = new GlobalDBContext 
 
             return View();
         }

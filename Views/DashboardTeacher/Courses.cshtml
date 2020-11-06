@@ -1,4 +1,4 @@
-@model Global_Intern.Models.EmployerModels.EmployerCompanyModel;
+@model Global_Intern.Models.Course;
 @{
     ViewData["Title"] = "CompleteProfile";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
@@ -10,47 +10,23 @@
         <div class="container-fluid">
             <form id="GeneralProfile" asp-action="CompanyDetails" enctype="multipart/form-data" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-
-
-                <div class="content">
-                    <main>
-                        <div class="container-fluid">
-
-                            <!-- The courses view like card views. -->
-                            <h2> Courses Infomation </h2>
-                            <p>We offer these courses at evening or 1-to-1.</p>
-
-                            <div class="row">
-                                <div class="column">
-                                    <div class="card">
-                                        <h3>ASP.NET Core</h3>
-                                        <p id="CourseType">Evening Class </p>
-                                        <p id="CourseDuration">3 hours per week, 10 weeks</p>
-                                        <p id="CourseBody">Course time always be on Monday 7:30 - 9pm & Wednesday 7:30 - 9pm </p>
-                                        <p id="CourseFees">$30 per hour</p>
-                                    </div>
+                <section class="CourseDetails">
+                    <div class="form-group">
+                        <div class="row py-4">
+                            <div class="col-lg-6">
+                                <h1>Course details</h1>
+                                <h3 style="color:green">@ViewBag.Message</h3>
+                                @{ foreach (var item in ViewData["CoursesModel"] as dynamic)
+                                    {
+                                <div class="form-group">
+                                    <label for="CourseTitle" asp-for="CourseTitle"></label>
                                 </div>
-
-                                <div class="column">
-                                    <div class="card">
-                                        <h3>DBA</h3>
-                                        <p id="CourseType">1-to-1</p>
-                                        <p id="CourseDuration">10 hours per week, 4 weeks</p>
-                                        <p id="CourseBody">Students can booking in their own time. </p>
-                                        <p id="CourseFees">$30 per hour</p>
-                                    </div>
-                                </div>
+                                        }
+                                    }
                             </div>
-
                         </div>
-                    </main>
-                </div>
-
-
-
-
-
+                    </div>
+                </section>
             </form>
         </div>
     </main>

@@ -16,10 +16,11 @@ namespace Global_Intern.Data
 
 
             //string connectionString = @"Data Source=localhost\sqlexpress;Initial Catalog=GlobalDB;Integrated Security=True";
-            string connectionString = GeneratePath();
+            //string connectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\thom\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\MSSQLLocalDB\Test.mdf;Integrated Security = True;Connect Timeout =30";
 
+            string connectionString = GeneratePath(); 
 
-            _ = optionsBuilder
+              _ = optionsBuilder
                 .UseSqlServer(connectionString, builder => builder.UseRowNumberForPaging(true));
 
         }
