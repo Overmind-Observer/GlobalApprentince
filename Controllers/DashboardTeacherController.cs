@@ -173,7 +173,18 @@ namespace Global_Intern.Controllers
 
             ViewData["CoursesModel"] = course;
 
-            GlobalDBContext context = new GlobalDBContext 
+            GlobalDBContext context = new GlobalDBContext();
+
+            ConsoleLogs consoleLogs = new ConsoleLogs(_env);
+
+            
+
+            for (var k=0;k<16;k++)
+            {
+                consoleLogs.WriteErrorLog(context.Users.ToList().ToString());
+            }
+
+
 
             return View();
         }

@@ -7,16 +7,27 @@ namespace Global_Intern.Util
     public class UserFilter
     {
         // Created to remove vital info like salt from the user.
-        public static List<Internship> RemoveUserInfoFromInternship(List<Internship> source)
+        public static List<Internship> RemoveUserInfoFromInternship(List<Internship> intern)
         {
 
-            for (int i = 0; i < source.Count(); i++)
+            for (int i = 0; i < intern.Count(); i++)
             {
-                source[i].User.UserPassword = "";
-                source[i].User.Salt = "";
+                intern[i].User.UserPassword = "";
+                intern[i].User.Salt = "";
             }
 
-            return source;
+            return intern;
+        }
+
+        public static List<Course> RemoveUserInfoFromCourses(List<Course> course)
+        {
+            for (int i = 0; i < course.Count(); i++)
+            {
+                course[i].User.UserPassword = "";
+                course[i].User.Salt = "";
+            }
+
+            return course;
         }
     }
 }

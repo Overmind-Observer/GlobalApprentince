@@ -1,0 +1,90 @@
+@model IEnumerable<Global_Intern.Models.Course>
+@{
+    ViewData["Title"] = "CompleteProfile";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+
+<h1>Courses</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseId);
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseTitle);
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseType);
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseDuration);
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseInfo);
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseFees);
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseCreatedAt);
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseExpDate);
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseUpdatedAt);
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.User);
+            </th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.CourseId);
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CourseTitle);
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CourseType);
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CourseDuration);
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CourseInfo);
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CourseFees);
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CourseCreatedAt);
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CourseExpDate);
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CourseUpdatedAt);
+            </td>
+            @*<td>
+                @Html.DisplayFor(model => item.User);
+            </td>*@
+            <td>
+                <p>
+                    <a asp-action="Edit" asp-route-id="@item.CourseId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CourseId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CourseId">Delete</a>
+                </p>
+
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

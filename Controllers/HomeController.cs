@@ -24,7 +24,9 @@ namespace Global_Intern.Controllers
         private readonly ICustomAuthManager _customAuthManager;
         private readonly string host;
         private readonly HttpClient _client = new HttpClient();
+        private readonly HttpClient _client1 = new HttpClient();
         private readonly string Internship_url = "/api/Internships";
+        private readonly string Course_url = "/api/Course";
         private User _user = null;
         IWebHostEnvironment _env;
         public HomeController(ILogger<HomeController> logger,
@@ -74,11 +76,13 @@ namespace Global_Intern.Controllers
             IEnumerable<Internship> model;
             HttpResponseMessage resp;
             string InternshipUrl = host + Internship_url;
+            string searchh = search;
             try
             {
                 if (!String.IsNullOrEmpty(search))
                 {
                     InternshipUrl = InternshipUrl + "?search=" + search;
+                    //InternshipUrl = InternshipUrl;
                     if (pageNumber != 0 && pageSize != 0)
                     {
                         InternshipUrl += "&pageNumber=" + pageNumber.ToString() + "&pageSize=" + pageSize.ToString();
@@ -108,6 +112,69 @@ namespace Global_Intern.Controllers
             }
         }
 
+        public async Task<IActionResult> AllCourses([FromQuery] string search, int pageNumber = 0, int pageSize = 0)
+        {
+            //Course model;
+            IEnumerable<Course> model;
+            HttpResponseMessage resp;
+            String CourseUrl = host + Course_url;
+            //String CourseUrl = host + Internship_url;
+            try
+            {
+                if (!String.IsNullOrEmpty(search)) {
+                    CourseUrl = CourseUrl + "?search" + search;
+                    if (pageNumber != 0 && pageSize != 0) {
+                        CourseUrl += "&pageNumber" + pageNumber.ToString() + "&pageSize" + pageSize.ToString();
+                    }
+                }
+                else
+                {
+                    if (pageNumber != 0 && pageSize != 0) {
+                        CourseUrl += "?pageNumber" + pageNumber.ToString() + "&pageSize" + pageSize.ToString();
+                    }
+                }
+                
+
+                    
+                resp = await _client1.GetAsync(CourseUrl);
+                resp.EnsureSuccessStatusCode();
+                string responseBody = await resp.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
+                ViewBag.pageSize = data[0]["pageSize"];
+                ViewBag.totalPages = data[0]["totalPages"];
+                ViewBag.currentPage = data[0]["pageNumber"];
+                model = data[0]["data"][0].ToObject<IEnumerable<Course>>();
+                var intern = data[0]["data"][0];
+                return View(model);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+           
+        }
+
+        //public async Task<IActionResult> Test(int id)
+        //{
+        //    Course model;
+        //    IEnumerable<Course> courses;
+        //    HttpResponseMessage resp;
+        //    String CourseUrl = host + Internship_url1;
+        //    try
+        //    {
+        //        resp = await _client.GetAsync(CourseUrl);
+        //        resp.EnsureSuccessStatusCode();
+        //        string responseBody = await resp.Content.ReadAsStringAsync();
+        //        var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
+        //        model = data[0].ToObject<Internship>();
+        //        return View(model);
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        throw;
+        //    }
+
+        //}
 
         public async Task<IActionResult> Internship(int id)
         {

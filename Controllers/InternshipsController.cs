@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Global_Intern.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("api/[Controller]")]
     [ApiController]
     public class InternshipsController : ControllerBase
     {
@@ -37,7 +37,7 @@ namespace Global_Intern.Controllers
 
         // GET: api/Internships
         [HttpGet]
-        public ActionResult<IEnumerable<Internship>> GetInternships([FromQuery] string search, int pageNumber = 1, int PageSize = 10)
+        public ActionResult<IEnumerable<Internship>> GetInternships([FromQuery] string search, int pageNumber = 1, int PageSize = 8)
         {
             List<Internship> interns;
 
