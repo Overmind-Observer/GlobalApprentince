@@ -10,12 +10,8 @@ using Global_Intern.Services;
 using Global_Intern.Data;
 using Microsoft.Extensions.Options;
 using System.Net.Http;
-using Global_Intern.Models.GeneralProfile;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
 
 namespace Global_Intern.Controllers
 {
