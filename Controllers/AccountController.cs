@@ -250,7 +250,7 @@ namespace Global_Intern.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
+        public IActionResult ResetPassword(ResetPasswordModel resetPasswordModel) //changed to sync
         {
             return View();
         }

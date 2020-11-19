@@ -1,20 +1,14 @@
 using Global_Intern.Data;
 using Global_Intern.Models;
-using Global_Intern.Models.GeneralProfile;
-using Global_Intern.Models.TeacherModels;
 using Global_Intern.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Bcpg;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Global_Intern.Controllers
 {
@@ -29,7 +23,7 @@ namespace Global_Intern.Controllers
         private readonly ICustomAuthManager _customAuthManager;
         private readonly string host;
         private readonly HttpClient _client = new HttpClient();
-        private readonly string Internship_url = "/api/Internships";
+        //private readonly string Internship_url = "/api/Internships"; - does not used!?
         //private readonly GlobalDBContext _context;
         IWebHostEnvironment _env;
         private User _user;
@@ -224,12 +218,10 @@ namespace Global_Intern.Controllers
 
                 Course nCourse = new Course();
 
-                //User user = _context.Users.Find(User_id);
-
                 User user = _context.Users.Find(User_id);
 
                 //this creates new course
-                nCourse.CreateNewCourse(NewCourse,user);
+                nCourse.CreateNewCourse(NewCourse,user);    // no definition!?
 
                 _context.Course.Add(nCourse);
 

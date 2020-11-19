@@ -147,7 +147,7 @@ namespace Global_Intern.Controllers
                 var intern = data[0]["data"][0];
                 return View(model);
             }
-            catch(Exception ex)
+            catch (Exception) //removed unused variable ex
             {
                 throw;
             }
