@@ -1,19 +1,54 @@
-@model Global_Intern.Models.EmployerModels.EmployerCompanyModel;
+@model Global_Intern.Models.TeacherModels.TeacherCourseModel;
 @{
-    ViewData["Title"] = "CompleteProfile";
+    ViewData["Title"] = "CreateCourse";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
 }
 
 
-<div class="content">
+<div class="container">
     <main>
-        <div class="container-fluid">
-            <form id="GeneralProfile" asp-action="CompanyDetails" enctype="multipart/form-data" method="post">
+        <div class="login-content">
+            <form id="GeneralProfile" asp-action="CreateCourses" enctype="multipart/form-data" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="content">
+                    <main>
+                        <section class="NewCourseDetails">
+                            <div class="form-group">
 
-                <h1> Create A Course </h1>
-                <p> This page is for teachers create a course, fill in course details, 
-                     and ready for post for students. </p>
+                                <!-- The courses view like card views. -->
+                                <div class=" row py-4">
+                                    <div class="col-lg-6">
+                                        <h1>Create Course</h1>
+                                        <h3 style="color:green;">@ViewBag.Message</h3>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="CourseTitle">CourseTitle</label>
+                                <input class="form-control" asp-for="CourseTitle">
+                            </div>
+                            <div class="form-group">
+                                <label for="CourseType">CourseType</label>
+                                <input class="form-control" asp-for="CourseType">
+                            </div>
+                            <div class="form-group">
+                                <label for="CourseDuration">CourseDuration</label>
+                                <input class="form-control" asp-for="CourseDuration">
+                            </div>
+                            <div class="form-group">
+                                <label for="CourseInfo">CourseInfo</label>
+                                <input class="form-control" asp-for="CourseInfo">
+                            </div>
+                            <div class="form-group">
+                                <label for="CourseFees">CourseFees</label>
+                                <input class="form-control" asp-for="CourseFees">
+                            </div>
+                        </section>
+                        <input type="submit" class="btn btn-info" value="Save">
+
+                    </main>
+                </div>
 
             </form>
         </div>

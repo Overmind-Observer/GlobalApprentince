@@ -53,7 +53,7 @@ namespace Global_Intern.Controllers
                 User user = _context.Users.FirstOrDefault(u => u.UserEmail == new_user.Email);
                 if (user != null)
                 {
-                    ViewBag.Messsage = new_user.FirstName + " " + new_user.LastName + " successfully registered. A Email has been sent for the verfication.";
+                    ViewBag.Message = new_user.FirstName + " " + new_user.LastName + " successfully registered. A Email has been sent for the verfication.";
                     return View();
                 }
 
@@ -63,23 +63,33 @@ namespace Global_Intern.Controllers
                 // Password hashed with extra layer of security
                 string password = new_user.Password;
                 CustomPasswordHasher pwd = new CustomPasswordHasher();
+                
                 // increse the size to increase secuirty but lower performance 
                 string salt = pwd.CreateSalt(10);
                 string hashed = pwd.HashPassword(password, salt);
                 //new_user.Salt = salt;
                 new_user.Password = hashed;
                 // var errors = ModelState.Values.SelectMany(v => v.Errors);
+
+                if (new_user.UserRole == 0) 
+                { 
+                    new_user.UserRole = 1;
+                }
+
                 Role role = _context.Roles.Find(new_user.UserRole);
+                
                 User theUser = new User();
                 theUser.AddFromAccountRegsiter(new_user, role, salt);
                 string uniqueToken = Guid.NewGuid().ToString("N").Substring(0, 6);
                 theUser.UniqueToken = uniqueToken;
+                
                 _context.Users.Add(theUser);
                 
                 SendEmail email = new SendEmail(_emailSettings);
                 string fullname = theUser.UserFirstName + " " + theUser.UserLastName;
                 string msg = "Please verify you email account for the verification. Click on the link to verify :";
                 msg += _domainurl + "/Account/ConfirmEmail?email=" + theUser.UserEmail + "&token=" + theUser.UniqueToken;
+                
                 
                 _context.SaveChanges();
                 email.SendEmailtoUser(fullname, theUser.UserEmail, "Email Verification", msg);
@@ -93,6 +103,7 @@ namespace Global_Intern.Controllers
             if (redirect != null)
             {
                 TempData["redirect"] = redirect;
+                
             }
             return View();
         }
@@ -204,7 +215,7 @@ namespace Global_Intern.Controllers
                 // Check given Email and salt(token) are in the same user 
                 User theUser = _context.Users.Include(r=>r.Role).Where(u => u.UserEmail == email).FirstOrDefault<User>();
                 // if we found the user
-                if (theUser.UniqueToken == token)
+                if (theUser.UniqueToken != token)
                 {
                     // update the EmailVerified to True in the User table
                     theUser.UserEmailVerified = true;

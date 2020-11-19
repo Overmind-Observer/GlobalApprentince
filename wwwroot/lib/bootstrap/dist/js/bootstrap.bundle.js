@@ -3002,7 +3002,8 @@
    * Vertically (`left` and `right`), `start` is top and `end` is bottom.
    *
    * Some valid examples are:
-   * - `top-end` (on top of reference, right aligned)
+   * - `top-end` (on top of reference, right 
+   * ed)
    * - `right-start` (on right of reference, top aligned)
    * - `bottom` (on bottom, centered)
    * - `auto-end` (on the side with more space available, alignment depends by placement)

@@ -87,7 +87,7 @@ namespace Global_Intern.Data
                 });
                 _context.SaveChanges();
             }
-
+            
             var stduent1 = _context.Users.SingleOrDefault(a => a.UserFirstName.Equals("Sameer"));
             var stduent2 = _context.Users.SingleOrDefault(a => a.UserFirstName.Equals("Cara"));
             var employer1 = _context.Users.SingleOrDefault(a => a.UserFirstName.Equals("Harit"));

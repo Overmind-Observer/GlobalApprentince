@@ -1,6 +1,6 @@
+using System;
 using System.ComponentModel.DataAnnotations;
-
-
+using Global_Intern.Models.TeacherModels;
 
 namespace Global_Intern.Models
 {
@@ -28,6 +28,21 @@ namespace Global_Intern.Models
         // add on 6th 10 2020
         public virtual User User { get; set; }
 
+
+
+        public void CreateNewCourse(Course NewCourse, User user)
+        {
+            this.CourseTitle = NewCourse.CourseTitle;
+            this.CourseType = NewCourse.CourseType;
+            this.CourseDuration = NewCourse.CourseDuration;
+            this.CourseInfo = NewCourse.CourseInfo;
+            this.CourseFees = NewCourse.CourseFees;
+            this.CourseExpDate = DateTime.UtcNow;
+            this.CourseUpdatedAt = DateTime.UtcNow;
+            this.CourseCreatedAt = DateTime.UtcNow;
+            this.User = user;
+            
+        }
 
     }
 }

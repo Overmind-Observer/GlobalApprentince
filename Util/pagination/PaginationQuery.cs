@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Global_Intern.Models;
 
 namespace Global_Intern.Util.pagination
 {
@@ -47,10 +48,32 @@ namespace Global_Intern.Util.pagination
             var count = source.Count();
             var skip = (pageNumber - 1) * pageSize;
 
+            //var ite = source.OrderBy(source)
+
+            pageSize = count-1;
+
             var items = source.Skip(skip).Take(pageSize).ToList();
 
             return new PaginationQuery<T>(items, count, pageNumber, pageSize);
 
         }
+
+        //public static PaginationQuery<T> CreateAsync1(List<T> source, int pageNumber, int pageSize)
+        //{
+        //    // Paging calculation
+        //    var count = source.Count();
+        //    var skip = (pageNumber - 1) * pageSize;
+
+        //    //var ite = source.OrderBy(source)
+
+        //    //var item = source.RemoveAt(0);
+
+        //    var items = source.Skip(skip).Take(2).ToList();
+
+        //    //List<Course> items1 = items.RemoveAt(0);
+
+        //    return new PaginationQuery<T>(items, count, pageNumber, pageSize);
+
+        //}
     }
 }
