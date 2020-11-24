@@ -25,7 +25,7 @@ namespace Global_Intern.Controllers
         private readonly ICustomAuthManager _customAuthManager;
         private readonly string host;
         private readonly HttpClient _client = new HttpClient();
-        private readonly string Internship_url = "/api/Internships";
+        //private readonly string Internship_url = "/api/Internships"; - does not used!?
         private readonly IWebHostEnvironment _env;
 
 

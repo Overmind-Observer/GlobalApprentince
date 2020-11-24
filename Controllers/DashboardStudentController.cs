@@ -25,7 +25,7 @@ namespace Global_Intern.Controllers
         private readonly string host;
 
         private readonly HttpClient _client = new HttpClient(); // Used to access API -> Internship.
-        private readonly string Internship_url = "/api/Internships";
+        //private readonly string Internship_url = "/api/Internships"; - does not used!?
         IWebHostEnvironment _env; // to access the Content PATH aka wwwroot
         /// <summary>
         /// User object is quite important here. without accessing database again and again on every action. User is set on constructor level.
