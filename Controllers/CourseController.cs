@@ -37,21 +37,22 @@ namespace Global_Intern.Controllers
         {
             List<Course> courses;
 
-            if (!string.IsNullOrEmpty(search))
+            if (!String.IsNullOrEmpty(search))
             {
                 string query = "SELECT * FROM " + _table + "WHERE(CourseTitle LIKE('%" + search + "%') OR CourseType LIKE('%" + search + "%') OR CourseInfo LIKE('%" + search + "%'))";
                 courses = _context.Course.FromSqlRaw(query).Include(u => u.User).OrderBy(x => x.CourseExpDate).ToList();
             }
             else
             {
-                courses = _context.Course.Include(u => u.User).OrderBy(p => p.CourseExpDate).ToList();
+                courses = _context.Course.Include(u => u.User).OrderBy(p => p.CourseCreatedAt).ToList();
+                //courses = _context.Internships.Include(u => u.User).OrderBy(x => x.InternshipCreatedAt).ToList()
             }
 
-            var filtered = UserFilter.RemoveUserInfoFromCourses(courses);
+            //var filtered = UserFilter.RemoveUserInfoFromCourses(courses);
 
             //filtered = _context.Course.OrderBy(j => j.CourseExpDate).ToList();
 
-            var response = PaginationQuery<Course>.CreateAsync(filtered, pagenumber, pagesize);
+            var response = PaginationQuery<Course>.CreateAsync(courses, pagenumber, pagesize);
 
             return Ok(response);
         }

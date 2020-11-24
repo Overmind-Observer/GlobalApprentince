@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http; // for -> HttpClient to make request to API
 using System.Threading.Tasks;
 
@@ -112,6 +113,16 @@ namespace Global_Intern.Controllers
             }
         }
 
+        public class SimpleHttpResponseException : Exception
+        {
+            public HttpStatusCode StatusCode { get; private set; }
+
+            public SimpleHttpResponseException(HttpStatusCode statusCode, string content) : base(content)
+            {
+                StatusCode = statusCode;
+            }
+        }
+
         public async Task<IActionResult> AllCourses([FromQuery] string search, int pageNumber = 0, int pageSize = 0)
         {
             //Course model;
@@ -136,8 +147,8 @@ namespace Global_Intern.Controllers
                 
 
                     
-                resp = await _client1.GetAsync(CourseUrl);
-                resp.EnsureSuccessStatusCode();
+                resp = await _client.GetAsync(CourseUrl);
+                 resp.EnsureSuccessStatusCode();
                 string responseBody = await resp.Content.ReadAsStringAsync();
                 var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
                 ViewBag.pageSize = data[0]["pageSize"];
