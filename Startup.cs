@@ -26,6 +26,7 @@ namespace Global_Intern
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<GlobalDBContext>();
+
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             //services.AddMvc().Add

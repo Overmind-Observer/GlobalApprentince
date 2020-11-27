@@ -25,7 +25,6 @@ namespace Global_Intern.Controllers
         private readonly ICustomAuthManager _customAuthManager;
         private readonly string host;
         private readonly HttpClient _client = new HttpClient();
-        private readonly HttpClient _client1 = new HttpClient();
         private readonly string Internship_url = "/api/Internships";
         private readonly string Course_url = "/api/Course";
         private User _user = null;
@@ -148,14 +147,14 @@ namespace Global_Intern.Controllers
 
                     
                 resp = await _client.GetAsync(CourseUrl);
-                 resp.EnsureSuccessStatusCode();
+                resp.EnsureSuccessStatusCode();
                 string responseBody = await resp.Content.ReadAsStringAsync();
                 var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
                 ViewBag.pageSize = data[0]["pageSize"];
                 ViewBag.totalPages = data[0]["totalPages"];
                 ViewBag.currentPage = data[0]["pageNumber"];
-                model = data[0]["data"][0].ToObject<IEnumerable<Course>>();
-                var intern = data[0]["data"][0];
+                model = data[0]["data"].ToObject<IEnumerable<Course>>();
+                var course = data[0]["data"][0];
                 return View(model);
             }
             catch (Exception) //removed unused variable ex
@@ -165,27 +164,28 @@ namespace Global_Intern.Controllers
            
         }
 
-        //public async Task<IActionResult> Test(int id)
-        //{
-        //    Course model;
-        //    IEnumerable<Course> courses;
-        //    HttpResponseMessage resp;
-        //    String CourseUrl = host + Internship_url1;
-        //    try
-        //    {
-        //        resp = await _client.GetAsync(CourseUrl);
-        //        resp.EnsureSuccessStatusCode();
-        //        string responseBody = await resp.Content.ReadAsStringAsync();
-        //        var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
-        //        model = data[0].ToObject<Internship>();
-        //        return View(model);
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        throw;
-        //    }
 
-        //}
+        public async Task<IActionResult> Courses(int id)
+        {
+            Course model;
+            HttpResponseMessage resp;
+            string CourseUrl = host + Course_url;
+            try
+            {
+                resp = await _client.GetAsync(CourseUrl + "/" + id.ToString());
+                resp.EnsureSuccessStatusCode();
+                string responseBody = await resp.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
+                model = data[0].ToObject<Course>();
+                return View(model);
+            }catch(Exception ex)
+            {
+                throw;
+            }
+
+
+        }
+
 
         public async Task<IActionResult> Internship(int id)
         {

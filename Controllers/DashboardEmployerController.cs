@@ -83,20 +83,20 @@ namespace Global_Intern.Controllers
             }
         }
 
-        public IActionResult Internships()
-        {            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
-            //-------------------- END
+        //public IActionResult Internships()
+        //{            // Display User name on the right-top corner - shows user is logedIN
+        //    ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+        //    // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+        //    string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+        //    ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+        //    //-------------------- END
 
-            using (GlobalDBContext _context = new GlobalDBContext())
-            {
-                Internship internship = new Internship();
-                return View(internship);
-            }
-        }
+        //    using (GlobalDBContext _context = new GlobalDBContext())
+        //    {
+        //        Internship internship = new Internship();
+        //        return View(internship);
+        //    }
+        //}
 
         [HttpPost]
         public IActionResult GeneralProfile(ProfileViewEmployer fromData)

@@ -48,10 +48,6 @@ namespace Global_Intern.Util.pagination
             var count = source.Count();
             var skip = (pageNumber - 1) * pageSize;
 
-            //var ite = source.OrderBy(source)
-
-            pageSize = count-1;
-
             var items = source.Skip(skip).Take(pageSize).ToList();
 
             return new PaginationQuery<T>(items, count, pageNumber, pageSize);

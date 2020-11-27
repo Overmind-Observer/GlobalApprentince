@@ -33,7 +33,7 @@ namespace Global_Intern.Controllers
 
         // GET: api/Course
         [HttpGet]
-        public ActionResult<IEnumerable<Course>> GetCourses([FromQuery] string search, int pagenumber = 1, int pagesize = 10)
+        public ActionResult<IEnumerable<Course>> GetCourses([FromQuery] string search, int pageNumber = 1, int pageSize = 1)
         {
             List<Course> courses;
 
@@ -48,13 +48,38 @@ namespace Global_Intern.Controllers
                 //courses = _context.Internships.Include(u => u.User).OrderBy(x => x.InternshipCreatedAt).ToList()
             }
 
-            //var filtered = UserFilter.RemoveUserInfoFromCourses(courses);
+            var filtered = UserFilter.RemoveUserInfoFromCourses(courses);
 
             //filtered = _context.Course.OrderBy(j => j.CourseExpDate).ToList();
 
-            var response = PaginationQuery<Course>.CreateAsync(courses, pagenumber, pagesize);
+            var count = courses.Count();
+
+            if (pageSize >= 10)
+            {
+                pageSize = 10;
+            }
+
+            else
+            {
+                pageSize = count;
+            }
+
+            var response = PaginationQuery<Course>.CreateAsync(courses, pageNumber, pageSize);
 
             return Ok(response);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Course>> GetCourse(int id)
+        {
+            var course = await _context.Course.FindAsync(id);
+
+            if(course == null)
+            {
+                return NotFound();
+            }
+
+            return course;
         }
 
 
