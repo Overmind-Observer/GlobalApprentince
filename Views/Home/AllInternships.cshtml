@@ -11,11 +11,17 @@
                     <div class="job_filter white-bg">
                         <div class="form_inner white-bg">
                             <h3>Filter</h3>
-                            <form action="#">
+                            <form asp-action="AllInternships" asp-controller="Home" method="get">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="single_field">
-                                            <input type="text" placeholder="Search keyword">
+                                            <div class="input-group">
+                                                <input type="search" placeholder="Enter Internship here" name="searchTerm" value="@ViewData["SearchTerm"]" />
+                                                <button class="btn btn-primary" type="submit">Search</button>
+                                                <span class="myColors">
+                                                    @Html.ValidationMessage("KeywordNotFound", new { @class = "myColors" })
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -65,11 +71,14 @@
                                     </div>
 
                                 </div>
+
                             </form>
                         </div>
-                        <div class="reset_btn">
-                            <button class="boxed-btn3" type="submit">Reset</button>
-                        </div>
+                        <form asp-action="AllInternships" asp-controller="Home" method="get">
+                            <div class="reset_btn">
+                                <button class="btn btn-primary" type="submit">Reset</button>
+                            </div>
+                         </form>
                     </div>
                 </div>
                 <div class="col-lg-9">

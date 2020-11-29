@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Global_Intern.Controllers
@@ -45,25 +47,16 @@ namespace Global_Intern.Controllers
             {
                 string sql = "SELECT * FROM " + _table + " WHERE (InternshipBody like('%" + search + "%') or InternshipType like ('%" + search + "%') or InternshipTitle like('%" + search + "%'))";
                 interns = _context.Internships.FromSqlRaw(sql).Include(u => u.User).OrderBy(x => x.InternshipExpDate).ToList();
+                if (interns.Count() == 0)
+                {
+                    var badresponse = HttpStatusCode.BadRequest;
+                    return Ok(badresponse);
+                }
             }
             else
             {
                 interns = _context.Internships.Include(u => u.User).OrderBy(x => x.InternshipCreatedAt).ToList();
             }
-
-            var count = interns.Count();
-
-            if (pageSize >= 10)
-            {
-                pageSize = 10;
-            }
-
-            else
-            {
-                pageSize = count;
-            }
-
-            
 
             // Make sensitive info like salt and password null or empty
             var filtered = UserFilter.RemoveUserInfoFromInternship(interns);
@@ -74,6 +67,8 @@ namespace Global_Intern.Controllers
 
             return Ok(response);
         }
+
+
 
         // GET: api/Internships/5
         [HttpGet("{id}")]
