@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http; // for -> HttpClient to make request to API
 using System.Threading.Tasks;
 
@@ -25,6 +26,7 @@ namespace Global_Intern.Controllers
         private readonly string host;
         private readonly HttpClient _client = new HttpClient();
         private readonly string Internship_url = "/api/Internships";
+        private readonly string Course_url = "/api/Course";
         private User _user = null;
         IWebHostEnvironment _env;
         public HomeController(ILogger<HomeController> logger,
@@ -52,20 +54,35 @@ namespace Global_Intern.Controllers
                 ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
             }
 
+            ConsoleLogs consoleLogs = new ConsoleLogs(_env);
 
+            using (GlobalDBContext context = new GlobalDBContext()) { 
+
+                //consoleLogs.WriteErrorLog(context.GeneratePath());
+
+
+
+            //var WhatIsThis = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+
+            ViewBag.Message = "Looks like this is a ";
+                 
+            }
             return View();
         }
+
 
         public async Task<IActionResult> AllInternships([FromQuery] string search, int pageNumber = 0, int pageSize = 0)
         {
             IEnumerable<Internship> model;
             HttpResponseMessage resp;
             string InternshipUrl = host + Internship_url;
+            string searchh = search;
             try
             {
                 if (!String.IsNullOrEmpty(search))
                 {
                     InternshipUrl = InternshipUrl + "?search=" + search;
+                    //InternshipUrl = InternshipUrl;
                     if (pageNumber != 0 && pageSize != 0)
                     {
                         InternshipUrl += "&pageNumber=" + pageNumber.ToString() + "&pageSize=" + pageSize.ToString();
@@ -93,6 +110,80 @@ namespace Global_Intern.Controllers
             {
                 throw;
             }
+        }
+
+        public class SimpleHttpResponseException : Exception
+        {
+            public HttpStatusCode StatusCode { get; private set; }
+
+            public SimpleHttpResponseException(HttpStatusCode statusCode, string content) : base(content)
+            {
+                StatusCode = statusCode;
+            }
+        }
+
+        public async Task<IActionResult> AllCourses([FromQuery] string search, int pageNumber = 0, int pageSize = 0)
+        {
+            //Course model;
+            IEnumerable<Course> model;
+            HttpResponseMessage resp;
+            String CourseUrl = host + Course_url;
+            //String CourseUrl = host + Internship_url;
+            try
+            {
+                if (!String.IsNullOrEmpty(search)) {
+                    CourseUrl = CourseUrl + "?search" + search;
+                    if (pageNumber != 0 && pageSize != 0) {
+                        CourseUrl += "&pageNumber" + pageNumber.ToString() + "&pageSize" + pageSize.ToString();
+                    }
+                }
+                else
+                {
+                    if (pageNumber != 0 && pageSize != 0) {
+                        CourseUrl += "?pageNumber" + pageNumber.ToString() + "&pageSize" + pageSize.ToString();
+                    }
+                }
+                
+
+                    
+                resp = await _client.GetAsync(CourseUrl);
+                resp.EnsureSuccessStatusCode();
+                string responseBody = await resp.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
+                ViewBag.pageSize = data[0]["pageSize"];
+                ViewBag.totalPages = data[0]["totalPages"];
+                ViewBag.currentPage = data[0]["pageNumber"];
+                model = data[0]["data"].ToObject<IEnumerable<Course>>();
+                var course = data[0]["data"][0];
+                return View(model);
+            }
+            catch (Exception) //removed unused variable ex
+            {
+                throw;
+            }
+           
+        }
+
+
+        public async Task<IActionResult> Courses(int id)
+        {
+            Course model;
+            HttpResponseMessage resp;
+            string CourseUrl = host + Course_url;
+            try
+            {
+                resp = await _client.GetAsync(CourseUrl + "/" + id.ToString());
+                resp.EnsureSuccessStatusCode();
+                string responseBody = await resp.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
+                model = data[0].ToObject<Course>();
+                return View(model);
+            }catch(Exception ex)
+            {
+                throw;
+            }
+
+
         }
 
 

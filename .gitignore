@@ -4,6 +4,7 @@ _ReSharper.*
 bin
 obj
 packages
+.vs/
 .vs/Global Intern/DesignTimeBuild/.dtbcache.v2
 .vs/Global Intern/config/applicationhost.config
 .vs/Global Intern/v16/.suo
@@ -13,6 +14,9 @@ obj/Global Intern.csproj.nuget.dgspec.json
 obj/Global Intern.csproj.nuget.g.props
 obj/project.assets.json
 obj/project.nuget.cache
+
+*.jfm
+*.ldf
 
 /bin
 /obj

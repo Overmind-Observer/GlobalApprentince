@@ -1,18 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Global_Intern.Models
 {
     public class User
     {
-        // CP-> Complete Prfile - fields which will be filled after the email has been verfied
-        // Auto -> fields which gets filled by the system
         public User()
         {
             this.CreatedAt = DateTime.UtcNow;
         }
+        // CP-> Complete Prfile - fields which will be filled after the email has been verfied
+        // Auto -> fields which gets filled by the system
 
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int UserId { get; set; }
         [Required]
         public string UserFirstName { get; set; }
@@ -67,6 +69,25 @@ namespace Global_Intern.Models
             this.SoftDelete = false;
         }
 
+        public void UpdateUser(User user)
+        {
+            UserFirstName = user.UserFirstName;
+            UserLastName = user.UserLastName;
+            UserAddress = user.UserAddress;
+            UserCity = user.UserCity;
+            Salt = user.Salt;
+            UserPassword = user.UserPassword;
+            UniqueToken = user.UniqueToken;
+            CreatedAt = user.CreatedAt;
+            UserEmail = user.UserEmail;
+            UserState = user.UserState;
+            UserCountry = user.UserCountry;
+            UserZip = user.UserZip;
+            UserPhone = user.UserPhone;
+            UserImage = user.UserImage;
+            UserGender = user.UserGender;
+        }
+
 
         public void AddFromAccountGeneralProfile(Global_Intern.Models.GeneralProfile.GeneralProfile updatedInfo, string UserImagePATH = "")
         {
@@ -116,19 +137,20 @@ namespace Global_Intern.Models
 
 
         // for Dashboard Teacher
-        public void AddFromTeacherProfileView(Global_Intern.Models.GeneralProfile.ProfileViewTeacher updatedInfo, string UserImagePATH = "")
+        public void AddFromTeacherProfileView(User updatedInfo, string UserImagePATH = "")
         {
-            UserFirstName = updatedInfo.UserFirstName;
-            UserLastName = updatedInfo.UserLastName;
-            UserGender = updatedInfo.UserGender;
-            UserPhone = updatedInfo.UserPhone.ToString();
-            UserAddress = updatedInfo.UserAddress;
-            UserCity = updatedInfo.UserCity;
-            UserState = updatedInfo.UserState;
-            UserCountry = updatedInfo.UserCountry;
-            if (UserImagePATH != "")
+            this.UserFirstName = updatedInfo.UserFirstName;
+            this.UserLastName = updatedInfo.UserLastName;
+            this.UserGender = updatedInfo.UserGender;
+            this.UserPhone = updatedInfo.UserPhone.ToString();
+            this.UserAddress = updatedInfo.UserAddress;
+            this.UserCity = updatedInfo.UserCity;
+            this.UserState = updatedInfo.UserState;
+            this.UserCountry = updatedInfo.UserCountry;
+            //updatedInfo.Salt="jnjn";
+            if (UserImagePATH != "sss")
             {
-                this.UserImage = UserImagePATH;
+                this.UserImage = "iiiiiii";
             }
         }
 

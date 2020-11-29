@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Global_Intern.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("api/[Controller]")]
     [ApiController]
     public class InternshipsController : ControllerBase
     {
@@ -37,7 +37,7 @@ namespace Global_Intern.Controllers
 
         // GET: api/Internships
         [HttpGet]
-        public ActionResult<IEnumerable<Internship>> GetInternships([FromQuery] string search, int pageNumber = 1, int PageSize = 10)
+        public ActionResult<IEnumerable<Internship>> GetInternships([FromQuery] string search, int pageNumber = 1, int pageSize = 1)
         {
             List<Internship> interns;
 
@@ -51,11 +51,25 @@ namespace Global_Intern.Controllers
                 interns = _context.Internships.Include(u => u.User).OrderBy(x => x.InternshipCreatedAt).ToList();
             }
 
+            var count = interns.Count();
+
+            if (pageSize >= 10)
+            {
+                pageSize = 10;
+            }
+
+            else
+            {
+                pageSize = count;
+            }
+
+            
+
             // Make sensitive info like salt and password null or empty
             var filtered = UserFilter.RemoveUserInfoFromInternship(interns);
             // the Response class will shows if the data is paginated or require token (Auth).
 
-            var response = PaginationQuery<Internship>.CreateAsync(filtered, pageNumber, PageSize);
+            var response = PaginationQuery<Internship>.CreateAsync(filtered, pageNumber, pageSize);
 
 
             return Ok(response);

@@ -1,4 +1,4 @@
-@model Global_Intern.Models.GeneralProfile.ProfileViewTeacher;
+@model Global_Intern.Models.User;
 @{
     ViewData["Title"] = "CompleteProfile";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
@@ -16,9 +16,10 @@
                         <div class="row py-4">
                             <div class="col-lg-6">
                                 <h1>General Profile</h1>
+                                <h3 style="color:green">@ViewBag.Message</h3>
                                 @{
                                     <!-- Uploaded Teacher's head photo -->
-                                    if (@Model.UserImageName == null)
+                                    if (@Model.UserImage == null)
                                     {
 
                                         <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
@@ -30,7 +31,7 @@
                                     {
                                         <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
                                         <div class="image-area mt-4">
-                                            <img id="imageResult" src="~/uploads/UserImage/@Model.UserImageName" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
+                                            <img id="imageResult" src="~/uploads/UserImage/@Model.UserImage" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
                                         </div>
                                     }
                                 }
@@ -268,8 +269,8 @@
 
 
 
-<!--
-<h2>Teacher Details</h2>
+
+@*<h2>Teacher Details</h2>
 
 <div class="card">
     <img src="/w3images/team2.jpg" alt="John" style="width:100%">
@@ -280,5 +281,5 @@
 
         <a class="bb" href="mailto:someone@example.com?Subject=Hello%20again" target="_top"> Contact </a>
     </div>
-</div>
--->
+</div>*@
+

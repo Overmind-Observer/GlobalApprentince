@@ -1,16 +1,12 @@
 using Global_Intern.Data;
 using Global_Intern.Models;
-using Global_Intern.Models.GeneralProfile;
 using Global_Intern.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Bcpg;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 
@@ -27,18 +23,21 @@ namespace Global_Intern.Controllers
         private readonly ICustomAuthManager _customAuthManager;
         private readonly string host;
         private readonly HttpClient _client = new HttpClient();
-        private readonly string Internship_url = "/api/Internships";
+        //private readonly string Internship_url = "/api/Internships"; - does not used!?
+        //private readonly GlobalDBContext _context;
         IWebHostEnvironment _env;
         private User _user;
+        GlobalDBContext context = new GlobalDBContext();
 
 
 
-        public DashboardTeacherController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth, IWebHostEnvironment env)
+        public DashboardTeacherController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth, IWebHostEnvironment env, GlobalDBContext context)
         {
             _env = env;
             _httpContextAccessor = httpContextAccessor;
             host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
             _customAuthManager = auth;
+            
 
 
             // sets User _user using session
@@ -102,18 +101,59 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
+            
 
-            using (GlobalDBContext _context = new GlobalDBContext())
+            using (GlobalDBContext context = new GlobalDBContext())
             {
-                ProfileViewTeacher gen = new ProfileViewTeacher(_user);
 
-                return View(gen);
+                User user = new User();
+
+                return View(_user);
+
             }
 
+
         }
-        
-        
-        
+
+        //public async Task<IActionResult> Kopl()
+        [HttpPost]
+        public IActionResult GeneralProfile(User UpdateDetails)
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+
+            GlobalDBContext _context = new GlobalDBContext();
+
+                //assigns the new values to the updated ones
+                _user.UserFirstName = UpdateDetails.UserFirstName;
+                _user.UserLastName = UpdateDetails.UserLastName;
+                _user.UserAddress = UpdateDetails.UserAddress;
+                _user.UserCity = UpdateDetails.UserCity;
+                _user.CreatedAt = UpdateDetails.CreatedAt;
+                _user.UserState = UpdateDetails.UserState;
+                _user.UserCountry = UpdateDetails.UserCountry;
+                _user.UserZip = UpdateDetails.UserZip;
+                _user.UserImage = UpdateDetails.UserImage;
+                _user.UserGender = UpdateDetails.UserGender;               
+
+                _context.Users.Update(_user);
+
+                _context.SaveChanges();
+
+                ViewBag.Message = _user.UserFirstName + " " + _user.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
+
+                return View(_user);
+            
+        }
+
+
+
         public IActionResult Courses()
         {
             // Display User name on the right-top corner - shows user is logedIN
@@ -123,11 +163,25 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
+            Course course = new Course();
+
+            ViewData["CoursesModel"] = course;
+
+            GlobalDBContext context = new GlobalDBContext();
+
+            ConsoleLogs consoleLogs = new ConsoleLogs(_env);
+
+            
+
+            for (var k=0;k<16;k++)
+            {
+                consoleLogs.WriteErrorLog(context.Users.ToList().ToString());
+            }
+
+
 
             return View();
         }
-
-
 
         public IActionResult CreateCourses()
         {
@@ -138,8 +192,77 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateCourses(Course NewCourse)
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+
+            var WhatIsThis = _customAuthManager.Tokens.FirstOrDefault().Value.Item1;
+
+            var WhatIsThis1 = _customAuthManager.Tokens.FirstOrDefault().Value.Item2;
+
+            //var WhatIsThis2 = _customAuthManager.Tokens.FirstOrDefault().Value.GetType;
+
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+
+                Course nCourse = new Course();
+
+                User user = _context.Users.Find(User_id);
+
+                //this creates new course
+                nCourse.CreateNewCourse(NewCourse,user);    // no definition!?
+
+                _context.Course.Add(nCourse);
+
+                _context.SaveChanges();
+
+                ViewBag.Message = NewCourse.CourseTitle + " successfully created check the courses table to see if it has been created"+WhatIsThis+"//"+WhatIsThis1;
+
+            }
+            return View();
+        }
+
+        public IActionResult Settings()
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            ViewBag.Message = "Are you sure you want to delete user "+_user.UserFirstName + " " + _user.UserLastName;
 
             return View();
+        }
+
+        public IActionResult DeleteUser()
+        {
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+
+                var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+
+                User user = _context.Users.Find(User_id);
+
+                _context.Users.Remove(user);
+
+                _context.SaveChanges();
+
+                return RedirectToAction("Index", "Home");
+            }
+
         }
 
 
@@ -157,8 +280,5 @@ namespace Global_Intern.Controllers
 
             return View();
         }
-        
-        
-        
     }
 }

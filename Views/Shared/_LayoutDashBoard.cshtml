@@ -37,7 +37,7 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Programmes</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AllInternships">Internships </a>
-                            <a class="dropdown-item" href="#">Courses</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AllCourses">Courses</a>
                         </div>
                     </li>
                 </div>
@@ -47,10 +47,10 @@
                 </li>
                 -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="ContactUs">Contact</a>
                 </li>
 
             </ul>
@@ -105,6 +105,16 @@
                                         <i class="material-icons icon">@each["icon"]</i>
                                         <span class="text">@each["field"]</span>
                                     </a>
+                                </li>
+                            }
+                            else if (@each["field"] == "Profile")
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="GeneralProfile" class="nav-link sidebarLinks">
+                                        <i class="material-icons icon">@each["icon"]</i>
+                                        <span class="text">@each["field"]</span>
+                                    </a>
+
                                 </li>
                             }
                             else
