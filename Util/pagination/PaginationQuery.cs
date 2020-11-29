@@ -46,6 +46,17 @@ namespace Global_Intern.Util.pagination
         {
             // Paging calculation
             var count = source.Count();
+
+            if (count >= 10)
+            {
+                pageSize = 10;
+            }
+
+            else
+            {
+                pageSize = count;
+            }
+
             var skip = (pageNumber - 1) * pageSize;
 
             var items = source.Skip(skip).Take(pageSize).ToList();

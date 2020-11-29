@@ -52,18 +52,6 @@ namespace Global_Intern.Controllers
 
             //filtered = _context.Course.OrderBy(j => j.CourseExpDate).ToList();
 
-            var count = courses.Count();
-
-            if (pageSize >= 10)
-            {
-                pageSize = 10;
-            }
-
-            else
-            {
-                pageSize = count;
-            }
-
             var response = PaginationQuery<Course>.CreateAsync(courses, pageNumber, pageSize);
 
             return Ok(response);

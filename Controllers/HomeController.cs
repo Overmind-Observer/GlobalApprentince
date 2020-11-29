@@ -71,17 +71,19 @@ namespace Global_Intern.Controllers
         }
 
 
-        public async Task<IActionResult> AllInternships([FromQuery] string search, int pageNumber = 0, int pageSize = 0)
+
+        public async Task<IActionResult> AllInternships([FromQuery] string searchTerm, int pageNumber = 0, int pageSize = 0)
         {
             IEnumerable<Internship> model;
             HttpResponseMessage resp;
             string InternshipUrl = host + Internship_url;
-            string searchh = search;
+            string tempInternshipUrl;
+            ViewData["SearchTerm"] = searchTerm;
             try
             {
-                if (!String.IsNullOrEmpty(search))
+                if (!String.IsNullOrEmpty(searchTerm))
                 {
-                    InternshipUrl = InternshipUrl + "?search=" + search;
+                    InternshipUrl = InternshipUrl + "?search=" + searchTerm;
                     //InternshipUrl = InternshipUrl;
                     if (pageNumber != 0 && pageSize != 0)
                     {
@@ -98,6 +100,15 @@ namespace Global_Intern.Controllers
                 resp = await _client.GetAsync(InternshipUrl);
                 resp.EnsureSuccessStatusCode();
                 string responseBody = await resp.Content.ReadAsStringAsync();
+                if (responseBody == "400")
+                {
+                    ModelState.AddModelError("KeywordNotFound", "No Internships match the entered keyword.");
+                    tempInternshipUrl = InternshipUrl.Replace("?search=" +searchTerm, null);
+                    InternshipUrl = tempInternshipUrl;
+                    resp = await _client.GetAsync(InternshipUrl);
+                    resp.EnsureSuccessStatusCode();
+                    responseBody = await resp.Content.ReadAsStringAsync();
+                }
                 var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
                 ViewBag.pageSize = data[0]["pageSize"];
                 ViewBag.totalPages = data[0]["totalPages"];
@@ -105,6 +116,7 @@ namespace Global_Intern.Controllers
                 model = data[0]["data"].ToObject<IEnumerable<Internship>>();
                 var intern = data[0]["data"][0];
                 return View(model);
+
             }
             catch (Exception)
             {

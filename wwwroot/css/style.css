@@ -550,6 +550,11 @@ p {
     color: #7A838B;
 }
 
+.myColors{
+    color:red;
+    font-size: 28px;
+}
+
 .job_listing_area .job_filter {
     padding: 03px;
     display: block;
