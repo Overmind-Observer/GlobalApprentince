@@ -42,7 +42,6 @@ select {
   background-color: transparent;
   border: none;
   color: #616875;
-  appearance: none;
   padding: 15px 25px;
 }
 
@@ -97,12 +96,12 @@ form.search-box .input-form input {
     }
 }
 
-form.search-box .input-form input::placeholder {
+form.search-box .input-form  {
     color: #616875
 }
 
 @media (max-width: 767px) {
-    form.search-box .input-form input::placeholder {
+    form.search-box .input-form  {
         font-size: 17px;
         padding-left: 14px
     }

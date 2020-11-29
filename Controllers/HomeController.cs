@@ -70,7 +70,7 @@ namespace Global_Intern.Controllers
             return View();
         }
 
-        public async Task<IActionResult> AllInternships([FromQuery] string search, int pageNumber = 0, int pageSize = 0)
+        public async Task<IActionResult> AllInternships([FromQuery] string searchTerm, int pageNumber = 0, int pageSize = 0)
         {
             /// What is happening How you get Internship -> Database to API. Api to you as a JSON response. when you can do something with that response
             /// In my custom response you get number of items, also you get what page you are on. And how many page to expect.
@@ -192,7 +192,7 @@ namespace Global_Intern.Controllers
                 var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
                 model = data[0].ToObject<Course>();
                 return View(model);
-            }catch(Exception ex)
+            }catch(Exception)
             {
                 throw;
             }
