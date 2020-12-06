@@ -9,6 +9,7 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="job_filter white-bg">
+                    <div class="form_inner white-bg">
                     <h3>filter</h3>
                     <form action="#">
                         <div class="row">
@@ -64,12 +65,12 @@
                             </div>
                         </div>
                     </form>
-                </div> 
+                        </div>
                 <div class="reset-btn">
                     <button class="boxed-btn3" type="submit">Reset</button>
                 </div>
+                </div>
             </div>
-        </div>
         <div class="col-lg-9">
             <div class="recent_joblist_wrap">
                 <div class="recent_joblist white-bg ">
@@ -96,17 +97,19 @@
                     {
                         <div class="col-lg-12 col-md-12">
                             <div class="single_jobs white-bg d-flex align-items-center">
-                                <div class="thumb">
-                                    <img src="/img/logo.png" alt=""/>
-                                </div>
-                                <div class="job-content">
-                                    <a asp-controller="Home" asp-action="Courses" asp-route-id="@item.CourseId" style="text-align:left;"><h4>@Html.DisplayFor(modelItem=>item.CourseTitle)</h4></a>
-                                    <div class="links_locat d-flex align-items-center">
-                                        <div class="location">
-                                            <p>Auckland, NZ</p>
-                                        </div>
-                                        <div class="location">
-                                            <p>Wellington, NZ</p>
+                                <div class="jobs_left d-flex align-items-center">
+                                    <div class="thumb">
+                                        <img src="/img/logo.png" alt="" />
+                                    </div>
+                                    <div class="jobs_conetent">
+                                        <a asp-controller="Home" asp-action="Courses" asp-route-id="@item.CourseId" style="text-align:left;"><h4>@Html.DisplayFor(modelItem => item.CourseTitle)</h4></a>
+                                        <div class="links_locat d-flex align-items-center">
+                                            <div class="location">
+                                                <p>Auckland, NZ  </p>
+                                            </div>
+                                            <div class="location">
+                                                <p>Part time</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -115,7 +118,7 @@
 
                                     </div>
                                     <div class="date">
-                                        <p>Deadline:@Html.DisplayFor(modelItem=>item.CourseExpDate)</p>
+                                        <p>Deadline:@Html.DisplayFor(modelItem => item.CourseExpDate)</p>
                                     </div>
                                 </div>
                             </div> 
@@ -160,6 +163,7 @@
                     </div>
                 </div>
             </div>
+         </div>
         </div>
     </div>
 </div> 

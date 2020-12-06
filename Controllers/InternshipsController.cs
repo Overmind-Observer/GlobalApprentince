@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Global_Intern.Controllers
@@ -37,7 +39,7 @@ namespace Global_Intern.Controllers
 
         // GET: api/Internships
         [HttpGet]
-        public ActionResult<IEnumerable<Internship>> GetInternships([FromQuery] string search, int pageNumber = 1, int PageSize = 8)
+        public ActionResult<IEnumerable<Internship>> GetInternships([FromQuery] string search, int pageNumber = 1, int pageSize = 1)
         {
             List<Internship> interns;
 
@@ -45,6 +47,11 @@ namespace Global_Intern.Controllers
             {
                 string sql = "SELECT * FROM " + _table + " WHERE (InternshipBody like('%" + search + "%') or InternshipType like ('%" + search + "%') or InternshipTitle like('%" + search + "%'))";
                 interns = _context.Internships.FromSqlRaw(sql).Include(u => u.User).OrderBy(x => x.InternshipExpDate).ToList();
+                if (interns.Count() == 0)
+                {
+                    var badresponse = HttpStatusCode.BadRequest;
+                    return Ok(badresponse);
+                }
             }
             else
             {
@@ -55,11 +62,13 @@ namespace Global_Intern.Controllers
             var filtered = UserFilter.RemoveUserInfoFromInternship(interns);
             // the Response class will shows if the data is paginated or require token (Auth).
 
-            var response = PaginationQuery<Internship>.CreateAsync(filtered, pageNumber, PageSize);
+            var response = PaginationQuery<Internship>.CreateAsync(filtered, pageNumber, pageSize);
 
 
             return Ok(response);
         }
+
+
 
         // GET: api/Internships/5
         [HttpGet("{id}")]

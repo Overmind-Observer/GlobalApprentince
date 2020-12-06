@@ -46,11 +46,18 @@ namespace Global_Intern.Util.pagination
         {
             // Paging calculation
             var count = source.Count();
+
+            if (count >= 10)
+            {
+                pageSize = 10;
+            }
+
+            else
+            {
+                pageSize = count;
+            }
+
             var skip = (pageNumber - 1) * pageSize;
-
-            //var ite = source.OrderBy(source)
-
-            pageSize = count-1;
 
             var items = source.Skip(skip).Take(pageSize).ToList();
 
@@ -58,22 +65,22 @@ namespace Global_Intern.Util.pagination
 
         }
 
-        //public static PaginationQuery<T> CreateAsync1(List<T> source, int pageNumber, int pageSize)
-        //{
-        //    // Paging calculation
-        //    var count = source.Count();
-        //    var skip = (pageNumber - 1) * pageSize;
+        ////public static paginationquery<t> createasync1(list<t> source, int pagenumber, int pagesize)
+        ////{
+        ////    // paging calculation
+        ////    var count = source.count();
+        ////    var skip = (pagenumber - 1) * pagesize;
 
-        //    //var ite = source.OrderBy(source)
+        ////    //var ite = source.orderby(source)
 
-        //    //var item = source.RemoveAt(0);
+        ////    //var item = source.removeat(0);
 
-        //    var items = source.Skip(skip).Take(2).ToList();
+        ////    var items = source.skip(skip).take(count).tolist();
 
-        //    //List<Course> items1 = items.RemoveAt(0);
+        ////    //list<course> items1 = items.removeat(0);
 
-        //    return new PaginationQuery<T>(items, count, pageNumber, pageSize);
+        ////    return new paginationquery<t>(items, count, pagenumber, pagesize);
 
-        //}
+        ////}
     }
 }

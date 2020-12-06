@@ -1,6 +1,8 @@
 ﻿using Global_Intern.Models.EmployerModels;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Global_Intern.Models
 {
@@ -23,6 +25,7 @@ namespace Global_Intern.Models
         public System.DateTime InternshipUpdatedAt { get; set; }
 
         [Required]
+        [JsonIgnore]
         public virtual User User { get; set; } // Poster
 
 

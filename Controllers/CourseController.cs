@@ -33,27 +33,41 @@ namespace Global_Intern.Controllers
 
         // GET: api/Course
         [HttpGet]
-        public ActionResult<IEnumerable<Course>> GetCourses([FromQuery] string search, int pagenumber = 1, int pagesize = 10)
+        public ActionResult<IEnumerable<Course>> GetCourses([FromQuery] string search, int pageNumber = 1, int pageSize = 1)
         {
             List<Course> courses;
 
-            if (!string.IsNullOrEmpty(search))
+            if (!String.IsNullOrEmpty(search))
             {
                 string query = "SELECT * FROM " + _table + "WHERE(CourseTitle LIKE('%" + search + "%') OR CourseType LIKE('%" + search + "%') OR CourseInfo LIKE('%" + search + "%'))";
                 courses = _context.Course.FromSqlRaw(query).Include(u => u.User).OrderBy(x => x.CourseExpDate).ToList();
             }
             else
             {
-                courses = _context.Course.Include(u => u.User).OrderBy(p => p.CourseExpDate).ToList();
+                courses = _context.Course.Include(u => u.User).OrderBy(p => p.CourseCreatedAt).ToList();
+                //courses = _context.Internships.Include(u => u.User).OrderBy(x => x.InternshipCreatedAt).ToList()
             }
 
             var filtered = UserFilter.RemoveUserInfoFromCourses(courses);
 
             //filtered = _context.Course.OrderBy(j => j.CourseExpDate).ToList();
 
-            var response = PaginationQuery<Course>.CreateAsync(filtered, pagenumber, pagesize);
+            var response = PaginationQuery<Course>.CreateAsync(courses, pageNumber, pageSize);
 
             return Ok(response);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Course>> GetCourse(int id)
+        {
+            var course = await _context.Course.FindAsync(id);
+
+            if(course == null)
+            {
+                return NotFound();
+            }
+
+            return course;
         }
 
 
