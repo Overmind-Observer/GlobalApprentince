@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using Global_Intern.Models;
-using Global_Intern.Models.Filters;
 using Microsoft.EntityFrameworkCore;
 using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
@@ -14,15 +13,16 @@ namespace Global_Intern.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
+            string connectionString = GeneratePath();
 
-            //string connectionString = @"Data Source=localhost\sqlexpress;Initial Catalog=GlobalDB;Integrated Security=True";
-            //string connectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\thom\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\MSSQLLocalDB\Test.mdf;Integrated Security = True;Connect Timeout =30";
+            _ = optionsBuilder.UseSqlServer(connectionString,
+              builder => builder.UseRowNumberForPaging(true));
 
-            string connectionString = GeneratePath(); 
+        }
 
-              _ = optionsBuilder
-                .UseSqlServer(connectionString, builder => builder.UseRowNumberForPaging(true));
-
+        private void AddDbContext<T>(Func<object, object> p)
+        {
+            throw new NotImplementedException();
         }
 
         public string GeneratePath()
