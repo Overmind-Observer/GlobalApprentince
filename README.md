@@ -67,13 +67,13 @@ Views Folder ->DashboardStudent Folder -> index.cshtml
 Views Folder ->DashboardStudent Folder -> GeneralProfile.cshtml
 
 12	Student Documents Page
-Views Folder ->DashboardStudent Folder -> Documents.cshtml  ### NOT RUN NEW Build ###
+Views Folder ->DashboardStudent Folder -> Documents.cshtml  
 
 13	Student Qualifications Page
-Views Folder ->DashboardStudent Folder -> Qualifications.cshtml  ### NOT RUN NEW Build ###
+Views Folder ->DashboardStudent Folder -> Qualifications.cshtml  
 
 14	Student Experience Page
-Views Folder ->DashboardStudent Folder -> Experience.cshtml  ### NOT RUN NEW Build ###
+Views Folder ->DashboardStudent Folder -> Experience.cshtml  
 
 15	Student Settings Page
 
