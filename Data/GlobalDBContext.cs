@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using Global_Intern.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
 namespace Global_Intern.Data
@@ -16,14 +17,22 @@ namespace Global_Intern.Data
             string connectionString = GeneratePath();
 
             _ = optionsBuilder.UseSqlServer(connectionString,
-              builder => builder.UseRowNumberForPaging(true));
+              Builder);
+
+ /*           _ = optionsBuilder.UseSqlServer(connectionString,
+              builder => builder.UseRowNumberForPaging(true));*/
 
         }
 
-        private void AddDbContext<T>(Func<object, object> p)
+        private void Builder(SqlServerDbContextOptionsBuilder obj)
         {
             throw new NotImplementedException();
         }
+
+       /* private void AddDbContext<T>(Func<object, object> p)
+        {
+            throw new NotImplementedException();
+        }*/
 
         public string GeneratePath()
         {
