@@ -90,6 +90,7 @@ namespace Global_Intern.Controllers
                     if (pageNumber != 0 && pageSize != 0)
                     {
                         InternshipUrl += "&pageNumber=" + pageNumber.ToString() + "&pageSize=" + pageSize.ToString();
+
                     }
                 }
                 else
