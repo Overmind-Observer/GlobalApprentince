@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Global_Intern.Data;
 using Global_Intern.Models;
@@ -41,11 +42,17 @@ namespace Global_Intern.Controllers
             {
                 string query = "SELECT * FROM " + _table + "WHERE(CourseTitle LIKE('%" + search + "%') OR CourseType LIKE('%" + search + "%') OR CourseInfo LIKE('%" + search + "%'))";
                 courses = _context.Course.FromSqlRaw(query).Include(u => u.User).OrderBy(x => x.CourseExpDate).ToList();
+                if (courses.Count() == 0)
+                {
+                    var badresponse = HttpStatusCode.BadRequest;
+                    return Ok(badresponse);
+                }
             }
             else
             {
                 courses = _context.Course.Include(u => u.User).OrderBy(p => p.CourseCreatedAt).ToList();
                 //courses = _context.Internships.Include(u => u.User).OrderBy(x => x.InternshipCreatedAt).ToList()
+
             }
 
             var filtered = UserFilter.RemoveUserInfoFromCourses(courses);
