@@ -174,6 +174,7 @@ namespace Global_Intern.Controllers
             }
             catch (Exception) //removed unused variable ex
             {
+
                 throw;
             }
            
