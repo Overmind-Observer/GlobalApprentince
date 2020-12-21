@@ -40,7 +40,7 @@ namespace Global_Intern.Controllers
 
             if (!String.IsNullOrEmpty(search))
             {
-                string query = "SELECT * FROM " + _table + "WHERE(CourseTitle LIKE('%" + search + "%') OR CourseType LIKE('%" + search + "%') OR CourseInfo LIKE('%" + search + "%'))";
+                string query = "SELECT * FROM " + _table + " WHERE (CourseTitle LIKE ('%" + search + "%') OR CourseType LIKE ('%" + search + "%') OR CourseInfo LIKE ('%" + search + "%'))";
                 courses = _context.Course.FromSqlRaw(query).Include(u => u.User).OrderBy(x => x.CourseExpDate).ToList();
                 if (courses.Count() == 0)
                 {

@@ -51,6 +51,17 @@ namespace Global_Intern.Models
             
         }
 
+        public Course UpdateCourse(Course course, Course UpdatedCourse)
+        {
+            course.CourseTitle = UpdatedCourse.CourseTitle;
+            course.CourseType = UpdatedCourse.CourseType;
+            course.CourseDuration = UpdatedCourse.CourseDuration;
+            course.CourseInfo = UpdatedCourse.CourseInfo;
+            course.CourseFees = UpdatedCourse.CourseFees;
+
+            return course;
+        }
+
     }
 }
 

@@ -151,7 +151,7 @@ namespace Global_Intern.Controllers
             try
             {
                 if (!String.IsNullOrEmpty(searchTerm)) {
-                    CourseUrl = CourseUrl + "?search" + searchTerm;
+                    CourseUrl = CourseUrl + "?search=" + searchTerm;
                     if (pageNumber != 0 && pageSize != 0) {
                         CourseUrl += "&pageNumber" + pageNumber.ToString() + "&pageSize" + pageSize.ToString();
                     }
