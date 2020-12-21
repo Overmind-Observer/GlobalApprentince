@@ -175,6 +175,8 @@ namespace Global_Intern.Controllers
                     CourseUrl = tempCourseUrl;
                     resp = await _client.GetAsync(CourseUrl);
                     resp.EnsureSuccessStatusCode();
+
+
                     responseBody = await resp.Content.ReadAsStringAsync();
                 }
                 var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
