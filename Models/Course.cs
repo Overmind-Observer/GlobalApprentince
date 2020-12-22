@@ -39,12 +39,14 @@ namespace Global_Intern.Models
 
         public void CreateNewCourse(Course NewCourse, User user)
         {
+            DateTime todaysDate = new DateTime();
+            var nextMonth = todaysDate.AddMonths(1);
             this.CourseTitle = NewCourse.CourseTitle;
             this.CourseType = NewCourse.CourseType;
             this.CourseDuration = NewCourse.CourseDuration;
             this.CourseInfo = NewCourse.CourseInfo;
             this.CourseFees = NewCourse.CourseFees;
-            this.CourseExpDate = DateTime.UtcNow;
+            this.CourseExpDate = nextMonth;
             this.CourseUpdatedAt = DateTime.UtcNow;
             this.CourseCreatedAt = DateTime.UtcNow;
             this.User = user;
@@ -58,6 +60,7 @@ namespace Global_Intern.Models
             course.CourseDuration = UpdatedCourse.CourseDuration;
             course.CourseInfo = UpdatedCourse.CourseInfo;
             course.CourseFees = UpdatedCourse.CourseFees;
+            course.CourseUpdatedAt = DateTime.Now;
 
             return course;
         }

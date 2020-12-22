@@ -1,0 +1,83 @@
+﻿@model Global_Intern.Models.Internship
+
+@{
+    ViewData["Title"] = "Internship";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+
+    <h1>Internship</h1>
+    <div class="content">
+        <h4>Internship</h4>
+        <hr />
+            <dl class="row" >
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.InternshipTitle)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.InternshipTitle)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.InternshipType)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.InternshipType)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.InternshipDuration)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.InternshipDuration)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.InternshipBody)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.InternshipBody)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.InternshipVirtual)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.InternshipVirtual)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.InternshipPaid)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.InternshipPaid)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.InternshipEmail)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.InternshipEmail)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.InternshipExpDate)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.InternshipExpDate)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.InternshipCreatedAt)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.InternshipCreatedAt)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.InternshipUpdatedAt)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.InternshipUpdatedAt)
+                </dd>
+            </dl>
+        <div class="d-flex">
+            <a class="btn btn-primary" href="/home/internship/@Model.InternshipId/Apply">Apply</a> |
+            <a class="btn btn-info" asp-action="Index">Back to List</a>
+            
+        </div>
+    </div>
+
+
+

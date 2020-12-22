@@ -91,8 +91,8 @@ namespace Global_Intern.Controllers
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 // Gets all internship created by the user
-                ViewBag.IntershipsByLoginedInUser = _context.Internships.Where(e => e.User == _user).ToList();
-                return View();
+                var course = _context.Course.ToList();
+                return View(course);
             }
         }
 
@@ -230,65 +230,19 @@ namespace Global_Intern.Controllers
             return View();
         }
 
-        public async Task<IActionResult> AllCourses([FromQuery] string searchTerm, int pageNumber = 0, int pageSize = 0)
-        {
-            //Course model;
-            IEnumerable<Course> model;
-            HttpResponseMessage resp;
-            String CourseUrl = host + Course_url;
-            string tempCourseUrl;
-            ViewData["SearchTerm"] = searchTerm;
-            try
-            {
-                if (!String.IsNullOrEmpty(searchTerm))
-                {
-                    CourseUrl = CourseUrl + "?search=" + searchTerm;
-                    if (pageNumber != 0 && pageSize != 0)
-                    {
-                        CourseUrl += "&pageNumber" + pageNumber.ToString() + "&pageSize" + pageSize.ToString();
-                    }
-                }
-                else
-                {
-                    if (pageNumber != 0 && pageSize != 0)
-                    {
-                        CourseUrl += "?pageNumber" + pageNumber.ToString() + "&pageSize" + pageSize.ToString();
-                    }
-                }
-
-
-
-                resp = await _client.GetAsync(CourseUrl);
-                resp.EnsureSuccessStatusCode();
-                string responseBody = await resp.Content.ReadAsStringAsync();
-                if (responseBody == "400")
-                {
-                    ModelState.AddModelError("KeywordNotFound", "No Courses match the entered keyword.");
-                    tempCourseUrl = CourseUrl.Replace("?search=" + searchTerm, null);
-                    CourseUrl = tempCourseUrl;
-                    resp = await _client.GetAsync(CourseUrl);
-                    resp.EnsureSuccessStatusCode();
-                    responseBody = await resp.Content.ReadAsStringAsync();
-                }
-                var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
-                ViewBag.pageSize = data[0]["pageSize"];
-                ViewBag.totalPages = data[0]["totalPages"];
-                ViewBag.currentPage = data[0]["pageNumber"];
-                model = data[0]["data"].ToObject<IEnumerable<Course>>();
-                var course = data[0]["data"][0];
-                return View(model);
-            }
-            catch (Exception) //removed unused variable ex
-            {
-
-                throw;
-            }
-
-        }
+        
 
         
-        public async Task<IActionResult> Courses(int id)
+        public async Task<IActionResult> Course(int id)
         {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            
             Course model;
             HttpResponseMessage resp;
             string CourseUrl = host + Course_url;
@@ -311,7 +265,7 @@ namespace Global_Intern.Controllers
             
         }
 
-        public IActionResult UpdateCourse()
+        public IActionResult UpdateCourse(int id)
         {
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
@@ -320,11 +274,11 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-            CourseId = Convert.ToInt32(_httpContextAccessor.HttpContext.Session.GetString("CourseId"));
+            _httpContextAccessor.HttpContext.Session.SetString("CourseId", Convert.ToString(id));
 
             using (GlobalDBContext context = new GlobalDBContext())
             {
-                Course course = context.Course.Find(CourseId);
+                Course course = context.Course.Find(id);
 
                 return View(course);
             }

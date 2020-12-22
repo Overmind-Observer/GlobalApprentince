@@ -170,7 +170,7 @@ namespace Global_Intern.Controllers
                 string responseBody = await resp.Content.ReadAsStringAsync();
                 if (responseBody == "400")
                 {
-                    ModelState.AddModelError("KeywordNotFound", "No Internships match the entered keyword.");
+                    ModelState.AddModelError("KeywordNotFound", "No Course match the entered keyword.");
                     tempCourseUrl = CourseUrl.Replace("?search=" + searchTerm, null);
                     CourseUrl = tempCourseUrl;
                     resp = await _client.GetAsync(CourseUrl);
@@ -196,7 +196,7 @@ namespace Global_Intern.Controllers
         }
 
 
-        public async Task<IActionResult> Courses(int id)
+        public async Task<IActionResult> Course(int id)
         {
             Course model;
             HttpResponseMessage resp;

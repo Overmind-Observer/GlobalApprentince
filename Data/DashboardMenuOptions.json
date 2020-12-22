@@ -9,7 +9,7 @@
         {
           "icon": "person",
           "field": "Profile",
-          "subfields": [ "General Profile", "Company Details", "Create Internships", "Intern Applications" ]
+          "subfields": [ "General Profile", "Company Details", "Create Internships", "Intern Applications", ]
         },
         {
           "icon": "settings",
@@ -43,7 +43,7 @@
         {
           "icon": "person",
           "field": "Profile",
-          "subfields": [ "General Profile", "Subscribers", "Create Courses","All Courses" ]
+          "subfields": [ "General Profile", "Subscribers", "Create Courses" ]
         },
         {
           "icon": "settings",
