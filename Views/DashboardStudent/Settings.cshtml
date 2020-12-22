@@ -1,0 +1,40 @@
+﻿@model Global_Intern.Models.User;
+@{
+    ViewData["Title"] = "Settings";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+
+<div class="container">
+    <main>
+        <div class="settings-content">
+            <form id="Settings" asp-action="DeleteUser" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="content">
+                    <main>
+                        <section class="setting-section">
+                            <div class="form-group">
+                                <div class="row py-4">
+                                    <div class="col-lg-6">
+                                        <h1>Settings</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <input type="submit" class="btn btn-danger" onclick="return validate();"  value="Delete Account">
+                    </main>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script type="text/javascript">
+       function validate(){
+           if (confirm("@ViewBag.Message") == true) {
+               return true;
+           }
+           else {
+               return false;
+           }
+        }
+    </script>
+</div>

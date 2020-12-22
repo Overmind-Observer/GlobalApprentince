@@ -69,23 +69,21 @@ namespace Global_Intern.Models
             this.SoftDelete = false;
         }
 
-        public void UpdateUser(User user)
+        public User UpdateUser(User _user,User user)
         {
-            UserFirstName = user.UserFirstName;
-            UserLastName = user.UserLastName;
-            UserAddress = user.UserAddress;
-            UserCity = user.UserCity;
-            Salt = user.Salt;
-            UserPassword = user.UserPassword;
-            UniqueToken = user.UniqueToken;
-            CreatedAt = user.CreatedAt;
-            UserEmail = user.UserEmail;
-            UserState = user.UserState;
-            UserCountry = user.UserCountry;
-            UserZip = user.UserZip;
-            UserPhone = user.UserPhone;
-            UserImage = user.UserImage;
-            UserGender = user.UserGender;
+            _user.UserFirstName = user.UserFirstName;
+            _user.UserLastName = user.UserLastName;
+            _user.UserAddress = user.UserAddress;
+            _user.UserCity = user.UserCity;
+            _user.CreatedAt = user.CreatedAt;
+            _user.UserState = user.UserState;
+            _user.UserCountry = user.UserCountry;
+            _user.UserZip = user.UserZip;
+            _user.UserImage = user.UserImage;
+            _user.UserGender = user.UserGender;
+            _user.UserPhone = user.UserPhone;
+
+            return _user;
         }
 
 

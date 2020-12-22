@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Global_Intern.Controllers
 {
@@ -27,6 +29,8 @@ namespace Global_Intern.Controllers
         private readonly HttpClient _client = new HttpClient();
         //private readonly string Internship_url = "/api/Internships"; - does not used!?
         private readonly IWebHostEnvironment _env;
+        private readonly string Internship_url = "/api/Internships";
+        string InternshipId;
 
 
         private User _user;
@@ -60,8 +64,11 @@ namespace Global_Intern.Controllers
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 // Gets all internship created by the user
-                ViewBag.IntershipsByLoginedInUser = _context.Internships.Where(e => e.User == _user).ToList();
-                return View();
+                var internship = _context.Internships.ToList();
+
+                
+
+                return View(internship);
             }
         }
 
@@ -151,6 +158,229 @@ namespace Global_Intern.Controllers
 
         }
 
+        public IActionResult Settings()
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            ViewBag.Message = "Are you sure you want to delete user " + _user.UserFirstName + " " + _user.UserLastName;
+
+            return View();
+        }
+
+        public IActionResult DeleteUser()
+        {
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+
+                var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+
+                User user = _context.Users.Find(User_id);
+
+                _context.Users.Remove(user);
+
+                _context.SaveChanges();
+
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+
+        public IActionResult CreateInternship()
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateInternship(Internship NewInternship)
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+
+            var WhatIsThis = _customAuthManager.Tokens.FirstOrDefault().Value.Item1;
+
+            var WhatIsThis1 = _customAuthManager.Tokens.FirstOrDefault().Value.Item2;
+
+            //var WhatIsThis2 = _customAuthManager.Tokens.FirstOrDefault().Value.GetType;
+
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+
+                Internship nInternship = new Internship();
+
+                User user = _context.Users.Find(User_id);
+
+                //this creates new course
+               nInternship= nInternship.CreateInternship(user, NewInternship);    // no definition!?
+
+                _context.Internships.Add(nInternship);
+
+                _context.SaveChanges();
+
+                ViewBag.Message = NewInternship.InternshipTitle + " successfully created check the Internship table to see if it has been created" + WhatIsThis + "//" + WhatIsThis1;
+
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> AllInternships([FromQuery] string searchTerm, int pageNumber = 0, int pageSize = 0)
+        {
+            /// What is happening How you get Internship -> Database to API. Api to you as a JSON response. when you can do something with that response
+            /// In my custom response you get number of items, also you get what page you are on. And how many page to expect.
+            /// Using QueryString, you can tell api what page you want, and how many internship info you want.
+
+            IEnumerable<Internship> model;
+            HttpResponseMessage resp;
+            string InternshipUrl = host + Internship_url;
+            string tempInternshipUrl;
+
+            ViewData["SearchTerm"] = searchTerm;
+            try
+            {
+
+                if (!String.IsNullOrEmpty(searchTerm))
+                {
+                    InternshipUrl = InternshipUrl + "?search=" + searchTerm;
+                    //InternshipUrl = InternshipUrl;
+                    if (pageNumber != 0 && pageSize != 0)
+                    {
+                        InternshipUrl += "&pageNumber=" + pageNumber.ToString() + "&pageSize=" + pageSize.ToString();
+
+                    }
+                }
+                else
+                {
+                    if (pageNumber != 0 && pageSize != 0)
+                    {
+                        InternshipUrl += "?pageNumber=" + pageNumber.ToString() + "&pageSize=" + pageSize.ToString();
+                    }
+                }
+
+                resp = await _client.GetAsync(InternshipUrl);
+                resp.EnsureSuccessStatusCode();
+                string responseBody = await resp.Content.ReadAsStringAsync();
+                if (responseBody == "400")
+                {
+                    ModelState.AddModelError("KeywordNotFound", "No Internships match the entered keyword.");
+                    tempInternshipUrl = InternshipUrl.Replace("?search=" + searchTerm, null);
+                    InternshipUrl = tempInternshipUrl;
+                    resp = await _client.GetAsync(InternshipUrl);
+                    resp.EnsureSuccessStatusCode();
+                    responseBody = await resp.Content.ReadAsStringAsync();
+                }
+                var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
+                ViewBag.pageSize = data[0]["pageSize"];
+                ViewBag.totalPages = data[0]["totalPages"];
+                ViewBag.currentPage = data[0]["pageNumber"];
+                model = data[0]["data"].ToObject<IEnumerable<Internship>>();
+                var intern = data[0]["data"][0];
+                return View(model);
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<IActionResult> Internship(int id)
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            Internship model;
+            HttpResponseMessage resp;
+            string InternshipUrl = host + Internship_url;
+            string temp = Convert.ToString(id);
+            _httpContextAccessor.HttpContext.Session.SetString("InternshipId", temp);
+            try
+            {
+
+                resp = await _client.GetAsync(InternshipUrl + "/" + id.ToString());
+                resp.EnsureSuccessStatusCode();
+                string responseBody = await resp.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
+                model = data[0].ToObject<Internship>();
+                return View(model);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IActionResult UpdateInternship(int id)
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            _httpContextAccessor.HttpContext.Session.SetString("InternshipId",Convert.ToString(id));
+
+            using (GlobalDBContext context = new GlobalDBContext())
+            {
+                Internship Internship = context.Internships.Find(Convert.ToInt32(id));
+
+                return View(Internship);
+            }
+
+
+        }
+
+        [HttpPost]
+        public IActionResult UpdateInternship(Internship UpdatedInternship)
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            using (GlobalDBContext context = new GlobalDBContext())
+            {
+
+                InternshipId = _httpContextAccessor.HttpContext.Session.GetString("InternshipId");
+
+                Internship _Internship = context.Internships.FirstOrDefault(k => k.InternshipId == Convert.ToInt32(InternshipId));
+
+                Internship Internship = new Internship();
+
+                Internship = Internship.UpdateInternship(_Internship, UpdatedInternship);
+
+                context.Internships.Update(Internship);
+
+                context.SaveChanges();
+
+                ViewBag.Message = "The Internship " + Internship.InternshipTitle + " has been updated successfully";
+
+                return View(Internship);
+            }
+        }
 
         public IActionResult CompanyDetails()
         {

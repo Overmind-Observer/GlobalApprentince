@@ -132,6 +132,39 @@ namespace Global_Intern.Controllers
             }
         }
 
+
+        public IActionResult Settings()
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            ViewBag.Message = "Are you sure you want to delete user " + _user.UserFirstName + " " + _user.UserLastName;
+
+            return View();
+        }
+
+        public IActionResult DeleteUser()
+        {
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+
+                var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+
+                User user = _context.Users.Find(User_id);
+
+                _context.Users.Remove(user);
+
+                _context.SaveChanges();
+
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+
         public void setUser()
         {
             ///  Access "UserToken" Session. 

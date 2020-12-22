@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Global_Intern.Controllers
 {
@@ -26,8 +29,10 @@ namespace Global_Intern.Controllers
         //private readonly string Internship_url = "/api/Internships"; - does not used!?
         //private readonly GlobalDBContext _context;
         IWebHostEnvironment _env;
+        string Course_url = "/api/Course"; 
         private User _user;
         GlobalDBContext context = new GlobalDBContext();
+        int CourseId;
 
 
 
@@ -86,8 +91,8 @@ namespace Global_Intern.Controllers
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 // Gets all internship created by the user
-                ViewBag.IntershipsByLoginedInUser = _context.Internships.Where(e => e.User == _user).ToList();
-                return View();
+                var course = _context.Course.ToList();
+                return View(course);
             }
         }
 
@@ -130,58 +135,50 @@ namespace Global_Intern.Controllers
 
             GlobalDBContext _context = new GlobalDBContext();
 
-                //assigns the new values to the updated ones
-                _user.UserFirstName = UpdateDetails.UserFirstName;
-                _user.UserLastName = UpdateDetails.UserLastName;
-                _user.UserAddress = UpdateDetails.UserAddress;
-                _user.UserCity = UpdateDetails.UserCity;
-                _user.CreatedAt = UpdateDetails.CreatedAt;
-                _user.UserState = UpdateDetails.UserState;
-                _user.UserCountry = UpdateDetails.UserCountry;
-                _user.UserZip = UpdateDetails.UserZip;
-                _user.UserImage = UpdateDetails.UserImage;
-                _user.UserGender = UpdateDetails.UserGender;               
+            User user = new User();
 
-                _context.Users.Update(_user);
+            user = user.UpdateUser(_user, UpdateDetails);
+
+                _context.Users.Update(user);
 
                 _context.SaveChanges();
 
-                ViewBag.Message = _user.UserFirstName + " " + _user.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
+                ViewBag.Message = user.UserFirstName + " " + user.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
 
-                return View(_user);
+                return View(user);
             
         }
 
 
 
-        public IActionResult Courses()
-        {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+        //public IActionResult Courses()
+        //{
+        //    // Display User name on the right-top corner - shows user is logedIN
+        //    ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
 
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+        //    // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+        //    string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+        //    ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-            Course course = new Course();
+        //    Course course = new Course();
 
-            ViewData["CoursesModel"] = course;
+        //    ViewData["CoursesModel"] = course;
 
-            GlobalDBContext context = new GlobalDBContext();
+        //    GlobalDBContext context = new GlobalDBContext();
 
-            ConsoleLogs consoleLogs = new ConsoleLogs(_env);
+        //    ConsoleLogs consoleLogs = new ConsoleLogs(_env);
 
             
 
-            for (var k=0;k<16;k++)
-            {
-                consoleLogs.WriteErrorLog(context.Users.ToList().ToString());
-            }
+        //    for (var k=0;k<16;k++)
+        //    {
+        //        consoleLogs.WriteErrorLog(context.Users.ToList().ToString());
+        //    }
 
 
 
-            return View();
-        }
+        //    return View();
+        //}
 
         public IActionResult CreateCourses()
         {
@@ -232,6 +229,94 @@ namespace Global_Intern.Controllers
             }
             return View();
         }
+
+        
+
+        
+        public async Task<IActionResult> Course(int id)
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            
+            Course model;
+            HttpResponseMessage resp;
+            string CourseUrl = host + Course_url;
+            string temp = Convert.ToString(id);
+            _httpContextAccessor.HttpContext.Session.SetString("CourseId", temp);
+
+            try
+            {
+                resp = await _client.GetAsync(CourseUrl + "/" + id.ToString());
+                resp.EnsureSuccessStatusCode();
+                string responseBody = await resp.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
+                model = data[0].ToObject<Course>();
+                return View(model);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
+        }
+
+        public IActionResult UpdateCourse(int id)
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            _httpContextAccessor.HttpContext.Session.SetString("CourseId", Convert.ToString(id));
+
+            using (GlobalDBContext context = new GlobalDBContext())
+            {
+                Course course = context.Course.Find(id);
+
+                return View(course);
+            }
+
+            
+        }
+
+        [HttpPost]
+        public IActionResult UpdateCourse(Course UpdatedCourse)
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            using(GlobalDBContext context = new GlobalDBContext())
+            {
+
+                CourseId = Convert.ToInt32(_httpContextAccessor.HttpContext.Session.GetString("CourseId"));
+
+                Course _course = context.Course.FirstOrDefault(k => k.CourseId == CourseId);
+
+                Course course = new Course();
+
+                course = course.UpdateCourse(_course, UpdatedCourse);
+
+                context.Course.Update(course);
+
+                context.SaveChanges();
+
+                ViewBag.Message = "The course " + course.CourseTitle + " has been updated successfully";
+
+                return View(course);
+            }
+        }
+
 
         public IActionResult Settings()
         {

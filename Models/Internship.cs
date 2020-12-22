@@ -51,5 +51,38 @@ namespace Global_Intern.Models
 
             this.User = user;
         }
+
+        public Internship CreateInternship(User user,Internship intern)
+        {
+            this.InternshipTitle = intern.InternshipTitle;
+            this.InternshipType = intern.InternshipType;
+            this.InternshipDuration = intern.InternshipDuration;
+            this.InternshipBody = intern.InternshipBody;
+            this.InternshipVirtual = intern.InternshipVirtual;
+            this.InternshipPaid = intern.InternshipPaid;
+            this.InternshipEmail = intern.InternshipEmail;
+            this.InternshipExpDate = intern.InternshipExpDate;
+            this.InternshipCreatedAt = DateTime.Now;
+            this.InternshipUpdatedAt = DateTime.Now;
+            this.User = user;
+
+            return this;
+        }
+
+        public Internship UpdateInternship(Internship internship, Internship _internship)
+        {
+            internship.InternshipTitle = _internship.InternshipTitle;
+            internship.InternshipType = _internship.InternshipType;
+            internship.InternshipDuration = _internship.InternshipDuration;
+            internship.InternshipBody = _internship.InternshipBody;
+            internship.InternshipVirtual = _internship.InternshipVirtual;
+            internship.InternshipPaid = _internship.InternshipPaid;
+            internship.InternshipEmail = _internship.InternshipEmail;
+            internship.InternshipExpDate = _internship.InternshipExpDate;
+            internship.InternshipUpdatedAt = DateTime.Now;
+            
+
+            return internship;
+        }
     }
 }

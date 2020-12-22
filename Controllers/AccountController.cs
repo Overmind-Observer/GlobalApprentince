@@ -20,6 +20,7 @@ namespace Global_Intern.Controllers
         private readonly EmailSettings _emailSettings;
         private readonly ICustomAuthManager _auth;
         IWebHostEnvironment _env;
+
         string host;
         IHttpContextAccessor _httpContextAccessor;
 
