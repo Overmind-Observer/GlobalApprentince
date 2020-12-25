@@ -317,7 +317,7 @@ namespace Global_Intern.Controllers
             }
         }
 
-
+        [Route("{controller}/{Action}")]
         public IActionResult Settings()
         {
             // Display User name on the right-top corner - shows user is logedIN
@@ -329,9 +329,12 @@ namespace Global_Intern.Controllers
 
             ViewBag.Message = "Are you sure you want to delete user "+_user.UserFirstName + " " + _user.UserLastName;
 
+            ViewBag.DeleteItem = "DeleteUser";
+
             return View();
         }
 
+        
         public IActionResult DeleteUser()
         {
             using (GlobalDBContext _context = new GlobalDBContext())
@@ -346,6 +349,48 @@ namespace Global_Intern.Controllers
                 _context.SaveChanges();
 
                 return RedirectToAction("Index", "Home");
+            }
+
+        }
+
+        [Route("{controller}/{Action}/{id}")]
+        public IActionResult Settings(int id)
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            _httpContextAccessor.HttpContext.Session.SetString("DeleteCourseId", Convert.ToString(id));
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+                Course course = _context.Course.Find(id);
+
+                ViewBag.Message = "Are you sure you want to delete this Course " + course.CourseTitle+"?";
+            }
+
+            ViewBag.DeleteItem = "DeleteCourse";
+
+            return View();
+        }
+
+        public IActionResult DeleteCourse()
+        {
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+
+                var id = _httpContextAccessor.HttpContext.Session.GetString("DeleteCourseId");
+
+                Course course = _context.Course.Find(Convert.ToInt32(id));
+
+                _context.Course.Remove(course);
+
+                _context.SaveChanges();
+
+                return RedirectToAction("Index", "DashboardTeacher");
             }
 
         }

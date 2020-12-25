@@ -54,6 +54,9 @@ namespace Global_Intern.Models
 
         public Internship CreateInternship(User user,Internship intern)
         {
+            DateTime todaysDate = new DateTime();
+            todaysDate = DateTime.Now;
+            var nextMonth = todaysDate.AddMonths(1);
             this.InternshipTitle = intern.InternshipTitle;
             this.InternshipType = intern.InternshipType;
             this.InternshipDuration = intern.InternshipDuration;
@@ -61,7 +64,7 @@ namespace Global_Intern.Models
             this.InternshipVirtual = intern.InternshipVirtual;
             this.InternshipPaid = intern.InternshipPaid;
             this.InternshipEmail = intern.InternshipEmail;
-            this.InternshipExpDate = intern.InternshipExpDate;
+            this.InternshipExpDate = nextMonth;
             this.InternshipCreatedAt = DateTime.Now;
             this.InternshipUpdatedAt = DateTime.Now;
             this.User = user;
