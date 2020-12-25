@@ -40,6 +40,7 @@ namespace Global_Intern.Models
         public void CreateNewCourse(Course NewCourse, User user)
         {
             DateTime todaysDate = new DateTime();
+            todaysDate = DateTime.Now;
             var nextMonth = todaysDate.AddMonths(1);
             this.CourseTitle = NewCourse.CourseTitle;
             this.CourseType = NewCourse.CourseType;
