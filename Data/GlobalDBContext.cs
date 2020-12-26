@@ -16,11 +16,11 @@ namespace Global_Intern.Data
 
             string connectionString = GeneratePath();
 
-            _ = optionsBuilder.UseSqlServer(connectionString,
-              Builder);
+           /* _ = optionsBuilder.UseSqlServer(connectionString,
+              Builder);*/
 
- /*           _ = optionsBuilder.UseSqlServer(connectionString,
-              builder => builder.UseRowNumberForPaging(true));*/
+_ = optionsBuilder.UseSqlServer(connectionString,
+              builder => builder.UseRowNumberForPaging(true));
 
         }
 

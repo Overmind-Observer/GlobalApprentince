@@ -254,22 +254,5 @@ namespace Global_Intern.Controllers
 
             return View();
         }
-        
-        
-         public IActionResult Settings()
-        {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
-
-            ViewBag.Message = "Are you sure you want to delete user "+_user.UserFirstName + " " + _user.UserLastName;
-
-            return View();
-        }
-        
-        
     }
 }
