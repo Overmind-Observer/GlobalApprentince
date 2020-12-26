@@ -11,6 +11,8 @@ namespace Global_Intern.Data
     public class GlobalDBContext : DbContext
     {
         public ConnectionString _connectionString;
+
+        [Obsolete]
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
