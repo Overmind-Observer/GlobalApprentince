@@ -26,35 +26,36 @@ namespace Global_Intern.Controllers
         private readonly ICustomAuthManager _customAuthManager;
         private readonly string host;
         private readonly HttpClient _client = new HttpClient();
+
         //private readonly string Internship_url = "/api/Internships"; - does not used!?
         //private readonly GlobalDBContext _context;
-        IWebHostEnvironment _env;
-        string Course_url = "/api/Course"; 
+        readonly IWebHostEnvironment _env;
+        readonly string Course_url = "/api/Course"; 
         private User _user;
-        GlobalDBContext context = new GlobalDBContext();
+        readonly GlobalDBContext context = new GlobalDBContext();
         int CourseId;
 
 
 
-        public DashboardTeacherController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth, IWebHostEnvironment env, GlobalDBContext context)
+        public DashboardTeacherController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth, IWebHostEnvironment env, GlobalDBContext context) //context is unused parameter !?
         {
             _env = env;
             _httpContextAccessor = httpContextAccessor;
             host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
             _customAuthManager = auth;
-            
+
 
 
             // sets User _user using session
-            string token = _httpContextAccessor.HttpContext.Session.GetString("UserToken");
+            _ = _httpContextAccessor.HttpContext.Session.GetString("UserToken");
             // To Access runtime tokens
             _customAuthManager = auth;
 
-            setUser();
+            SetUser();
         }
 
         // setUser() method continue for above.
-        public void setUser()
+        public void SetUser()
         {
             ///  Access "UserToken" Session. 
             /// NOTE:  Session get created when user login with unique id. This id is also used to identify the user from number of Auth Tokens
@@ -63,17 +64,13 @@ namespace Global_Intern.Controllers
             {
                 return;
             }
-            using (GlobalDBContext _context = new GlobalDBContext())
+            using GlobalDBContext _context = new GlobalDBContext();
+            if (_customAuthManager.Tokens.Count > 0)
             {
-
-                if (_customAuthManager.Tokens.Count > 0)
-                {
-                    // check weather the unique id is in AuthManager
-                    int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
-                    // User is found in the AuthManager
-                    _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
-                }
-
+                // check weather the unique id is in AuthManager
+                int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
+                // User is found in the AuthManager
+                _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
             }
         }
 
@@ -88,12 +85,10 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-            using (GlobalDBContext _context = new GlobalDBContext())
-            {
-                // Gets all internship created by the user
-                var course = _context.Course.ToList();
-                return View(course);
-            }
+            using GlobalDBContext _context = new GlobalDBContext();
+            // Gets all internship created by the user
+            var course = _context.Course.ToList();
+            return View(course);
         }
 
         // Dashboard Teacher General Profile Page.
@@ -106,16 +101,12 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-            
 
-            using (GlobalDBContext context = new GlobalDBContext())
-            {
 
-                User user = new User();
+            using GlobalDBContext context = new GlobalDBContext();
+            User user = new User();
 
-                return View(_user);
-
-            }
+            return View(_user);
 
 
         }
@@ -130,8 +121,7 @@ namespace Global_Intern.Controllers
             // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
-
-            var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+            _ = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
 
             GlobalDBContext _context = new GlobalDBContext();
 
@@ -276,14 +266,12 @@ namespace Global_Intern.Controllers
 
             _httpContextAccessor.HttpContext.Session.SetString("CourseId", Convert.ToString(id));
 
-            using (GlobalDBContext context = new GlobalDBContext())
-            {
-                Course course = context.Course.Find(id);
+            using GlobalDBContext context = new GlobalDBContext();
+            Course course = context.Course.Find(id);
 
-                return View(course);
-            }
+            return View(course);
 
-            
+
         }
 
         [HttpPost]
@@ -296,25 +284,22 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-            using(GlobalDBContext context = new GlobalDBContext())
-            {
+            using GlobalDBContext context = new GlobalDBContext();
+            CourseId = Convert.ToInt32(_httpContextAccessor.HttpContext.Session.GetString("CourseId"));
 
-                CourseId = Convert.ToInt32(_httpContextAccessor.HttpContext.Session.GetString("CourseId"));
+            Course _course = context.Course.FirstOrDefault(k => k.CourseId == CourseId);
 
-                Course _course = context.Course.FirstOrDefault(k => k.CourseId == CourseId);
+            Course course = new Course();
 
-                Course course = new Course();
+            course = course.UpdateCourse(_course, UpdatedCourse);
 
-                course = course.UpdateCourse(_course, UpdatedCourse);
+            context.Course.Update(course);
 
-                context.Course.Update(course);
+            context.SaveChanges();
 
-                context.SaveChanges();
+            ViewBag.Message = "The course " + course.CourseTitle + " has been updated successfully";
 
-                ViewBag.Message = "The course " + course.CourseTitle + " has been updated successfully";
-
-                return View(course);
-            }
+            return View(course);
         }
 
         [Route("{controller}/{Action}")]
@@ -337,19 +322,16 @@ namespace Global_Intern.Controllers
         
         public IActionResult DeleteUser()
         {
-            using (GlobalDBContext _context = new GlobalDBContext())
-            {
+            using GlobalDBContext _context = new GlobalDBContext();
+            var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
 
-                var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+            User user = _context.Users.Find(User_id);
 
-                User user = _context.Users.Find(User_id);
+            _context.Users.Remove(user);
 
-                _context.Users.Remove(user);
+            _context.SaveChanges();
 
-                _context.SaveChanges();
-
-                return RedirectToAction("Index", "Home");
-            }
+            return RedirectToAction("Index", "Home");
 
         }
 
@@ -379,19 +361,16 @@ namespace Global_Intern.Controllers
 
         public IActionResult DeleteCourse()
         {
-            using (GlobalDBContext _context = new GlobalDBContext())
-            {
+            using GlobalDBContext _context = new GlobalDBContext();
+            var id = _httpContextAccessor.HttpContext.Session.GetString("DeleteCourseId");
 
-                var id = _httpContextAccessor.HttpContext.Session.GetString("DeleteCourseId");
+            Course course = _context.Course.Find(Convert.ToInt32(id));
 
-                Course course = _context.Course.Find(Convert.ToInt32(id));
+            _context.Course.Remove(course);
 
-                _context.Course.Remove(course);
+            _context.SaveChanges();
 
-                _context.SaveChanges();
-
-                return RedirectToAction("Index", "DashboardTeacher");
-            }
+            return RedirectToAction("Index", "DashboardTeacher");
 
         }
 

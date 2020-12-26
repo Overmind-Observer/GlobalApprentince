@@ -24,7 +24,7 @@ _ = optionsBuilder.UseSqlServer(connectionString,
 
         }
 
-        private void Builder(SqlServerDbContextOptionsBuilder obj)
+        private void Builder(SqlServerDbContextOptionsBuilder obj) //memberBuilder is unused !?
         {
             throw new NotImplementedException();
         }
