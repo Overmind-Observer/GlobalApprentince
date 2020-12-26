@@ -22,7 +22,7 @@ namespace Global_Intern.Controllers
     public class DashboardEmployerController : Controller
     {
 
-        ////https://localhost:44307/api/internships/employer/3
+        ////https://localhost:44307/api/Internships/employer/3
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICustomAuthManager _customAuthManager;
         private readonly string host;
@@ -61,13 +61,15 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-            using GlobalDBContext _context = new GlobalDBContext();
-            // Gets all internship created by the user
-            var internship = _context.Internships.ToList();
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+                // Gets all Internship created by the user
+                var Internship = _context.Internships.ToList();
 
 
 
-            return View(internship);
+                return View(Internship);
+            }
         }
 
         //[Authorize]
@@ -96,8 +98,8 @@ namespace Global_Intern.Controllers
 
         //    using (GlobalDBContext _context = new GlobalDBContext())
         //    {
-        //        Internship internship = new Internship();
-        //        return View(internship);
+        //        Internship Internship = new Internship();
+        //        return View(Internship);
         //    }
         //}
 
@@ -180,6 +182,47 @@ namespace Global_Intern.Controllers
             return RedirectToAction("Index", "Home");
 
         }
+        [Route("{controller}/{Action}/{id}")]
+        public IActionResult Settings(int id)
+        {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
+            _httpContextAccessor.HttpContext.Session.SetString("DeleteInternshipId", Convert.ToString(id));
+
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+                Internship Internship = _context.Internships.Find(id);
+
+                ViewBag.Message = "Are you sure you want to delete this Internship " + Internship.InternshipTitle + "?";
+            }
+
+            ViewBag.DeleteItem = "DeleteInternship";
+
+            return View();
+        }
+
+        public IActionResult DeleteInternship()
+        {
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+
+                var id = _httpContextAccessor.HttpContext.Session.GetString("DeleteInternshipId");
+
+                Internship Internship = _context.Internships.Find(Convert.ToInt32(id));
+
+                _context.Internships.Remove(Internship);
+
+                _context.SaveChanges();
+
+                return RedirectToAction("Index", "DashboardTeacher");
+            }
+
+        }
 
         public IActionResult CreateInternship()
         {
@@ -198,6 +241,7 @@ namespace Global_Intern.Controllers
         {
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+
 
             // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
@@ -218,7 +262,7 @@ namespace Global_Intern.Controllers
 
                 User user = _context.Users.Find(User_id);
 
-                //this creates new course
+                //this creates new Internship
                nInternship= nInternship.CreateInternship(user, NewInternship);    // no definition!?
 
                 _context.Internships.Add(nInternship);
@@ -235,7 +279,7 @@ namespace Global_Intern.Controllers
         {
             /// What is happening How you get Internship -> Database to API. Api to you as a JSON response. when you can do something with that response
             /// In my custom response you get number of items, also you get what page you are on. And how many page to expect.
-            /// Using QueryString, you can tell api what page you want, and how many internship info you want.
+            /// Using QueryString, you can tell api what page you want, and how many Internship info you want.
 
             IEnumerable<Internship> model;
             HttpResponseMessage resp;
