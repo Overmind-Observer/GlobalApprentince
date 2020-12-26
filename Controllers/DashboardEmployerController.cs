@@ -61,15 +61,13 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-            using (GlobalDBContext _context = new GlobalDBContext())
-            {
-                // Gets all Internship created by the user
-                var Internship = _context.Internships.ToList();
+            using GlobalDBContext _context = new GlobalDBContext();
+            // Gets all Internship created by the user
+            var Internship = _context.Internships.ToList();
 
 
 
-                return View(Internship);
-            }
+            return View(Internship);
         }
 
         //[Authorize]
@@ -208,19 +206,16 @@ namespace Global_Intern.Controllers
 
         public IActionResult DeleteInternship()
         {
-            using (GlobalDBContext _context = new GlobalDBContext())
-            {
+            using GlobalDBContext _context = new GlobalDBContext();
+            var id = _httpContextAccessor.HttpContext.Session.GetString("DeleteInternshipId");
 
-                var id = _httpContextAccessor.HttpContext.Session.GetString("DeleteInternshipId");
+            Internship Internship = _context.Internships.Find(Convert.ToInt32(id));
 
-                Internship Internship = _context.Internships.Find(Convert.ToInt32(id));
+            _context.Internships.Remove(Internship);
 
-                _context.Internships.Remove(Internship);
+            _context.SaveChanges();
 
-                _context.SaveChanges();
-
-                return RedirectToAction("Index", "DashboardTeacher");
-            }
+            return RedirectToAction("Index", "DashboardTeacher");
 
         }
 

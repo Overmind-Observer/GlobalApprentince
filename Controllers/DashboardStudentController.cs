@@ -25,8 +25,9 @@ namespace Global_Intern.Controllers
         private readonly string host;
 
         private readonly HttpClient _client = new HttpClient(); // Used to access API -> Internship.
-        //private readonly string Internship_url = "/api/Internships"; - does not used!?
-        IWebHostEnvironment _env; // to access the Content PATH aka wwwroot
+                                                                //private readonly string Internship_url = "/api/Internships"; - does not used!?
+
+        readonly IWebHostEnvironment _env; // to access the Content PATH aka wwwroot
         /// <summary>
         /// User object is quite important here. without accessing database again and again on every action. User is set on constructor level.
         /// </summary>
@@ -42,7 +43,7 @@ namespace Global_Intern.Controllers
             // To Access runtime tokens
             _customAuthManager = auth;
 
-            setUser();
+            SetUser();
         }
         public IActionResult Index()
         {
@@ -80,12 +81,10 @@ namespace Global_Intern.Controllers
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
 
-            using (GlobalDBContext _context = new GlobalDBContext())
-            {
-                ProfileViewStudent gen = new ProfileViewStudent(_user);
+            using GlobalDBContext _context = new GlobalDBContext();
+            ProfileViewStudent gen = new ProfileViewStudent(_user);
 
-                return View(gen);
-            }
+            return View(gen);
 
         }
 
@@ -100,36 +99,33 @@ namespace Global_Intern.Controllers
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
             // When Save button is clicked
-            using (GlobalDBContext _context = new GlobalDBContext())
+            using GlobalDBContext _context = new GlobalDBContext();
+            if (fromData.UserImage != null && fromData.UserImage.Length > 0)
             {
-                if (fromData.UserImage != null && fromData.UserImage.Length > 0)
+                string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + fromData.UserImage.FileName;
+                string filePath = uploadFolder + uniqueFileName;
+                fromData.UserImage.CopyTo(new FileStream(filePath, FileMode.Create));
+
+                // Delete previous uploaded Image
+                if (!String.IsNullOrEmpty(_user.UserImage))
                 {
-                    string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
-                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + fromData.UserImage.FileName;
-                    string filePath = uploadFolder + uniqueFileName;
-                    fromData.UserImage.CopyTo(new FileStream(filePath, FileMode.Create));
-
-                    // Delete previous uploaded Image
-                    if (!String.IsNullOrEmpty(_user.UserImage))
-                    {
-                        string imagePath = uploadFolder + _user.UserImage;
-                        System.IO.File.Delete(imagePath);
-                    }
-
-                    // if new image is uploaded with other user info
-                    _user.AddFromStudentProfileView(fromData, uniqueFileName);
+                    string imagePath = uploadFolder + _user.UserImage;
+                    System.IO.File.Delete(imagePath);
                 }
-                else
-                {
-                    // Adding generalProfile attr to user without image
-                    _user.AddFromStudentProfileView(fromData);
-                }
-                _context.Users.Update(_user);
-                _context.SaveChanges();
-                ProfileViewStudent gen = new ProfileViewStudent(_user);
-                return View(gen);
 
+                // if new image is uploaded with other user info
+                _user.AddFromStudentProfileView(fromData, uniqueFileName);
             }
+            else
+            {
+                // Adding generalProfile attr to user without image
+                _user.AddFromStudentProfileView(fromData);
+            }
+            _context.Users.Update(_user);
+            _context.SaveChanges();
+            ProfileViewStudent gen = new ProfileViewStudent(_user);
+            return View(gen);
         }
 
 
@@ -149,23 +145,20 @@ namespace Global_Intern.Controllers
 
         public IActionResult DeleteUser()
         {
-            using (GlobalDBContext _context = new GlobalDBContext())
-            {
+            using GlobalDBContext _context = new GlobalDBContext();
+            var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
 
-                var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+            User user = _context.Users.Find(User_id);
 
-                User user = _context.Users.Find(User_id);
+            _context.Users.Remove(user);
 
-                _context.Users.Remove(user);
+            _context.SaveChanges();
 
-                _context.SaveChanges();
-
-                return RedirectToAction("Index", "Home");
-            }
+            return RedirectToAction("Index", "Home");
 
         }
 
-        public void setUser()
+        public void SetUser()
         {
             ///  Access "UserToken" Session. 
             /// NOTE:  Session get created when user login with unique id. This id is also used to identify the user from number of Auth Tokens
@@ -174,17 +167,13 @@ namespace Global_Intern.Controllers
             {
                 return;
             }
-            using (GlobalDBContext _context = new GlobalDBContext())
+            using GlobalDBContext _context = new GlobalDBContext();
+            if (_customAuthManager.Tokens.Count > 0)
             {
-
-                if (_customAuthManager.Tokens.Count > 0)
-                {
-                    // check weather the unique id is in AuthManager
-                    int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
-                    // User is found in the AuthManager
-                    _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
-                }
-
+                // check weather the unique id is in AuthManager
+                int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
+                // User is found in the AuthManager
+                _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
             }
         }
         
@@ -203,7 +192,7 @@ namespace Global_Intern.Controllers
 
         }
         [HttpPost]
-        public IActionResult Qualifications(Qualification qualification)
+        public IActionResult Qualifications(Qualification qualification) //qualification is unused parameter !? 
         {
             using (GlobalDBContext _context = new GlobalDBContext())
             {
