@@ -11,7 +11,6 @@ using Global_Intern.Data;
 using Microsoft.Extensions.Options;
 using System.Net.Http;
 using Microsoft.AspNetCore.Hosting;
-using System.Threading.Tasks;
 
 namespace Global_Intern.Controllers
 {

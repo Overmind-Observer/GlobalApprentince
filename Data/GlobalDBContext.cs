@@ -12,7 +12,7 @@ namespace Global_Intern.Data
     {
         public ConnectionString _connectionString;
 
-        [Obsolete]
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
@@ -22,7 +22,9 @@ namespace Global_Intern.Data
               Builder);*/
 
 _ = optionsBuilder.UseSqlServer(connectionString,
+#pragma warning disable CS0618 // Type or member is obsolete
               builder => builder.UseRowNumberForPaging(true));
+#pragma warning restore CS0618 // Type or member is obsolete
 
         }
 
