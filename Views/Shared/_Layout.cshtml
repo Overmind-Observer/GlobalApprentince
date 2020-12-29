@@ -42,18 +42,18 @@
                         <a class="nav-link" asp-area="" asp-controller="Internship" asp-action="Create">Create Internship</a>
                     </li>
                     -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                   <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact</a>
                     </li>
                     <div class="dropdown">
                         <li class="nav-item">
                             <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Careers</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="" asp-controller=" " asp-action=" "> Current Vacancies </a>
-                                <a class="dropdown-item" asp-area="" asp-controller=" " asp-action=" "> Our Benefits</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="CurrentVacancies">Current Vacancies</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="OurBenefits">Our Benefits</a>
                             </div>
                         </li>
                     </div>
