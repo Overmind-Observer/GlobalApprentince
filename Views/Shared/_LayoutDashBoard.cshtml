@@ -46,11 +46,20 @@
                 </li>
                 -->
                 <li class="nav-item">
-                    <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Home" asp-action="ContactUs">Contact</a>
-                </li>
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact</a>
+                    </li>
+                    <div class="dropdown">
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Careers</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="CurrentVacancies">Current Vacancies</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="OurBenefits">Our Benefits</a>
+                            </div>
+                        </li>
+                    </div>
 
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -148,6 +157,71 @@
             @RenderBody()
         </div>
     </main>
+    
+    
+     <div class="footer-distributed">
+        <div class="footer-left">
+            <img src="/img/Tech.png" alt="GlobalIntern" height="150" width="250">
+            <p class="footer-links">
+                <a asp-controller="Home" asp-action="Index">Home</a>
+                <br>
+                <a asp-controller="Home" asp-action="AllInternships">Program.All Internships</a>
+                <br>
+                <a asp-controller="" asp-action="">Program.Courses</a>
+                <br>
+                <a asp-controller="Home" asp-action="About">About</a>
+                <br>
+                <a asp-controller="Home" asp-action="ContactUs">Contact</a>
+                <br>
+                <a asp-controller="Home" asp-action="CurrentVacancies">Current Vacancies</a>
+                <br>
+                <a asp-controller="Home" asp-action="OurBenefits">OurBenefits</a>
+            </p>
+
+            <p class="footer-company-name">GlobalIntern 2020</p>
+        </div>
+
+        <div class="footer-center">
+            <div>
+                <i class="fa fa-map-marker"></i>
+                <p><span>111 Victoria Street</span> Hamilton, New Zealand</p>
+            </div>
+
+            <div>
+                <i class="fa fa-phone"></i>
+                <p>07-898-8060</p>
+            </div>
+
+            <div">
+                <i class="fa fa-envelope"></i>
+                <p><a href="mailto:globalintern@gmail.com">globalintern@gmail.com</a></p>
+
+        </div>
+    </div>
+
+    <div class="footer-right">
+        <div class="footer-icons">
+            <div class="row">
+
+                <a href="https://www.facebook.com">
+                    <img src="img/fb_icon.ico" alt="SocialMedia1" height="30" width="30" />
+                </a>
+                <a href="https://www.twitter.com">
+                    <img src="img/twitter.ico" alt="SocialMedia2" height="30" width="30" />
+                </a>
+                <a href="https://www.linkedin.com">
+                    <img src="img/linkedin.ico" alt="SocialMedia3" height="30" width="30" />
+                </a>
+                <a href="https://www.youtube.com">
+                    <img src="img/youtube.ico" alt="SocialMedia4" height="30" width="30" />
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    
+    
     <footer class="footer text-muted">
         <div class="container">
             <form class="form-inline" style="float:left">

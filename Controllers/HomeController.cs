@@ -345,6 +345,17 @@ namespace Global_Intern.Controllers
         {
             return View();
         }
+        
+        // Add methods under careers 
+        public IActionResult CurrentVacancies()
+        {
+            return View();
+        }
+        public IActionResult OurBenefits()
+        {
+            return View();
+        }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
