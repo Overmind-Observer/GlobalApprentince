@@ -1,4 +1,4 @@
-﻿@model Global_Intern.Models.User;
+﻿@model Global_Intern.Models.GeneralProfile.ProfileViewEmployer;
 @{
     ViewData["Title"] = "CompleteProfile";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
@@ -16,9 +16,10 @@
                         <div class="row py-4">
                             <div class="col-lg-6">
                                 <h1>General Profile</h1>
+                                <h3 style="color:green">@ViewBag.Message</h3>
                                 @{
-                                    <!-- Uploaded Company Logo -->
-                                    if (@Model.UserImage == null)
+                                    <!-- Uploaded Teacher's head photo -->
+                                    if (@Model.UserImageName == null)
                                     {
 
                                         <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
@@ -30,7 +31,7 @@
                                     {
                                         <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
                                         <div class="image-area mt-4">
-                                            <img id="imageResult" src="~/uploads/UserImage/@Model.UserImage" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
+                                            <img id="imageResult" src="~/uploads/UserImage/@Model.UserImageName" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
                                         </div>
                                     }
                                 }
@@ -94,21 +95,21 @@
                         @{ if (Model.UserState == null)
                             {
                                 <select asp-for="UserState" id="dd_states" class="form-control">
-                                    <option value="">Select Country</option>
+                                    <option id="optionState" value="">Select Country</option>
                                 </select>
                             }
                             else
                             {
                                 <select asp-for="UserState" id="dd_states" class="form-control">
-                                    <option value="">@Model.UserState</option>
+                                    <option id="optionState" value="@Model.UserState">@Model.UserState</option>
                                 </select>
                             }
                         }
 
                     </div>
                     <div class="form-group">
-                        <label asp-for="UserPhone">Phone</label>
-                        <input class="form-control" asp-for="UserPhone">
+                        <label asp-for="UserCity">Phone</label>
+                        <input class="form-control" asp-for="UserCity">
                     </div>
 
                 </section>
@@ -140,8 +141,8 @@
         let uri = "https://www.universal-tutorial.com/api/getaccesstoken";
         let h = new Headers();
         h.append("Accept", "application/json");
-        h.append("api-token", "4k9BmJ0DVwUi_ktFlyDvchDFXS3Mz7BAetCqdJjJI6sDmfoIHigqUonf3PQufBB5i3g");
-        h.append("user-email", "haritjangwal89@protonmail.com");
+        h.append("api-token", "N-7Ag7GBCSQKidScuKcpV3UOfwwz6Dco-G0dEJewVeyxuXU57SuuPnCnGEsmPsVllP0");
+        h.append("user-email", "eobardthawnee69@gmail.com");
 
         // Get auth_token -> exp every 24 hours
         let req = new Request(uri, {
@@ -197,13 +198,17 @@
                 repeatCountry = false;
                 repeatState = true;
                 var opt = document.createElement('option');
-                tempState = optionStateStr.value;
-                selState.textContent = "";
+                tempCountry = selCountries.value;
+                selCountries.textContent = "";
+                var opt = document.createElement('option');
+                opt.appendChild(document.createTextNode(tempCountry));
+                opt.value = tempCountry;
+                selCountries.appendChild(opt);
                 let uri = "https://www.universal-tutorial.com/api/getaccesstoken";
                 let h = new Headers();
                 h.append("Accept", "application/json");
-                h.append("api-token", "4k9BmJ0DVwUi_ktFlyDvchDFXS3Mz7BAetCqdJjJI6sDmfoIHigqUonf3PQufBB5i3g");
-                h.append("user-email", "haritjangwal89@protonmail.com");
+                h.append("api-token", "N-7Ag7GBCSQKidScuKcpV3UOfwwz6Dco-G0dEJewVeyxuXU57SuuPnCnGEsmPsVllP0");
+                h.append("user-email", "eobardthawnee69@gmail.com");
 
                 // Get auth_token -> exp every 24 hours
                 let req = new Request(uri, {
@@ -272,6 +277,13 @@
                 else {
                     tempCountry = optionCountryStr.value;
                 }
+                var opt = document.createElement('option');
+                tempState = selState.value;
+                selState.textContent = "";
+                var opt = document.createElement('option');
+                opt.appendChild(document.createTextNode(tempState));
+                opt.value = tempState;
+                selState.appendChild(opt);
                 let uri = "https://www.universal-tutorial.com/api/states/" + tempCountry;
                 let h = new Headers();
                 h.append("Accept", "application/json");
@@ -298,8 +310,6 @@
                     })
                     .catch((err) => {
                         console.log('ERROR:', err.message);
-
-
                     });
             }
         });
@@ -324,7 +334,7 @@
             })
         }
 
-        // Script to fecth Country -> State -> City ENDS
+        // Script to fecth Country -> State -> City ENDSS
 
         // Dashboard menu for mobile view
         $(document).ready(function () {
@@ -381,3 +391,20 @@
 
     </script>
 }
+
+
+
+
+@*<h2>Teacher Details</h2>
+
+    <div class="card">
+        <img src="/w3images/team2.jpg" alt="John" style="width:100%">
+        <div class="container">
+            <h4><b>John Doe</b></h4>
+            <p>Architect & Engineer</p>
+            <p> More than 10 years expeience as ASP.NET core developer at God IT. </p>
+
+            <a class="bb" href="mailto:someone@example.com?Subject=Hello%20again" target="_top"> Contact </a>
+        </div>
+    </div>*@
+

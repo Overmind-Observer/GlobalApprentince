@@ -1,5 +1,6 @@
 using Global_Intern.Data;
 using Global_Intern.Models;
+using Global_Intern.Models.GeneralProfile;
 using Global_Intern.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -111,9 +113,10 @@ namespace Global_Intern.Controllers
             using (GlobalDBContext context = new GlobalDBContext())
             {
 
-                User user = new User();
+                ProfileViewTeacher teacher = new ProfileViewTeacher(_user);
+                
 
-                return View(_user);
+                return View(teacher);
 
             }
 
@@ -122,31 +125,60 @@ namespace Global_Intern.Controllers
 
         //public async Task<IActionResult> Kopl()
         [HttpPost]
-        public IActionResult GeneralProfile(User UpdateDetails)
+        public IActionResult GeneralProfile(ProfileViewTeacher UpdatedUser)
         {
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
             // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            //-------------------- END
 
-            var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+            if (UpdatedUser.UserImage != null && UpdatedUser.UserImage.Length > 0)
+            {
+                string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
 
-            GlobalDBContext _context = new GlobalDBContext();
+                // File of code need to be Tested
+                //string file_Path = HelpersFunctions.StoreFile(uploadFolder, generalProfile.UserImage);
 
-            User user = new User();
 
-            user = user.UpdateUser(_user, UpdateDetails);
 
-                _context.Users.Update(user);
+
+
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + UpdatedUser.UserImage.FileName;
+                // Delete previous uploaded Image
+                if (!String.IsNullOrEmpty(UpdatedUser.UserImage.ToString()))
+                {
+                    string imagePath = uploadFolder + _user.UserImage;
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        // If file found, delete it    
+                        System.IO.File.Delete(imagePath);
+                        Console.WriteLine("File deleted.");
+                    }
+                }
+                string filePath = uploadFolder + uniqueFileName;
+                FileStream stream = new FileStream(filePath, FileMode.Create);
+                UpdatedUser.UserImage.CopyTo(stream);
+                stream.Dispose();
+                UpdatedUser.UserImageName = uniqueFileName;
+
+            }
+
+                GlobalDBContext _context = new GlobalDBContext();
+
+                _user = _user.UpdateUserTeacher(_user, UpdatedUser);
+
+                _context.Users.Update(_user);
 
                 _context.SaveChanges();
 
-                ViewBag.Message = user.UserFirstName + " " + user.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
+                ViewBag.Message = UpdatedUser.UserFirstName + " " + UpdatedUser.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
 
-                return View(user);
-            
+
+            ProfileViewTeacher userViewModel = new ProfileViewTeacher(_user);
+            return View(userViewModel);
+
         }
 
 

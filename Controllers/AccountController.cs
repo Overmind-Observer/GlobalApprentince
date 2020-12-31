@@ -47,14 +47,14 @@ namespace Global_Intern.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(AccountRegister new_user)
+        public IActionResult Register(User new_user)
         {
             using (GlobalDBContext _context = new GlobalDBContext())
             {
-                User user = _context.Users.FirstOrDefault(u => u.UserEmail == new_user.Email);
+                User user = _context.Users.FirstOrDefault(u => u.UserEmail == new_user.UserEmail);
                 if (user != null)
                 {
-                    ViewBag.Message = new_user.FirstName + " " + new_user.LastName + " successfully registered. A Email has been sent for the verfication.";
+                    ViewBag.Message = new_user.UserFirstName + " " + new_user.UserLastName + " successfully registered. A Email has been sent for the verfication.";
                     return View();
                 }
 
@@ -62,25 +62,25 @@ namespace Global_Intern.Controllers
                 // ->TODO Validation check on clinet side using Jquery or JavaScript
 
                 // Password hashed with extra layer of security
-                string password = new_user.Password;
+                string password = new_user.UserPassword;
                 CustomPasswordHasher pwd = new CustomPasswordHasher();
                 
                 // increse the size to increase secuirty but lower performance 
                 string salt = pwd.CreateSalt(10);
                 string hashed = pwd.HashPassword(password, salt);
                 //new_user.Salt = salt;
-                new_user.Password = hashed;
+                new_user.UserPassword = hashed;
                 // var errors = ModelState.Values.SelectMany(v => v.Errors);
 
-                if (new_user.UserRole == 0) 
-                { 
-                    new_user.UserRole = 1;
+                if (new_user.Role.RoleId == 0) 
+                {
+                    new_user.Role.RoleId = 1;
                 }
 
-                Role role = _context.Roles.Find(new_user.UserRole);
+                Role role = _context.Roles.Find(new_user.Role.RoleId);
                 
                 User theUser = new User();
-                theUser.AddFromAccountRegsiter(new_user, role, salt);
+                theUser.AddFromAccountRegister(new_user, role, salt);
                 string uniqueToken = Guid.NewGuid().ToString("N").Substring(0, 6);
                 theUser.UniqueToken = uniqueToken;
                 
@@ -94,7 +94,7 @@ namespace Global_Intern.Controllers
                 
                 _context.SaveChanges();
                 email.SendEmailtoUser(fullname, theUser.UserEmail, "Email Verification", msg);
-                ViewBag.Messsage = new_user.FirstName + " " + new_user.LastName + " successfully registered. A Email has been sent for the verfication.";
+                ViewBag.Messsage = new_user.UserFirstName + " " + new_user.UserLastName + " successfully registered. A Email has been sent for the verfication.";
             }
             return View();
         }

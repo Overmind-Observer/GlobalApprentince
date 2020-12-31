@@ -16,6 +16,11 @@ namespace Global_Intern.Models.GeneralProfile
         public IFormFile UserImage { get; set; } // From POST 
         public string UserGender { get; set; }
 
+       public  ProfileViewTeacher()
+        {
+
+        }
+
         public ProfileViewTeacher(User user)
         {
             UserFirstName = user.UserFirstName;

@@ -64,11 +64,11 @@ namespace Global_Intern.Controllers
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 // Gets all Internship created by the user
-                var Internship = _context.Internships.ToList();
+                var internship = _context.Internships.ToList();
 
                 
 
-                return View(Internship);
+                return View(internship);
             }
         }
 
@@ -85,6 +85,8 @@ namespace Global_Intern.Controllers
 
             using (GlobalDBContext _context = new GlobalDBContext())
             {
+
+                //ViewBag.ImageURL = _env.WebRootPath + @"\uploads\UserImage\"+_user.UserImage;
                 ProfileViewEmployer userViewModel = new ProfileViewEmployer(_user);
                 return View(userViewModel);
             }
@@ -106,25 +108,30 @@ namespace Global_Intern.Controllers
         //}
 
         [HttpPost]
-        public IActionResult GeneralProfile(ProfileViewEmployer fromData)
+        public IActionResult GeneralProfile(ProfileViewEmployer UpdatedUser)
         {
+            // Display User name on the right-top corner - shows user is logedIN
+            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
+            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
+            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            //-------------------- END
             using (GlobalDBContext _context = new GlobalDBContext())
             {
-                if (fromData.UserImage != null && fromData.UserImage.Length > 0)
+                if (UpdatedUser.UserImage != null && UpdatedUser.UserImage.Length > 0)
                 {
                     string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
 
                     // File of code need to be Tested
                     //string file_Path = HelpersFunctions.StoreFile(uploadFolder, generalProfile.UserImage);
 
-                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + fromData.UserImage.FileName;
-                    string filePath = uploadFolder + uniqueFileName;
-                    FileStream stream = new FileStream(filePath, FileMode.Create);
-                    fromData.UserImage.CopyTo(stream);
-                    stream.Dispose();
 
+
+
+
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + UpdatedUser.UserImage.FileName;
                     // Delete previous uploaded Image
-                    if (!String.IsNullOrEmpty(_user.UserImage))
+                    if (!String.IsNullOrEmpty(UpdatedUser.UserImage.ToString()))
                     {
                         string imagePath = uploadFolder + _user.UserImage;
                         if (System.IO.File.Exists(imagePath))
@@ -134,29 +141,32 @@ namespace Global_Intern.Controllers
                             Console.WriteLine("File deleted.");
                         }
                     }
+                    string filePath = uploadFolder + uniqueFileName;
+                    FileStream stream = new FileStream(filePath, FileMode.Create);
+                    UpdatedUser.UserImage.CopyTo(stream);
+                    stream.Dispose();
+                    UpdatedUser.UserImageName = uniqueFileName; 
+
                     // if new image is uploaded with other user info
-                    _user.AddFromEmployerProfileView(fromData, uniqueFileName);
+                   _user = _user.UpdateUserEmployer(_user,UpdatedUser);
                 }
                 else
                 {
-                    // Adding generalProfile attr to user without image
-                    _user.AddFromEmployerProfileView(fromData);
+                    
                 }
+
+                ViewBag.Message = UpdatedUser.UserFirstName + " " + UpdatedUser.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
+
                 _context.Users.Update(_user);
                 _context.SaveChanges();
-                fromData.UserImageName = _user.UserImage;
 
-                // Display User name on the right-top corner - shows user is logedIN
-                ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-                // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-                string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-                ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
-                //-------------------- END
-
-                return View(fromData);
+                ProfileViewEmployer userViewModel = new ProfileViewEmployer(_user);
+                return View(userViewModel);
             }
 
         }
+
+
 
         public IActionResult Settings()
         {

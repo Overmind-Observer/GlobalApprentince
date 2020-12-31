@@ -79,57 +79,67 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-
-            using (GlobalDBContext _context = new GlobalDBContext())
-            {
-                ProfileViewStudent gen = new ProfileViewStudent(_user);
-
-                return View(gen);
-            }
+                return View(_user);
+            
 
         }
 
         [HttpPost]
-        public IActionResult GeneralProfile(ProfileViewStudent fromData)
+        public IActionResult GeneralProfile(ProfileViewStudent UpdatedUser)
         {
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
             // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            //-------------------- END
 
-            // When Save button is clicked
-            using (GlobalDBContext _context = new GlobalDBContext())
+            if (UpdatedUser.UserImage != null && UpdatedUser.UserImage.Length > 0)
             {
-                if (fromData.UserImage != null && fromData.UserImage.Length > 0)
-                {
-                    string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
-                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + fromData.UserImage.FileName;
-                    string filePath = uploadFolder + uniqueFileName;
-                    fromData.UserImage.CopyTo(new FileStream(filePath, FileMode.Create));
+                string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
 
-                    // Delete previous uploaded Image
-                    if (!String.IsNullOrEmpty(_user.UserImage))
+                // File of code need to be Tested
+                //string file_Path = HelpersFunctions.StoreFile(uploadFolder, generalProfile.UserImage);
+
+
+
+
+
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + UpdatedUser.UserImage.FileName;
+                // Delete previous uploaded Image
+                if (!String.IsNullOrEmpty(UpdatedUser.UserImage.ToString()))
+                {
+                    string imagePath = uploadFolder + _user.UserImage;
+                    if (System.IO.File.Exists(imagePath))
                     {
-                        string imagePath = uploadFolder + _user.UserImage;
+                        // If file found, delete it    
                         System.IO.File.Delete(imagePath);
+                        Console.WriteLine("File deleted.");
                     }
-
-                    // if new image is uploaded with other user info
-                    _user.AddFromStudentProfileView(fromData, uniqueFileName);
                 }
-                else
-                {
-                    // Adding generalProfile attr to user without image
-                    _user.AddFromStudentProfileView(fromData);
-                }
-                _context.Users.Update(_user);
-                _context.SaveChanges();
-                ProfileViewStudent gen = new ProfileViewStudent(_user);
-                return View(gen);
+                string filePath = uploadFolder + uniqueFileName;
+                FileStream stream = new FileStream(filePath, FileMode.Create);
+                UpdatedUser.UserImage.CopyTo(stream);
+                stream.Dispose();
+                UpdatedUser.UserImageName = uniqueFileName;
 
             }
+
+            GlobalDBContext _context = new GlobalDBContext();
+
+
+            _user = _user.UpdateUserStudent(_user, UpdatedUser);
+
+            _context.Users.Update(_user);
+
+            _context.SaveChanges();
+
+            ViewBag.Message = UpdatedUser.UserFirstName + " " + UpdatedUser.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
+
+
+            ProfileViewStudent userViewModel = new ProfileViewStudent(_user);
+            return View(userViewModel);
+
         }
 
 

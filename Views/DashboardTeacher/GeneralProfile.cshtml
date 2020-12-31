@@ -1,4 +1,4 @@
-@model Global_Intern.Models.User;
+@model Global_Intern.Models.GeneralProfile.ProfileViewTeacher;
 @{
     ViewData["Title"] = "CompleteProfile";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
@@ -19,7 +19,7 @@
                                 <h3 style="color:green">@ViewBag.Message</h3>
                                 @{
                                     <!-- Uploaded Teacher's head photo -->
-                                    if (@Model.UserImage == null)
+                                    if (@Model.UserImageName == null)
                                     {
 
                                         <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
@@ -31,7 +31,7 @@
                                     {
                                         <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
                                         <div class="image-area mt-4">
-                                            <img id="imageResult" src="~/uploads/UserImage/@Model.UserImage" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
+                                            <img id="imageResult" src="~/uploads/UserImage/@Model.UserImageName" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
                                         </div>
                                     }
                                 }
@@ -73,49 +73,123 @@
                     <div class="form-group">
                         <label asp-for="UserCountry" class="control-label">Select your Country</label>
 
-                            @{ if (Model.UserCountry == null)
-                                {
-                                    <select asp-for="UserCountry" onchange="getStates()" id="dd_countries" class="form-control">
-                                        <option id="optionCountry" value="">Select Country</option>
-                                    </select>
-                                } 
-                                else
-                                {
-                                    <select asp-for="UserCountry" onchange="getStates()" id="dd_countries" class="form-control">
-                                        <option id="optionCountry" value="@Model.UserCountry">@Model.UserCountry</option> 
-                                    </select>
-                                }
+                        @{ if (Model.UserCountry == null)
+                            {
+                                <select asp-for="UserCountry" onchange="getStates()" id="dd_countries" class="form-control">
+                                    <option id="optionCountry" value="">Select Country</option>
+                                </select>
                             }
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="UserState" class="control-label">Select your State</label>
-
-
-
-                            @{ if (Model.UserState == null)
-                                {
-                                    <select asp-for="UserState"  id="dd_states" class="form-control">
-                                        <option id="optionState" value="">Select Country</option>
-                                    </select>
-                                }
-                                else
-                                {
-                                    <select asp-for="UserState"  id="dd_states" class="form-control">
-                                        <option id="optionState" value="@Model.UserState">@Model.UserState</option>
-                                    </select>
-                                }
+                            else
+                            {
+                                <select asp-for="UserCountry" onchange="getStates()" id="dd_countries" class="form-control">
+                                    <option id="optionCountry" value="@Model.UserCountry">@Model.UserCountry</option>
+                                </select>
                             }
+                        }
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserState" class="control-label">Select your State</label>
 
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="UserCity">Phone</label>
-                            <input class="form-control" asp-for="UserCity">
-                        </div>
+
+
+                        @{ if (Model.UserState == null)
+                            {
+                                <select asp-for="UserState" id="dd_states" class="form-control">
+                                    <option id="optionState" value="">Select Country</option>
+                                </select>
+                            }
+                            else
+                            {
+                                <select asp-for="UserState" id="dd_states" class="form-control">
+                                    <option id="optionState" value="@Model.UserState">@Model.UserState</option>
+                                </select>
+                            }
+                        }
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserCity">Phone</label>
+                        <input class="form-control" asp-for="UserCity">
+                    </div>
 
                 </section>
 
-                <button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>
-                <input type="submit" class="btn btn-info" value="Save">
+                <section class="otherDETAILS">
+                    <h2>BACKGROUND AND STUDY DETAILS</h2>
+
+                    <h4>Are you a Domestic or International student?</h4>
+                    <input type="radio" id="domestic" name="type" value="domestic">
+                    <label for="domestic">Domestic</label><br>
+                    <input type="radio" id="international" name="type" value="international">
+                    <label for="international">International</label><br>
+
+                    <h4>Do you legally have the right to work in New Zealand?</h4>
+                    <input type="radio" id="yes" name="type" value="yes">
+                    <label for="yes">YES</label><br>
+                    <input type="radio" id="no" name="type" value="no">
+                    <label for="no">NO</label><br>
+
+                    <h4>What type of visa do you currently hold?</h4>
+                    <input type="checkbox" name="studyvisa" value="studyvisa">
+                    <label for="studyvisa"> Student Visa with 20 Hours </label><br>
+                    <input type="checkbox" name="workvisa" value="workvisa">
+                    <label for="workvisa"> Open Work Visa </label><br>
+                    <input type="checkbox" name="workvisa" value="workvisa">
+                    <label for="workvisa"> Essential Work Visa </label><br>
+                    <input type="checkbox" name="vehicle2" value="workvisa">
+                    <label for="workvisa"> Working Holiday Visa </label><br>
+                    <input type="checkbox" name="other" value="other">
+                    <label for="other"> Other Visa Type </label><br>
+
+
+                    <h4>Visa expiry date</h4>
+                    <input type="date" id="birthday" name="birthday">
+
+                    <h4> Industry Certifications and Licences </h4>
+                    <textarea rows="10" cols="50" name="comment" form="usrform" placeholder="Enter line by line here">
+                    </textarea>
+
+
+                    <div class="form-group">
+                        <label class="control-label">Driver Licence	:</label>
+                        <select onchange="getStates()" id="dd_counties" class="form-control">
+                            <option value="">Full Licence</option>
+                            <option value="">Registered Licence</option>
+                            <option value="">Learner Licence</option>
+                            <option value="">Foreign Licence</option>
+                            <option value="">No Licence</option>
+                        </select>
+                    </div>
+                </section>
+
+
+                <section class="otherDETAILS">
+                    <h2>OTHER DETAILS</h2>
+                    <label for="birthday">Date of Birth:</label>
+                    <input type="date" id="birthday" name="birthday">
+
+                    <div class="form-group">
+                        <label class="control-label">Ethnicity</label>
+                        <select onchange="getStates()" id="dd_counties" class="form-control">
+                            <option value="">European</option>
+                            <option value="">Maori</option>
+                            <option value="">Asian</option>
+                            <option value="">Other</option>
+                            <option value="">I'd prefer not to say</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserCountry" class="control-label">Select your Country</label>
+                        <select asp-for="UserCountry" onchange="getStates()" id="dd_counties" class="form-control">
+                            <option value="">New Zealand</option>
+                            <option value="">Russia</option>
+                            <option value="">India</option>
+                            <option value="">China</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>
+                    <input type="submit" class="btn btn-info" value="Save">
             </form>
         </div>
     </main>
@@ -141,8 +215,8 @@
         let uri = "https://www.universal-tutorial.com/api/getaccesstoken";
         let h = new Headers();
         h.append("Accept", "application/json");
-        h.append("api-token", "4k9BmJ0DVwUi_ktFlyDvchDFXS3Mz7BAetCqdJjJI6sDmfoIHigqUonf3PQufBB5i3g");
-        h.append("user-email", "haritjangwal89@protonmail.com");
+        h.append("api-token", "N-7Ag7GBCSQKidScuKcpV3UOfwwz6Dco-G0dEJewVeyxuXU57SuuPnCnGEsmPsVllP0");
+        h.append("user-email", "eobardthawnee69@gmail.com");
 
         // Get auth_token -> exp every 24 hours
         let req = new Request(uri, {
@@ -194,123 +268,134 @@
             });
 
         $('#dd_countries').on('click', function () {
-            if (repeatCountry) { 
+            if (repeatCountry) {
                 repeatCountry = false;
                 repeatState = true;
                 var opt = document.createElement('option');
-                tempState = optionStateStr.value;
-                selState.textContent = "";
-            let uri = "https://www.universal-tutorial.com/api/getaccesstoken";
-            let h = new Headers();
-            h.append("Accept", "application/json");
-            h.append("api-token", "4k9BmJ0DVwUi_ktFlyDvchDFXS3Mz7BAetCqdJjJI6sDmfoIHigqUonf3PQufBB5i3g");
-            h.append("user-email", "haritjangwal89@protonmail.com");
+                tempCountry = selCountries.value;
+                selCountries.textContent = "";
+                var opt = document.createElement('option');
+                opt.appendChild(document.createTextNode(tempCountry));
+                opt.value = tempCountry;
+                selCountries.appendChild(opt);
+                let uri = "https://www.universal-tutorial.com/api/getaccesstoken";
+                let h = new Headers();
+                h.append("Accept", "application/json");
+                h.append("api-token", "N-7Ag7GBCSQKidScuKcpV3UOfwwz6Dco-G0dEJewVeyxuXU57SuuPnCnGEsmPsVllP0");
+                h.append("user-email", "eobardthawnee69@gmail.com");
 
-            // Get auth_token -> exp every 24 hours
-            let req = new Request(uri, {
-                method: 'GET',
-                headers: h,
-                mode: 'cors'
-            });
-            fetch(req)
-                .then((res) => {
-                    if (res.ok) {
-                        return res.json();
-                    }
-                    else {
-                        throw new Error('BAD Request');
-                    }
-                })
-                .then((jsonData) => {
-                    auth_token = jsonData["auth_token"];
-                    let uri_country = "https://www.universal-tutorial.com/api/countries/";
-                    let h = new Headers();
-                    count = 0;
-                    h.append("Accept", "application/json");
-                    h.append("Authorization", "Bearer " + auth_token);
-
-                    // Get auth_token -> exp every 24 hours
-                    let req = new Request(uri_country, {
-                        method: 'GET',
-                        headers: h,
-                        mode: 'cors'
-                    });
-
-                    fetch(req)
-                        .then((res) => {
-                            if (res.ok) {
-                                return res.json();
-                            }
-                            else {
-                                throw new Error('BAD Request');
-                            }
-                        })
-                        .then((jsonData) => {
-                            populateCountries(jsonData);
-                        })
-                        .catch((err) => {
-                            console.log('ERROR:', err.message);
-                        });
-                })
-                .catch((err) => {
-                    console.log('ERROR:', err.message);
+                // Get auth_token -> exp every 24 hours
+                let req = new Request(uri, {
+                    method: 'GET',
+                    headers: h,
+                    mode: 'cors'
                 });
-        }
+                fetch(req)
+                    .then((res) => {
+                        if (res.ok) {
+                            return res.json();
+                        }
+                        else {
+                            throw new Error('BAD Request');
+                        }
+                    })
+                    .then((jsonData) => {
+                        auth_token = jsonData["auth_token"];
+                        let uri_country = "https://www.universal-tutorial.com/api/countries/";
+                        let h = new Headers();
+                        count = 0;
+                        h.append("Accept", "application/json");
+                        h.append("Authorization", "Bearer " + auth_token);
+
+                        // Get auth_token -> exp every 24 hours
+                        let req = new Request(uri_country, {
+                            method: 'GET',
+                            headers: h,
+                            mode: 'cors'
+                        });
+
+                        fetch(req)
+                            .then((res) => {
+                                if (res.ok) {
+                                    return res.json();
+                                }
+                                else {
+                                    throw new Error('BAD Request');
+                                }
+                            })
+                            .then((jsonData) => {
+                                populateCountries(jsonData);
+                            })
+                            .catch((err) => {
+                                console.log('ERROR:', err.message);
+                            });
+                    })
+                    .catch((err) => {
+                        console.log('ERROR:', err.message);
+                    });
+            }
         });
-        
+
 
         $('#dd_states').on('click', function () {
-            if (repeatState) { 
+            if (repeatState) {
                 repeatState = false;
                 repeatCountry = true;
                 var tempCountry = "";
-            if (optionCountryStr.value == null) {
-                tempCountry = selCountries.value;
-            }
-            else if (optionCountryStr.value != selCountries.value) {
-                tempCountry = selCountries.value;
-            }
-            else {
-                tempCountry = optionCountryStr.value;
-            }
-            let uri = "https://www.universal-tutorial.com/api/states/" + tempCountry;
-            let h = new Headers();
-            h.append("Accept", "application/json");
-            h.append("Authorization", "Bearer " + auth_token);
+                if (optionCountryStr.value == null) {
+                    tempCountry = selCountries.value;
+                }
+                else if (optionCountryStr.value != selCountries.value) {
+                    tempCountry = selCountries.value;
+                }
+                else {
+                    tempCountry = optionCountryStr.value;
+                }
+                var opt = document.createElement('option');
+                tempState = selState.value;
+                selState.textContent = "";
+                var opt = document.createElement('option');
+                opt.appendChild(document.createTextNode(tempState));
+                opt.value = tempState;
+                selState.appendChild(opt);
+                let uri = "https://www.universal-tutorial.com/api/states/" + tempCountry;
+                let h = new Headers();
+                h.append("Accept", "application/json");
+                h.append("Authorization", "Bearer " + auth_token);
 
-            // Get auth_token -> exp every 24 hours
-            let req = new Request(uri, {
-                method: 'GET',
-                headers: h,
-                mode: 'cors'
-            });
-
-            fetch(req)
-                .then((res) => {
-                    if (res.ok) {
-                        return res.json();
-                    }
-                    else {
-                        throw new Error('BAD Request');
-                    }
-                })
-                .then((jsonData) => {
-                    populateStates(jsonData);
-                })
-                .catch((err) => {
-                    console.log('ERROR:', err.message);
+                // Get auth_token -> exp every 24 hours
+                let req = new Request(uri, {
+                    method: 'GET',
+                    headers: h,
+                    mode: 'cors'
                 });
+
+                fetch(req)
+                    .then((res) => {
+                        if (res.ok) {
+                            return res.json();
+                        }
+                        else {
+                            throw new Error('BAD Request');
+                        }
+                    })
+                    .then((jsonData) => {
+                        populateStates(jsonData);
+                    })
+                    .catch((err) => {
+                        console.log('ERROR:', err.message);
+                    });
             }
         });
 
         function populateStates(json) {
-                json.forEach((element) => {
-                    console.log("state", element['state_name'])
-                    var opt = document.createElement('option');
-                    opt.appendChild(document.createTextNode(element['state_name']));
-                    opt.value = element['state_name'];
-                    selState.appendChild(opt);
-                })
+            json.forEach((element) => {
+                console.log("state", element['state_name'])
+                var opt = document.createElement('option');
+                opt.appendChild(document.createTextNode(element['state_name']));
+                opt.value = element['state_name'];
+                selState.appendChild(opt);
+            })
         }
 
         function populateCountries(json) {
@@ -386,14 +471,14 @@
 
 @*<h2>Teacher Details</h2>
 
-<div class="card">
-    <img src="/w3images/team2.jpg" alt="John" style="width:100%">
-    <div class="container">
-        <h4><b>John Doe</b></h4>
-        <p>Architect & Engineer</p>
-        <p> More than 10 years expeience as ASP.NET core developer at God IT. </p>
+    <div class="card">
+        <img src="/w3images/team2.jpg" alt="John" style="width:100%">
+        <div class="container">
+            <h4><b>John Doe</b></h4>
+            <p>Architect & Engineer</p>
+            <p> More than 10 years expeience as ASP.NET core developer at God IT. </p>
 
-        <a class="bb" href="mailto:someone@example.com?Subject=Hello%20again" target="_top"> Contact </a>
-    </div>
-</div>*@
+            <a class="bb" href="mailto:someone@example.com?Subject=Hello%20again" target="_top"> Contact </a>
+        </div>
+    </div>*@
 
