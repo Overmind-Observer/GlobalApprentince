@@ -70,22 +70,29 @@ namespace Global_Intern.Controllers
             return View();
         }
 
-
-        public async Task<IActionResult> AllInternships([FromQuery] string search, int pageNumber = 0, int pageSize = 0)
+        public async Task<IActionResult> AllInternships([FromQuery] string searchTerm, int pageNumber = 0, int pageSize = 0)
         {
+            /// What is happening How you get Internship -> Database to API. Api to you as a JSON response. when you can do something with that response
+            /// In my custom response you get number of items, also you get what page you are on. And how many page to expect.
+            /// Using QueryString, you can tell api what page you want, and how many internship info you want.
+
             IEnumerable<Internship> model;
             HttpResponseMessage resp;
             string InternshipUrl = host + Internship_url;
-            string searchh = search;
+            string tempInternshipUrl;
+
+            ViewData["SearchTerm"] = searchTerm;
             try
             {
-                if (!String.IsNullOrEmpty(search))
+
+                if (!String.IsNullOrEmpty(searchTerm))
                 {
-                    InternshipUrl = InternshipUrl + "?search=" + search;
+                    InternshipUrl = InternshipUrl + "?search=" + searchTerm;
                     //InternshipUrl = InternshipUrl;
                     if (pageNumber != 0 && pageSize != 0)
                     {
                         InternshipUrl += "&pageNumber=" + pageNumber.ToString() + "&pageSize=" + pageSize.ToString();
+
                     }
                 }
                 else
@@ -95,9 +102,19 @@ namespace Global_Intern.Controllers
                         InternshipUrl += "?pageNumber=" + pageNumber.ToString() + "&pageSize=" + pageSize.ToString();
                     }
                 }
+
                 resp = await _client.GetAsync(InternshipUrl);
                 resp.EnsureSuccessStatusCode();
                 string responseBody = await resp.Content.ReadAsStringAsync();
+                if (responseBody == "400")
+                {
+                    ModelState.AddModelError("KeywordNotFound", "No Internships match the entered keyword.");
+                    tempInternshipUrl = InternshipUrl.Replace("?search=" +searchTerm, null);
+                    InternshipUrl = tempInternshipUrl;
+                    resp = await _client.GetAsync(InternshipUrl);
+                    resp.EnsureSuccessStatusCode();
+                    responseBody = await resp.Content.ReadAsStringAsync();
+                }
                 var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
                 ViewBag.pageSize = data[0]["pageSize"];
                 ViewBag.totalPages = data[0]["totalPages"];
@@ -105,6 +122,7 @@ namespace Global_Intern.Controllers
                 model = data[0]["data"].ToObject<IEnumerable<Internship>>();
                 var intern = data[0]["data"][0];
                 return View(model);
+
             }
             catch (Exception)
             {
@@ -122,17 +140,18 @@ namespace Global_Intern.Controllers
             }
         }
 
-        public async Task<IActionResult> AllCourses([FromQuery] string search, int pageNumber = 0, int pageSize = 0)
+        public async Task<IActionResult> AllCourses([FromQuery] string searchTerm, int pageNumber = 0, int pageSize = 0)
         {
             //Course model;
             IEnumerable<Course> model;
             HttpResponseMessage resp;
             String CourseUrl = host + Course_url;
-            //String CourseUrl = host + Internship_url;
+            string tempCourseUrl;
+            ViewData["SearchTerm"] = searchTerm;
             try
             {
-                if (!String.IsNullOrEmpty(search)) {
-                    CourseUrl = CourseUrl + "?search" + search;
+                if (!String.IsNullOrEmpty(searchTerm)) {
+                    CourseUrl = CourseUrl + "?search=" + searchTerm;
                     if (pageNumber != 0 && pageSize != 0) {
                         CourseUrl += "&pageNumber" + pageNumber.ToString() + "&pageSize" + pageSize.ToString();
                     }
@@ -149,6 +168,17 @@ namespace Global_Intern.Controllers
                 resp = await _client.GetAsync(CourseUrl);
                 resp.EnsureSuccessStatusCode();
                 string responseBody = await resp.Content.ReadAsStringAsync();
+                if (responseBody == "400")
+                {
+                    ModelState.AddModelError("KeywordNotFound", "No Course match the entered keyword.");
+                    tempCourseUrl = CourseUrl.Replace("?search=" + searchTerm, null);
+                    CourseUrl = tempCourseUrl;
+                    resp = await _client.GetAsync(CourseUrl);
+                    resp.EnsureSuccessStatusCode();
+
+
+                    responseBody = await resp.Content.ReadAsStringAsync();
+                }
                 var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
                 ViewBag.pageSize = data[0]["pageSize"];
                 ViewBag.totalPages = data[0]["totalPages"];
@@ -159,13 +189,14 @@ namespace Global_Intern.Controllers
             }
             catch (Exception) //removed unused variable ex
             {
+
                 throw;
             }
            
         }
 
 
-        public async Task<IActionResult> Courses(int id)
+        public async Task<IActionResult> Course(int id)
         {
             Course model;
             HttpResponseMessage resp;
@@ -178,7 +209,7 @@ namespace Global_Intern.Controllers
                 var data = JsonConvert.DeserializeObject<dynamic>("[" + responseBody + "]");
                 model = data[0].ToObject<Course>();
                 return View(model);
-            }catch(Exception ex)
+            }catch(Exception)
             {
                 throw;
             }

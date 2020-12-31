@@ -1,4 +1,4 @@
-﻿@*@model IEnumerable<Global_Intern.Models.Internship>*@
+﻿@model IEnumerable<Global_Intern.Models.Internship>
 
 @{
     ViewData["Title"] = "Employer DashBoard";
@@ -25,7 +25,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var intern in ViewBag.IntershipsByLoginedInUser)
+                                        @foreach (var intern in @Model.ToList())
                                         {
                                             <tr>
                                                 <th scope="row">@intern.InternshipId</th>
@@ -42,10 +42,10 @@
                                                 </td>*@
                                                 <td>@intern.InternshipExpDate</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-info" style="width:100%">View</button>
+                                                    <a asp-action="Internship" asp-route-id="@intern.InternshipId" class="btn btn-info" style="width:100%">View</a>
                                                     <div class="d-flex">
-                                                        <button type="button" class="btn btn-secondary w-75 m-1">Edit</button>
-                                                        <button type="button" class="btn btn-danger w-75 m-1">Delete</button>
+                                                        <a asp-action="UpdateInternship" asp-route-id="@intern.InternshipId"  class="btn btn-secondary w-75 m-1">Update</a>
+                                                        <a asp-action="Settings" asp-route-id="@intern.InternshipId"  class="btn btn-danger w-75 m-1">Delete</a>
                                                     </div>
                                                 </td>
                                             </tr>

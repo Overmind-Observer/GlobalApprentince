@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Global_Intern
 {
+
     public class Program
     {
         public static void Main(string[] args)

@@ -26,11 +26,11 @@ namespace Global_Intern.Util
             string sYear = DateTime.Now.Year.ToString();
             string sMonth = DateTime.Now.Month.ToString();
             string sDay = DateTime.Now.Day.ToString();
-            sErrorDate = sYear + sMonth + sDay;
+            sErrorDate = sDay+ sMonth + sYear;
             _env = env;
         }
 
-
+         
 
         //This method is used to write directly to the file
         public void WriteErrorLog(string sErrMsg)
@@ -44,3 +44,4 @@ namespace Global_Intern.Util
 
     }
 }
+ 

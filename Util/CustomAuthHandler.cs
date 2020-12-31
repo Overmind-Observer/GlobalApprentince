@@ -33,7 +33,7 @@ namespace Global_Intern.Util
             httpContextAccessor = _httpContextAccessor;
         }
 
-        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+        protected override Task<AuthenticateResult> HandleAuthenticateAsync() //removed assync modifer
         {
 
 
@@ -57,12 +57,12 @@ namespace Global_Intern.Util
                 {
                     _tokenSession = httpContextAccessor.HttpContext.Session.GetString("UserToken");
                 }
-                return validateToken();
+                return Task.FromResult(validateToken());
             }
             catch (Exception ex)
             {
 
-                return AuthenticateResult.Fail(ex.Message);
+                return Task.FromResult(AuthenticateResult.Fail(ex.Message));
             }
         }
 

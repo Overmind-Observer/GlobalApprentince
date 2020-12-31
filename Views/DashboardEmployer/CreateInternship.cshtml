@@ -1,0 +1,60 @@
+@model Global_Intern.Models.Internship;
+@{
+    ViewData["Title"] = "CreateInternship";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+
+<div class="container">
+    <main>
+        <div class="login-content">
+            <form id="GeneralProfile" asp-action="CreateInternship" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="content">
+                    <main>
+                        <section class="NewInternshipDetails">
+                            <div class="form-group">
+
+                                <!-- The courses view like card views. -->
+                                <div class=" row py-4">
+                                    <div class="col-lg-6">
+                                        <h1>Create Internship</h1>
+                                        <h3 style="color:green;">@ViewBag.Message</h3>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="InternshipTitle">InternshipTitle</label>
+                                <input class="form-control" asp-for="InternshipTitle">
+                            </div>
+                            <div class="form-group">
+                                <label for="InternshipType">InternshipType</label>
+                                <input class="form-control" asp-for="InternshipType">
+                            </div>
+                            <div class="form-group">
+                                <label for="InternshipPaid">InternshipPaid</label>
+                                <input class="form-control" asp-for="InternshipPaid">
+                            </div>
+                            <div class="form-group">
+                                <label for="InternshipBody">InternshipBody</label>
+                                <input class="form-control" asp-for="InternshipBody">
+                            </div>
+                            <div class="form-group">
+                                <label for="InternshipDuration">InternshipDuration</label>
+                                <input class="form-control" asp-for="InternshipDuration">
+                            </div>
+                            <div class="form-group">
+                                <label for="InternshipVirtual">InternshipVirtual</label>
+                                <input class="form-control" asp-for="InternshipVirtual">
+                            </div>
+                        </section>
+                        <input type="submit" class="btn btn-info" value="Save">
+
+                    </main>
+                </div>
+
+            </form>
+        </div>
+    </main>
+</div>

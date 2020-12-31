@@ -1,5 +1,7 @@
+@model IEnumerable<Global_Intern.Models.Course>
+
 @{
-    ViewData["Title"] = "Teacher Dashboard";
+    ViewData["Title"] = "Teacher DashBoard";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
 }
 
@@ -9,7 +11,7 @@
             <div class="row">
                 <div class=".col-12 col-md-8 my-3">
                     <div class="p-3 tttCard">
-                        <h1 class="mb-2">Created Courses</h1>
+                        <h1 class="mb-2">Created Course</h1>
                         <div class="userInternships">
                             <div class="table-responsive">
                                 <table class="table table-hover">
@@ -17,46 +19,45 @@
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Role</th>
-                                            <th scope="col">Body</th>
+                                            @*<th scope="col">Body</th>*@
                                             <th scope="col">Expires</th>
                                             <th></th>
                                         </tr>
                                     </thead>
-
-                                    @*<tbody>
-                                            @foreach (var intern in ViewBag.IntershipsByLoginedInUser)
-                                            {
-                                                <tr>
-                                                    <th scope="row">@intern.InternshipId</th>
-                                                    <td>
-                                                        <div class="ed_InternTitleView">
-                                                            @intern.InternshipTitle
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="ed_InternBodyView">
-                                                            @intern.InternshipBody
-                                                            <div class="ed_InternBodyViewShadow"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>@intern.InternshipExpDate</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-info" style="width:100%">View</button>
-                                                        <div class="d-flex">
-                                                            <button type="button" class="btn btn-secondary w-75 m-1">Edit</button>
-                                                            <button type="button" class="btn btn-danger w-75 m-1">Delete</button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    *@
+                                    <tbody>
+                                        @foreach (var course in @Model.ToList())
+                                        {
+                                        <tr>
+                                            <th scope="row">@course.CourseId</th>
+                                            <td>
+                                                <div class="ed_InternTitleView">
+                                                    @course.CourseTitle
+                                                </div>
+                                            </td>
+                                            @*<td>
+            <div class="ed_InternBodyView">
+                @intern.InternshipBody
+                <div class="ed_InternBodyViewShadow"></div>
+            </div>
+        </td>*@
+                                            <td>@course.CourseExpDate</td>
+                                            <td>
+                                                
+                                                <a asp-action="Course" asp-route-id="@course.CourseId" class="btn btn-info" style="width:100%">View</a>
+                                                <div class="d-flex">
+                                                    <a asp-action="UpdateCourse" asp-route-id="@course.CourseId" class="btn btn-secondary w-75 m-1">Update</a>
+                                                    <a asp-action="Settings" asp-route-id="@course.CourseId" class="btn btn-danger w-75 m-1">Delete</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class=".col-12 col-md-5 my-5">
+                <div class=".col-12 col-md-4 my-3">
                     <div class="p-3 tttCard">
                         <h1 class="mb-2">New Card</h1>
                     </div>
@@ -66,6 +67,7 @@
         </div>
     </main>
 </div>
+
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -93,35 +95,3 @@
         });
     });
 </script>
-
-
-
-
-<!--
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-<div class="w3-container">
-    <h2>Our Teacher in Training</h2>
-    <p> These are our teachers lists. All of them are senior level positions at IT comapanies with large solutions done in the past several years. </p>
-    <ul class="w3-ul w3-card-4">
-        <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
-            <img src="img_avatar2.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-            <div class="w3-bar-item">
-                <span class="w3-large">John</span><br>
-                <span>Architect & Engineer</span>
-            </div>
-        </li>
-
-        <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
-            <img src="img_avatar5.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-            <div class="w3-bar-item">
-                <span class="w3-large">Jodan</span><br>
-                <span>Senior Developer</span>
-            </div>
-        </li>
-    </ul>
-</div>
--->

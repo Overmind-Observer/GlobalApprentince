@@ -1,0 +1,56 @@
+@model Global_Intern.Models.Course;
+@{
+    ViewData["Title"] = "UpdateCourse";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+
+<div class="container">
+    <main>
+        <div class="login-content">
+            <form id="GeneralProfile" asp-action="UpdateCourse" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="content">
+                    <main>
+                        <section class="NewCourseDetails">
+                            <div class="form-group">
+
+                                <!-- The courses view like card views. -->
+                                <div class=" row py-4">
+                                    <div class="col-lg-6">
+                                        <h1>Update Course</h1>
+                                        <h3 style="color:green;">@ViewBag.Message</h3>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="CourseTitle">CourseTitle</label>
+                                <input class="form-control" asp-for="CourseTitle">
+                            </div>
+                            <div class="form-group">
+                                <label for="CourseType">CourseType</label>
+                                <input class="form-control" asp-for="CourseType">
+                            </div>
+                            <div class="form-group">
+                                <label for="CourseDuration">CourseDuration</label>
+                                <input class="form-control" asp-for="CourseDuration">
+                            </div>
+                            <div class="form-group">
+                                <label for="CourseInfo">CourseInfo</label>
+                                <input class="form-control" asp-for="CourseInfo">
+                            </div>
+                            <div class="form-group">
+                                <label for="CourseFees">CourseFees</label>
+                                <input class="form-control" asp-for="CourseFees">
+                            </div>
+                        </section>
+                        <input type="submit" class="btn btn-info" value="Save">
+
+                    </main>
+                </div>
+
+            </form>
+        </div>
+    </main>
+</div>

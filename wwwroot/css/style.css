@@ -1,37 +1,38 @@
 body {
-    height: auto;
-    margin: auto, 0, 0, 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    font-family: "Muli", sans-serif;
-    font-weight: normal;
-    font-style: normal;
-    vertical-align: baseline;
+	height: auto;
+	margin: auto, 0, 0, 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	font-family: "Muli", sans-serif;
+	font-weight: normal;
+	font-style: normal;
+	vertical-align: baseline;
 }
 
 h2, h5 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 200%;
-    color: white;
-    font-weight: bold;
-    z-index: 1;
-    position: relative;
+	font-family: 'Poppins', sans-serif;
+	font-size: 200%;
+	color: white;
+	font-weight: bold;
+	z-index: 1;
+	position: relative;
 }
+
 .navbar {
-    width: 100%;
-    position: fixed;
-    z-index: 10;
+	width: 100%;
+	position: fixed;
+	z-index: 10;
 }
 
 search-form.a:hover{
-    text-decoration: none
+	text-decoration: none
 }
 
 .select-form{
-    position: relative;
-    z-index: 2
+	position: relative;
+	z-index: 2
 }
 select {
   width: 100%;
@@ -42,7 +43,6 @@ select {
   background-color: transparent;
   border: none;
   color: #616875;
-  appearance: none;
   padding: 15px 25px;
 }
 
@@ -53,132 +53,132 @@ select:focus {
 }
 
 form.search-box {
-    box-shadow: 0px 6px 29px 0px rgba(36, 43, 94, 0.08);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    text-align: center;
-    
+	box-shadow: 0px 6px 29px 0px rgba(36, 43, 94, 0.08);
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	text-align: center;
+	
 }
 
 form.search-box .input-form {
-    width: 45%;
-    position: relative
+	width: 45%;
+	position: relative
 }
 
 @media (max-width: 767px) {
-    form.search-box .input-form {
-        width: 100%
-    }
+	form.search-box .input-form {
+		width: 100%
+	}
 }
 
 form.search-box .input-form input {
-    height: 70px;
-    width: 100%;
-    color: #777777;
-    font-size: 18px;
-    font-weight: 400;
-    padding: 9px 33px 9px 23px;
-    border: none;
-    border-radius: 0px;
-    position: relative
+	height: 70px;
+	width: 100%;
+	color: #777777;
+	font-size: 18px;
+	font-weight: 400;
+	padding: 9px 33px 9px 23px;
+	border: none;
+	border-radius: 0px;
+	position: relative
 }
 
 @media (max-width: 767px) {
-    form.search-box .input-form input {
-        margin-bottom: 20px
-    }
+	form.search-box .input-form input {
+		margin-bottom: 20px
+	}
 }
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
-    form.search-box .input-form input {
-        padding: 9px 33px 9px 25px;
-        margin-bottom: 20px
-    }
+	form.search-box .input-form input {
+		padding: 9px 33px 9px 25px;
+		margin-bottom: 20px
+	}
 }
 
-form.search-box .input-form input::placeholder {
-    color: #616875
+form.search-box .input-form  {
+	color: #616875
 }
 
 @media (max-width: 767px) {
-    form.search-box .input-form input::placeholder {
-        font-size: 17px;
-        padding-left: 14px
-    }
+	form.search-box .input-form  {
+		font-size: 17px;
+		padding-left: 14px
+	}
 }
 
 form.search-box .input-form::before {
-    position: absolute;
-    content: '';
-    width: 1px;
-    height: 51px;
-    background: #e0e4f8;
-    right: 22px;
-    top: 50%;
-    z-index: 1;
-    transform: translateY(-50%)
+	position: absolute;
+	content: '';
+	width: 1px;
+	height: 51px;
+	background: #e0e4f8;
+	right: 22px;
+	top: 50%;
+	z-index: 1;
+	transform: translateY(-50%)
 }
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
-    form.search-box .input-form::before {
-        display: none
-    }
+	form.search-box .input-form::before {
+		display: none
+	}
 }
 
 @media (max-width: 767px) {
-    form.search-box .input-form::before {
-        display: none
-    }
+	form.search-box .input-form::before {
+		display: none
+	}
 }
 
 form.search-box .select-form {
-    width: 34%;
-    padding: 9px 33px 9px 10px;
+	width: 34%;
+	padding: 9px 33px 9px 10px;
 }
 
 @media (max-width: 767px) {
-    form.search-box .select-form {
-        width: 100%;
-        padding-top: 2px;
-    }
+	form.search-box .select-form {
+		width: 100%;
+		padding-top: 2px;
+	}
 }
 
 form.search-box .search-form {
-    width: 21%
+	width: 21%
 }
 
 @media (max-width: 767px) {
-    form.search-box .search-form {
-        width: 100%;
-    }
+	form.search-box .search-form {
+		width: 100%;
+	}
 }
 
 form.search-box .search-form a {
-    width: 100%;
-    height: 70px;
-    background: #ED4226;
-    font-size: 20px;
-    line-height: 1;
-    text-align: center;
-    color: #fff;
-    display: block;
-    padding: 15px;
-    border-radius: 0px;
-    text-transform: capitalize;
-    letter-spacing: 0.1em;
-    line-height: 1.2;
-    line-height: 38px;
-    font-size: 16px
+	width: 100%;
+	height: 70px;
+	background: #ED4226;
+	font-size: 20px;
+	line-height: 1;
+	text-align: center;
+	color: #fff;
+	display: block;
+	padding: 15px;
+	border-radius: 0px;
+	text-transform: capitalize;
+	letter-spacing: 0.1em;
+	line-height: 1.2;
+	line-height: 38px;
+	font-size: 16px
 }
 
 .tab {
-    padding: 35px;
-    background-color: #E46854;
+	padding: 35px;
+	background-color: #E46854;
 }
 
 .container{
-    padding:30px 20px;
+	padding:30px 20px;
 }
 
 
@@ -192,12 +192,12 @@ form.search-box .search-form a {
 
 
 .login-container{
-    width: 100vw;
-    height: 100vh;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap :7rem;
-    padding: 0 2rem;
+	width: 100vw;
+	height: 100vh;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap :7rem;
+	padding: 0 2rem;
 }
 
 .img{
@@ -218,7 +218,7 @@ form.search-box .search-form a {
 }
 
 .login-content img{
-    height: 100px;
+	height: 100px;
 }
 
 .login-content h2{
@@ -230,11 +230,11 @@ form.search-box .search-form a {
 
 .login-content .input-div{
 	position: relative;
-    display: grid;
-    grid-template-columns: 7% 93%;
-    margin: 25px 0;
-    padding: 5px 0;
-    border-bottom: 2px solid #d9d9d9;
+	display: grid;
+	grid-template-columns: 7% 93%;
+	margin: 25px 0;
+	padding: 5px 0;
+	border-bottom: 2px solid #d9d9d9;
 }
 
 .login-content .input-div.one{
@@ -253,7 +253,7 @@ form.search-box .search-form a {
 }
 
 .input-div > div{
-    position: relative;
+	position: relative;
 	height: 45px;
 }
 
@@ -323,12 +323,12 @@ a{
 	text-decoration: none;
 	color: #999;
 	font-size: 0.9rem;
-    font-family: "poppins",sans-serif;
+	font-family: "poppins",sans-serif;
 	transition: .3s;
 }
 
 .pageLinks {
-    text-align: center;
+	text-align: center;
 }
 
 
@@ -391,8 +391,8 @@ a:hover{
 	}
 
 	.login-content h2{
-        font-size: 2.4rem;
-        margin: 8px 0;
+		font-size: 2.4rem;
+		margin: 8px 0;
 	}
 
 	.img img{
@@ -416,199 +416,204 @@ a:hover{
 
 /* Footer */
 #footer {
-    height:auto;
-    background-color: #E46854;
-    color: #ffffff;
-    padding: 4em 0 2em 0;
-    background: #E46854;
+	height:auto;
+	background-color: #E46854;
+	color: #ffffff;
+	padding: 4em 0 2em 0;
+	background: #E46854;
 }
 
 #footer input[type="text"],
 #footer input[type="password"],
 #footer input[type="email"],
 #footer textarea {
-    background: none;
-    border-color: rgba(255, 255, 255, 0.25);
+	background: none;
+	border-color: rgba(255, 255, 255, 0.25);
 }
 
 #footer .inner {
-    max-width: 65em;
-    width: calc(100% - 6em);
-    margin: 0 auto;
+	max-width: 65em;
+	width: calc(100% - 6em);
+	margin: 0 auto;
 }
 
 
 p {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 28px;
-    color: #7A838B;
-    margin-bottom: 13px;
-    font-family: "Roboto", sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 28px;
+	color: #7A838B;
+	margin-bottom: 13px;
+	font-family: "Roboto", sans-serif;
 }
 
 /* Job Listing page*/
 
 .boxed-btn1:hover {
-    color: #E46854;
-    border: 1px solid #E46854;
-    background: transparent;
+	color: #E46854;
+	border: 1px solid #E46854;
+	background: transparent;
 }
 
 .boxed-btn1:focus {
-    outline: none;
+	outline: none;
 }
 
 .job_listing_area {
-    background: #F5F7FA;
-    padding-bottom: 80px;
+	background: #F5F7FA;
+	padding-bottom: 80px;
 }
 
 .job_listing_area.plus_padding {
-    padding-top: 100px;
+	padding-top: 100px;
 }
 
 @media (max-width: 767px) {
-    .job_listing_area.plus_padding {
-        padding-top: 60px;
-    }
+	.job_listing_area.plus_padding {
+		padding-top: 60px;
+	}
 }
 
 .job_listing_area .job_lists {
-    margin-top: 50px;
+	margin-top: 50px;
 }
 
 .job_listing_area .job_lists .single_jobs {
-    padding: 30px;
-    margin-bottom: 12px;
-    border: 1px solid transparent;
-    -webkit-transition: 0.3s;
-    -moz-transition: 0.3s;
-    -o-transition: 0.3s;
-    transition: 0.3s;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+	padding: 30px;
+	margin-bottom: 12px;
+	border: 1px solid transparent;
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	-o-transition: 0.3s;
+	transition: 0.3s;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 
 @media (max-width: 767px) {
-    .job_listing_area .job_lists .single_jobs {
-        display: block;
-    }
+	.job_listing_area .job_lists .single_jobs {
+		display: block;
+	}
 }
 
 @media (max-width: 767px) {
-    .job_listing_area .job_lists .single_jobs .jobs_left {
-        display: block;
-        overflow: hidden;
-    }
+	.job_listing_area .job_lists .single_jobs .jobs_left {
+		display: block;
+		overflow: hidden;
+	}
 }
 
 
 @media (max-width: 767px) {
-    .job_listing_area .job_lists .single_jobs .jobs_left .jobs_conetent .links_locat {
-        display: block;
-    }
+	.job_listing_area .job_lists .single_jobs .jobs_left .jobs_conetent .links_locat {
+		display: block;
+	}
 }
 
 .job_listing_area .job_lists .single_jobs .jobs_left .jobs_conetent .links_locat .location {
-    margin-right: 50px;
+	margin-right: 50px;
 }
 
 @media (max-width: 767px) {
-    .job_listing_area .job_lists .single_jobs .jobs_left .jobs_conetent .links_locat .location {
-        margin-right: 10px;
-    }
+	.job_listing_area .job_lists .single_jobs .jobs_left .jobs_conetent .links_locat .location {
+		margin-right: 10px;
+	}
 }
 
 @media (max-width: 767px) {
-    .job_listing_area .job_lists .single_jobs .jobs_right .apply_now {
-        margin: 10px 0;
-    }
+	.job_listing_area .job_lists .single_jobs .jobs_right .apply_now {
+		margin: 10px 0;
+	}
 }
 
 .job_listing_area .job_lists .single_jobs .jobs_right .apply_now a.boxed-btn3 {
-    padding: 9px 27px 9px 27px;
-    font-size: 14px;
+	padding: 9px 27px 9px 27px;
+	font-size: 14px;
 }
 
 .job_listing_area .job_lists .single_jobs .jobs_right .date {
-    text-align: right;
-    margin-top: 10px;
+	text-align: right;
+	margin-top: 10px;
 }
 
 @media (max-width: 767px) {
-    .job_listing_area .job_lists .single_jobs .jobs_right .date {
-        text-align: left;
-    }
+	.job_listing_area .job_lists .single_jobs .jobs_right .date {
+		text-align: left;
+	}
 }
 
 .job_listing_area .job_lists .single_jobs .jobs_right .date p {
-    margin-bottom: 0;
-    font-size: 14px;
-    font-style: italic;
-    color: #7A838B;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-style: italic;
+	color: #7A838B;
+}
+
+.myColors{
+	color:red;
+	font-size: 28px;
 }
 
 .job_listing_area .job_filter {
-    padding: 03px;
-    display: block;
+	padding: 03px;
+	display: block;
 }
 
 .job_listing_area .job_filter h3 {
-    font-size: 28px;
-    margin-bottom: 25px;
-    color: #001D38;
-    font-weight: 400;
+	font-size: 28px;
+	margin-bottom: 25px;
+	color: #001D38;
+	font-weight: 400;
 }
 
 /* pagination*/
 .pagination_wrap {
-    text-align: center;
-    margin-top: 20px;
+	text-align: center;
+	margin-top: 20px;
 }
 
 .ws_message {
-    background-color:lightgreen;
+	background-color:lightgreen;
 }
 
 .pagination_wrap li {
-    display: inline-block;
-    width: 38px;
-    height: 38px;
-    border: 1px solid #EAEAEA;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-    font-size: 16px;
-    text-align: center;
-    line-height: 38px;
-    display: inline-block;
-    color: #AAB1B7;
-    font-size: 14px;
-    margin: 0 4px;
+	display: inline-block;
+	width: 38px;
+	height: 38px;
+	border: 1px solid #EAEAEA;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	font-size: 16px;
+	text-align: center;
+	line-height: 38px;
+	display: inline-block;
+	color: #AAB1B7;
+	font-size: 14px;
+	margin: 0 4px;
 }
 
 .EmailMsg {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 70%;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 70%;
 }
 
 .EmailMsg > a{
-    text-align:center;
-    font-family:poppins;
-    font-size:2em;
+	text-align:center;
+	font-family:poppins;
+	font-size:2em;
 }
 
 
 .circleImg {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    object-fit: cover;
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	object-fit: cover;
 }
 /* New Added on 22/ Agu/ 2020, for User view company Infomation, but temporary in CompanyInfo.cshtml */
 * {
@@ -657,55 +662,55 @@ body {
 
 /* New Added on 22/ Agu/ 2020, for ApplyIntern.cshtml */
 .input-container {
-    display: -ms-flexbox; /* IE10 */
-    display: flex;
-    width: 100%;
-    margin-bottom: 15px;
+	display: -ms-flexbox; /* IE10 */
+	display: flex;
+	width: 100%;
+	margin-bottom: 15px;
 }
 
 .icon {
-    padding: 10px;
-    background: dodgerblue;
-    color: white;
-    min-width: 50px;
-    text-align: center;
+	padding: 10px;
+	background: dodgerblue;
+	color: white;
+	min-width: 50px;
+	text-align: center;
 }
 
 .input-field {
-    width: 100%;
-    padding: 10px;
-    outline: none;
+	width: 100%;
+	padding: 10px;
+	outline: none;
 }
 
-    .input-field:focus {
-        border: 2px solid dodgerblue;
-    }
+	.input-field:focus {
+		border: 2px solid dodgerblue;
+	}
 
 /* Set a style for the submit button */
 /*.btn {
-    background-color: dodgerblue;
-    color: white;
-    padding: 15px 20px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
+	background-color: dodgerblue;
+	color: white;
+	padding: 15px 20px;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	opacity: 0.9;
 }*/
 
-    .btn:hover {
-        opacity: 1;
-    }
+	.btn:hover {
+		opacity: 1;
+	}
 
 .apply1 {
-    text-align: center;
+	text-align: center;
 }
 /* 25-08-2020 new added CSS */
 table, th, td {
-    border: 1px solid black;
+	border: 1px solid black;
   }
   
   .title {
-    text-align: center;
+	text-align: center;
   }
 
 .card {
@@ -736,9 +741,9 @@ table, th, td {
 }
 
 a {
-  text-decoration: none;
-  
-  color: black;
+  text-decoration: underline;
+  text-align:center;
+  color:black;
 }
 
 .bb:hover, a:hover {
@@ -747,92 +752,97 @@ a {
 
 /* 15-09-2020 new added CSS for courses views. */
 * {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Float four columns side by side */
 .column {
-    float: left;
-    width: 25%;
-    padding: 0 10px;
+	float: left;
+	width: 25%;
+	padding: 0 10px;
 }
 
 /* Remove extra left and right margins, due to padding */
 .row {
-    margin: 0 -5px;
+	margin: 0 -5px;
 }
 
-    /* Clear floats after the columns */
-    .row:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
+	/* Clear floats after the columns */
+	.row:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
 
 /* Responsive columns */
 @media screen and (max-width: 600px) {
-    .column {
-        width: 100%;
-        display: block;
-        margin-bottom: 20px;
-    }
+	.column {
+		width: 100%;
+		display: block;
+		margin-bottom: 20px;
+	}
 }
 
 /* Style the counter cards */
 .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    padding: 16px;
-    text-align: center;
-    background-color: #f1f1f1;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	padding: 16px;
+	text-align: center;
+	background-color: #f1f1f1;
 }
 
 
 /* Style CSS for Tab pages under student applications.  10/13/2020 */
 body {
-    font-family: Arial;
+	font-family: Arial;
 }
 
 .customcontent{
-    text-align:center;
+	text-align:center;
+}
+
+.centerTable{
+	padding-left:100px;
+	
 }
 
 /* Style the tab */
 .tab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
+	overflow: hidden;
+	border: 1px solid #ccc;
+	background-color: #f1f1f1;
 }
 
-    /* Style the buttons inside the tab */
-    .tab button {
-        background-color: inherit;
-        float: left;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        padding: 14px 16px;
-        transition: 0.3s;
-        font-size: 17px;
-    }
+	/* Style the buttons inside the tab */
+	.tab button {
+		background-color: inherit;
+		float: left;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		padding: 14px 16px;
+		transition: 0.3s;
+		font-size: 17px;
+	}
 
-        /* Change background color of buttons on hover */
-        .tab button:hover {
-            background-color: #ddd;
-        }
+		/* Change background color of buttons on hover */
+		.tab button:hover {
+			background-color: #ddd;
+		}
 
-        /* Create an active/current tablink class */
-        .tab button.active {
-            background-color: #ccc;
-        }
+		/* Create an active/current tablink class */
+		.tab button.active {
+			background-color: #ccc;
+		}
 
 /* Style the tab content */
 .tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
+	display: none;
+	padding: 6px 12px;
+	border: 1px solid #ccc;
+	border-top: none;
 }

@@ -2,8 +2,8 @@
 using System;
 using System.IO;
 using Global_Intern.Models;
-using Global_Intern.Models.Filters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
 namespace Global_Intern.Data
@@ -11,19 +11,32 @@ namespace Global_Intern.Data
     public class GlobalDBContext : DbContext
     {
         public ConnectionString _connectionString;
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
+            string connectionString = GeneratePath();
 
-            //string connectionString = @"Data Source=localhost\sqlexpress;Initial Catalog=GlobalDB;Integrated Security=True";
-            //string connectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\thom\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\MSSQLLocalDB\Test.mdf;Integrated Security = True;Connect Timeout =30";
+           /* _ = optionsBuilder.UseSqlServer(connectionString,
+              Builder);*/
 
-            string connectionString = GeneratePath(); 
-
-              _ = optionsBuilder
-                .UseSqlServer(connectionString, builder => builder.UseRowNumberForPaging(true));
+_ = optionsBuilder.UseSqlServer(connectionString,
+#pragma warning disable CS0618 // Type or member is obsolete
+              builder => builder.UseRowNumberForPaging(true));
+#pragma warning restore CS0618 // Type or member is obsolete
 
         }
+
+        private void Builder(SqlServerDbContextOptionsBuilder obj) //memberBuilder is unused !?
+        {
+            throw new NotImplementedException();
+        }
+
+       /* private void AddDbContext<T>(Func<object, object> p)
+        {
+            throw new NotImplementedException();
+        }*/
 
         public string GeneratePath()
         {

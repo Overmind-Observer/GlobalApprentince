@@ -72,20 +72,45 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="UserCountry" class="control-label">Select your Country</label>
-                        <select asp-for="UserCountry" onchange="getStates()" id="dd_counties" class="form-control">
-                            <option value="">Select Country</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="UserState" class="control-label">Select your State</label>
-                        <select asp-for="UserState" id="dd_states" class="form-control">
-                            <option value="">Select State</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="UserPhone">Phone</label>
-                        <input class="form-control" asp-for="UserPhone">
-                    </div>
+
+                            @{ if (Model.UserCountry == null)
+                                {
+                                    <select asp-for="UserCountry" onchange="getStates()" id="dd_countries" class="form-control">
+                                        <option id="optionCountry" value="">Select Country</option>
+                                    </select>
+                                } 
+                                else
+                                {
+                                    <select asp-for="UserCountry" onchange="getStates()" id="dd_countries" class="form-control">
+                                        <option id="optionCountry" value="@Model.UserCountry">@Model.UserCountry</option> 
+                                    </select>
+                                }
+                            }
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserState" class="control-label">Select your State</label>
+
+
+
+                            @{ if (Model.UserState == null)
+                                {
+                                    <select asp-for="UserState"  id="dd_states" class="form-control">
+                                        <option id="optionState" value="">Select Country</option>
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select asp-for="UserState"  id="dd_states" class="form-control">
+                                        <option id="optionState" value="@Model.UserState">@Model.UserState</option>
+                                    </select>
+                                }
+                            }
+
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserCity">Phone</label>
+                            <input class="form-control" asp-for="UserCity">
+                        </div>
 
                 </section>
 
@@ -99,10 +124,20 @@
 @section Scripts {
     <script>
 
+
+
+
         // Script to fecth Country -> State -> City
         var auth_token = "";
-        var selCountries = document.getElementById('dd_counties');
+        var selCountries = document.getElementById('dd_countries');
         var selState = document.getElementById('dd_states');
+        var userCountry = document.getElementById('profile_country');
+        var optionCountryStr = document.getElementById('optionCountry');
+        var optionStateStr = document.getElementById('optionState');
+        var repeatCountry = true;
+        var repeatState = true;
+        var tempState = "";
+
         let uri = "https://www.universal-tutorial.com/api/getaccesstoken";
         let h = new Headers();
         h.append("Accept", "application/json");
@@ -158,8 +193,87 @@
                 console.log('ERROR:', err.message);
             });
 
-        $('#dd_counties').on('change', function () {
-            let uri = "https://www.universal-tutorial.com/api/states/" + this.value;
+        $('#dd_countries').on('click', function () {
+            if (repeatCountry) { 
+                repeatCountry = false;
+                repeatState = true;
+                var opt = document.createElement('option');
+                tempState = optionStateStr.value;
+                selState.textContent = "";
+            let uri = "https://www.universal-tutorial.com/api/getaccesstoken";
+            let h = new Headers();
+            h.append("Accept", "application/json");
+            h.append("api-token", "4k9BmJ0DVwUi_ktFlyDvchDFXS3Mz7BAetCqdJjJI6sDmfoIHigqUonf3PQufBB5i3g");
+            h.append("user-email", "haritjangwal89@protonmail.com");
+
+            // Get auth_token -> exp every 24 hours
+            let req = new Request(uri, {
+                method: 'GET',
+                headers: h,
+                mode: 'cors'
+            });
+            fetch(req)
+                .then((res) => {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                    else {
+                        throw new Error('BAD Request');
+                    }
+                })
+                .then((jsonData) => {
+                    auth_token = jsonData["auth_token"];
+                    let uri_country = "https://www.universal-tutorial.com/api/countries/";
+                    let h = new Headers();
+                    count = 0;
+                    h.append("Accept", "application/json");
+                    h.append("Authorization", "Bearer " + auth_token);
+
+                    // Get auth_token -> exp every 24 hours
+                    let req = new Request(uri_country, {
+                        method: 'GET',
+                        headers: h,
+                        mode: 'cors'
+                    });
+
+                    fetch(req)
+                        .then((res) => {
+                            if (res.ok) {
+                                return res.json();
+                            }
+                            else {
+                                throw new Error('BAD Request');
+                            }
+                        })
+                        .then((jsonData) => {
+                            populateCountries(jsonData);
+                        })
+                        .catch((err) => {
+                            console.log('ERROR:', err.message);
+                        });
+                })
+                .catch((err) => {
+                    console.log('ERROR:', err.message);
+                });
+        }
+        });
+        
+
+        $('#dd_states').on('click', function () {
+            if (repeatState) { 
+                repeatState = false;
+                repeatCountry = true;
+                var tempCountry = "";
+            if (optionCountryStr.value == null) {
+                tempCountry = selCountries.value;
+            }
+            else if (optionCountryStr.value != selCountries.value) {
+                tempCountry = selCountries.value;
+            }
+            else {
+                tempCountry = optionCountryStr.value;
+            }
+            let uri = "https://www.universal-tutorial.com/api/states/" + tempCountry;
             let h = new Headers();
             h.append("Accept", "application/json");
             h.append("Authorization", "Bearer " + auth_token);
@@ -186,17 +300,17 @@
                 .catch((err) => {
                     console.log('ERROR:', err.message);
                 });
-
+            }
         });
 
         function populateStates(json) {
-            json.forEach((element) => {
-                console.log("state", element['state_name'])
-                var opt = document.createElement('option');
-                opt.appendChild(document.createTextNode(element['state_name']));
-                opt.value = element['state_name'];
-                selState.appendChild(opt);
-            })
+                json.forEach((element) => {
+                    console.log("state", element['state_name'])
+                    var opt = document.createElement('option');
+                    opt.appendChild(document.createTextNode(element['state_name']));
+                    opt.value = element['state_name'];
+                    selState.appendChild(opt);
+                })
         }
 
         function populateCountries(json) {
