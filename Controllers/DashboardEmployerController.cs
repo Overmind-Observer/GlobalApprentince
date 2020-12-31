@@ -150,10 +150,6 @@ namespace Global_Intern.Controllers
                     // if new image is uploaded with other user info
                    _user = _user.UpdateUserEmployer(_user,UpdatedUser);
                 }
-                else
-                {
-                    
-                }
 
                 ViewBag.Message = UpdatedUser.UserFirstName + " " + UpdatedUser.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
 
