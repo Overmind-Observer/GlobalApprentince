@@ -34,3 +34,5 @@ obj/project.assets.json
 obj/project.nuget.cache
 
 *.jfm
+obj/Debug/netcoreapp3.1/Global Intern.assets.cache
+*.cache
