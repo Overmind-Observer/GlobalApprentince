@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Global_Intern.Models.GeneralProfile;
+using Microsoft.AspNetCore.Http;
 
 namespace Global_Intern.Models
 {
@@ -54,19 +56,20 @@ namespace Global_Intern.Models
         public List<Course> Course { get; set; }
 
 
-        public void AddFromAccountRegsiter(AccountRegister newUser, Role role, string salt)
+        public void AddFromAccountRegister(User newUser, Role role, string salt)
         {
-            this.UserFirstName = newUser.FirstName;
-            this.UserLastName = newUser.LastName;
-            this.UserGender = newUser.Gender;
-            this.UserEmail = newUser.Email;
+            this.UserFirstName = newUser.UserFirstName;
+            this.UserLastName = newUser.UserLastName;
+            this.UserGender = newUser.UserGender;
+            this.UserEmail = newUser.UserEmail;
             this.UserEmailVerified = false;
-            this.UserPassword = newUser.Password;
+            this.UserPassword = newUser.UserPassword;
             this.Salt = salt;
-            this.UserPhone = newUser.Phone.ToString();
+            this.UserPhone = newUser.UserPhone.ToString();
             this.Role = role;
             this.CreatedAt = DateTime.UtcNow;
             this.SoftDelete = false;
+            //ProfileViewTeacher teacher = new 
         }
 
         public User UpdateUser(User _user,User user)
@@ -82,9 +85,94 @@ namespace Global_Intern.Models
             _user.UserImage = user.UserImage;
             _user.UserGender = user.UserGender;
             _user.UserPhone = user.UserPhone;
+            if (user.UserImage != "")
+            {
+                _user.UserImage = user.UserImage;
+            }
 
             return _user;
         }
+
+        public User UpdateUserEmployer(User _user, GeneralProfile.ProfileViewEmployer user)
+        {
+            _user.UserFirstName = user.UserFirstName;
+            _user.UserLastName = user.UserLastName;
+            _user.UserAddress = user.UserAddress;
+            _user.UserCity = user.UserCity;
+            _user.UserState = user.UserState;
+            _user.UserCountry = user.UserCountry;
+            _user.UserZip = user.UserZip;
+            _user.UserImage = user.UserImageName;
+            _user.UserGender = user.UserGender;
+            _user.UserPhone = user.UserPhone;
+            if (_user.UserImage != "")
+            {
+                _user.UserImage = user.UserImageName;
+            }
+
+            return _user;
+        }
+
+        public User UpdateUserTeacher(User _user, GeneralProfile.ProfileViewTeacher user)
+        {
+            _user.UserFirstName = user.UserFirstName;
+            _user.UserLastName = user.UserLastName;
+            _user.UserAddress = user.UserAddress;
+            _user.UserCity = user.UserCity;
+            _user.UserState = user.UserState;
+            _user.UserCountry = user.UserCountry;
+            _user.UserZip = user.UserZip;
+            _user.UserImage = user.UserImageName;
+            _user.UserGender = user.UserGender;
+            _user.UserPhone = user.UserPhone;
+            if (_user.UserImage != "")
+            {
+                _user.UserImage = user.UserImageName;
+            }
+
+            return _user;
+        }
+
+        public User UpdateUserStudent(User _user, GeneralProfile.ProfileViewStudent user)
+        {
+            _user.UserFirstName = user.UserFirstName;
+            _user.UserLastName = user.UserLastName;
+            _user.UserAddress = user.UserAddress;
+            _user.UserCity = user.UserCity;
+            _user.UserState = user.UserState;
+            _user.UserCountry = user.UserCountry;
+            _user.UserZip = user.UserZip;
+            _user.UserImage = user.UserImageName;
+            _user.UserGender = user.UserGender;
+            _user.UserPhone = user.UserPhone;
+            if (_user.UserImage != "")
+            {
+                _user.UserImage = user.UserImageName;
+            }
+
+            return _user;
+        }
+
+        //public User UpdateUserWithImage(User _user, User user )
+        //{
+        //    _user.UserFirstName = user.UserFirstName;
+        //    _user.UserLastName = user.UserLastName;
+        //    _user.UserAddress = user.UserAddress;
+        //    _user.UserCity = user.UserCity;
+        //    _user.CreatedAt = user.CreatedAt;
+        //    _user.UserState = user.UserState;
+        //    _user.UserCountry = user.UserCountry;
+        //    _user.UserZip = user.UserZip;
+        //    _user.UserImage = user.UserImage;
+        //    _user.UserGender = user.UserGender;
+        //    _user.UserPhone = user.UserPhone;
+        //    if (user.UserImage != "")
+        //    {
+        //        _user.UserImage = user.UserImage;
+        //    }
+
+        //    return _user;
+        //}
 
 
         public void AddFromAccountGeneralProfile(Global_Intern.Models.GeneralProfile.GeneralProfile updatedInfo, string UserImagePATH = "")

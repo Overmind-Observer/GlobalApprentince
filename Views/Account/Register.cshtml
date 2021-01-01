@@ -1,4 +1,4 @@
-@model Global_Intern.Models.AccountRegister
+@model Global_Intern.Models.User
 
 @{
     ViewData["Title"] = "Register";
@@ -17,9 +17,9 @@
             <h3 style="color:green;">@ViewBag.Message</h3>
             <div class="divUserRole">
                 @*<h5 id="tttUserRole">What Are You</h5>*@
-                <label asp-for="UserRole" class="control-label" style="color: #999;text-align:left;">What Are You</label>
-                <select asp-for="UserRole" id="UserRoleInput">
-                    <option value="">Select the Role</option>
+                <label asp-for="Role.RoleId" class="control-label" style="color: #999;text-align:left;">What Are You</label>
+                <select asp-for="Role.RoleId" id="UserRoleInput">
+                    <option value="0">Select the Role</option>
                     <option value="1">Student</option>
                     <option value="2">Employer</option>
                     <option value="3">Teacher</option>
@@ -31,9 +31,9 @@
                 </div>
                 <div class="div">
                     <h5 id="tttFirst"></h5>
-                    <label asp-for="FirstName" hidden class="control-label"></label>
-                    <input required asp-for="FirstName" id="FirstNameInput" class="form-control" placeholder="FirstName" />
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                    <label asp-for="UserFirstName" hidden class="control-label"></label>
+                    <input required asp-for="UserFirstName" id="FirstNameInput" class="form-control" placeholder="FirstName" />
+                    <span asp-validation-for="UserFirstName" class="text-danger"></span>
                 </div>
             </div>
             <div class="input-div one">
@@ -42,17 +42,17 @@
                 </div>
                 <div class="div">
                     <h5 id="tttLast"></h5>
-                    <label asp-for="LastName" hidden class="control-label"></label>
-                    <input required asp-for="LastName" id="LastNameInput" class="form-control" placeholder="LastName" />
-                    <span asp-validation-for="LastName" class="text-danger"></span>
+                    <label asp-for="UserLastName" hidden class="control-label"></label>
+                    <input required asp-for="UserLastName" id="LastNameInput" class="form-control" placeholder="LastName" />
+                    <span asp-validation-for="UserLastName" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group" style="text-align:left;height: 57px; color: #999;border-bottom: 2px solid #d9d9d9;padding:5px 0;margin-top:0; margin-bottom:25px;">
-                <label asp-for="Gender" class="control-label" style="transform: scale(1.2);">Gender: </label> &nbsp;
-                <input type="radio" asp-for="Gender" value="Male" style="transform: scale(1.2);" /> Male &nbsp;
-                <input type="radio" asp-for="Gender" value="Female" style="transform: scale(1.2);" /> Female &nbsp;
-                <input type="radio" asp-for="Gender" value="Other" style="transform: scale(1.2);" /> Other &nbsp;
-                <span asp-validation-for="Gender" class="text-danger"></span>
+                <label asp-for="UserGender" class="control-label" style="transform: scale(1.2);">Gender: </label> &nbsp;
+                <input type="radio" asp-for="UserGender" value="Male" style="transform: scale(1.2);" /> Male &nbsp;
+                <input type="radio" asp-for="UserGender" value="Female" style="transform: scale(1.2);" /> Female &nbsp;
+                <input type="radio" asp-for="UserGender" value="Other" style="transform: scale(1.2);" /> Other &nbsp;
+                <span asp-validation-for="UserGender" class="text-danger"></span>
             </div>
             <div class="input-div one">
                 <div class="i">
@@ -60,9 +60,9 @@
                 </div>
                 <div class="div">
                     <h5 id="tttEmail"></h5>
-                    <label asp-for="Email" hidden class="control-label"></label>
-                    <input required asp-for="Email" id="EmailInput" type="email" class="form-control" placeholder="Your Email" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <label asp-for="UserEmail" hidden class="control-label"></label>
+                    <input required asp-for="UserEmail" id="EmailInput" type="email" class="form-control" placeholder="Your Email" />
+                    <span asp-validation-for="UserEmail" class="text-danger"></span>
                 </div>
             </div>
             <div class="input-div pass">
@@ -71,9 +71,9 @@
                 </div>
                 <div class="div">
                     <h5 id="tttPassword"></h5>
-                    <label asp-for="Password" hidden class="control-label"></label>
-                    <input required asp-for="Password" id="PasswordInput" type="password" class="form-control" placeholder="Your Password" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <label asp-for="UserPassword" hidden class="control-label"></label>
+                    <input required asp-for="UserPassword" id="PasswordInput" type="password" class="form-control" placeholder="Your Password" />
+                    <span asp-validation-for="UserPassword" class="text-danger"></span>
                 </div>
             </div>
             <div class="input-div pass">
@@ -82,9 +82,9 @@
                 </div>
                 <div class="div">
                     <h5 id="tttCPassword"></h5>
-                    <label asp-for="ConfirmPassword" hidden class="control-label"></label>
-                    <input required asp-for="ConfirmPassword" id="ConfirmPasswordInput" type="password" class="form-control" placeholder="Confirm Password" />
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    <label asp-for="UserPassword" hidden class="control-label"></label>
+                    <input required asp-for="UserPassword" id="ConfirmPasswordInput" type="password" class="form-control" placeholder="Confirm Password" />
+                    <span asp-validation-for="UserPassword" class="text-danger"></span>
                 </div>
             </div>
             <div class="input-div one">
@@ -93,9 +93,9 @@
                 </div>
                 <div class="div">
                     <h5 id="tttPhone"></h5>
-                    <label asp-for="Phone" hidden class="control-label"></label>
-                    <input asp-for="Phone" id="PhoneInput" type="text" class="form-control" placeholder="Your phone number" />
-                    <span asp-validation-for="Phone" class="text-danger"></span>
+                    <label asp-for="UserPhone" hidden class="control-label"></label>
+                    <input asp-for="UserPhone" id="PhoneInput" type="text" class="form-control" placeholder="Your phone number" />
+                    <span asp-validation-for="UserPhone" class="text-danger"></span>
                 </div>
             </div>
             <a href="#">Forgot Password?</a>

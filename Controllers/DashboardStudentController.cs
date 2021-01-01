@@ -25,9 +25,8 @@ namespace Global_Intern.Controllers
         private readonly string host;
 
         private readonly HttpClient _client = new HttpClient(); // Used to access API -> Internship.
-                                                                //private readonly string Internship_url = "/api/Internships"; - does not used!?
-
-        readonly IWebHostEnvironment _env; // to access the Content PATH aka wwwroot
+        //private readonly string Internship_url = "/api/Internships"; - does not used!?
+        IWebHostEnvironment _env; // to access the Content PATH aka wwwroot
         /// <summary>
         /// User object is quite important here. without accessing database again and again on every action. User is set on constructor level.
         /// </summary>
@@ -43,7 +42,7 @@ namespace Global_Intern.Controllers
             // To Access runtime tokens
             _customAuthManager = auth;
 
-            SetUser();
+            setUser();
         }
         public IActionResult Index()
         {
@@ -80,52 +79,65 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
+            ProfileViewStudent userViewModel = new ProfileViewStudent(_user);
+            return View(userViewModel);
 
-            using GlobalDBContext _context = new GlobalDBContext();
-            ProfileViewStudent gen = new ProfileViewStudent(_user);
-
-            return View(gen);
 
         }
 
         [HttpPost]
-        public IActionResult GeneralProfile(ProfileViewStudent fromData)
+        public IActionResult GeneralProfile(ProfileViewStudent UpdatedUser)
         {
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
             // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
-
-            // When Save button is clicked
-            using GlobalDBContext _context = new GlobalDBContext();
-            if (fromData.UserImage != null && fromData.UserImage.Length > 0)
+            //-------------------- END
+            using (GlobalDBContext _context = new GlobalDBContext())
             {
-                string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + fromData.UserImage.FileName;
-                string filePath = uploadFolder + uniqueFileName;
-                fromData.UserImage.CopyTo(new FileStream(filePath, FileMode.Create));
-
-                // Delete previous uploaded Image
-                if (!String.IsNullOrEmpty(_user.UserImage))
+                if (UpdatedUser.UserImage != null && UpdatedUser.UserImage.Length > 0)
                 {
-                    string imagePath = uploadFolder + _user.UserImage;
-                    System.IO.File.Delete(imagePath);
+                    string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
+
+                    // File of code need to be Tested
+                    //string file_Path = HelpersFunctions.StoreFile(uploadFolder, generalProfile.UserImage);
+
+
+
+
+
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + UpdatedUser.UserImage.FileName;
+                    // Delete previous uploaded Image
+                    if (!String.IsNullOrEmpty(UpdatedUser.UserImage.ToString()))
+                    {
+                        string imagePath = uploadFolder + _user.UserImage;
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            // If file found, delete it    
+                            System.IO.File.Delete(imagePath);
+                            Console.WriteLine("File deleted.");
+                        }
+                    }
+                    string filePath = uploadFolder + uniqueFileName;
+                    FileStream stream = new FileStream(filePath, FileMode.Create);
+                    UpdatedUser.UserImage.CopyTo(stream);
+                    stream.Dispose();
+                    UpdatedUser.UserImageName = uniqueFileName;
+
+                    // if new image is uploaded with other user info
+                    _user = _user.UpdateUserStudent(_user, UpdatedUser);
                 }
 
-                // if new image is uploaded with other user info
-                _user.AddFromStudentProfileView(fromData, uniqueFileName);
+                ViewBag.Message = UpdatedUser.UserFirstName + " " + UpdatedUser.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
+
+                _context.Users.Update(_user);
+                _context.SaveChanges();
+
+                ProfileViewStudent userViewModel = new ProfileViewStudent(_user);
+                return View(userViewModel);
             }
-            else
-            {
-                // Adding generalProfile attr to user without image
-                _user.AddFromStudentProfileView(fromData);
-            }
-            _context.Users.Update(_user);
-            _context.SaveChanges();
-            ProfileViewStudent gen = new ProfileViewStudent(_user);
-            return View(gen);
+
         }
 
 
@@ -145,20 +157,23 @@ namespace Global_Intern.Controllers
 
         public IActionResult DeleteUser()
         {
-            using GlobalDBContext _context = new GlobalDBContext();
-            var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
 
-            User user = _context.Users.Find(User_id);
+                var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
 
-            _context.Users.Remove(user);
+                User user = _context.Users.Find(User_id);
 
-            _context.SaveChanges();
+                _context.Users.Remove(user);
 
-            return RedirectToAction("Index", "Home");
+                _context.SaveChanges();
+
+                return RedirectToAction("Index", "Home");
+            }
 
         }
 
-        public void SetUser()
+        public void setUser()
         {
             ///  Access "UserToken" Session. 
             /// NOTE:  Session get created when user login with unique id. This id is also used to identify the user from number of Auth Tokens
@@ -167,13 +182,17 @@ namespace Global_Intern.Controllers
             {
                 return;
             }
-            using GlobalDBContext _context = new GlobalDBContext();
-            if (_customAuthManager.Tokens.Count > 0)
+            using (GlobalDBContext _context = new GlobalDBContext())
             {
-                // check weather the unique id is in AuthManager
-                int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
-                // User is found in the AuthManager
-                _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
+
+                if (_customAuthManager.Tokens.Count > 0)
+                {
+                    // check weather the unique id is in AuthManager
+                    int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
+                    // User is found in the AuthManager
+                    _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
+                }
+
             }
         }
         
@@ -192,7 +211,7 @@ namespace Global_Intern.Controllers
 
         }
         [HttpPost]
-        public IActionResult Qualifications(Qualification qualification) //qualification is unused parameter !? 
+        public IActionResult Qualifications(Qualification qualification)
         {
             using (GlobalDBContext _context = new GlobalDBContext())
             {
@@ -243,5 +262,8 @@ namespace Global_Intern.Controllers
 
             return View();
         }
+        
+        
+        
     }
 }

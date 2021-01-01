@@ -47,8 +47,8 @@ namespace Global_Intern.Controllers
 
             // sets User _user using session
             
-            SetUser();
-            SetUserCompany();
+            setUser();
+            setUserCompany();
         }
 
         
@@ -61,13 +61,15 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-            using GlobalDBContext _context = new GlobalDBContext();
-            // Gets all Internship created by the user
-            var Internship = _context.Internships.ToList();
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+                // Gets all Internship created by the user
+                var internship = _context.Internships.ToList();
 
+                
 
-
-            return View(Internship);
+                return View(internship);
+            }
         }
 
         //[Authorize]
@@ -81,9 +83,13 @@ namespace Global_Intern.Controllers
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
             //-------------------- END
 
-            using GlobalDBContext _context = new GlobalDBContext();
-            ProfileViewEmployer userViewModel = new ProfileViewEmployer(_user);
-            return View(userViewModel);
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+
+                //ViewBag.ImageURL = _env.WebRootPath + @"\uploads\UserImage\"+_user.UserImage;
+                ProfileViewEmployer userViewModel = new ProfileViewEmployer(_user);
+                return View(userViewModel);
+            }
         }
 
         //public IActionResult Internships()
@@ -102,55 +108,61 @@ namespace Global_Intern.Controllers
         //}
 
         [HttpPost]
-        public IActionResult GeneralProfile(ProfileViewEmployer fromData)
+        public IActionResult GeneralProfile(ProfileViewEmployer UpdatedUser)
         {
-            using GlobalDBContext _context = new GlobalDBContext();
-            if (fromData.UserImage != null && fromData.UserImage.Length > 0)
-            {
-                string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
-
-                // File of code need to be Tested
-                //string file_Path = HelpersFunctions.StoreFile(uploadFolder, generalProfile.UserImage);
-
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + fromData.UserImage.FileName;
-                string filePath = uploadFolder + uniqueFileName;
-                FileStream stream = new FileStream(filePath, FileMode.Create);
-                fromData.UserImage.CopyTo(stream);
-                stream.Dispose();
-
-                // Delete previous uploaded Image
-                if (!String.IsNullOrEmpty(_user.UserImage))
-                {
-                    string imagePath = uploadFolder + _user.UserImage;
-                    if (System.IO.File.Exists(imagePath))
-                    {
-                        // If file found, delete it    
-                        System.IO.File.Delete(imagePath);
-                        Console.WriteLine("File deleted.");
-                    }
-                }
-                // if new image is uploaded with other user info
-                _user.AddFromEmployerProfileView(fromData, uniqueFileName);
-            }
-            else
-            {
-                // Adding generalProfile attr to user without image
-                _user.AddFromEmployerProfileView(fromData);
-            }
-            _context.Users.Update(_user);
-            _context.SaveChanges();
-            fromData.UserImageName = _user.UserImage;
-
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
             // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
             //-------------------- END
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
+                if (UpdatedUser.UserImage != null && UpdatedUser.UserImage.Length > 0)
+                {
+                    string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
 
-            return View(fromData);
+                    // File of code need to be Tested
+                    //string file_Path = HelpersFunctions.StoreFile(uploadFolder, generalProfile.UserImage);
+
+
+
+
+
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + UpdatedUser.UserImage.FileName;
+                    // Delete previous uploaded Image
+                    if (!String.IsNullOrEmpty(UpdatedUser.UserImage.ToString()))
+                    {
+                        string imagePath = uploadFolder + _user.UserImage;
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            // If file found, delete it    
+                            System.IO.File.Delete(imagePath);
+                            Console.WriteLine("File deleted.");
+                        }
+                    }
+                    string filePath = uploadFolder + uniqueFileName;
+                    FileStream stream = new FileStream(filePath, FileMode.Create);
+                    UpdatedUser.UserImage.CopyTo(stream);
+                    stream.Dispose();
+                    UpdatedUser.UserImageName = uniqueFileName; 
+
+                    // if new image is uploaded with other user info
+                   _user = _user.UpdateUserEmployer(_user,UpdatedUser);
+                }
+
+                ViewBag.Message = UpdatedUser.UserFirstName + " " + UpdatedUser.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
+
+                _context.Users.Update(_user);
+                _context.SaveChanges();
+
+                ProfileViewEmployer userViewModel = new ProfileViewEmployer(_user);
+                return View(userViewModel);
+            }
 
         }
+
+
 
         public IActionResult Settings()
         {
@@ -168,16 +180,19 @@ namespace Global_Intern.Controllers
 
         public IActionResult DeleteUser()
         {
-            using GlobalDBContext _context = new GlobalDBContext();
-            var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
 
-            User user = _context.Users.Find(User_id);
+                var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
 
-            _context.Users.Remove(user);
+                User user = _context.Users.Find(User_id);
 
-            _context.SaveChanges();
+                _context.Users.Remove(user);
 
-            return RedirectToAction("Index", "Home");
+                _context.SaveChanges();
+
+                return RedirectToAction("Index", "Home");
+            }
 
         }
         [Route("{controller}/{Action}/{id}")]
@@ -206,16 +221,19 @@ namespace Global_Intern.Controllers
 
         public IActionResult DeleteInternship()
         {
-            using GlobalDBContext _context = new GlobalDBContext();
-            var id = _httpContextAccessor.HttpContext.Session.GetString("DeleteInternshipId");
+            using (GlobalDBContext _context = new GlobalDBContext())
+            {
 
-            Internship Internship = _context.Internships.Find(Convert.ToInt32(id));
+                var id = _httpContextAccessor.HttpContext.Session.GetString("DeleteInternshipId");
 
-            _context.Internships.Remove(Internship);
+                Internship Internship = _context.Internships.Find(Convert.ToInt32(id));
 
-            _context.SaveChanges();
+                _context.Internships.Remove(Internship);
 
-            return RedirectToAction("Index", "DashboardTeacher");
+                _context.SaveChanges();
+
+                return RedirectToAction("Index", "DashboardTeacher");
+            }
 
         }
 
@@ -371,10 +389,12 @@ namespace Global_Intern.Controllers
 
             _httpContextAccessor.HttpContext.Session.SetString("InternshipId",Convert.ToString(id));
 
-            using GlobalDBContext context = new GlobalDBContext();
-            Internship Internship = context.Internships.Find(Convert.ToInt32(id));
+            using (GlobalDBContext context = new GlobalDBContext())
+            {
+                Internship Internship = context.Internships.Find(Convert.ToInt32(id));
 
-            return View(Internship);
+                return View(Internship);
+            }
 
 
         }
@@ -389,22 +409,25 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-            using GlobalDBContext context = new GlobalDBContext();
-            InternshipId = _httpContextAccessor.HttpContext.Session.GetString("InternshipId");
+            using (GlobalDBContext context = new GlobalDBContext())
+            {
 
-            Internship _Internship = context.Internships.FirstOrDefault(k => k.InternshipId == Convert.ToInt32(InternshipId));
+                InternshipId = _httpContextAccessor.HttpContext.Session.GetString("InternshipId");
 
-            Internship Internship = new Internship();
+                Internship _Internship = context.Internships.FirstOrDefault(k => k.InternshipId == Convert.ToInt32(InternshipId));
 
-            Internship = Internship.UpdateInternship(_Internship, UpdatedInternship);
+                Internship Internship = new Internship();
 
-            context.Internships.Update(Internship);
+                Internship = Internship.UpdateInternship(_Internship, UpdatedInternship);
 
-            context.SaveChanges();
+                context.Internships.Update(Internship);
 
-            ViewBag.Message = "The Internship " + Internship.InternshipTitle + " has been updated successfully";
+                context.SaveChanges();
 
-            return View(Internship);
+                ViewBag.Message = "The Internship " + Internship.InternshipTitle + " has been updated successfully";
+
+                return View(Internship);
+            }
         }
 
         public IActionResult CompanyDetails()
@@ -416,15 +439,18 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-            using GlobalDBContext _context = new GlobalDBContext();
-            UserCompany companyInfo = _context.UserCompany.Include(u => u.User).FirstOrDefault(e => e.User.UserId == _user.UserId);
-            Global_Intern.Models.EmployerModels.EmployerCompanyModel model = new Models.EmployerModels.EmployerCompanyModel();
-            if (companyInfo != null)
+            using (GlobalDBContext _context = new GlobalDBContext())
             {
-                model = new Models.EmployerModels.EmployerCompanyModel(companyInfo);
+               
+                UserCompany companyInfo = _context.UserCompany.Include(u => u.User).FirstOrDefault(e => e.User.UserId == _user.UserId);
+                Global_Intern.Models.EmployerModels.EmployerCompanyModel model = new Models.EmployerModels.EmployerCompanyModel();
+                if (companyInfo != null)
+                {
+                   model = new Models.EmployerModels.EmployerCompanyModel(companyInfo);
+                }
+                return View(model);
             }
-            return View(model);
-
+            
         }
         [HttpPost]
         public IActionResult CompanyDetails(EmployerCompanyModel FromData)
@@ -436,82 +462,91 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-            using GlobalDBContext _context = new GlobalDBContext();
-            if (FromData.CompanyLogo != null && FromData.CompanyLogo.Length > 0)
+            using (GlobalDBContext _context = new GlobalDBContext())
             {
-                string uploadFolder = _env.WebRootPath + @"\uploads\CompanyLogos\";
-
-                // File of code need to be Tested
-                //string file_Path = HelpersFunctions.StoreFile(uploadFolder, generalProfile.UserImage);
-
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + FromData.CompanyLogo.FileName;
-                string filePath = uploadFolder + uniqueFileName;
-                FileStream stream = new FileStream(filePath, FileMode.Create);
-                FromData.CompanyLogo.CopyTo(stream);
-                stream.Dispose();
-                // Delete previous uploaded Image
-                if (!String.IsNullOrEmpty(_company.UserCompanyLogo))
+                
+                if (FromData.CompanyLogo != null && FromData.CompanyLogo.Length > 0)
                 {
-                    string imagePath = uploadFolder + _company.UserCompanyLogo;
-                    if (System.IO.File.Exists(imagePath))
-                    {
+                    string uploadFolder = _env.WebRootPath + @"\uploads\CompanyLogos\"; 
 
-                        // If file found, delete it    
-                        System.IO.File.Delete(imagePath);
-                        Console.WriteLine("File deleted.");
+                    // File of code need to be Tested
+                    //string file_Path = HelpersFunctions.StoreFile(uploadFolder, generalProfile.UserImage);
+
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + FromData.CompanyLogo.FileName;
+                    string filePath = uploadFolder + uniqueFileName;
+                    FileStream stream = new FileStream(filePath, FileMode.Create);
+                    FromData.CompanyLogo.CopyTo(stream);
+                    stream.Dispose();
+                    // Delete previous uploaded Image
+                    if (!String.IsNullOrEmpty(_company.UserCompanyLogo))
+                    {
+                        string imagePath = uploadFolder + _company.UserCompanyLogo;
+                        if (System.IO.File.Exists(imagePath))
+                        {
+
+                            // If file found, delete it    
+                            System.IO.File.Delete(imagePath);
+                            Console.WriteLine("File deleted.");
+                        }
+                        
                     }
+                    // if new image is uploaded with other user info
+                    _company.AddFromEmployerCompanyModel(FromData, uniqueFileName);
 
                 }
-                // if new image is uploaded with other user info
-                _company.AddFromEmployerCompanyModel(FromData, uniqueFileName);
-
+                else
+                {
+                    // Adding generalProfile attr to user without image
+                    _company.AddFromEmployerCompanyModel(FromData);
+                }
+                _context.UserCompany.Update(_company);
+                _context.SaveChanges(); 
+                 FromData.CompanyLogoName = _company.UserCompanyLogo;
+                return View(FromData);
             }
-            else
-            {
-                // Adding generalProfile attr to user without image
-                _company.AddFromEmployerCompanyModel(FromData);
-            }
-            _context.UserCompany.Update(_company);
-            _context.SaveChanges();
-            FromData.CompanyLogoName = _company.UserCompanyLogo;
-            return View(FromData);
 
         }
 
 
-        public void SetUser()
+        public void setUser()
         {
             string token = _httpContextAccessor.HttpContext.Session.GetString("UserToken");
             if(token == null)
             {
                 return;
             }
-            using GlobalDBContext _context = new GlobalDBContext();
-            if (_customAuthManager.Tokens.Count > 0)
+            using (GlobalDBContext _context = new GlobalDBContext())
             {
-                int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
-                _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
+                
+                if(_customAuthManager.Tokens.Count > 0)
+                {
+                    int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
+                    _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
+                }
+                
             }
         }
 
         // User should be initialized (setUser()) before using this method
-        public void SetUserCompany()
+        public void setUserCompany()
         {
             if (_user == null) {
                 return; 
             }
-            using GlobalDBContext _context = new GlobalDBContext();
-            _company = _context.UserCompany.Include(r => r.User).FirstOrDefault(u => u.User.UserId == _user.UserId);
-
-            if (_company == null)  // If no record is found on user company
+            using (GlobalDBContext _context = new GlobalDBContext())
             {
-                // inserting company with user ID 
-                UserCompany userCompany = new UserCompany();
-                User user = _context.Users.Find(_user.UserId);
-                userCompany.User = user;
-                _context.UserCompany.Add(userCompany);
-                _context.SaveChanges();
-                _company = userCompany;
+                _company = _context.UserCompany.Include(r => r.User).FirstOrDefault(u => u.User.UserId == _user.UserId);
+
+                if(_company == null)  // If no record is found on user company
+                {
+                    // inserting company with user ID 
+                    UserCompany userCompany = new UserCompany();
+                    User user = _context.Users.Find(_user.UserId);
+                    userCompany.User = user;
+                    _context.UserCompany.Add(userCompany);
+                    _context.SaveChanges();
+                    _company = userCompany;
+                }
             }
         }
 
@@ -545,5 +580,9 @@ namespace Global_Intern.Controllers
 
             return View();
         }
+        
+      
+
+
     }
 }

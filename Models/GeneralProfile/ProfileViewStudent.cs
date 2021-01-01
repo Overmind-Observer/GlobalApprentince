@@ -26,6 +26,11 @@ namespace Global_Intern.Models.GeneralProfile
         public string UserDob { get; set; }
         public string UserEthnic { get; set; }
 
+        public ProfileViewStudent()
+        {
+
+        }
+
         //public ProfileViewStudent(User user, ExtendedStudent info)
         public ProfileViewStudent(User user)
         {
