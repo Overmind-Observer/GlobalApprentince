@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using Global_Intern.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
 namespace Global_Intern.Data
@@ -13,31 +12,26 @@ namespace Global_Intern.Data
         public ConnectionString _connectionString;
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder AddDbContext)
         {
 
+            base.OnConfiguring(AddDbContext);
             string connectionString = GeneratePath();
 
-           /* _ = optionsBuilder.UseSqlServer(connectionString,
-              Builder);*/
-
-_ = optionsBuilder.UseSqlServer(connectionString,
-#pragma warning disable CS0618 // Type or member is obsolete
-              builder => builder.UseRowNumberForPaging(true));
-#pragma warning restore CS0618 // Type or member is obsolete
+            _ = AddDbContext.UseSqlServer(connectionString);
 
         }
 
-        private void Builder(SqlServerDbContextOptionsBuilder obj) //memberBuilder is unused !?
+        /*private void Builder(SqlServerDbContextOptionsBuilder obj) //memberBuilder is unused !?
         {
             throw new NotImplementedException();
         }
-
-       /* private void AddDbContext<T>(Func<object, object> p)
+        
+        private void AddDbContext<T>(Func<object, object> p)
         {
-            throw new NotImplementedException();
-        }*/
-
+             throw new NotImplementedException();
+        }
+        */
         public string GeneratePath()
         {
             System.IO.DirectoryInfo myDirectory = new DirectoryInfo(Environment.CurrentDirectory);
@@ -79,6 +73,11 @@ _ = optionsBuilder.UseSqlServer(connectionString,
             modelBuilder.Entity<User>().Property(b => b.SoftDelete).HasDefaultValue(false);
 
 
+        }
+
+        internal void EnsureDataBaseSeeded()
+        {
+            throw new NotImplementedException();
         }
     }
 }

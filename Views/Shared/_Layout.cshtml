@@ -15,60 +15,58 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-            <button class="navbar-toggler sideMenuToggler" type="button">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Global Intern</a>
+           
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index"><img src="img/Tech.png" alt="logo" height="55" /></a>
+            
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home<span class="sr-only">(current)</span></a>
-                    </li>
-                    <div class="dropdown">
-                        <li class="nav-item">
+                <div class="navbar-nav mr-auto">
+                    <div class="nav" style="grid-row-start:auto; float:left" >
+                        <p class="nav-item" style="margin:auto">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home<span class="sr-only">(current)</span></a>
+                        </p>
+
+                        <p class="dropdown, nav-item" style="margin:auto">
                             <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Programmes</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AllInternships">Internships </a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AllCourses">Course</a>
                             </div>
-                        </li>
-                    </div>
-                    <!--
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Internship" asp-action="Create">Create Internship</a>
-                    </li>
-                    -->
-                   <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact</a>
+                        </p>
 
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="ContactUs">Contact</a>
+                        <!--
+    <li class="nav-item">
+        <a class="nav-link" asp-area="" asp-controller="Internship" asp-action="Create">Create Internship</a>
+    </li>
+    -->
 
-                    </li>
-                    <div class="dropdown">
-                        <li class="nav-item">
+                        <p class="dropdown, nav-item" style="margin:auto">
                             <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Careers</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="CurrentVacancies">Current Vacancies</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="OurBenefits">Our Benefits</a>
                             </div>
-                        </li>
+                        </p>
+
+
+
+                        <p class="nav-item" style="margin:auto">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact</a>
+                        </p>
+                        <p class="nav-item" style="margin:auto">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                        </p>
+
+
                     </div>
 
-                </ul>
-                <div class="userControlles">
+                </div>
+                <div class="userControlles" style="float:right">
                     @if (ViewData["LoggeduserName"] != null)
-                     {
+                    {
                         <div class="d-flex">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item d-flex">
@@ -89,72 +87,41 @@
 
                                 </li>
                             </ul>
-                            <button class="btn btn-success my-2 my-sm-0"  asp-controller="Account" asp-action="Logout">Logout</button>
+                            <button class="btn btn-success my-2 my-sm-0" asp-controller="Account" asp-action="Logout">Logout</button>
                         </div>
                     }
                     else
                     {
-                        <div class="d-flex">
-                    
-                            <a style="width:100px;" class="btn btn-primary mr-1"  asp-controller="Account" asp-action="Login">Log In</a>
+                        
+                        <p class="dropdown, nav-item" style="margin:auto;">
 
-                            <a style="width:100px;" class="btn btn-primary"  asp-controller="Account" asp-action="Register">Sign Up</a>
-                        </div>
+
+                            <a style="width:100px;" class="btn btn-primary mr-1" asp-controller="Account" asp-action="Login">Log In</a>
+
+                            <a style="width:100px;" class="btn btn-primary" asp-controller="Account" asp-action="Register">Sign Up</a>
+                        </p>
+
                     }
                 </div>
             </div>
         </nav>
     </header>
-    <main>
+    <main style="margin-bottom:7%">
 
         @RenderBody()
 
     </main>
-    
-    
-     <div class="footer-distributed">
-        <div class="footer-left">
-            <img src="/img/Tech.png" alt="GlobalIntern" height="150" width="250">
-            <p class="footer-links">
-                <a asp-controller="Home" asp-action="Index">Home</a>
-                <br>
-                <a asp-controller="Home" asp-action="AllInternships">Program.All Internships</a>
-                <br>
-                <a asp-controller="" asp-action="">Program.Courses</a>
-                <br>
-                <a asp-controller="Home" asp-action="About">About</a>
-                <br>
-                <a asp-controller="Home" asp-action="ContactUs">Contact</a>
-                <br>
-                <a asp-controller="Home" asp-action="CurrentVacancies">Current Vacancies</a>
-                <br>
-                <a asp-controller="Home" asp-action="OurBenefits">OurBenefits</a>
-            </p>
+     
+    <footer class="footer text-muted bg-dark fixed-bottom">
 
-            <p class="footer-company-name">GlobalIntern 2020</p>
-        </div>
+        <div class="form-inline" style="margin-bottom:1%; margin-top:1%">
 
-        <div class="footer-center">
-            <div>
-                <i class="fa fa-map-marker"></i>
-                <p><span>111 Victoria Street</span> Hamilton, New Zealand</p>
+            <div class="form-inline" style="margin-right:auto; margin-left:auto">
+
+                <a asp-area="" asp-controller="Home" asp-action="Privacy">&copy; 2020 - Global Apprentince & Intern - Privacy</a>
             </div>
 
-            <div>
-                <i class="fa fa-phone"></i>
-                <p>07-898-8060</p>
-            </div>
-
-            <div">
-                <i class="fa fa-envelope"></i>
-                <p><a href="mailto:globalintern@gmail.com">globalintern@gmail.com</a></p>
-
-        </div>
-    </div>
-
-    <div class="footer-right">
-        <div class="footer-icons">
-            <div class="row">
+            <div class="form-inline" style="margin-right:auto; margin-left:auto">
 
                 <a href="https://www.facebook.com">
                     <img src="img/fb_icon.ico" alt="SocialMedia1" height="30" width="30" />
@@ -168,41 +135,13 @@
                 <a href="https://www.youtube.com">
                     <img src="img/youtube.ico" alt="SocialMedia4" height="30" width="30" />
                 </a>
+
             </div>
-        </div>
-    </div>
-    </div>
-    
-    
-    
-    
-    <footer class="footer text-muted">
-        <div class="container">
 
-            <form class="form-inline" style="float:left">
-                <a asp-area="" asp-controller="Home" asp-action="Privacy">&copy; 2020 - Global Apprentince & Intern - Privacy</a>
-            </form>
-            <form class="form-inline" style="float:left; margin-left:15%">
-
-                <a href="https://www.facebook.com">
-                    <img src="img/fb_icon.ico" alt="SocialMedia1" height="25" width="25" />
-                </a>
-                <a href="https://www.twitter.com">
-                    <img src="img/twitter.ico" alt="SocialMedia2" height="25" width="25" />
-                </a>
-                <a href="https://www.linkedin.com">
-                    <img src="img/linkedin.ico" alt="SocialMedia3" height="25" width="25" />
-                </a>
-                <a href="https://www.youtube.com">
-                    <img src="img/youtube.ico" alt="SocialMedia4" height="25" width="25" />
-                </a>
-
-            </form>
-
-            <form class="form-inline my-2 my-lg-0" style="float:right">
+            <div class="form-inline" style="margin-right:auto; margin-left:auto">
                 <input class="form-control mr-sm-2" type="search" placeholder="Your Email" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Subscribe</button>
-            </form>
+            </div>
 
         </div>
     </footer>

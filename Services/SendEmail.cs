@@ -1,18 +1,15 @@
 ﻿using System.Net.Security;
-using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using Global_Intern.Models;
-using Global_Intern.Models.Filters;
-using Global_Intern.Util;
-using MailKit.Net.Smtp;
-using MailKit.Security;
 using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace Global_Intern.Services
 {
     public class SendEmail
+
     {
-        private EmailSettings _settings;
+        private readonly EmailSettings _settings;
 
 
 
@@ -38,21 +35,21 @@ namespace Global_Intern.Services
                 Text = body
             };
 
-            using (var client = new SmtpClient())
+            using SmtpClient client = new SmtpClient
             {
 
                 // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-                //client.SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
+                ServerCertificateValidationCallback = (s, c, h, e) => true
+            };
+            //client.SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
 
-                //client.SSLConfiguration.EnabledSslProtocols = SslProtocols.Ssl3;
-                client.Connect(_settings.MailServer, _settings.MailPort, true);
-                client.Authenticate(_settings.Sender, _settings.Password);
-                client.Send(message);
-                client.Disconnect(true);
-
-            }
+            //client.SSLConfiguration.EnabledSslProtocols = SslProtocols.Ssl3;
+            client.Connect(_settings.MailServer, _settings.MailPort, true);
+            client.Authenticate(_settings.Sender, _settings.Password);
+            client.Send(message);
+            client.Disconnect(true);
         }
+        /*
         bool ServerCertificateValidationCallback(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
             if (sslPolicyErrors == SslPolicyErrors.None)
@@ -74,5 +71,6 @@ namespace Global_Intern.Services
 
             return false;
         }
+        */
     }
 }
