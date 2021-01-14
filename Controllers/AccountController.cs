@@ -131,7 +131,7 @@ namespace Global_Intern.Controllers
                     if (hashed == theUser.UserPassword)
                     {
                         
-                        //string usr = JsonConvert.SerializeObject(theUser, Formatting.Indented, new JsonSerializerSettings()
+                        //string usr = JsonConvert.SerializeObject(theUser, Formattin g.Indented, new JsonSerializerSettings()
                         //{
                         //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         //});

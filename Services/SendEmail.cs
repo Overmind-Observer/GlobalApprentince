@@ -42,7 +42,7 @@ namespace Global_Intern.Services
             {
 
                 // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                //client.ServerCertificateValidationCallback(s, c, h, e); ;
                 //client.SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
 
                 //client.SSLConfiguration.EnabledSslProtocols = SslProtocols.Ssl3;
