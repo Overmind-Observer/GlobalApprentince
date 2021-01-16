@@ -1,6 +1,7 @@
 ﻿using Global_Intern.Data;
 using Global_Intern.Models;
 using Global_Intern.Models.GeneralProfile;
+using Global_Intern.Models.StudentModels;
 using Global_Intern.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -63,6 +64,7 @@ namespace Global_Intern.Controllers
                     Internship theIntern = appliedIntern.Internship;
                     interns.Add(theIntern);
                 }
+                ViewBag.IntershipsByLoginedInUser = _context.Internships.Where(e => e.User == _user).ToList();
             }
             return View();
         }
@@ -79,15 +81,44 @@ namespace Global_Intern.Controllers
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
-            ProfileViewStudent userViewModel = new ProfileViewStudent(_user);
-            return View(userViewModel);
 
 
-        }
+            bool d = true;
+
+            using GlobalDBContext context = new GlobalDBContext();
+            
+            var temp = context.StudentInternProfiles.Where(u=>u.User==_user).ToList();
+
+            ConsoleLogs logs = new ConsoleLogs(_env);
+
+            logs.WriteErrorLog(temp.ToString());
+
+            if (temp.Count == 0)
+            {
+                ProfileViewStudent userViewModel = new ProfileViewStudent(_user);
+
+                return View(userViewModel);
+            }
+            else
+            {
+                var studentIntern = temp[0];
+
+                ProfileViewStudent userViewModel = new ProfileViewStudent(_user, studentIntern);
+
+                return View(userViewModel);
+            }
+
+
+
+            
+
+
+         }
 
         [HttpPost]
-        public IActionResult GeneralProfile(ProfileViewStudent UpdatedUser)
+        public IActionResult GeneralProfile(ProfileViewStudent updatedUser)
         {
+            StudentInternProfile internProfile = new StudentInternProfile();
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
             // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
@@ -96,7 +127,7 @@ namespace Global_Intern.Controllers
             //-------------------- END
             using (GlobalDBContext _context = new GlobalDBContext())
             {
-                if (UpdatedUser.UserImage != null && UpdatedUser.UserImage.Length > 0)
+                if (updatedUser.UserImage != null && updatedUser.UserImage.Length > 0)
                 {
                     string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
 
@@ -107,9 +138,9 @@ namespace Global_Intern.Controllers
 
 
 
-                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + UpdatedUser.UserImage.FileName;
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + updatedUser.UserImage.FileName;
                     // Delete previous uploaded Image
-                    if (!String.IsNullOrEmpty(UpdatedUser.UserImage.ToString()))
+                    if (!String.IsNullOrEmpty(updatedUser.UserImage.ToString()))
                     {
                         string imagePath = uploadFolder + _user.UserImage;
                         if (System.IO.File.Exists(imagePath))
@@ -121,20 +152,55 @@ namespace Global_Intern.Controllers
                     }
                     string filePath = uploadFolder + uniqueFileName;
                     FileStream stream = new FileStream(filePath, FileMode.Create);
-                    UpdatedUser.UserImage.CopyTo(stream);
+                    updatedUser.UserImage.CopyTo(stream);
                     stream.Dispose();
-                    UpdatedUser.UserImageName = uniqueFileName;
+                    updatedUser.UserImageName = uniqueFileName;
 
                     // if new image is uploaded with other user info
-                    _user = _user.UpdateUserStudent(_user, UpdatedUser);
+                    
+
+                    
                 }
 
-                ViewBag.Message = UpdatedUser.UserFirstName + " " + UpdatedUser.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
+                _user = _user.UpdateUserStudent(_user, updatedUser);
 
-                _context.Users.Update(_user);
-                _context.SaveChanges();
+                //DateTime date = Convert.ToDateTime(Request.Form["UserDob"]);
 
-                ProfileViewStudent userViewModel = new ProfileViewStudent(_user);
+                //DateTime date1 = Convert.ToDateTime(Request.Form["userVisaExpiryId"]);
+
+                ProfileViewStudent profileView = new ProfileViewStudent();
+
+                GlobalDBContext context = new GlobalDBContext();
+
+                var temp = context.StudentInternProfiles.Where(u => u.User == _user).ToList();
+
+
+                if (temp.Count==0)
+                {
+                    internProfile = profileView.updateOrCreateStudentInternProfile(internProfile, updatedUser, _user);
+                    _context.Users.Update(_user);
+                    _context.StudentInternProfiles.Add(internProfile);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    internProfile = temp[0];
+                    internProfile = profileView.updateOrCreateStudentInternProfile(internProfile, updatedUser, _user);
+                    _context.Users.Update(_user);
+                    _context.StudentInternProfiles.Update(internProfile);
+                    _context.SaveChanges();
+                }
+                
+
+                
+
+
+
+
+                ViewBag.Message = updatedUser.UserFirstName + " " + updatedUser.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
+
+
+                ProfileViewStudent userViewModel = new ProfileViewStudent(updatedUser);
                 return View(userViewModel);
             }
 
@@ -151,6 +217,8 @@ namespace Global_Intern.Controllers
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
             ViewBag.Message = "Are you sure you want to delete user " + _user.UserFirstName + " " + _user.UserLastName;
+
+            ViewBag.DeleteItem = "DeleteUser";
 
             return View();
         }

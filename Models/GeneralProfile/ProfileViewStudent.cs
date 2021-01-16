@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using Global_Intern.Models.StudentModels;
 using Microsoft.AspNetCore.Http;
 
 namespace Global_Intern.Models.GeneralProfile
@@ -23,6 +25,8 @@ namespace Global_Intern.Models.GeneralProfile
         public string UserVisaExpire { get; set; }
         public string UserIndustryCertificates { get; set; }
         public string UserDriverType { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public string UserDob { get; set; }
         public string UserEthnic { get; set; }
 
@@ -32,6 +36,7 @@ namespace Global_Intern.Models.GeneralProfile
         }
 
         //public ProfileViewStudent(User user, ExtendedStudent info)
+
         public ProfileViewStudent(User user)
         {
             UserFirstName = user.UserFirstName;
@@ -44,15 +49,81 @@ namespace Global_Intern.Models.GeneralProfile
             UserPhone = user.UserPhone;
             UserImageName = user.UserImage;
             UserGender = user.UserGender;
-            // Add on 1/09/2020
-            //UserStudentType = user.UserStudentType;
-            //UserWorkingRight = user.UserWorkingRight;
-            //UserVisaType = user.UserVisaType;
-            //UserVisaExpire = user.UserVisaExpire;
-            //UserIndustryCertificates = user.UserIndustryCertificates;
-            //UserDriverType = user.UserDriverType;
-            //UserDob = user.UserDob;
-            //UserEthnic = user.UserEthnic;
         }
+
+        public ProfileViewStudent(ProfileViewStudent user)
+        {
+            UserFirstName = user.UserFirstName;
+            UserLastName = user.UserLastName;
+            UserAddress = user.UserAddress;
+            UserCity = user.UserCity;
+            UserState = user.UserState;
+            UserCountry = user.UserCountry;
+            UserZip = user.UserZip;
+            UserPhone = user.UserPhone;
+            if (user.UserImage != null)
+            {
+                UserImageName = user.UserImage.FileName;
+            }
+            UserGender = user.UserGender;
+            UserStudentType =user.UserStudentType;
+            UserWorkingRight = user.UserWorkingRight;
+            UserVisaType = user.UserVisaType;
+            UserVisaExpire = user.UserVisaExpire;
+            UserIndustryCertificates = user.UserIndustryCertificates;
+            UserDriverType = user.UserDriverType;
+            UserDob = user.UserDob;
+            UserEthnic = user.UserEthnic;
+        }
+
+        public ProfileViewStudent(User user, StudentInternProfile student)
+        {
+            UserFirstName = user.UserFirstName;
+            UserLastName = user.UserLastName;
+            UserAddress = user.UserAddress;
+            UserCity = user.UserCity;
+            UserState = user.UserState;
+            UserCountry = user.UserCountry;
+            UserZip = user.UserZip;
+            UserPhone = user.UserPhone;
+            UserImageName = user.UserImage;
+            UserGender = user.UserGender;
+            UserStudentType = student.StudentType;
+            UserWorkingRight = student.StudentWorkingRight;
+            UserVisaType = student.StudentVisaType;
+            UserVisaExpire = student.StudentVisaExpire;
+            UserIndustryCertificates = student.StudentIndustryCertificates;
+            UserDriverType = student.StudentDriverType;
+            UserDob = student.StudentDob;
+            UserEthnic = student.StudentEthnic;
+        }
+        public StudentInternProfile updateOrCreateStudentInternProfile(StudentInternProfile newProfile, ProfileViewStudent createdProfile, User user)
+        {
+            newProfile.StudentType = createdProfile.UserStudentType;
+            newProfile.StudentWorkingRight = createdProfile.UserWorkingRight;
+            newProfile.StudentVisaType = createdProfile.UserVisaType;
+            newProfile.StudentVisaExpire = createdProfile.UserVisaExpire;
+            newProfile.StudentIndustryCertificates = createdProfile.UserIndustryCertificates;
+            newProfile.StudentDriverType = createdProfile.UserDriverType;
+            newProfile.StudentDob = createdProfile.UserDob;
+            newProfile.StudentEthnic = createdProfile.UserEthnic;
+            newProfile.User = user;
+            return newProfile;
+        }
+
+        public StudentInternProfile updateStudentInternProfileOtherDetails(StudentInternProfile newProfile, ProfileViewStudent updatedProfile)
+        {
+            newProfile.StudentType = updatedProfile.UserStudentType;
+            newProfile.StudentWorkingRight = updatedProfile.UserWorkingRight;
+            newProfile.StudentVisaType = updatedProfile.UserVisaType;
+            newProfile.StudentVisaExpire = updatedProfile.UserVisaExpire;
+            newProfile.StudentIndustryCertificates = updatedProfile.UserIndustryCertificates;
+            newProfile.StudentDriverType = updatedProfile.UserDriverType;
+            newProfile.StudentDob = updatedProfile.UserDob;
+            newProfile.StudentEthnic = updatedProfile.UserEthnic;
+            
+            return newProfile;
+        }
+
     }
 }

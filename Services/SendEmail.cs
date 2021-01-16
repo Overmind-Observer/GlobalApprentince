@@ -39,9 +39,14 @@ namespace Global_Intern.Services
             {
 
                 // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
-                ServerCertificateValidationCallback = (s, c, h, e) => true
-            };
-            //client.SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
+                //client.ServerCertificateValidationCallback(s, c, h, e); ;
+                //client.SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
+
+                //client.SSLConfiguration.EnabledSslProtocols = SslProtocols.Ssl3;
+                client.Connect(_settings.MailServer, _settings.MailPort, true);
+                client.Authenticate(_settings.Sender, _settings.Password);
+                client.Send(message);
+                client.Disconnect(true);
 
             //client.SSLConfiguration.EnabledSslProtocols = SslProtocols.Ssl3;
             client.Connect(_settings.MailServer, _settings.MailPort, true);

@@ -2,6 +2,8 @@
 using System;
 using System.IO;
 using Global_Intern.Models;
+using Global_Intern.Models.Filters;
+using Global_Intern.Models.StudentModels;
 using Microsoft.EntityFrameworkCore;
 using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
@@ -61,6 +63,8 @@ namespace Global_Intern.Data
         public DbSet<Course> Course { get; set; }
 
         public DbSet<Document> Documents { get; set; }
+
+        public DbSet<StudentInternProfile> StudentInternProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

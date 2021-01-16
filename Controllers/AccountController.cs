@@ -127,6 +127,24 @@ namespace Global_Intern.Controllers
                 // Check if the user entered password is correct
                 if (hashed == theUser.UserPassword)
                 {
+/*
+                    //Check email is verified
+                    if(theUser.UserEmailVerified == false)
+                    {
+                        ModelState.AddModelError("", "Email is not verifed you cant login.");
+                        return View();
+                    }
+                    CustomPasswordHasher pwd = new CustomPasswordHasher();
+                    string hashed = pwd.HashPassword(user.Password, theUser.Salt);
+                    // Check if the user entered password is correct
+                    if (hashed == theUser.UserPassword)
+                    {
+                        
+                        //string usr = JsonConvert.SerializeObject(theUser, Formattin g.Indented, new JsonSerializerSettings()
+                        //{
+                        //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        //});
+*/
 
                     //string usr = JsonConvert.SerializeObject(theUser, Formatting.Indented, new JsonSerializerSettings()
                     //{

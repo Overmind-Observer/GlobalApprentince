@@ -1,4 +1,5 @@
 @model Global_Intern.Models.GeneralProfile.ProfileViewStudent;
+
 @{
     ViewData["Title"] = "CompleteProfile";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
@@ -62,6 +63,7 @@
                         <input type="radio" asp-for="UserGender" value="Other" style="transform: scale(1.2);" /> Other &nbsp;
                         <span asp-validation-for="UserGender" class="text-danger"></span>
                     </div>
+
                     <div class="form-group">
                         <label for="UserAddress">Your Current Address</label>
                         <textarea class="form-control" asp-for="UserAddress"></textarea>
@@ -95,7 +97,7 @@
                         @{ if (Model.UserState == null)
                             {
                                 <select asp-for="UserState" id="dd_states" class="form-control">
-                                    <option id="optionState" value="">Select Country</option>
+                                    <option id="optionState" value="">Select State</option>
                                 </select>
                             }
                             else
@@ -108,16 +110,110 @@
 
                     </div>
                     <div class="form-group">
-                        <label asp-for="UserCity">Phone</label>
-                        <input class="form-control" asp-for="UserCity">
+                        <label asp-for="UserPhone">Phone</label>
+                        <input class="form-control" asp-for="UserPhone">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="UserZip">UserZip</label>
+                        <input class="form-control" asp-for="UserZip">
+                    </div>
+
+                </section>
+                <section class="otherDETAILS">
+
+                    <div class="form-group">
+                        <label class="control-label">Driver Licence	:</label>
+                        <select asp-for="UserDriverType" class="form-control">
+                            <option value="Full Licence">Full Licence</option>
+                            <option value="Registered Licence">Registered Licence</option>
+                            <option value="Learner Licence">Learner Licence</option>
+                            <option value="Foreign Licence">Foreign Licence</option>
+                            <option value="No Licence">No Licence</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <h4> Industry Certifications and Licences </h4>
+                        <textarea asp-for="UserIndustryCertificates" rows="10" cols="50" class="form-control" placeholder="Enter line by line here">
+                    </textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <h4>Are you a Domestic or International student?</h4>
+                        <input asp-for="UserStudentType" type="radio" value="Domestic" />&nbsp;
+                        <label asp-for="UserStudentType" for="domestic">Domestic</label><br>
+                        <input asp-for="UserStudentType" type="radio" id="international" value="International" />&nbsp;
+                        <label asp-for="UserStudentType" for="international">International</label><br>
+                    </div>
+
+                    <div class="form-group">
+                        <h2>Date Of Birth</h2>
+                        <label for="birthday">Date of Birth:</label>
+                        <input asp-for="UserDob" class="form-control" type="date">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Ethnicity</label>
+                        <select asp-for="UserEthnic" class="form-control">
+                            <option value="European">European</option>
+                            <option value="Maori">Maori</option>
+                            <option value="Asian">Asian</option>
+                            <option value="Other">Other</option>
+                            <option value="I'd prefer not to say">I'd prefer not to say</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <h2>BACKGROUND AND STUDY DETAILS</h2>
+                        <h4>Do you legally have the right to work in New Zealand?</h4>
+                        <input asp-for="UserWorkingRight" type="radio" value="Yes">Yes&nbsp;
+                        <label for="yes"></label><br>
+                        <input asp-for="UserWorkingRight" type="radio" value="No">No&nbsp;
+                        <label for="no"></label><br>
+                    </div>
+
+                    <div class="form-group">
+                        <h4>What type of visa do you currently hold?</h4>
+                        @*@if (Model.UserVisaType == null)
+                        {
+                            <input asp-for="UserVisaType" type="checkbox" value="Student Visa">
+                            <label for="studyvisa"> Student Visa with 20 Hours </label><br>
+                            <input asp-for="UserVisaType" type="checkbox" value="Open Work Visa">
+                            <label for="workvisa"> Open Work Visa </label><br>
+                            <input asp-for="UserVisaType" type="checkbox" value="Essential Skills Visa">
+                            <label for="workvisa"> Essential Work Visa </label><br>
+                            <input asp-for="UserVisaType" type="checkbox" value="Working Holiday Visa">
+                            <label for="workvisa"> Working Holiday Visa </label><br>
+                            <input asp-for="UserVisaType" type="checkbox" value="Other Visa Type">
+                            <label for="other"> Other Visa Type </label><br>
+                        }
+                        else
+                        {
+                            <input asp-for="UserVisaType" type="checkbox"  value="@Model.UserVisaType">
+                            <label>Typ</label><br>
+                        }*@
+                    <select asp-for="UserVisaType" class="form-control">
+                        <option value="Student Visa">Student Visa</option>
+                        <option value="Open Work Visa">Open Work Visa</option>
+                        <option value="Essential Skills Visa">Essential Skills Visa</option>
+                        <option value="Working Holiday Visa">Working Holiday Visa</option>
+                        <option value="Other Visa Type">Other Visa Type</option>
+                    </select>
+                    </div>
+
+                    <div class="form-group">
+                        <h4>Visa expiry date</h4>
+                        <input asp-for="UserVisaExpire" class="form-control" type="date">
                     </div>
 
                 </section>
 
-                <button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>
-                <input type="submit" class="btn btn-info" value="Save">
-            </form>
-        </div>
+        <button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>
+        <input type="submit" class="btn btn-info" value="Save">
+        </form>
+</div>
     </main>
 </div>
 
