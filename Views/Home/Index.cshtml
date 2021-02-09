@@ -4,6 +4,7 @@
 
 <img src="https://www.office2u.co.nz/images/2234/1920/banner-01.jpg" alt="doc" class="img-fluid" alt="Responsive image">
 
+
 <!-- Search Box-->
 <div class="row">
     <div class="col-xl-8">
@@ -64,7 +65,7 @@
             <h3>About Us</h3>
         </header>
         <p>Internships are on offer to people from all around the world to gain real work experience in New Zealand workforce, working with New Zealand companies. You will be working with New Zealand startup companies which will help you enhance your skills and experience being ready to work with NZ's large corporates and Government Departments.</p>
-        <h3 style="color:green;">@ViewBag.Message</h3>
+        <h3 style="color:green;"><script>@ViewBag.Message</script></h3>
         <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" href="###">Learn More</button>
     </div>
 
@@ -112,6 +113,8 @@
             <a asp-controller="Home" asp-action="AllCourses">Courses</a>
             <br>
             <a asp-controller="Home" asp-action="About">About</a>
+            <br >
+            
             <br>
             <a asp-controller="Home" asp-action="ContactUs">Contact</a>
         </p>

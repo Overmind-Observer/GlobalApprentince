@@ -17,6 +17,7 @@ namespace Global_Intern.Util
 
         public string Authenticate(string username, string role, int id, bool IsAddToken)
         {
+
             var token = Guid.NewGuid().ToString();
             if (!IsAddToken)
             {

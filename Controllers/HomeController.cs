@@ -39,6 +39,8 @@ namespace Global_Intern.Controllers
             _logger = logger;
             _env = env;
 
+            int[] jj;
+
             // Check if cookie exits and create a session.
             CreateUserSessionFromCookie();
             // fetch user from the database using session.
@@ -47,26 +49,17 @@ namespace Global_Intern.Controllers
 
         public IActionResult Index()
         {
-
+            
             
             if (_user != null)
             {
                 ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
             }
 
-            ConsoleLogs consoleLogs = new ConsoleLogs(_env);
+            HelpersFunctions helpersFunctions = new HelpersFunctions(_env);
 
-            using (GlobalDBContext context = new GlobalDBContext()) { 
+            helpersFunctions.ListOfPrimeNumbers();
 
-                //consoleLogs.WriteErrorLog(context.GeneratePath());
-
-
-
-            //var WhatIsThis = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
-
-            ViewBag.Message = "Looks like this is a ";
-                 
-            }
             return View();
         }
 

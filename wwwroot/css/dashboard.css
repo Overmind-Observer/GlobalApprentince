@@ -24,6 +24,11 @@
     transform: translateY(-50%);
 }
 
+.dark-mode {
+    background-color: black;
+    color: white;
+}
+
 .image-area {
     border: 2px dashed rgba(255, 255, 255, 0.7);
     padding: 1rem;

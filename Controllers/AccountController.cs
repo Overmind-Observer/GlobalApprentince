@@ -143,6 +143,10 @@ namespace Global_Intern.Controllers
                         //HttpContext.Session.SetString("UserSession", usr);
                         HttpContext.Session.SetString("UserToken", token);
 
+                        ConsoleLogs consoleLogs = new ConsoleLogs(_env);
+
+                        consoleLogs.WriteDebugLog(token);
+
                         // Delete Existing cookie
                         Response.Cookies.Delete("UserToken");
                         //Create Cookie

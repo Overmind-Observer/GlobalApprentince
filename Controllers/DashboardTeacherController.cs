@@ -79,9 +79,7 @@ namespace Global_Intern.Controllers
             }
         }
 
-        // This is for Dashboard Teacher Page 
-        [Authorize(Roles = "teacher")]
-        public IActionResult Index()
+        public void DashboardOptions()
         {
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
@@ -89,6 +87,13 @@ namespace Global_Intern.Controllers
             // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+        }
+
+        // This is for Dashboard Teacher Page 
+        [Authorize(Roles = "teacher")]
+        public IActionResult Index()
+        {
+            DashboardOptions();
 
             using (GlobalDBContext _context = new GlobalDBContext())
             {
@@ -101,14 +106,7 @@ namespace Global_Intern.Controllers
         // Dashboard Teacher General Profile Page.
         public IActionResult GeneralProfile()
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
-
-            
+            DashboardOptions();
 
             using (GlobalDBContext context = new GlobalDBContext())
             {
@@ -127,11 +125,7 @@ namespace Global_Intern.Controllers
         [HttpPost]
         public IActionResult GeneralProfile(ProfileViewTeacher UpdatedUser)
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
             //-------------------- END
             using (GlobalDBContext _context = new GlobalDBContext())
             {
@@ -211,12 +205,7 @@ namespace Global_Intern.Controllers
 
         public IActionResult CreateCourses()
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
             return View();
         }
@@ -224,12 +213,7 @@ namespace Global_Intern.Controllers
         [HttpPost]
         public IActionResult CreateCourses(Course NewCourse)
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
             var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
 
@@ -264,13 +248,7 @@ namespace Global_Intern.Controllers
         
         public async Task<IActionResult> Course(int id)
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
-
+            DashboardOptions();
             
             Course model;
             HttpResponseMessage resp;
@@ -296,12 +274,7 @@ namespace Global_Intern.Controllers
 
         public IActionResult UpdateCourse(int id)
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
             _httpContextAccessor.HttpContext.Session.SetString("CourseId", Convert.ToString(id));
 
@@ -318,14 +291,9 @@ namespace Global_Intern.Controllers
         [HttpPost]
         public IActionResult UpdateCourse(Course UpdatedCourse)
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+            DashboardOptions();
 
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
-
-            using(GlobalDBContext context = new GlobalDBContext())
+            using (GlobalDBContext context = new GlobalDBContext())
             {
 
                 CourseId = Convert.ToInt32(_httpContextAccessor.HttpContext.Session.GetString("CourseId"));
@@ -349,12 +317,7 @@ namespace Global_Intern.Controllers
         [Route("{controller}/{Action}")]
         public IActionResult Settings()
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
             ViewBag.Message = "Are you sure you want to delete user "+_user.UserFirstName + " " + _user.UserLastName;
 
@@ -385,14 +348,7 @@ namespace Global_Intern.Controllers
         [Route("{controller}/{Action}/{id}")]
         public IActionResult Settings(int id)
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            _httpContextAccessor.HttpContext.Session.SetString("DeleteCourseId", Convert.ToString(id));
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
             using (GlobalDBContext _context = new GlobalDBContext())
             {
@@ -429,13 +385,7 @@ namespace Global_Intern.Controllers
 
         public IActionResult Subscribers()
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
-
+            DashboardOptions();
 
             return View();
         }

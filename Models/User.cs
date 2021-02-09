@@ -175,12 +175,12 @@ namespace Global_Intern.Models
         //}
 
 
-        public void AddFromAccountGeneralProfile(Global_Intern.Models.GeneralProfile.GeneralProfile updatedInfo, string UserImagePATH = "")
+        public void AddFromAccountGeneralProfile(Global_Intern.Models.GeneralProfile.ProfileViewDocuments updatedInfo, string UserImagePATH = "")
         {
-            this.UserFirstName = updatedInfo.UserFirstName;
-            this.UserLastName = updatedInfo.UserLastName;
-            this.UserGender = updatedInfo.UserGender;
-            this.UserPhone = updatedInfo.UserPhone.ToString();
+            //this.UserFirstName = updatedInfo.UserFirstName;
+            //this.UserLastName = updatedInfo.UserLastName;
+            //this.UserGender = updatedInfo.UserGender;
+            //this.UserPhone = updatedInfo.UserPhone.ToString();
             if (UserImagePATH != "")
             {
                 this.UserImage = UserImagePATH;

@@ -51,30 +51,7 @@ namespace Global_Intern.Models.GeneralProfile
             UserGender = user.UserGender;
         }
 
-        public ProfileViewStudent(ProfileViewStudent user)
-        {
-            UserFirstName = user.UserFirstName;
-            UserLastName = user.UserLastName;
-            UserAddress = user.UserAddress;
-            UserCity = user.UserCity;
-            UserState = user.UserState;
-            UserCountry = user.UserCountry;
-            UserZip = user.UserZip;
-            UserPhone = user.UserPhone;
-            if (user.UserImage != null)
-            {
-                UserImageName = user.UserImage.FileName;
-            }
-            UserGender = user.UserGender;
-            UserStudentType =user.UserStudentType;
-            UserWorkingRight = user.UserWorkingRight;
-            UserVisaType = user.UserVisaType;
-            UserVisaExpire = user.UserVisaExpire;
-            UserIndustryCertificates = user.UserIndustryCertificates;
-            UserDriverType = user.UserDriverType;
-            UserDob = user.UserDob;
-            UserEthnic = user.UserEthnic;
-        }
+
 
         public ProfileViewStudent(User user, StudentInternProfile student)
         {
