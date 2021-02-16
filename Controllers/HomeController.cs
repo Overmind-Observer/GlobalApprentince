@@ -13,8 +13,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Xml.Linq;
 using System.Net.Http; // for -> HttpClient to make request to API
 using System.Threading.Tasks;
+using static Global_Intern.Controllers.HomeController;
 
 namespace Global_Intern.Controllers
 {
@@ -47,7 +49,139 @@ namespace Global_Intern.Controllers
             setUser();
         }
 
-        public IActionResult Index()
+        public int EvilList()
+        {
+            IList<int> numbers = new List<int> { 23, 12, 71, 10 };
+            IList<Func<int, int, int>> operators = new List<Func<int, int, int>>()
+   {
+      (a, b) => { return a - b; },
+      (a, b) => { return a + b; },
+      (a, b) => { return a / b; },
+      (a, b) => { return a * b; },
+
+   };
+
+            int result = 1;
+
+            foreach (var op in operators)
+            {
+                result = op(result, numbers[operators.IndexOf(op)]);
+            }
+
+            return result;
+            //uygu
+        }
+
+        public class Song
+        {
+            public string SongName { get; set; }
+            public string Artist { get; set; }
+        }
+
+        public string Artist { get; set; }
+        
+
+        public class SongLibrary
+        {
+            public SongLibrary() { }
+
+            private List<Song> _songs = new List<Song>();
+
+            public List<Song> songs1 = new List<Song>();
+
+            public IList<Song> songs2 = new List<Song>();
+
+            bool songFound = false;
+
+            Song song = new Song();
+            public List<Song> songs { get { return _songs; } }
+
+
+            public IEnumerable<Song> OneHitWonders()
+            {
+                _songs.Sort();
+
+                songs1 = _songs;
+
+                Song song = new Song();
+
+                song.SongName = "A";
+
+                song.Artist = "AA";
+
+                songs1.Add(song);
+
+                _songs.Add(song);
+
+                songs2 = _songs;
+
+                for (int i = 0; i < _songs.Count(); i++)
+                {
+                    if (songs1[i] == songs2[i] && songs1[i].Artist != songs2[i].Artist)
+                    {
+                        song = songs1[i];
+                        songFound = true;
+                        break;
+                    }
+                    if (songFound)
+                    {
+                        yield return song;
+                    }
+                }
+            }
+        }
+
+        public void Testi()
+        {
+            bool broken = false;
+            for (int i = 0; i < 10; i++)
+            {
+                if (i == 2)
+                {
+                    broken = true;
+                    break;
+
+                }
+
+            }
+            if (broken)
+            {
+
+                ConsoleLogs consoleLogs = new ConsoleLogs(_env);
+
+                consoleLogs.WriteDebugLog("T-Series is the best");
+
+            }
+        }
+
+
+
+        public string FruitBasket()
+        {
+            List<string> test = new List<string>();
+
+            string s = "kjgkyjg kjgjyk ugkkg";
+
+            string[] p = s.Split(" ");
+
+            
+            IList<string> fruit = new List<string> { "Apple", "Orange", "Banana", "Grape", "Tomato" };
+            fruit.Add("Pineapple");
+            IEnumerable<IGrouping<int, string>> groupedFruit = fruit.OrderBy(f => f)
+
+                                                                    .GroupBy(f => f.Length);
+            fruit.Add("Watermelon");
+            var filteredFruit = groupedFruit.OrderByDescending(g => g.Key)
+                                             .SelectMany(g => g)
+                                             .Where(f => !f.StartsWith("T"));
+
+            fruit.Add("Pest");
+            return string.Join(", ", filteredFruit.ToArray());
+        }
+
+
+
+            public IActionResult Index()
         {
             
             
@@ -56,9 +190,15 @@ namespace Global_Intern.Controllers
                 ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
             }
 
-            HelpersFunctions helpersFunctions = new HelpersFunctions(_env);
+            //HelpersFunctions helpersFunctions = new HelpersFunctions(_env);
 
-            helpersFunctions.ListOfPrimeNumbers();
+            //helpersFunctions.ListOfPrimeNumbers();
+
+            Testi();
+
+            ConsoleLogs consoleLogs = new ConsoleLogs(_env);
+
+            consoleLogs.WriteDebugLog(EvilList().ToString());
 
             return View();
         }

@@ -121,6 +121,10 @@ namespace Global_Intern.Controllers
 
         }
 
+
+
+
+
         //public async Task<IActionResult> Kopl()
         [HttpPost]
         public IActionResult GeneralProfile(ProfileViewTeacher UpdatedUser)
@@ -159,8 +163,10 @@ namespace Global_Intern.Controllers
                     UpdatedUser.UserImageName = uniqueFileName;
 
                     // if new image is uploaded with other user info
-                    _user = _user.UpdateUserTeacher(_user, UpdatedUser);
+                    
                 }
+
+                _user = _user.UpdateUserTeacher(_user, UpdatedUser);
 
                 ViewBag.Message = UpdatedUser.UserFirstName + " " + UpdatedUser.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
 

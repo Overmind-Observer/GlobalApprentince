@@ -184,6 +184,11 @@ namespace Global_Intern.Controllers
                     
                 }
 
+                if (updatedUser.UserImageName==null)
+                {
+                    updatedUser.UserImageName = _user.UserImage;
+                }
+
                 _user = _user.UpdateUserStudent(_user, updatedUser);
 
                 //DateTime date = Convert.ToDateTime(Request.Form["UserDob"]);
