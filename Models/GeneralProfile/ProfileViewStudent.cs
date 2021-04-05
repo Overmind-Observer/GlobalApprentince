@@ -17,6 +17,7 @@ namespace Global_Intern.Models.GeneralProfile
         public string UserPhone { get; set; }
         public string UserImageName { get; set; }
         public IFormFile UserImage { get; set; }
+
         public string UserGender { get; set; }
         //Add on 1 Sep 2020
         public string UserStudentType { get; set; }
@@ -86,6 +87,11 @@ namespace Global_Intern.Models.GeneralProfile
             newProfile.StudentEthnic = createdProfile.UserEthnic;
             newProfile.User = user;
             return newProfile;
+        }
+
+        public void CreateOrUpdateDocuments()
+        {
+
         }
 
         public StudentInternProfile updateStudentInternProfileOtherDetails(StudentInternProfile newProfile, ProfileViewStudent updatedProfile)

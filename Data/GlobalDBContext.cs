@@ -50,20 +50,23 @@ namespace Global_Intern.Data
         public DbSet<Qualification> Qualifications { get; set; }
         public DbSet<Experience> Experiences { get; set; }
         public DbSet<Profile> Profiles { get; set; }
-        public DbSet<UserDocument> UserDocuments { get; set; }
         public DbSet<UserCompany> UserCompany { get; set; }
         public DbSet<UserCL> UserCL { get; set; }
         public DbSet<UserCV> UserCV { get; set; }
         public DbSet<Course> Course { get; set; }
 
-        public DbSet<Document> Documents { get; set; }
+        public DbSet<Document> Document { get; set; }
+
+        //public DbSet<Test> Test { get; set; }
 
         public DbSet<StudentInternProfile> StudentInternProfiles { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Document>();
 
             // User table modification
             modelBuilder.Entity<User>().

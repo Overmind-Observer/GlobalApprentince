@@ -46,7 +46,6 @@ namespace Global_Intern.Models
         public bool SoftDelete { get; set; } // Auto
         public List<Qualification> Qualifications { get; set; }
         public List<Experience> Experiences { get; set; }
-        public List<UserDocument> UserDocuments { get; set; } // should get one row
         public List<UserCompany> UserCompanies { get; set; } // should get one row
         public List<Profile> Profiles { get; set; } // should get one row
         public List<InternStudent> InternStudents { get; set; } // list of students who are working in some internships

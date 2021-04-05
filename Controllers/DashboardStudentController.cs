@@ -311,7 +311,7 @@ namespace Global_Intern.Controllers
         [HttpPost]
         public IActionResult Qualifications(Qualification qualification)
         {
-            DashboardOptions();
+            
 
             using (GlobalDBContext _context = new GlobalDBContext())
             {
@@ -321,13 +321,118 @@ namespace Global_Intern.Controllers
             return View();
         }
 
-
-        // Documents page works on 17 Oct 2020.
         public IActionResult Documents()
         {
             DashboardOptions();
 
+            GlobalDBContext context = new GlobalDBContext();
+
+            //var documents = context.Documents.Where(u => u.User == _user).ToList();
+
+            //UserDocument user = new UserDocument(documents[0]);
+
             return View();
+
+        }
+
+        [HttpPost]
+        // Documents page works on 17 Oct 2020.
+        public IActionResult Documents(UserDocument document, IFormFile filetest)
+        {
+            DashboardOptions();
+
+            string uniqueCVFileName = null;
+
+            string uniqueCLFileName = null;
+
+            using (GlobalDBContext context = new GlobalDBContext())
+            {
+                if (filetest.Length!=0 || document.UserCL.Length != 0)
+                {
+                    string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
+
+
+                    // File of code need to be Tested
+                    //string file_Path = HelpersFunctions.StoreFile(uploadFolder, generalProfile.UserImage);
+
+
+
+                    if (filetest.Length != 0)
+                    {
+                        uniqueCVFileName = Guid.NewGuid().ToString() + "_" + filetest.FileName;
+
+                        // Delete previous uploaded Image
+                        if (!String.IsNullOrEmpty(filetest.ToString()))
+                        {
+                            string imagePath = uploadFolder + filetest.FileName;
+                            if (System.IO.File.Exists(imagePath))
+                            {
+                                // If file found, delete it    
+                                System.IO.File.Delete(imagePath);
+                                Console.WriteLine("File deleted.");
+                            }
+                        }
+                        string CVfilePath = uploadFolder + uniqueCVFileName;
+                        FileStream stream = new FileStream(CVfilePath, FileMode.Create);
+                        filetest.CopyTo(stream);
+                        stream.Dispose();
+                        //document.UserCVName = CVfilePath;
+                        document.UserCVName = "jnh";
+                    }
+
+                    if (document.UserCL.Length != 0)
+                    {
+                        uniqueCLFileName = Guid.NewGuid().ToString() + "_" + document.UserCL.FileName;
+
+                        // Delete previous uploaded Image
+                        if (!String.IsNullOrEmpty(document.UserCL.ToString()))
+                        {
+                            string imagePath = uploadFolder + _user.UserImage;
+                            if (System.IO.File.Exists(imagePath))
+                            {
+                                // If file found, delete it    
+                                System.IO.File.Delete(imagePath);
+                                Console.WriteLine("File deleted.");
+                            }
+                        }
+                        string CLfilePath = uploadFolder + uniqueCLFileName;
+                        FileStream stream1 = new FileStream(CLfilePath, FileMode.Create);
+                        document.UserCL.CopyTo(stream1);
+                        stream1.Dispose();
+                        //document.UserCLName = CLfilePath;
+                        document.UserCLName = "rffff";
+                    }
+
+                    List<Document> documents = context.Document.Where(u => u.User == _user).ToList();
+
+                    Document document1 = new Document();
+
+                    if (documents.Count == 0)
+                    {
+                        Document document2 = new Document();
+                        var temp = new List<Document>();
+                        documents.Add(document2);
+                        document1 = document.CreateOrUpdateDocuments(document1, document, _user);
+
+
+                        document1.User.Role = null;
+                        document1.User.UserId = 0;
+                        context.Document.Add(document1);
+                    }
+
+                   
+
+                    else
+                    {
+                        document1 = document.CreateOrUpdateDocuments(documents[0], document, _user);
+                        context.Document.Update(document1);
+                    }
+                    context.SaveChanges();
+
+                }
+            }
+
+            return View(document);
         }
 
 
