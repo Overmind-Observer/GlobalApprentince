@@ -142,13 +142,10 @@ namespace Global_Intern.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DocumentStartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DocumentType")
+                    b.Property<string>("UserCLName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Documentupload")
+                    b.Property<int>("UserCVName")
                         .HasColumnType("int");
 
                     b.Property<int?>("UserId")

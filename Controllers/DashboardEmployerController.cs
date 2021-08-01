@@ -51,8 +51,7 @@ namespace Global_Intern.Controllers
             setUserCompany();
         }
 
-        
-        public IActionResult Index()
+        public void DashboardOptions()
         {
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
@@ -60,6 +59,12 @@ namespace Global_Intern.Controllers
             // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+        }
+
+
+        public IActionResult Index()
+        {
+            DashboardOptions();
 
             using (GlobalDBContext _context = new GlobalDBContext())
             {
@@ -76,12 +81,7 @@ namespace Global_Intern.Controllers
         [HttpGet]
         public IActionResult GeneralProfile()
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
-            //-------------------- END
+            DashboardOptions();
 
             using (GlobalDBContext _context = new GlobalDBContext())
             {
@@ -110,11 +110,7 @@ namespace Global_Intern.Controllers
         [HttpPost]
         public IActionResult GeneralProfile(ProfileViewEmployer UpdatedUser)
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
             //-------------------- END
             using (GlobalDBContext _context = new GlobalDBContext())
             {
@@ -148,8 +144,10 @@ namespace Global_Intern.Controllers
                     UpdatedUser.UserImageName = uniqueFileName; 
 
                     // if new image is uploaded with other user info
-                   _user = _user.UpdateUserEmployer(_user,UpdatedUser);
+                   
                 }
+
+                _user = _user.UpdateUserEmployer(_user, UpdatedUser);
 
                 ViewBag.Message = UpdatedUser.UserFirstName + " " + UpdatedUser.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
 
@@ -166,12 +164,7 @@ namespace Global_Intern.Controllers
 
         public IActionResult Settings()
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
             ViewBag.Message = "Are you sure you want to delete user " + _user.UserFirstName + " " + _user.UserLastName;
 
@@ -198,14 +191,10 @@ namespace Global_Intern.Controllers
         [Route("{controller}/{Action}/{id}")]
         public IActionResult Settings(int id)
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+            DashboardOptions();
 
             _httpContextAccessor.HttpContext.Session.SetString("DeleteInternshipId", Convert.ToString(id));
 
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
             using (GlobalDBContext _context = new GlobalDBContext())
             {
@@ -237,28 +226,11 @@ namespace Global_Intern.Controllers
 
         }
 
-        public IActionResult CreateInternship()
-        {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
-
-            return View();
-        }
 
         [HttpPost]
         public IActionResult CreateInternship(Internship NewInternship)
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
             var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
 
@@ -350,12 +322,7 @@ namespace Global_Intern.Controllers
 
         public async Task<IActionResult> Internship(int id)
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
             Internship model;
             HttpResponseMessage resp;
@@ -380,12 +347,7 @@ namespace Global_Intern.Controllers
 
         public IActionResult UpdateInternship(int id)
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
             _httpContextAccessor.HttpContext.Session.SetString("InternshipId",Convert.ToString(id));
 
@@ -402,12 +364,7 @@ namespace Global_Intern.Controllers
         [HttpPost]
         public IActionResult UpdateInternship(Internship UpdatedInternship)
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
             using (GlobalDBContext context = new GlobalDBContext())
             {
@@ -432,12 +389,7 @@ namespace Global_Intern.Controllers
 
         public IActionResult CompanyDetails()
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
             using (GlobalDBContext _context = new GlobalDBContext())
             {
@@ -455,12 +407,7 @@ namespace Global_Intern.Controllers
         [HttpPost]
         public IActionResult CompanyDetails(EmployerCompanyModel FromData)
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
             using (GlobalDBContext _context = new GlobalDBContext())
             {
@@ -555,12 +502,7 @@ namespace Global_Intern.Controllers
         public IActionResult CreateInternships()
         {
 
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
-
+            DashboardOptions();
             return View();
         }
 
@@ -570,12 +512,7 @@ namespace Global_Intern.Controllers
         //From here is Intern Applications methods
         public IActionResult InternApplications()
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
 
             return View();

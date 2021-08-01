@@ -158,17 +158,15 @@ namespace Global_Intern.Controllers
                     //HttpContext.Session.SetString("UserSession", usr);
                     HttpContext.Session.SetString("UserToken", token);
 
-                    // Delete Existing cookie
-                    Response.Cookies.Delete("UserToken");
-                    //Create Cookie
-                    if (user.RememberMe)
-                    {
-                        CookieOptions cookieOptions = new CookieOptions
+                        // Delete Existing cookie
+                        Response.Cookies.Delete("UserToken");
+                        //Create Cookie
+                        if (user.RememberMe)
                         {
-                            Expires = DateTime.Now.AddDays(7)
-                        };
-                        Response.Cookies.Append("UserToken", token, cookieOptions);
-                    }
+                            CookieOptions cookieOptions = new CookieOptions();
+                            cookieOptions.Expires = DateTime.Now.AddDays(7);
+                            Response.Cookies.Append("UserToken", token, cookieOptions);
+                        }
 
                     // at Genearted token in header
                     using (var client = new HttpClient())

@@ -1,4 +1,4 @@
-@*@model Global_Intern.Models.GeneralProfile.GeneralProfile;*@
+@model Global_Intern.Models.UserDocument;
 @{
     ViewData["Title"] = "CompleteProfile";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
@@ -10,7 +10,7 @@
 <main>
     <div class="content">
         <div class="container-fluid" style="margin-top:56px;">
-            <div id="GeneralProfile" asp-action="GeneralProfile" enctype="multipart/form-data" method="post">
+            <form id="Documents" asp-action="Documents" enctype="multipart/form-data" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="content">
@@ -19,28 +19,35 @@
                             <div id="GeneralProfile" asp-action="GeneralProfile" enctype="multipart/form-data" method="post">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+                                <label for="CL">Upload your Covering Letter Here:</label>
+
+                                <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+                                    <input id="upload" asp-for="UserCL" onchange="readURL(this);" class="form-control border-0">
+                                    <label id="upload-label" asp-for="UserCL" class="font-weight-light text-muted">Choose CL</label>
+                                    <div class="input-group-append">
+                                        <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
+                                    </div>
+                                </div>
 
                                 <label for="CV">Upload your Resume File here :</label>
-                                <form action="/action_page.php">
-                                    <input type="file" id="myFile" name="filename">
-                                </form>
+
+                                <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+                                    <input  type="file"  name="filetest" >
+                                    <label id="upload-label" asp-for="UserCV" class="font-weight-light text-muted">Choose CVttttt</label>
+                                    <div class="input-group-append">
+                                        <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
+                                    </div>
+                                </div>
 
 
-                                <label for="CL">Upload your Covering Letter Here:</label>
-                                <form action="/action_page.php">
-                                    <input type="file" id="myFile" name="filename">
-                                </form>
-                                <button type="submit" onclick="alert('Data be saved, Thank you!')">Submit</button>
-
-
-
+                                
                             </div>
                         </div>
                     </main>
                 </div>
+                <input type="submit" value="Save" class="btn btn-info">
 
-
-            </div>
+            </form>
         </div>
     </div>
 </main>
