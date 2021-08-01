@@ -366,7 +366,7 @@ namespace Global_Intern.Controllers
                 int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
                 using (GlobalDBContext _context = new GlobalDBContext())
                 {
-                    _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
+                    _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId); 
                 }
             }
             
