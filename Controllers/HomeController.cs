@@ -367,6 +367,7 @@ namespace Global_Intern.Controllers
                 using (GlobalDBContext _context = new GlobalDBContext())
                 {
                     _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId); 
+
                 }
             }
             
