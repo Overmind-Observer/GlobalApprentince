@@ -46,7 +46,6 @@ namespace Global_Intern.Models
         public bool SoftDelete { get; set; } // Auto
         public List<Qualification> Qualifications { get; set; }
         public List<Experience> Experiences { get; set; }
-        public List<UserDocument> UserDocuments { get; set; } // should get one row
         public List<UserCompany> UserCompanies { get; set; } // should get one row
         public List<Profile> Profiles { get; set; } // should get one row
         public List<InternStudent> InternStudents { get; set; } // list of students who are working in some internships
@@ -175,12 +174,12 @@ namespace Global_Intern.Models
         //}
 
 
-        public void AddFromAccountGeneralProfile(Global_Intern.Models.GeneralProfile.GeneralProfile updatedInfo, string UserImagePATH = "")
+        public void AddFromAccountGeneralProfile(Global_Intern.Models.GeneralProfile.ProfileViewDocuments updatedInfo, string UserImagePATH = "")
         {
-            this.UserFirstName = updatedInfo.UserFirstName;
-            this.UserLastName = updatedInfo.UserLastName;
-            this.UserGender = updatedInfo.UserGender;
-            this.UserPhone = updatedInfo.UserPhone.ToString();
+            //this.UserFirstName = updatedInfo.UserFirstName;
+            //this.UserLastName = updatedInfo.UserLastName;
+            //this.UserGender = updatedInfo.UserGender;
+            //this.UserPhone = updatedInfo.UserPhone.ToString();
             if (UserImagePATH != "")
             {
                 this.UserImage = UserImagePATH;

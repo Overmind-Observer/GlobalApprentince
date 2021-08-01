@@ -1,9 +1,11 @@
 ﻿using Global_Intern.Data;
 using Global_Intern.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -11,6 +13,12 @@ namespace Global_Intern.Util
 {
     public class HelpersFunctions
     {
+        IWebHostEnvironment _env;
+
+        public HelpersFunctions(IWebHostEnvironment env)
+        {
+            _env = env;
+        }
         public HttpResponse res;
         public static T GetCSharpObject<T>(string JsonString)
         {
@@ -57,10 +65,33 @@ namespace Global_Intern.Util
 
         }
 
+        public void ListOfPrimeNumbers()
+        {
+            ConsoleLogs consoleLogs = new ConsoleLogs(_env);
+
+            PrimeNumberGenerator primeNumberGenerator = new PrimeNumberGenerator(_env);
+
+            Random random1 = new Random();
+
+            Random random2 = new Random();
+
+            int number1 = random2.Next(100);
+
+            int number2 = random1.Next(100);
+
+            IEnumerable<int> listOfPrimeNumbers = primeNumberGenerator.GetPrimeNumbers(number1, number2);
+
+            foreach (int num in listOfPrimeNumbers)
+            {
+                consoleLogs.WriteDebugLog(num.ToString());
+            }
+        }
+
         public static string FirstLetterToUpper(string str)
         {
             if (str == null)
                 return null;
+
 
             if (str.Length > 1)
                 return char.ToUpper(str[0]) + str.Substring(1);

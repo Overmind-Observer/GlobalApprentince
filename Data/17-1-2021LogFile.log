@@ -1,0 +1,84 @@
+17-01-2021 08:45:43 ==> System.Collections.Generic.List`1[Global_Intern.Models.StudentModels.StudentInternProfile]
+17-01-2021 08:50:32 ==> System.Collections.Generic.List`1[Global_Intern.Models.StudentModels.StudentInternProfile]
+17-01-2021 10:08:35 ==> 1
+17-01-2021 10:08:52 ==> 1
+17-01-2021 10:11:18 ==> 1
+17-01-2021 10:11:29 ==> 1
+17-01-2021 10:11:31 ==> 1
+17-01-2021 10:11:44 ==> 1
+17-01-2021 10:12:01 ==> 1
+17-01-2021 10:12:11 ==> 1
+17-01-2021 10:12:22 ==> 1
+17-01-2021 10:12:30 ==> 1
+17-01-2021 10:16:57 ==> 1
+17-01-2021 10:17:05 ==> 1
+17-01-2021 10:17:13 ==> 1
+17-01-2021 10:17:14 ==> 1
+17-01-2021 10:17:14 ==> 1
+17-01-2021 10:17:15 ==> 1
+17-01-2021 10:17:15 ==> 1
+17-01-2021 10:17:16 ==> 1
+17-01-2021 10:17:16 ==> 1
+17-01-2021 10:17:17 ==> 1
+17-01-2021 10:17:17 ==> 1
+17-01-2021 10:17:26 ==> 1
+17-01-2021 10:17:28 ==> 1
+17-01-2021 10:17:28 ==> 1
+17-01-2021 10:17:28 ==> 1
+17-01-2021 10:17:29 ==> 1
+17-01-2021 10:17:29 ==> 1
+17-01-2021 10:17:30 ==> 1
+17-01-2021 10:17:30 ==> 1
+17-01-2021 10:25:48 ==> 0
+17-01-2021 10:32:21 ==> 1
+17-01-2021 10:32:41 ==> 1
+17-01-2021 10:32:42 ==> 1
+17-01-2021 10:32:43 ==> 1
+17-01-2021 10:32:43 ==> 1
+17-01-2021 10:32:43 ==> 1
+17-01-2021 10:32:44 ==> 1
+17-01-2021 10:36:17 ==> 1
+17-01-2021 10:38:41 ==> 1
+17-01-2021 12:50:32 ==> 1
+17-01-2021 12:56:35 ==> 1
+17-01-2021 12:59:58 ==> 1
+17-01-2021 13:02:39 ==> 1
+17-01-2021 13:09:01 ==> 1
+17-01-2021 13:09:17 ==> 1
+17-01-2021 14:03:54 ==> 1
+17-01-2021 16:40:15 ==> 1
+17-01-2021 16:40:36 ==> 1
+17-01-2021 16:40:37 ==> 1
+17-01-2021 16:40:38 ==> 1
+17-01-2021 16:43:44 ==> 1
+17-01-2021 16:47:42 ==> 1
+17-01-2021 16:50:42 ==> 1
+17-01-2021 16:53:32 ==> 1
+17-01-2021 16:55:42 ==> 1
+17-01-2021 16:57:39 ==> 1
+17-01-2021 16:57:51 ==> 1
+17-01-2021 16:57:52 ==> 1
+17-01-2021 16:57:52 ==> 1
+17-01-2021 17:00:48 ==> 1
+17-01-2021 17:09:59 ==> 1
+17-01-2021 17:13:07 ==> 1
+17-01-2021 17:13:19 ==> 1
+17-01-2021 17:13:20 ==> 1
+17-01-2021 17:13:21 ==> 1
+17-01-2021 17:13:22 ==> 1
+17-01-2021 17:19:58 ==> 1
+17-01-2021 17:26:07 ==> 1
+17-01-2021 17:28:10 ==> 1
+17-01-2021 17:28:36 ==> Attempted to divide by zero.
+17-01-2021 17:28:36 ==>    at Global_Intern.Controllers.DashboardStudentController.GeneralProfile(ProfileViewStudent updatedUser) in C:\Users\thom\Source\Repos\NETCoreWebApplication\Controllers\DashboardStudentController.cs:line 136
+17-01-2021 17:28:36 ==> Global Intern
+17-01-2021 17:28:36 ==> Microsoft.AspNetCore.Mvc.IActionResult GeneralProfile(Global_Intern.Models.GeneralProfile.ProfileViewStudent)
+17-01-2021 17:30:19 ==> 1
+17-01-2021 17:30:34 ==> Attempted to divide by zero.
+17-01-2021 17:30:34 ==>    at Global_Intern.Controllers.DashboardStudentController.GeneralProfile(ProfileViewStudent updatedUser) in C:\Users\thom\Source\Repos\NETCoreWebApplication\Controllers\DashboardStudentController.cs:line 136
+17-01-2021 17:30:34 ==> Global Intern
+17-01-2021 17:30:34 ==> Microsoft.AspNetCore.Mvc.IActionResult GeneralProfile(Global_Intern.Models.GeneralProfile.ProfileViewStudent)
+17-01-2021 17:31:10 ==> Attempted to divide by zero.
+17-01-2021 17:31:10 ==>    at Global_Intern.Controllers.DashboardStudentController.GeneralProfile(ProfileViewStudent updatedUser) in C:\Users\thom\Source\Repos\NETCoreWebApplication\Controllers\DashboardStudentController.cs:line 135
+17-01-2021 17:31:10 ==> Global Intern
+17-01-2021 17:31:10 ==> Microsoft.AspNetCore.Mvc.IActionResult GeneralProfile(Global_Intern.Models.GeneralProfile.ProfileViewStudent)

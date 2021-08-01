@@ -10,7 +10,7 @@ namespace Global_Intern.Models
     {
         public int UserCVId { get; set; }
         public string UserCVFullPath { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime CVCreatedAt { get; set; }
         public virtual User User { get; set; }
     }
 }

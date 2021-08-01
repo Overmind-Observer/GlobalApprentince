@@ -105,9 +105,8 @@ namespace Global_Intern.Migrations
                 {
                     DocumentId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DocumentType = table.Column<string>(nullable: true),
-                    Documentupload = table.Column<int>(nullable: false),
-                    DocumentStartDate = table.Column<DateTime>(nullable: false),
+                    UserCVName = table.Column<string>(nullable: true),
+                    UserCLName = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

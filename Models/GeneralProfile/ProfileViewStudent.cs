@@ -17,6 +17,7 @@ namespace Global_Intern.Models.GeneralProfile
         public string UserPhone { get; set; }
         public string UserImageName { get; set; }
         public IFormFile UserImage { get; set; }
+
         public string UserGender { get; set; }
         //Add on 1 Sep 2020
         public string UserStudentType { get; set; }
@@ -51,30 +52,7 @@ namespace Global_Intern.Models.GeneralProfile
             UserGender = user.UserGender;
         }
 
-        public ProfileViewStudent(ProfileViewStudent user)
-        {
-            UserFirstName = user.UserFirstName;
-            UserLastName = user.UserLastName;
-            UserAddress = user.UserAddress;
-            UserCity = user.UserCity;
-            UserState = user.UserState;
-            UserCountry = user.UserCountry;
-            UserZip = user.UserZip;
-            UserPhone = user.UserPhone;
-            if (user.UserImage != null)
-            {
-                UserImageName = user.UserImage.FileName;
-            }
-            UserGender = user.UserGender;
-            UserStudentType =user.UserStudentType;
-            UserWorkingRight = user.UserWorkingRight;
-            UserVisaType = user.UserVisaType;
-            UserVisaExpire = user.UserVisaExpire;
-            UserIndustryCertificates = user.UserIndustryCertificates;
-            UserDriverType = user.UserDriverType;
-            UserDob = user.UserDob;
-            UserEthnic = user.UserEthnic;
-        }
+
 
         public ProfileViewStudent(User user, StudentInternProfile student)
         {
@@ -109,6 +87,11 @@ namespace Global_Intern.Models.GeneralProfile
             newProfile.StudentEthnic = createdProfile.UserEthnic;
             newProfile.User = user;
             return newProfile;
+        }
+
+        public void CreateOrUpdateDocuments()
+        {
+
         }
 
         public StudentInternProfile updateStudentInternProfileOtherDetails(StudentInternProfile newProfile, ProfileViewStudent updatedProfile)

@@ -26,16 +26,16 @@ namespace Global_Intern.Util
             string sYear = DateTime.Now.Year.ToString();
             string sMonth = DateTime.Now.Month.ToString();
             string sDay = DateTime.Now.Day.ToString();
-            sErrorDate = sDay+ sMonth + sYear;
+            sErrorDate = sDay+"-"+ sMonth + "-"+sYear;
             _env = env;
         }
 
          
 
         //This method is used to write directly to the file
-        public void WriteErrorLog(string sErrMsg)
+        public void WriteDebugLog(string sErrMsg)
         {
-            path = _env.ContentRootPath + @"\Data\"+sErrorDate +"LogFile.log";
+            path = _env.ContentRootPath + @"\Data\"+sErrorDate +"_LogFile.log";
             StreamWriter sw = new StreamWriter(path, true);
             sw.WriteLine(sLogFormat + sErrMsg);
             sw.Flush();

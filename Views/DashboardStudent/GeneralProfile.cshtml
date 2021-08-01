@@ -177,30 +177,30 @@
                     <div class="form-group">
                         <h4>What type of visa do you currently hold?</h4>
                         @*@if (Model.UserVisaType == null)
-                        {
-                            <input asp-for="UserVisaType" type="checkbox" value="Student Visa">
-                            <label for="studyvisa"> Student Visa with 20 Hours </label><br>
-                            <input asp-for="UserVisaType" type="checkbox" value="Open Work Visa">
-                            <label for="workvisa"> Open Work Visa </label><br>
-                            <input asp-for="UserVisaType" type="checkbox" value="Essential Skills Visa">
-                            <label for="workvisa"> Essential Work Visa </label><br>
-                            <input asp-for="UserVisaType" type="checkbox" value="Working Holiday Visa">
-                            <label for="workvisa"> Working Holiday Visa </label><br>
-                            <input asp-for="UserVisaType" type="checkbox" value="Other Visa Type">
-                            <label for="other"> Other Visa Type </label><br>
-                        }
-                        else
-                        {
-                            <input asp-for="UserVisaType" type="checkbox"  value="@Model.UserVisaType">
-                            <label>Typ</label><br>
-                        }*@
-                    <select asp-for="UserVisaType" class="form-control">
-                        <option value="Student Visa">Student Visa</option>
-                        <option value="Open Work Visa">Open Work Visa</option>
-                        <option value="Essential Skills Visa">Essential Skills Visa</option>
-                        <option value="Working Holiday Visa">Working Holiday Visa</option>
-                        <option value="Other Visa Type">Other Visa Type</option>
-                    </select>
+                {
+                    <input asp-for="UserVisaType" type="checkbox" value="Student Visa">
+                    <label for="studyvisa"> Student Visa with 20 Hours </label><br>
+                    <input asp-for="UserVisaType" type="checkbox" value="Open Work Visa">
+                    <label for="workvisa"> Open Work Visa </label><br>
+                    <input asp-for="UserVisaType" type="checkbox" value="Essential Skills Visa">
+                    <label for="workvisa"> Essential Work Visa </label><br>
+                    <input asp-for="UserVisaType" type="checkbox" value="Working Holiday Visa">
+                    <label for="workvisa"> Working Holiday Visa </label><br>
+                    <input asp-for="UserVisaType" type="checkbox" value="Other Visa Type">
+                    <label for="other"> Other Visa Type </label><br>
+                }
+                else
+                {
+                    <input asp-for="UserVisaType" type="checkbox"  value="@Model.UserVisaType">
+                    <label>Typ</label><br>
+                }*@
+                        <select asp-for="UserVisaType" class="form-control">
+                            <option value="Student Visa">Student Visa</option>
+                            <option value="Open Work Visa">Open Work Visa</option>
+                            <option value="Essential Skills Visa">Essential Skills Visa</option>
+                            <option value="Working Holiday Visa">Working Holiday Visa</option>
+                            <option value="Other Visa Type">Other Visa Type</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -210,16 +210,20 @@
 
                 </section>
 
-        <button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>
-        <input type="submit" class="btn btn-info" value="Save">
-        </form>
-</div>
+                <button class="btn-back" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</button>
+                <input type="submit" class="btn btn-info" value="Save">
+                <button onclick="myFunction()">Toggle Dark Mode</button>
+            </form>
+        </div>
     </main>
 </div>
 
 @section Scripts {
     <script>
-
+        function myFunction() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+        }
 
 
 

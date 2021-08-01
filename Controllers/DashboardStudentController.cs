@@ -24,6 +24,7 @@ namespace Global_Intern.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor; // Accessor allows access to session and cookies
         private readonly ICustomAuthManager _customAuthManager;
         private readonly string host;
+        StudentInternProfile studentIntern = null;
 
         private readonly HttpClient _client = new HttpClient(); // Used to access API -> Internship.
         //private readonly string Internship_url = "/api/Internships"; - does not used!?
@@ -45,7 +46,8 @@ namespace Global_Intern.Controllers
 
             setUser();
         }
-        public IActionResult Index()
+
+        public void DashboardOptions()
         {
             // Display User name on the right-top corner - shows user is logedIN
             ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
@@ -53,6 +55,10 @@ namespace Global_Intern.Controllers
             // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
             string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
             ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+        }
+        public IActionResult Index()
+        {
+            DashboardOptions();
 
             using (GlobalDBContext _context = new GlobalDBContext())
             {
@@ -74,16 +80,7 @@ namespace Global_Intern.Controllers
         [HttpGet]
         public IActionResult GeneralProfile()
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
-
-
-
-            bool d = true;
+            DashboardOptions();
 
             using GlobalDBContext context = new GlobalDBContext();
             
@@ -91,9 +88,11 @@ namespace Global_Intern.Controllers
 
             ConsoleLogs logs = new ConsoleLogs(_env);
 
-            logs.WriteErrorLog(temp.ToString());
+            logs.WriteDebugLog(temp.Count().ToString());
 
-            if (temp.Count == 0)
+
+
+            if (temp.Count() == 0)
             {
                 ProfileViewStudent userViewModel = new ProfileViewStudent(_user);
 
@@ -101,7 +100,7 @@ namespace Global_Intern.Controllers
             }
             else
             {
-                var studentIntern = temp[0];
+                studentIntern = temp[0];
 
                 ProfileViewStudent userViewModel = new ProfileViewStudent(_user, studentIntern);
 
@@ -118,12 +117,31 @@ namespace Global_Intern.Controllers
         [HttpPost]
         public IActionResult GeneralProfile(ProfileViewStudent updatedUser)
         {
+            DashboardOptions();
+            bool imageUploaded= true; ;
             StudentInternProfile internProfile = new StudentInternProfile();
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            try
+            {
+                //if (updatedUser.UserImage!=null)
+                //{
+                //    if (_user.UserImage.Length > 0)
+                //    {
+                //        updatedUser.UserImageName = _user.UserImage;
+                //    }
+                //}
+            }catch(Exception e)
+            {
+                //throw;
+                imageUploaded = false;
+                ConsoleLogs consoleLogs = new ConsoleLogs(_env);
+
+                consoleLogs.WriteDebugLog(e.Message.ToString());
+                consoleLogs.WriteDebugLog(e.StackTrace);
+                consoleLogs.WriteDebugLog(e.Source);
+                consoleLogs.WriteDebugLog(e.TargetSite.ToString());
+                consoleLogs.WriteDebugLog(e.InnerException.ToString());
+
+            }
             //-------------------- END
             using (GlobalDBContext _context = new GlobalDBContext())
             {
@@ -154,12 +172,21 @@ namespace Global_Intern.Controllers
                     FileStream stream = new FileStream(filePath, FileMode.Create);
                     updatedUser.UserImage.CopyTo(stream);
                     stream.Dispose();
+                    //try
+                    //{
+                    //    if(updatedUser.UserImageName)
+                    //}
                     updatedUser.UserImageName = uniqueFileName;
 
                     // if new image is uploaded with other user info
                     
 
                     
+                }
+
+                if (updatedUser.UserImageName==null)
+                {
+                    updatedUser.UserImageName = _user.UserImage;
                 }
 
                 _user = _user.UpdateUserStudent(_user, updatedUser);
@@ -199,9 +226,15 @@ namespace Global_Intern.Controllers
 
                 ViewBag.Message = updatedUser.UserFirstName + " " + updatedUser.UserLastName + " has been updated successfully. Check the Users table to see if it has been updated.";
 
+                var temp1 = _context.Users.Find(_user.UserId);
 
-                ProfileViewStudent userViewModel = new ProfileViewStudent(updatedUser);
-                return View(userViewModel);
+                var temp2 = context.StudentInternProfiles.Where(u => u.User == _user).ToList();
+
+                var temp3 = temp2[0];
+
+                ProfileViewStudent userViewModel = new ProfileViewStudent(temp1,temp3);
+
+                    return View(userViewModel);
             }
 
         }
@@ -209,12 +242,7 @@ namespace Global_Intern.Controllers
 
         public IActionResult Settings()
         {
-            // Display User name on the right-top corner - shows user is logedIN
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
             ViewBag.Message = "Are you sure you want to delete user " + _user.UserFirstName + " " + _user.UserLastName;
 
@@ -225,6 +253,7 @@ namespace Global_Intern.Controllers
 
         public IActionResult DeleteUser()
         {
+
             using (GlobalDBContext _context = new GlobalDBContext())
             {
 
@@ -250,7 +279,7 @@ namespace Global_Intern.Controllers
             {
                 return;
             }
-            using (GlobalDBContext _context = new GlobalDBContext())
+            using (GlobalDBContext tooMuchConfusion = new GlobalDBContext())
             {
 
                 if (_customAuthManager.Tokens.Count > 0)
@@ -258,29 +287,32 @@ namespace Global_Intern.Controllers
                     // check weather the unique id is in AuthManager
                     int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
                     // User is found in the AuthManager
-                    _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
+                    _user = tooMuchConfusion.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
                 }
 
             }
         }
+
+
         
         
         
         // Qualifications page works on 17 Oct 2020.
         public IActionResult Qualifications()
         {
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+            DashboardOptions();
 
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
 
             return View();
+
+            
 
         }
         [HttpPost]
         public IActionResult Qualifications(Qualification qualification)
         {
+            
+
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 // additional codes?
@@ -289,17 +321,118 @@ namespace Global_Intern.Controllers
             return View();
         }
 
-
-        // Documents page works on 17 Oct 2020.
         public IActionResult Documents()
         {
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
+            DashboardOptions();
 
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            GlobalDBContext context = new GlobalDBContext();
+
+            //var documents = context.Documents.Where(u => u.User == _user).ToList();
+
+            //UserDocument user = new UserDocument(documents[0]);
 
             return View();
+
+        }
+
+        [HttpPost]
+        // Documents page works on 17 Oct 2020.
+        public IActionResult Documents(UserDocument document, IFormFile filetest)
+        {
+            DashboardOptions();
+
+            string uniqueCVFileName = null;
+
+            string uniqueCLFileName = null;
+
+            using (GlobalDBContext context = new GlobalDBContext())
+            {
+                if (filetest.Length!=0 || document.UserCL.Length != 0)
+                {
+                    string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
+
+
+                    // File of code need to be Tested
+                    //string file_Path = HelpersFunctions.StoreFile(uploadFolder, generalProfile.UserImage);
+
+
+
+                    if (filetest.Length != 0)
+                    {
+                        uniqueCVFileName = Guid.NewGuid().ToString() + "_" + filetest.FileName;
+
+                        // Delete previous uploaded Image
+                        if (!String.IsNullOrEmpty(filetest.ToString()))
+                        {
+                            string imagePath = uploadFolder + filetest.FileName;
+                            if (System.IO.File.Exists(imagePath))
+                            {
+                                // If file found, delete it    
+                                System.IO.File.Delete(imagePath);
+                                Console.WriteLine("File deleted.");
+                            }
+                        }
+                        string CVfilePath = uploadFolder + uniqueCVFileName;
+                        FileStream stream = new FileStream(CVfilePath, FileMode.Create);
+                        filetest.CopyTo(stream);
+                        stream.Dispose();
+                        //document.UserCVName = CVfilePath;
+                        document.UserCVName = "jnh";
+                    }
+
+                    if (document.UserCL.Length != 0)
+                    {
+                        uniqueCLFileName = Guid.NewGuid().ToString() + "_" + document.UserCL.FileName;
+
+                        // Delete previous uploaded Image
+                        if (!String.IsNullOrEmpty(document.UserCL.ToString()))
+                        {
+                            string imagePath = uploadFolder + _user.UserImage;
+                            if (System.IO.File.Exists(imagePath))
+                            {
+                                // If file found, delete it    
+                                System.IO.File.Delete(imagePath);
+                                Console.WriteLine("File deleted.");
+                            }
+                        }
+                        string CLfilePath = uploadFolder + uniqueCLFileName;
+                        FileStream stream1 = new FileStream(CLfilePath, FileMode.Create);
+                        document.UserCL.CopyTo(stream1);
+                        stream1.Dispose();
+                        //document.UserCLName = CLfilePath;
+                        document.UserCLName = "rffff";
+                    }
+
+                    List<Document> documents = context.Document.Where(u => u.User == _user).ToList();
+
+                    Document document1 = new Document();
+
+                    if (documents.Count == 0)
+                    {
+                        Document document2 = new Document();
+                        var temp = new List<Document>();
+                        documents.Add(document2);
+                        document1 = document.CreateOrUpdateDocuments(document1, document, _user);
+
+
+                        document1.User.Role = null;
+                        document1.User.UserId = 0;
+                        context.Document.Add(document1);
+                    }
+
+                   
+
+                    else
+                    {
+                        document1 = document.CreateOrUpdateDocuments(documents[0], document, _user);
+                        context.Document.Update(document1);
+                    }
+                    context.SaveChanges();
+
+                }
+            }
+
+            return View(document);
         }
 
 
@@ -308,11 +441,7 @@ namespace Global_Intern.Controllers
         // Experience page works on 17 Oct 2020.
         public IActionResult Experience()
         {
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
-
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
             return View();
         }
@@ -322,11 +451,8 @@ namespace Global_Intern.Controllers
         // MyApplications page works on 17 Oct 2020.
         public IActionResult MyApplications()
         {
-            ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
 
-            // Geting Dashboard Menu from project/data/DashboardMenuOption.json into ViewData
-            string path = _env.ContentRootPath + @"\Data\DashboardMenuOptions.json";
-            ViewData["menuItems"] = HelpersFunctions.GetMenuOptionsForUser(_user.UserId, path);
+            DashboardOptions();
 
             return View();
         }

@@ -27,6 +27,9 @@ namespace Global_Intern.Util
         public string GenerateSHA256Hash(string input, string salt)
         {
 
+
+
+
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(input + salt);
             System.Security.Cryptography.SHA256Managed sha256HashString =
                 new System.Security.Cryptography.SHA256Managed();

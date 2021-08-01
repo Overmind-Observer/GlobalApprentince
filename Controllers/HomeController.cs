@@ -13,8 +13,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Xml.Linq;
 using System.Net.Http; // for -> HttpClient to make request to API
 using System.Threading.Tasks;
+using static Global_Intern.Controllers.HomeController;
+using System.Text;
 
 namespace Global_Intern.Controllers
 {
@@ -39,14 +42,17 @@ namespace Global_Intern.Controllers
             _logger = logger;
             _env = env;
 
+
             // Check if cookie exits and create a session.
             CreateUserSessionFromCookie();
             // fetch user from the database using session.
             setUser();
         }
 
-        public IActionResult Index()
-        {
+            public IActionResult Index()
+        
+            {
+
 
             
             if (_user != null)
@@ -54,19 +60,13 @@ namespace Global_Intern.Controllers
                 ViewData["LoggeduserName"] = new List<string>() { _user.UserFirstName + ' ' + _user.UserLastName, _user.UserImage };
             }
 
-            ConsoleLogs consoleLogs = new ConsoleLogs(_env);
+            HelpersFunctions helpersFunctions = new HelpersFunctions(_env);
 
-            using (GlobalDBContext context = new GlobalDBContext()) { 
-
-                //consoleLogs.WriteErrorLog(context.GeneratePath());
+            helpersFunctions.ListOfPrimeNumbers();
 
 
 
-            //var WhatIsThis = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
 
-            ViewBag.Message = "Looks like this is a ";
-                 
-            }
             return View();
         }
 
@@ -283,9 +283,9 @@ namespace Global_Intern.Controllers
                 {
                     if (fromData.isCVExisting)
                     {
-                        UserDocument Doc = _context.UserDocuments.Include(u => u.User).FirstOrDefault(p =>
-                        p.User.UserId == _user.UserId && p.DocumentType == "CV");
-                        FinalCVPath = Doc.DocumentPath;
+                        //UserDocument Doc = _context.UserDocuments.Include(u => u.User).FirstOrDefault(p =>
+                        //p.User.UserId == _user.UserId && p.DocumentType == "CV");
+                        //FinalCVPath = Doc.DocumentPath;
                     }
                     else
                     {
@@ -303,9 +303,9 @@ namespace Global_Intern.Controllers
                 {
                     if (fromData.isCLExisting)
                     {
-                        UserDocument Doc = _context.UserDocuments.Include(u => u.User).FirstOrDefault(p =>
-                        p.User.UserId == _user.UserId && p.DocumentType == "CL");
-                        FinalCLPath = Doc.DocumentPath;
+                        //UserDocument Doc = _context.UserDocuments.Include(u => u.User).FirstOrDefault(p =>
+                        //p.User.UserId == _user.UserId && p.DocumentType == "CL");
+                        //FinalCLPath = Doc.DocumentPath;
                     }
                     else
                     {
@@ -325,8 +325,8 @@ namespace Global_Intern.Controllers
                 // AppliedInternship constructor takes User and Internship object to create AppliedInternship object
                 AppliedInternship APP_Intern = new AppliedInternship(_user, intern)
                 {
-                    TempCVPath = FinalCVPath,
-                    TempCLPath = FinalCLPath,
+                    //TempCVPath = FinalCVPath,
+                    //TempCLPath = FinalCLPath,
                     CoverLetterText = FinalCLString,
                     EmployerStatus = "Pending"
                 };
@@ -377,7 +377,8 @@ namespace Global_Intern.Controllers
                 int userId = _customAuthManager.Tokens.FirstOrDefault(i => i.Key == token).Value.Item3;
                 using (GlobalDBContext _context = new GlobalDBContext())
                 {
-                    _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId);
+                    _user = _context.Users.Include(r => r.Role).FirstOrDefault(u => u.UserId == userId); 
+
                 }
             }
             
