@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Global_Intern.Models.StudentModels.StudentInternProfile>;
+@{
+    ViewData["Title"] = "Interns Browser";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+
+<div class="content">
+    <main>
+        <div class="container-fluid">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Names
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.User.UserGender)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.User.UserEmail)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.UserFirstName)
+                                @Html.DisplayFor(modelItem => item.User.UserLastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.UserGender)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.UserEmail)
+                            </td>
+                            <td>
+                                <a asp-action="InternDetails" asp-route-id="@item.StudentInternProfileId">Details</a> |
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
