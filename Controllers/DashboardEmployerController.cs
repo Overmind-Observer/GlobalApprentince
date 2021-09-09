@@ -2,7 +2,6 @@
 using Global_Intern.Models;
 using Global_Intern.Models.EmployerModels;
 using Global_Intern.Models.GeneralProfile;
-using Global_Intern.Models.StudentModels;
 using Global_Intern.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -32,20 +31,19 @@ namespace Global_Intern.Controllers
         private readonly IWebHostEnvironment _env;
         private readonly string Internship_url = "/api/Internships";
         string InternshipId;
-        GlobalDBContext _context;
 
 
         private User _user;
         private UserCompany _company;
 
 
-        public DashboardEmployerController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth, IWebHostEnvironment env, GlobalDBContext context)
+        public DashboardEmployerController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth, IWebHostEnvironment env)
         {
             _env = env;
             _httpContextAccessor = httpContextAccessor;
             host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
             _customAuthManager = auth;
-            _context = context ;
+
 
             // sets User _user using session
             
@@ -227,12 +225,7 @@ namespace Global_Intern.Controllers
             }
 
         }
-        [HttpGet]
-        public IActionResult CreateInternship()
-        {
-            DashboardOptions();
-            return View();
-        }
+
 
         [HttpPost]
         public IActionResult CreateInternship(Internship NewInternship)
@@ -506,23 +499,16 @@ namespace Global_Intern.Controllers
 
 
         //Create CreateInternController  
-        //public  IActionResult CreateInternships()
-        //{
+        public IActionResult CreateInternships()
+        {
 
-        //    DashboardOptions();
-        //    return View();
-        //}
-        //[HttpPost]
-        //public IActionResult CreateInternships(Internship internship)
-        //{
-
-        //    DashboardOptions();
-        //    return View();
-        //}
+            DashboardOptions();
+            return View();
+        }
 
 
-
-
+        
+        
         //From here is Intern Applications methods
         public IActionResult InternApplications()
         {
@@ -531,43 +517,8 @@ namespace Global_Intern.Controllers
 
             return View();
         }
-
-        public IActionResult InternBrowser()
-        {
-            DashboardOptions();
-            
-
-            return View(_context.StudentInternProfiles.Include(s=>s.User).ToList());
-        }
-
-        public IActionResult InternDetails(int?id)
-        {
-            Console.WriteLine(id);
-            DashboardOptions();
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            StudentInternProfile studentProfile =  _context.StudentInternProfiles
-                .Include(s=>s.User)
-                .Single(s => s.StudentInternProfileId == id);
-            if (studentProfile == null)
-            {
-                return NotFound();
-            }
-            List<Qualification> qualifications = studentProfile.User.Qualifications;
-            List<Experience> experiences = studentProfile.User.Experiences;
-            
-            ViewBag.qulifications = qualifications;
-
-            
-            ViewBag.experiences = experiences;
-            return View(studentProfile);
-
-        }
-
-
+        
+      
 
 
     }
