@@ -50,6 +50,7 @@ namespace Global_Intern.Models
         public List<Profile> Profiles { get; set; } // should get one row
         public List<InternStudent> InternStudents { get; set; } // list of students who are working in some internships
         public List<AppliedInternship> appliedInternships { get; set; } // list of user applyed for intership
+        public List<InstituteAdmin> InstituteAdmins { get; set; }
 
         // add on 6th 10 2020
         public List<Course> Course { get; set; }

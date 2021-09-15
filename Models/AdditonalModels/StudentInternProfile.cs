@@ -19,6 +19,7 @@ namespace Global_Intern.Models.StudentModels
         public string StudentDob { get; set; } //1994
         public string StudentEthnic { get; set; } //Asian
         public virtual User User { get; set; }
+        public List<Skill> Skills { get; set; }
 
 
 
