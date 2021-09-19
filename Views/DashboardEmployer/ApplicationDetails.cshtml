@@ -1,0 +1,41 @@
+﻿@model Global_Intern.Models.AppliedInternship;
+@{
+    ViewData["Title"] = "Application Details";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+<div class="content">
+    <main>
+        <div class="container-fluid">
+
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.User.UserFirstName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.User.UserFirstName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.User.UserLastName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.User.UserLastName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.User.UserGender)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.User.UserGender)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.User.Qualifications)
+                </dt>
+
+
+            </dl>
+
+
+
+        </div>
+    </main>
+</div>

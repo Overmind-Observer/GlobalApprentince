@@ -71,11 +71,11 @@ namespace Global_Intern.Controllers
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 // Gets all Internship created by the user
-                var internship = _context.Internships.ToList();
+                var internships = _context.Internships.Where(i => i.User == _user).ToList();
 
                 
 
-                return View(internship);
+                return View(internships);
             }
         }
 
@@ -527,9 +527,33 @@ namespace Global_Intern.Controllers
         public IActionResult InternApplications()
         {
             DashboardOptions();
+            var applications = _context.AppliedInternships
+                .Include(a=>a.Internship)
+                .Include(a=>a.User)
+                .Where(i => i.Internship.User == _user);
 
 
-            return View();
+            return View(applications);
+        }
+
+        public IActionResult ApplicationDetails(int? id)
+        {
+            DashboardOptions();
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            AppliedInternship application = _context.AppliedInternships
+                .Include(a=>a.User)
+                .Single(s => s.AppliedInternshipId == id);
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+            return View(application);
         }
 
         public IActionResult InternBrowser()
@@ -542,7 +566,6 @@ namespace Global_Intern.Controllers
 
         public IActionResult InternDetails(int?id)
         {
-            Console.WriteLine(id);
             DashboardOptions();
             if (id == null)
             {
@@ -567,7 +590,11 @@ namespace Global_Intern.Controllers
 
         }
 
-
+        public IActionResult InternLiked(int?id)
+        {
+            DashboardOptions();
+            return RedirectToAction(nameof(InternBrowser));
+        }
 
 
     }

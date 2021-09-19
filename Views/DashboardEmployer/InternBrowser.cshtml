@@ -26,21 +26,22 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.User.UserFirstName)
-                                @Html.DisplayFor(modelItem => item.User.UserLastName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.User.UserGender)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.User.UserEmail)
-                            </td>
-                            <td>
-                                <a asp-action="InternDetails" asp-route-id="@item.StudentInternProfileId">Details</a> |
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.UserFirstName)
+                            @Html.DisplayFor(modelItem => item.User.UserLastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.UserGender)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.UserEmail)
+                        </td>
+                        <td>
+                            <a asp-action="InternDetails" asp-route-id="@item.StudentInternProfileId">Details</a> |
+                            <a asp-action="InternLiked" asp-route-id="@item.User.UserId">Like</a>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>
