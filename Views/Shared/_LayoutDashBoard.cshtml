@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css"
           integrity="sha256-x8PYmLKD83R9T/sYmJn1j3is/chhJdySyhet/JuHnfY="
@@ -32,70 +32,70 @@
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home<span class="sr-only">(current)</span></a>
                 </li>
                 <div class="dropdown">
-                    <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Programmes</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AllInternships">Internships </a>
-                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AllCourses">Courses</a>
-                        </div>
-                    </li>
-                </div>
-                <!--
                 <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Internship" asp-action="Create">Create Internship</a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Programmes</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AllInternships">Internships </a>
+                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AllCourses">Courses</a>
+                    </div>
                 </li>
-                -->
-                <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
+        </div>
+        <!--
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="Internship" asp-action="Create">Create Internship</a>
+        </li>
+        -->
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact</a>
+        </li>
+        <div class="dropdown">
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Careers</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="CurrentVacancies">Current Vacancies</a>
+                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="OurBenefits">Our Benefits</a>
+                </div>
+            </li>
+        </div>
+
+        </ul>
+        <form class="form-inline my-2 my-lg-0 d-flex" style="background-color:red">
+            @if (ViewData["LoggeduserName"] != null)
+            {
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item d-flex">
+                        @{
+                            var userInfo = ViewData["LoggeduserName"] as List<string>;
+                        }
+
+                        @if (userInfo[1] != null)
+                        {
+                            <img class="circleImg" src="~/uploads/UserImage/@userInfo[1]" alt="Avatar">
+                        }
+                        else
+                        {
+                            <img class="circleImg" src="~/uploads/defaut-person.png" alt="Avatar">
+                        }
+
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@userInfo[0]</a>
+
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact</a>
-                    </li>
-                    <div class="dropdown">
-                        <li class="nav-item">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Careers</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="CurrentVacancies">Current Vacancies</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="OurBenefits">Our Benefits</a>
-                            </div>
-                        </li>
-                    </div>
+                </ul>
+                <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Logout"  >Logout</button>
+            }
+            else
+            {
+                <div class="d-flex">
+                    <button class="btn btn-outline-success my-2 my-sm-0 mr-1" asp-area="" asp-controller="Account" asp-action="Login">Log In</button>
 
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                @if (ViewData["LoggeduserName"] != null)
-                {
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item d-flex">
-                            @{
-                                var userInfo = ViewData["LoggeduserName"] as List<string>;
-                            }
+                    <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Register">Sign Up</button>
+                </div>
 
-                            @if (userInfo[1] != null)
-                            {
-                                <img class="circleImg" src="~/uploads/UserImage/@userInfo[1]" alt="Avatar">
-                            }
-                            else
-                            {
-                                <img class="circleImg" src="~/uploads/defaut-person.png" alt="Avatar">
-                            }
-
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@userInfo[0]</a>
-
-                        </li>
-                    </ul>
-                    <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Logout">Logout</button>
-                }
-                else
-                {
-                    <div class="d-flex">
-                        <button class="btn btn-outline-success my-2 my-sm-0 mr-1" asp-area="" asp-controller="Account" asp-action="Login">Log In</button>
-
-                        <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Register">Sign Up</button>
-                    </div>
-
-                }
-            </form>
+            }
+        </form>
         </div>
     </nav>
     <main>
@@ -126,15 +126,15 @@
                                 </li>
                             }
                             @*else if (@each["field"] == "Settings")
-                            {
-                                <li class="nav-item">
-                                    <a asp-action="Settings" class="nav-link sidebarLinks">
-                                        <i class="material-icons icon">@each["icon"]</i>
-                                        <span class="text">@each["field"]</span>
-                                    </a>
+                                {
+                                    <li class="nav-item">
+                                        <a asp-action="Settings" class="nav-link sidebarLinks">
+                                            <i class="material-icons icon">@each["icon"]</i>
+                                            <span class="text">@each["field"]</span>
+                                        </a>
 
-                                </li>
-                            }*@
+                                    </li>
+                                }*@
                             else
                             {
                                 <li class="nav-item">
@@ -167,9 +167,9 @@
             @RenderBody()
         </div>
     </main>
-    
-    
-     <div class="footer-distributed">
+
+
+    <div class="footer-distributed">
         <div class="footer-left">
             <img src="/img/Tech.png" alt="GlobalIntern" height="150" width="250">
             <p class="footer-links">
@@ -229,9 +229,9 @@
         </div>
     </div>
     </div>
-    
-    
-    
+
+
+
     <footer class="footer text-muted">
         <div class="container">
             <form class="form-inline" style="float:left">
@@ -243,9 +243,12 @@
             </form>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>

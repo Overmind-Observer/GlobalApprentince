@@ -30,6 +30,8 @@ namespace Global_Intern
 
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddRazorRuntimeCompilation();
             //services.AddMvc().Add
             services.AddSession(option =>
             {

@@ -15,16 +15,16 @@ namespace Global_Intern.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Global_Intern.Models.Admin", b =>
                 {
                     b.Property<int>("AdminID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AdminEmail")
                         .HasColumnType("nvarchar(max)");
@@ -48,7 +48,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("AppliedInternshipId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CoverLetterText")
                         .HasColumnType("nvarchar(max)");
@@ -97,7 +97,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("CourseId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CourseCreatedAt")
                         .HasColumnType("datetime2");
@@ -138,7 +138,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("DocumentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("UserCLName")
                         .HasColumnType("nvarchar(max)");
@@ -161,7 +161,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("EmployerLikeID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("EmployerUserId")
                         .HasColumnType("int");
@@ -186,7 +186,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("ExperienceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ExperienceCompany")
                         .HasColumnType("int");
@@ -221,7 +221,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("InstituteID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("InsituteName")
                         .HasColumnType("nvarchar(max)");
@@ -239,7 +239,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("InstituteAdminID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("InstituteID")
                         .HasColumnType("int");
@@ -261,7 +261,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("InternStudentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("IndemnityInsuranceDetails")
                         .HasColumnType("nvarchar(max)");
@@ -286,7 +286,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("InternshipId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("InternshipBody")
                         .IsRequired()
@@ -320,6 +320,9 @@ namespace Global_Intern.Migrations
                     b.Property<bool>("InternshipVirtual")
                         .HasColumnType("bit");
 
+                    b.Property<int>("MyProperty")
+                        .HasColumnType("int");
+
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
@@ -335,7 +338,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("MessageId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -374,7 +377,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("ProfileId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ProfileAcademicRecord")
                         .HasColumnType("nvarchar(max)");
@@ -415,7 +418,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("QualificationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -459,7 +462,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("RoleName")
                         .HasColumnType("nvarchar(max)");
@@ -474,7 +477,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("SkillID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("InternStudentInternProfileId")
                         .HasColumnType("int");
@@ -497,7 +500,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("StudentInternProfileId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("StudentDob")
                         .HasColumnType("nvarchar(max)");
@@ -538,7 +541,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -617,7 +620,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("UserCLId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CLCreatedAt")
                         .HasColumnType("datetime2");
@@ -640,7 +643,7 @@ namespace Global_Intern.Migrations
                     b.Property<int>("UserCVId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CVCreatedAt")
                         .HasColumnType("datetime2");
@@ -663,7 +666,7 @@ namespace Global_Intern.Migrations
                     b.Property<int?>("UserCompanyId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("UserCompanyAddress")
                         .HasColumnType("nvarchar(max)");

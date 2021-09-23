@@ -559,8 +559,13 @@ namespace Global_Intern.Controllers
         public IActionResult InternBrowser()
         {
             DashboardOptions();
+            if(TempData["success"] != null)
+            {
+                var success = TempData["success"].ToString();
+                Console.WriteLine(success);
+                ViewBag.Success = Int32.Parse(success);
+            }
             
-
             return View(_context.StudentInternProfiles.Include(s=>s.User).ToList());
         }
 
@@ -590,9 +595,27 @@ namespace Global_Intern.Controllers
 
         }
 
-        public IActionResult InternLiked(int?id)
+        public IActionResult InternLike(int?id)
         {
             DashboardOptions();
+            try
+            {
+                User intern = _context.Users.Single(u => u.UserId == id);
+                EmployerLike newLike = new EmployerLike(_user, intern);
+                _context.EmployerLikes.Add(newLike);
+                _context.SaveChanges();
+                TempData["success"] = 1;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                TempData["success"] = 0;
+
+            }
+            
+
+            
+
             return RedirectToAction(nameof(InternBrowser));
         }
 

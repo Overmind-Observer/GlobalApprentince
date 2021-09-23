@@ -11,5 +11,16 @@ namespace Global_Intern.Models
         public User Employer { get; set; }
         public User Intern { get; set; }
         public bool SoftDelete { get; set; }
+
+        public EmployerLike() { }
+
+        public EmployerLike(User employer, User intern)
+        {
+            this.Employer = employer;
+            this.Intern = intern;
+            this.SoftDelete = false;
+        }
     }
+
+    
 }
