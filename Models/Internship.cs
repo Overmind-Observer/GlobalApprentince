@@ -23,7 +23,6 @@ namespace Global_Intern.Models
         public System.DateTime InternshipExpDate { get; set; }
         public System.DateTime InternshipCreatedAt { get; set; }
         public System.DateTime InternshipUpdatedAt { get; set; }
-        public int MyProperty { get; set; }
 
         [Required]
         [JsonIgnore]

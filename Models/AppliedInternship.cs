@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Global_Intern.Models.AdditonalModels;
+using System;
 
 namespace Global_Intern.Models
 {
@@ -24,6 +25,8 @@ namespace Global_Intern.Models
         public string CoverLetterText { get; set; }
         public DateTime ExpDate { get; set; } // Automatic
         public bool SoftDelete { get; set; }
+        public InternshipApplicationStatus ApplicationStatus { get; set; }
+        public bool Shortlist { get; set; }
         public virtual User User { get; set; } // Who Applied
         public virtual Internship Internship { get; set; } // which Intership user applied
     }

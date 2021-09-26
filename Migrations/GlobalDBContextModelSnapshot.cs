@@ -50,6 +50,9 @@ namespace Global_Intern.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ApplicationStatus")
+                        .HasColumnType("int");
+
                     b.Property<string>("CoverLetterText")
                         .HasColumnType("nvarchar(max)");
 
@@ -70,6 +73,9 @@ namespace Global_Intern.Migrations
 
                     b.Property<int?>("InternshipId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Shortlist")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("SoftDelete")
                         .HasColumnType("bit");
@@ -319,9 +325,6 @@ namespace Global_Intern.Migrations
 
                     b.Property<bool>("InternshipVirtual")
                         .HasColumnType("bit");
-
-                    b.Property<int>("MyProperty")
-                        .HasColumnType("int");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");

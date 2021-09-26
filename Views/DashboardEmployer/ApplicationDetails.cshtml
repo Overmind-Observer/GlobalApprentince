@@ -37,5 +37,19 @@
 
 
         </div>
+
+        <a asp-action="InternApplications">Back to List</a>
+        <a asp-action="ApplicationShortlist" asp-route-id="@Model.AppliedInternshipId">
+            @{
+                if (Model.Shortlist)
+                { <i class="fa fa-heart" aria-hidden="true"></i> }
+                else
+                { <i class="fa fa-heart-o" aria-hidden="true"></i>}
+            }
+
+        </a>
+
+        <a asp-action="ApplicationAccept" asp-route-id="@Model.AppliedInternshipId">Accept</a>
+        <a asp-action="ApplicationDecline" asp-route-id="@Model.AppliedInternshipId">Decline</a>
     </main>
 </div>

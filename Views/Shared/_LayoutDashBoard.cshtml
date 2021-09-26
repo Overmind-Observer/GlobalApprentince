@@ -18,84 +18,90 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <button class="navbar-toggler sideMenuToggler" type="button">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="#">Global Intern</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="container-fluid">
+            <button class="navbar-toggler sideMenuToggler" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">Global Intern</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home<span class="sr-only">(current)</span></a>
-                </li>
-                <div class="dropdown">
-                <li class="nav-item">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Programmes</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AllInternships">Internships </a>
-                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AllCourses">Courses</a>
-                    </div>
-                </li>
-        </div>
-        <!--
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home<span class="sr-only">(current)</span></a>
+                    </li>
+
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Programmes</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AllInternships">Internships </a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AllCourses">Courses</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Careers</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="CurrentVacancies">Current Vacancies</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="OurBenefits">Our Benefits</a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <!--
         <li class="nav-item">
             <a class="nav-link" asp-area="" asp-controller="Internship" asp-action="Create">Create Internship</a>
         </li>
         -->
-        <li class="nav-item">
-            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact</a>
-        </li>
-        <div class="dropdown">
-            <li class="nav-item">
-                <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Careers</a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="CurrentVacancies">Current Vacancies</a>
-                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="OurBenefits">Our Benefits</a>
-                </div>
-            </li>
-        </div>
+            
+            
 
-        </ul>
-        <form class="form-inline my-2 my-lg-0 d-flex" style="background-color:red">
-            @if (ViewData["LoggeduserName"] != null)
-            {
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item d-flex">
-                        @{
-                            var userInfo = ViewData["LoggeduserName"] as List<string>;
-                        }
 
-                        @if (userInfo[1] != null)
-                        {
-                            <img class="circleImg" src="~/uploads/UserImage/@userInfo[1]" alt="Avatar">
-                        }
-                        else
-                        {
-                            <img class="circleImg" src="~/uploads/defaut-person.png" alt="Avatar">
-                        }
+            <form class="form-inline my-2 my-lg-0 d-flex" >
+                @if (ViewData["LoggeduserName"] != null)
+                {
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item d-flex">
+                            @{
+                                var userInfo = ViewData["LoggeduserName"] as List<string>;
+                            }
 
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@userInfo[0]</a>
+                            @if (userInfo[1] != null)
+                            {
+                                <img class="circleImg" src="~/uploads/UserImage/@userInfo[1]" alt="Avatar">
+                            }
+                            else
+                            {
+                                <img class="circleImg" src="~/uploads/defaut-person.png" alt="Avatar">
+                            }
 
-                    </li>
-                </ul>
-                <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Logout"  >Logout</button>
-            }
-            else
-            {
-                <div class="d-flex">
-                    <button class="btn btn-outline-success my-2 my-sm-0 mr-1" asp-area="" asp-controller="Account" asp-action="Login">Log In</button>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@userInfo[0]</a>
 
-                    <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Register">Sign Up</button>
-                </div>
+                        </li>
+                    </ul>
+                    <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Logout">Logout</button>
+                }
+                else
+                {
+                    <div class="d-flex">
+                        <button class="btn btn-outline-success my-2 my-sm-0 mr-1" asp-area="" asp-controller="Account" asp-action="Login">Log In</button>
 
-            }
-        </form>
+                        <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Register">Sign Up</button>
+                    </div>
+
+                }
+            </form>
         </div>
     </nav>
     <main>

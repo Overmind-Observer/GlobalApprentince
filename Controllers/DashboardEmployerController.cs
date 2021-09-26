@@ -1,5 +1,6 @@
 ﻿using Global_Intern.Data;
 using Global_Intern.Models;
+using Global_Intern.Models.AdditonalModels;
 using Global_Intern.Models.EmployerModels;
 using Global_Intern.Models.GeneralProfile;
 using Global_Intern.Models.StudentModels;
@@ -539,7 +540,10 @@ namespace Global_Intern.Controllers
         public IActionResult ApplicationDetails(int? id)
         {
             DashboardOptions();
-
+            if (TempData["ApplicationID"] != null)
+            {
+                id = int.Parse(TempData["ApplicationID"].ToString());
+            }
             if (id == null)
             {
                 return NotFound();
@@ -553,8 +557,134 @@ namespace Global_Intern.Controllers
                 return NotFound();
             }
 
+            if (application.ApplicationStatus == InternshipApplicationStatus.unviewed)
+            {
+                application.ApplicationStatus = InternshipApplicationStatus.viewed;
+                _context.Update(application);
+                _context.SaveChanges();
+            }
+
             return View(application);
         }
+
+
+        public IActionResult ApplicationShortlist(int? id)
+        {
+            DashboardOptions();
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            AppliedInternship application = _context.AppliedInternships
+                .Include(a => a.User)
+                .Single(s => s.AppliedInternshipId == id);
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+            
+                application.Shortlist = !application.Shortlist;
+                _context.Update(application);
+                _context.SaveChanges();
+
+            TempData["ApplicationID"] = id;
+            return RedirectToAction(nameof(ApplicationDetails));
+        }
+
+
+
+        public IActionResult ApplicationAccept(int? id)
+        {
+            DashboardOptions();
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            AppliedInternship application = _context.AppliedInternships
+                .Include(a => a.User)
+                .Single(s => s.AppliedInternshipId == id);
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+
+            application.ApplicationStatus = InternshipApplicationStatus.accepted;
+            _context.Update(application);
+            _context.SaveChanges();
+
+            //todo: Sendemmail to interns
+
+            return RedirectToAction(nameof(InternApplications));
+        }
+
+        public IActionResult ApplicationDecline(int? id)
+        {
+            DashboardOptions();
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            AppliedInternship application = _context.AppliedInternships
+                .Include(a => a.User)
+                .Single(s => s.AppliedInternshipId == id);
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+
+            application.ApplicationStatus = InternshipApplicationStatus.declined;
+            _context.Update(application);
+            _context.SaveChanges();
+
+            //todo: Sendemmail to interns
+
+            return RedirectToAction(nameof(InternApplications));
+        }
+
+
+        public IActionResult ApplicationLike(int? id)
+        {
+            DashboardOptions();
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            AppliedInternship application = _context.AppliedInternships
+                .Include(a => a.User)
+                .Single(s => s.AppliedInternshipId == id);
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+
+            application.Shortlist = !application.Shortlist;
+            _context.Update(application);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(InternApplications));
+        }
+
+
+
+
+
+
+
+
+
+
 
         public IActionResult InternBrowser()
         {
