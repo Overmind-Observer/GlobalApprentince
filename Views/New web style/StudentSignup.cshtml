@@ -1,0 +1,250 @@
+﻿@model Global_Intern.Models.User
+
+@{
+    ViewData["Title"] = "Register";
+    var message = ViewBag.Message;
+}
+
+<div class="margin-top-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 offset-xl-2">
+                <div class="login-register-page">
+                    <!-- Welcome Text -->
+                    <div class="welcome-text">
+                        <h3 style="font-size: 26px;">Sign up to Apprentices Interns</h3>
+                        <span>Already have an account? <a href="/Account/Login">Log In!</a></span>
+                    </div>
+                    <h3 style="color:green;">@ViewBag.Message</h3>
+
+                    <!-- Form -->
+                    <form asp-action="Register" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <!-- Account Type -->
+                        <div class="account-type">
+                            <div class="radio">
+                                <input asp-for="Role.RoleId" type="radio" value="1" id="student-radio"
+                                       class="account-type-radio" checked >
+                                <label for="student-radio" class="ripple-effect-dark">
+                                    <i class="icon-material-outline-account-circle"></i>Student
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <h5 id="tttFirst"></h5>
+                            <label asp-for="UserFirstName" class="control-label">What's your name?*</label>
+                            <input required asp-for="UserFirstName" class="form-control" id="FirstNameInput"
+                                   type="text">
+                        </div>
+
+                            <div class="form-group">
+                                <h5 id="tttLast"></h5>
+                                <label asp-for="UserLastName" class="control-label">What's your last name?*</label>
+                                <input required asp-for="UserLastName" class="form-control" id="LastNameInput"
+                                       type="text">
+                                <span asp-validation-for="UserLastName" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="UserGender" class="control-label">What gender do you identify as?*</label>
+                                <select required asp-for="UserGender" class="form-control" id="GenderInput">
+                                    <option disabled selected hidden>Select...</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Identify as both</option>
+                                    <option>Identify as neither</option>
+                                    <option>Prefer not to disclose</option>
+                                </select>
+                                <span asp-validation-for="UserGender" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="UserEthnicity" class="control-label">What is your ethnicity?*</label>
+                                <select required asp-for="UserEthnicity" class="form-control" id="EthinicityInput">
+                                    <option disabled selected hidden>Select...</option>
+                                    <option>Pakeha</option>
+                                    <option>Maori</option>
+                                    <option>Pacific Islands</option>
+                                    <option>Australia</option>
+                                    <option>Asia</option>
+                                    <option>America</option>
+                                    <option>Europe</option>
+                                    <option>Other</option>
+                                    <option>Prefer not to disclose</option>
+                                </select>
+                                <span asp-validation-for="UserGender" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="UserEducation" class="control-label">What University do you/did you attend?*</label>
+                                <select required asp-for="UserEducation" class="form-control" id="EducationInput">
+                                    <option disabled selected hidden>Select...</option>
+                                    <option>Ara Institute of Canterbury</option>
+                                    <option>Auckland Univerisity of Technology</option>
+                                    <option>Eastern Institute of Technology</option>
+                                    <option>Lincoln University</option>
+                                    <option>Manukau Institute of Technology</option>
+                                    <option>Massey University</option>
+                                    <option>Nelson Marlborough Inst of Technology</option>
+                                    <option>North Tec</option>
+                                    <option>Open Polytechnic</option>
+                                    <option>Otago Polytechnic</option>
+                                    <option>Southern Institute of Technology</option>
+                                    <option>Tai Poutini Polytechnic</option>
+                                    <option>Te Wananga O Aotearoa</option>
+                                    <option>Te Wananga O Raukawa</option>
+                                    <option>Te Whare Wananga O Awanuiarangi</option>
+                                    <option>Toi Ohomai Institute of Technology</option>
+                                    <option>Unitec New Zealand</option>
+                                    <option>Universal College of Learning</option>
+                                    <option>University of Auckland</option>
+                                    <option>University of Canterbury</option>
+                                    <option>University of Otago</option>
+                                    <option>University of Waikato</option>
+                                    <option>Victoria University of Wellington</option>
+                                    <option>Waikato Institute of Technology</option>
+                                    <option>Wellington Institute of Technology</option>
+                                    <option>Western Institute of Technology Taranaki</option>
+                                    <option>Whitireia Community Polytechnic</option>
+                                    <option>Other - rest of New Zealand</option>
+                                    <option>Other - rest of world</option>
+                                </select>
+                                <span asp-validation-for="UserGender" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <h5 id="tttEmail"></h5>
+                                <label asp-for="UserEmail" class="control-label">Email address*</label>
+                                <input required asp-for="UserEmail" id="EmailInput" type="email" class="form-control">
+                                <span asp-validation-for="UserEmail" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <h5 id="tttPhone"></h5>
+                                <label asp-for="UserPhone" class="control-label">Phone number*</label>
+                                <input asp-for="UserPhone" id="PhoneInput" type="text" class="form-control">
+                                <span asp-validation-for="UserPhone" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <h5 id="tttPassword"></h5>
+                                <label asp-for="UserPassword" class="control-label">Password*</label>
+                                <input required asp-for="UserPassword" id="PasswordInput" type="password"
+                                       class="form-control">
+                                <small id="passwordHelp" class="form-text text-muted">8 characters minimum</small>
+                                <span asp-validation-for="UserPassword" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <h5 id="tttCPassword"></h5>
+                                <label asp-for="UserPassword" class="control-label">Re-enter your password*</label>
+                                <input required asp-for="UserPassword" id="ConfirmPasswordInput" type="password"
+                                       class="form-control">
+                                <span asp-validation-for="UserPassword" class="text-danger"></span>
+                            </div>
+
+                            <a href="#" class="forgot-password">Forgot Password?</a>
+                            <!-- Button -->
+                            <input type="submit"
+                                   class="button full-width button-sliding-icon ripple-effect margin-top-10"
+                                   value="Register">
+
+                    </form>
+
+                    <!-- Social Login -->
+                    <div class="back-to-home-separator">
+                        <span>
+                            <a asp-controller="Home" asp-action="Index">
+                                Back to Home!
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("RegisterForm").onload = function () {
+        FirstName.value = "";
+        LastName.value = "";
+        Email.value = "";
+        Password.value = "";
+        CPassword.value = "";
+        Phone.value = "";
+    }
+
+    var placeHolderFirst = document.getElementById("tttFirst");
+    var placeHolderLast = document.getElementById("tttLast");
+    var placeHolderEmail = document.getElementById("tttEmail");
+    var placeHolderPass = document.getElementById("tttPassword");
+    var placeHolderCPass = document.getElementById("tttCPassword");
+    var placeHolderPhone = document.getElementById("tttPhone");
+
+    var FirstName = document.getElementById("FirstNameInput");
+    var LastName = document.getElementById("LastNameInput");
+    var Email = document.getElementById("EmailInput");
+    var Password = document.getElementById("PasswordInput");
+    var CPassword = document.getElementById("ConfirmPasswordInput");
+    var Phone = document.getElementById("PhoneInput");
+
+
+    FirstName.addEventListener('focus', () => {
+        placeHolderFirst.innerText = "";
+    });
+    LastName.addEventListener('focus', () => {
+        placeHolderLast.innerText = "";
+    });
+    Email.addEventListener('focus', () => {
+        placeHolderEmail.innerText = "";
+    });
+    Password.addEventListener('focus', () => {
+        placeHolderPass.innerText = "";
+    });
+    CPassword.addEventListener('focus', () => {
+        placeHolderCPass.innerText = "";
+    });
+    Phone.addEventListener('focus', () => {
+        placeHolderPhone.innerText = "";
+    });
+
+    FirstName.addEventListener('blur', () => {
+        if (FirstName.value == "") {
+            placeHolderFirst.innerText = "First Name";
+        }
+    });
+    LastName.addEventListener('blur', () => {
+        if (LastName.value == "") {
+            placeHolderLast.innerText = "Last Name";
+        }
+    });
+    Email.addEventListener('blur', () => {
+        if (Email.value == "") {
+            placeHolderEmail.innerText = "Your Email";
+        }
+    });
+    Password.addEventListener('blur', () => {
+        if (Password.value == "") {
+            placeHolderPass.innerText = "Your Password";
+        }
+    });
+    CPassword.addEventListener('blur', () => {
+        if (CPassword.value == "") {
+            placeHolderCPass.innerText = "Confirm Password";
+        }
+    });
+    Phone.addEventListener('blur', () => {
+        if (Phone.value == "") {
+            placeHolderPhone.innerText = "Your Phone";
+        }
+    });
+
+
+</script>

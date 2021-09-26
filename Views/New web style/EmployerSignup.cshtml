@@ -1,0 +1,235 @@
+﻿@model Global_Intern.Models.User
+
+@{
+    ViewData["Title"] = "Register";
+    var message = ViewBag.Message;
+}
+
+
+<div class="margin-top-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 offset-xl-2">
+                <div class="login-register-page">
+                    <!-- Welcome Text -->
+                    <div class="welcome-text">
+                        <h3 style="font-size: 26px;">Sign up to Apprentices Interns</h3>
+                        <p>We welcome all New Zealand employers to join us. Please, leave your details and we will be in touch with you.</p>
+                        <span>Already have an account? <a href="/Account/Login">Log In!</a></span>
+                    </div>
+                    <h3 style="color:green;">@ViewBag.Message</h3>
+
+                    <!-- Form -->
+                    <form asp-action="Register" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <!-- Account Type -->
+                        <div class="account-type">
+                            <div class="radio">
+                                <input asp-for="Role.RoleId" type="radio" value="2" id="employer-radio" class="account-type-radio" checked>
+                                <label for="employer-radio" class="ripple-effect-dark"><i class="icon-material-outline-business-center"></i> Employer</label>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <h5 id="tttFirst"></h5>
+                            <label asp-for="UserFirstName" class="control-label">Your full name*</label>
+                            <input required asp-for="UserFirstName" class="form-control" id="FirstNameInput"
+                                   type="text">
+
+                            <div class="form-group">
+                                <h5 id="tttLast"></h5>
+                                <label asp-for="UserLastName" class="control-label">Your last name*</label>
+                                <input required asp-for="UserLastName" class="form-control" id="LastNameInput"
+                                       type="text">
+                                <span asp-validation-for="UserLastName" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <h5 id="tttEmail"></h5>
+                                <label asp-for="UserEmail" class="control-label">Email address*</label>
+                                <input required asp-for="UserEmail" id="EmailInput" type="email" class="form-control">
+                                <span asp-validation-for="UserEmail" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <h5 id="tttPhone"></h5>
+                                <label asp-for="UserPhone" class="control-label">Phone number*</label>
+                                <input asp-for="UserPhone" id="PhoneInput" type="text" class="form-control">
+                                <span asp-validation-for="UserPhone" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <h5 id="tttOrganizationName"></h5>
+                                <label asp-for="OrganisationName" class="control-label">Organisation name*</label>
+                                <input asp-for="OrganisationName" id="OrganisationInput" type="text" class="form-control">
+                                <span asp-validation-for="OrganisationName" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <h5 id="tttNzbn"></h5>
+                                <label asp-for="NzbnNumber" class="control-label">NZBN Number*</label>
+                                <input asp-for="NzbnNumber" id="NzbnInput" type="text" class="form-control">
+                                <span asp-validation-for="NzbnNumber" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="OrganisationSize" class="control-label">How many New Zealand-based employees does your organisation have?*</label>
+                                <select required asp-for="OrganisationSize" class="form-control" id="OrganizationSizeInput">
+                                    <option disabled selected hidden>Select...</option>
+                                    <option>1 - 5</option>
+                                    <option>6 - 9</option>
+                                    <option>10 - 19</option>
+                                    <option>20 - 49</option>
+                                    <option>50 - 99</option>
+                                    <option>100 - 499</option>
+                                    <option>500 - 999</option>
+                                    <option>1000 - 4999</option>
+                                    <option>5000 - 9999</option>
+                                    <option>10000+</option>
+                                </select>
+                                <span asp-validation-for="OrganisationSize" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="CompanyBased" class="control-label">Where are you based?*</label>
+                                <select required asp-for="CompanyBased" class="CompanyBased" id="CompanyBasedInput">
+                                    <option disabled selected hidden>Select...</option>
+                                    <option>Auckland</option>
+                                    <option>Christchurch</option>
+                                    <option>Dunedin</option>
+                                    <option>Gisborne</option>
+                                    <option>Hamilton</option>
+                                    <option>Hawkes Bay</option>
+                                    <option>Invercargill</option>
+                                    <option>Nelson</option>
+                                    <option>New Plymouth</option>
+                                    <option>Northland</option>
+                                    <option>Palmerston North</option>
+                                    <option>Queenstown</option>
+                                    <option>Tauranga</option>
+                                    <option>Wellington</option>
+                                </select>
+                                <span asp-validation-for="CompanyBased" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <h5 id="tttPassword"></h5>
+                                <label asp-for="UserPassword" class="control-label">Password*</label>
+                                <input required asp-for="UserPassword" id="PasswordInput" type="password"
+                                       class="form-control">
+                                <small id="passwordHelp" class="form-text text-muted">8 characters minimum</small>
+                                <span asp-validation-for="UserPassword" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <h5 id="tttCPassword"></h5>
+                                <label asp-for="UserPassword" class="control-label">Re-enter your password*</label>
+                                <input required asp-for="UserPassword" id="ConfirmPasswordInput" type="password"
+                                       class="form-control">
+                                <span asp-validation-for="UserPassword" class="text-danger"></span>
+                            </div>
+
+                            <a href="#" class="forgot-password">Forgot Password?</a>
+                            <!-- Button -->
+                            <input type="submit"
+                                   class="button full-width button-sliding-icon ripple-effect margin-top-10"
+                                   value="Register">
+
+                    </form>
+
+                    <!-- Social Login -->
+                    <div class="back-to-home-separator">
+                        <span>
+                            <a asp-controller="Home" asp-action="Index">
+                                Back to
+                                Home!
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("RegisterForm").onload = function () {
+        FirstName.value = "";
+        LastName.value = "";
+        Email.value = "";
+        Password.value = "";
+        CPassword.value = "";
+        Phone.value = "";
+    }
+
+    var placeHolderFirst = document.getElementById("tttFirst");
+    var placeHolderLast = document.getElementById("tttLast");
+    var placeHolderEmail = document.getElementById("tttEmail");
+    var placeHolderPass = document.getElementById("tttPassword");
+    var placeHolderCPass = document.getElementById("tttCPassword");
+    var placeHolderPhone = document.getElementById("tttPhone");
+
+    var FirstName = document.getElementById("FirstNameInput");
+    var LastName = document.getElementById("LastNameInput");
+    var Email = document.getElementById("EmailInput");
+    var Password = document.getElementById("PasswordInput");
+    var CPassword = document.getElementById("ConfirmPasswordInput");
+    var Phone = document.getElementById("PhoneInput");
+
+
+    FirstName.addEventListener('focus', () => {
+        placeHolderFirst.innerText = "";
+    });
+    LastName.addEventListener('focus', () => {
+        placeHolderLast.innerText = "";
+    });
+    Email.addEventListener('focus', () => {
+        placeHolderEmail.innerText = "";
+    });
+    Password.addEventListener('focus', () => {
+        placeHolderPass.innerText = "";
+    });
+    CPassword.addEventListener('focus', () => {
+        placeHolderCPass.innerText = "";
+    });
+    Phone.addEventListener('focus', () => {
+        placeHolderPhone.innerText = "";
+    });
+
+    FirstName.addEventListener('blur', () => {
+        if (FirstName.value == "") {
+            placeHolderFirst.innerText = "First Name";
+        }
+    });
+    LastName.addEventListener('blur', () => {
+        if (LastName.value == "") {
+            placeHolderLast.innerText = "Last Name";
+        }
+    });
+    Email.addEventListener('blur', () => {
+        if (Email.value == "") {
+            placeHolderEmail.innerText = "Your Email";
+        }
+    });
+    Password.addEventListener('blur', () => {
+        if (Password.value == "") {
+            placeHolderPass.innerText = "Your Password";
+        }
+    });
+    CPassword.addEventListener('blur', () => {
+        if (CPassword.value == "") {
+            placeHolderCPass.innerText = "Confirm Password";
+        }
+    });
+    Phone.addEventListener('blur', () => {
+        if (Phone.value == "") {
+            placeHolderPhone.innerText = "Your Phone";
+        }
+    });
+
+
+</script>
