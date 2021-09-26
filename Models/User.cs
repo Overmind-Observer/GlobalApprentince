@@ -19,26 +19,92 @@ namespace Global_Intern.Models
         //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int UserId { get; set; }
         [Required]
-        public string UserFirstName { get; set; }
-        public string UserLastName { get; set; }
+       
+        
+        // =========== add validation requirements ============
         [Required]
+        [RegularExpression(@"/^[a-zA-Z]+([a-zA-Z]+)+$")]
+        [StringLength(50, MinimumLength = 3)]
+        public string UserFirstName { get; set; }
+        
+        
+        [Required]
+        [RegularExpression(@"/^[a-zA-Z]+([a-zA-Z]+)+$")]
+        [StringLength(50, MinimumLength = 3)]
+        public string UserLastName { get; set; }
+       
+        
+        [Required]
+        [RegularExpression(@"^[a-zA-Z0-9.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", ErrorMessage = "Invalid Email Format")]
         public string UserEmail { get; set; }
+        
+        
         public bool UserEmailVerified { get; set; } // Auto
         public string UserAddress { get; set; } //CP
         public string UserCity { get; set; } //CP
         public string UserState { get; set; } //CP
         public string UserCountry { get; set; } //CP
         public int UserZip { get; set; } //CP
+        
+        
+        //password must contain at least a number, one uppder case, 8 characters long
+        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage ="Password must contain at least a number, one upper case and 8 characters long")] 
         [Required]
         public string UserPassword { get; set; }
+        
+        
+        
         [Required]
         public string Salt { get; set; } // Auto
         public string UniqueToken { get; set; } // Auto
+        
+        
+        [Required]
+        [RegularExpression(@"^[0 - 9] +$", ErrorMessage ="Invalid format.")]
         public string UserPhone { get; set; }
+       
         public string UserImage { get; set; }
         public string UserGender { get; set; } // Could be use full for User with student role.
 
 
+         // ========== new definition for sign up pages===================
+
+        [Required]
+        public string UserEthnicity { get; set; } 
+
+        [Required]
+        public string UserEducation { get; set; }
+
+        [Required]
+        public string OrganisationName { get; set; }
+
+        [Required]
+        [RegularExpression(@"/^(?=\d{13}$)(9)\d+/+$", ErrorMessage ="NZBN must contains 13 digits.")]      //@"^[0 - 9] +$"
+        public string NzbnNumber { get; set; }
+
+        [Required]
+        public string OrganisationSize { get; set; }
+
+        [Required]
+        public string CompanyBased { get; set; }
+
+        [Required]
+        public string InstituteName { get; set; }
+
+        [Required]
+        public string InstituteBased { get; set; }
+
+        [Required]
+        public string Occupation{ get; set; }
+
+
+        
+        
+        
+        
+        
+        
+        
 
         [Required]
         public virtual Role Role { get; set; } //FK
