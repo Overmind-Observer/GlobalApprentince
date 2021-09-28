@@ -43,6 +43,38 @@ namespace Global_Intern.Controllers
         {
             return View();
         }
+        
+        
+       // new page for student sign up 
+        public IActionResult StudentSignup()
+        {
+            return View();
+        }
+
+        // new page for employer sign up
+        public IActionResult EmployerSignup()
+        {
+            return View();
+        }
+
+        // new page for institute sign up
+        public IActionResult InstituteSignup()
+        {
+            return View();
+        }
+
+        // new page for supervisor sign up
+        public IActionResult SupervisorSignup()
+        {
+            return View();
+        }
+  
+        
+        
+        
+        
+        
+        
 
         [HttpPost]
         public IActionResult Register(User new_user)
