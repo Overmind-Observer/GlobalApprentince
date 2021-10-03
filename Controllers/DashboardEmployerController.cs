@@ -2,6 +2,7 @@
 using Global_Intern.Models;
 using Global_Intern.Models.AdditonalModels;
 using Global_Intern.Models.EmployerModels;
+using Global_Intern.Models.Filters;
 using Global_Intern.Models.GeneralProfile;
 using Global_Intern.Models.StudentModels;
 using Global_Intern.Util;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
@@ -525,18 +527,45 @@ namespace Global_Intern.Controllers
 
 
         //From here is Intern Applications methods
-        public IActionResult InternApplications()
+        //public IActionResult InternApplications()
+        //{
+        //    DashboardOptions();
+
+        //    var applications = _context.AppliedInternships
+        //        .Include(a=>a.Internship)
+        //        .Include(a=>a.User)
+        //        .Where(i => i.Internship.User == _user);
+        //    return View(applications);
+        //}
+        public IActionResult InternApplications(string title, string status)
         {
             DashboardOptions();
+            IQueryable<string> titleQuery = from i in _context.AppliedInternships
+                                            select i.Internship.InternshipTitle;
+
+            IQueryable<string> statusQuery = from i in _context.AppliedInternships
+                                            select i.ApplicationStatus.ToString();
+
             var applications = _context.AppliedInternships
-                .Include(a=>a.Internship)
-                .Include(a=>a.User)
+                .Include(a => a.Internship)
+                .Include(a => a.User)
                 .Where(i => i.Internship.User == _user);
-
-
-            return View(applications);
+            if (!string.IsNullOrEmpty(title))
+            {
+                applications = applications.Where(a => a.Internship.InternshipTitle == title);
+            }
+            if (!string.IsNullOrEmpty(status))
+            {
+                applications = applications.Where(a => a.ApplicationStatus.ToString() == status);
+            }
+            var applicationsVM = new ApplicationsFilter()
+            {
+                Titles = new SelectList( titleQuery.Distinct().ToList() ),
+                Status = new SelectList(statusQuery.Distinct().ToList()),
+                Applications = applications.ToList()
+            };
+            return View(applicationsVM);
         }
-
         public IActionResult ApplicationDetails(int? id)
         {
             DashboardOptions();
@@ -567,7 +596,7 @@ namespace Global_Intern.Controllers
             return View(application);
         }
 
-
+        
         public IActionResult ApplicationShortlist(int? id)
         {
             DashboardOptions();

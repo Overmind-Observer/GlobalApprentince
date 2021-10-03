@@ -1,8 +1,8 @@
-@model IEnumerable<Global_Intern.Models.AppliedInternship>;
+@model Global_Intern.Models.Filters.ApplicationsFilter;
 @using Global_Intern.Models.AdditonalModels
 
 @{
-    ViewData["Title"] = "CompleteProfile";
+    ViewData["Title"] = "Applications";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
 }
 
@@ -14,53 +14,66 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <h1>Intern Applications </h1>
+                <form asp-controller="DashboardEmployerController" asp-action="Index" method="get">
+                    <p>
+                        <select asp-for="Titles" asp-items="Model.Titles">
+                            <option value="">Internship</option>
+                        </select>
 
-                <table class="table table-hover">
+                        <select asp-for="Status" asp-items="Model.Status">
+                            <option value="">Status</option>
+                        </select>
 
-                    <thead>
+
+                    </p>
+                    <input type="submit" value="Filter" />
+                </form>
+                    <table class="table table-hover">
+
+                        <thead>
                         <td>Application Briefs</td>
                         <td>Action</td>
                         <td>Status</td>
-                    </thead>
+                        </thead>
 
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                <span>Application number @item.AppliedInternshipId</span>
-                                <div>Applicant name: @item.User.UserFirstName, @item.User.UserLastName</div>
-                                <div>Position: @item.Internship.InternshipTitle</div>
-                            </td>
-                            <td>
-                                <a asp-action="ApplicationDetails" asp-route-id="@item.AppliedInternshipId">
+                        @foreach (var item in Model.Applications)
+                        {
+                            <tr>
+                                <td>
+                                    <span>Application number @item.AppliedInternshipId</span>
+                                    <div>Applicant name: @item.User.UserFirstName, @item.User.UserLastName</div>
+                                    <div>Position: @item.Internship.InternshipTitle</div>
+                                </td>
+                                <td>
+                                    <a asp-action="ApplicationDetails" asp-route-id="@item.AppliedInternshipId">
 
-                                    Details
-                                    |
-                                </a>
-                                <a asp-action="ApplicationLike" asp-route-id="@item.AppliedInternshipId">
-                                    @{
-                                        if (item.Shortlist)
-                                        { <i class="fa fa-heart" aria-hidden="true"></i> }
-                                        else
-                                        { <i class="fa fa-heart-o" aria-hidden="true"></i>}
-                                    }
-                                    
-                                </a>
+                                        Details
+                                        |
+                                    </a>
+                                    <a asp-action="ApplicationLike" asp-route-id="@item.AppliedInternshipId">
+                                        @{
+                                            if (item.Shortlist)
+                                            { <i class="fa fa-heart" aria-hidden="true"></i> }
+                                            else
+                                            { <i class="fa fa-heart-o" aria-hidden="true"></i>}
+                                        }
 
-                                
-
-                            </td>
-                            <td>
-                                @item.ApplicationStatus.ToString().ToUpper()
-                            </td>
-                        </tr>
-
-                    }
+                                    </a>
 
 
-                </table>
 
-            </form>
-        </div>
+                                </td>
+                                <td>
+                                    @item.ApplicationStatus.ToString().ToUpper()
+                                </td>
+                            </tr>
+
+                        }
+
+
+                    </table>
+
+                </form>
+</div>
     </main>
 </div>
