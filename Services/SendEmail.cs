@@ -35,8 +35,8 @@ namespace Global_Intern.Services
                 Text = body
             };
 
-            using SmtpClient client = new SmtpClient
-            {
+            using SmtpClient client = new SmtpClient();
+            
 
                 // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
                 //client.ServerCertificateValidationCallback(s, c, h, e); ;
