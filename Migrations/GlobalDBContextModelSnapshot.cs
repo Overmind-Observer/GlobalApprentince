@@ -15,8 +15,8 @@ namespace Global_Intern.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Global_Intern.Models.Admin", b =>
@@ -50,6 +50,9 @@ namespace Global_Intern.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ApplicationStatus")
+                        .HasColumnType("int");
+
                     b.Property<string>("CoverLetterText")
                         .HasColumnType("nvarchar(max)");
 
@@ -70,6 +73,9 @@ namespace Global_Intern.Migrations
 
                     b.Property<int?>("InternshipId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Shortlist")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("SoftDelete")
                         .HasColumnType("bit");
@@ -112,11 +118,9 @@ namespace Global_Intern.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CourseInfo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CourseTitle")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CourseType")
@@ -145,8 +149,8 @@ namespace Global_Intern.Migrations
                     b.Property<string>("UserCLName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserCVName")
-                        .HasColumnType("int");
+                    b.Property<string>("UserCVName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
@@ -155,7 +159,32 @@ namespace Global_Intern.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Documents");
+                    b.ToTable("Document");
+                });
+
+            modelBuilder.Entity("Global_Intern.Models.EmployerLike", b =>
+                {
+                    b.Property<int>("EmployerLikeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("EmployerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("InternUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("SoftDelete")
+                        .HasColumnType("bit");
+
+                    b.HasKey("EmployerLikeID");
+
+                    b.HasIndex("EmployerUserId");
+
+                    b.HasIndex("InternUserId");
+
+                    b.ToTable("EmployerLikes");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.Experience", b =>
@@ -191,6 +220,46 @@ namespace Global_Intern.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Experiences");
+                });
+
+            modelBuilder.Entity("Global_Intern.Models.Institute", b =>
+                {
+                    b.Property<int>("InstituteID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("InsituteName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InstituteLocation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("InstituteID");
+
+                    b.ToTable("Institutes");
+                });
+
+            modelBuilder.Entity("Global_Intern.Models.InstituteAdmin", b =>
+                {
+                    b.Property<int>("InstituteAdminID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("InstituteID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("InstituteAdminID");
+
+                    b.HasIndex("InstituteID");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("InstituteAdmins");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.InternStudent", b =>
@@ -257,7 +326,7 @@ namespace Global_Intern.Migrations
                     b.Property<bool>("InternshipVirtual")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("InternshipId");
@@ -406,6 +475,70 @@ namespace Global_Intern.Migrations
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("Global_Intern.Models.Skill", b =>
+                {
+                    b.Property<int>("SkillID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("InternStudentInternProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SkillLevel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkillName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SkillID");
+
+                    b.HasIndex("InternStudentInternProfileId");
+
+                    b.ToTable("Skills");
+                });
+
+            modelBuilder.Entity("Global_Intern.Models.StudentModels.StudentInternProfile", b =>
+                {
+                    b.Property<int>("StudentInternProfileId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("StudentDob")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentDriverType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentEthnic")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentIndustryCertificates")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentVisaExpire")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentVisaType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentWorkingRight")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentInternProfileId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("StudentInternProfiles");
+                });
+
             modelBuilder.Entity("Global_Intern.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -492,7 +625,7 @@ namespace Global_Intern.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("CLCreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserCLFullPath")
@@ -515,7 +648,7 @@ namespace Global_Intern.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("CVCreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserCVFullPath")
@@ -569,32 +702,6 @@ namespace Global_Intern.Migrations
                     b.ToTable("UserCompany");
                 });
 
-            modelBuilder.Entity("Global_Intern.Models.UserDocument", b =>
-                {
-                    b.Property<int>("UserDocumentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DocumentPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DocumentTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DocumentType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserDocumentId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserDocuments");
-                });
-
             modelBuilder.Entity("Global_Intern.Models.AppliedInternship", b =>
                 {
                     b.HasOne("Global_Intern.Models.Internship", "Internship")
@@ -604,6 +711,10 @@ namespace Global_Intern.Migrations
                     b.HasOne("Global_Intern.Models.User", "User")
                         .WithMany("appliedInternships")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Internship");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.Course", b =>
@@ -611,6 +722,8 @@ namespace Global_Intern.Migrations
                     b.HasOne("Global_Intern.Models.User", "User")
                         .WithMany("Course")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.Document", b =>
@@ -618,6 +731,23 @@ namespace Global_Intern.Migrations
                     b.HasOne("Global_Intern.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Global_Intern.Models.EmployerLike", b =>
+                {
+                    b.HasOne("Global_Intern.Models.User", "Employer")
+                        .WithMany()
+                        .HasForeignKey("EmployerUserId");
+
+                    b.HasOne("Global_Intern.Models.User", "Intern")
+                        .WithMany()
+                        .HasForeignKey("InternUserId");
+
+                    b.Navigation("Employer");
+
+                    b.Navigation("Intern");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.Experience", b =>
@@ -625,6 +755,23 @@ namespace Global_Intern.Migrations
                     b.HasOne("Global_Intern.Models.User", "User")
                         .WithMany("Experiences")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Global_Intern.Models.InstituteAdmin", b =>
+                {
+                    b.HasOne("Global_Intern.Models.Institute", "Institute")
+                        .WithMany("InstituteAdmin")
+                        .HasForeignKey("InstituteID");
+
+                    b.HasOne("Global_Intern.Models.User", "User")
+                        .WithMany("InstituteAdmins")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Institute");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.InternStudent", b =>
@@ -636,15 +783,19 @@ namespace Global_Intern.Migrations
                     b.HasOne("Global_Intern.Models.User", "User")
                         .WithMany("InternStudents")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Internship");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.Internship", b =>
                 {
                     b.HasOne("Global_Intern.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.Message", b =>
@@ -660,6 +811,12 @@ namespace Global_Intern.Migrations
                     b.HasOne("Global_Intern.Models.User", "MessageTo")
                         .WithMany()
                         .HasForeignKey("MessageToUserId");
+
+                    b.Navigation("InternStudent");
+
+                    b.Navigation("MessageFrom");
+
+                    b.Navigation("MessageTo");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.Profile", b =>
@@ -669,6 +826,8 @@ namespace Global_Intern.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.Qualification", b =>
@@ -678,6 +837,26 @@ namespace Global_Intern.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Global_Intern.Models.Skill", b =>
+                {
+                    b.HasOne("Global_Intern.Models.StudentModels.StudentInternProfile", "Intern")
+                        .WithMany("Skills")
+                        .HasForeignKey("InternStudentInternProfileId");
+
+                    b.Navigation("Intern");
+                });
+
+            modelBuilder.Entity("Global_Intern.Models.StudentModels.StudentInternProfile", b =>
+                {
+                    b.HasOne("Global_Intern.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.User", b =>
@@ -687,6 +866,8 @@ namespace Global_Intern.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.UserCL", b =>
@@ -694,6 +875,8 @@ namespace Global_Intern.Migrations
                     b.HasOne("Global_Intern.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.UserCV", b =>
@@ -701,6 +884,8 @@ namespace Global_Intern.Migrations
                     b.HasOne("Global_Intern.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.UserCompany", b =>
@@ -710,15 +895,42 @@ namespace Global_Intern.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Global_Intern.Models.UserDocument", b =>
+            modelBuilder.Entity("Global_Intern.Models.Institute", b =>
                 {
-                    b.HasOne("Global_Intern.Models.User", "User")
-                        .WithMany("UserDocuments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("InstituteAdmin");
+                });
+
+            modelBuilder.Entity("Global_Intern.Models.Role", b =>
+                {
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Global_Intern.Models.StudentModels.StudentInternProfile", b =>
+                {
+                    b.Navigation("Skills");
+                });
+
+            modelBuilder.Entity("Global_Intern.Models.User", b =>
+                {
+                    b.Navigation("appliedInternships");
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Experiences");
+
+                    b.Navigation("InstituteAdmins");
+
+                    b.Navigation("InternStudents");
+
+                    b.Navigation("Profiles");
+
+                    b.Navigation("Qualifications");
+
+                    b.Navigation("UserCompanies");
                 });
 #pragma warning restore 612, 618
         }

@@ -36,3 +36,5 @@ obj/project.nuget.cache
 *.jfm
 obj/Debug/netcoreapp3.1/Global Intern.assets.cache
 *.cache
+UserDB.mdf
+UserDB_log.ldf

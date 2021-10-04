@@ -1,4 +1,6 @@
-@model Global_Intern.Models.EmployerModels.EmployerCompanyModel;
+@model IEnumerable<Global_Intern.Models.AppliedInternship>;
+@using Global_Intern.Models.AdditonalModels
+
 @{
     ViewData["Title"] = "CompleteProfile";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
@@ -12,12 +14,51 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <h1>Intern Applications </h1>
-                <p> This page is for employers read and watch applications that students applied. </p>
+
+                <table class="table table-hover">
+
+                    <thead>
+                        <td>Application Briefs</td>
+                        <td>Action</td>
+                        <td>Status</td>
+                    </thead>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span>Application number @item.AppliedInternshipId</span>
+                                <div>Applicant name: @item.User.UserFirstName, @item.User.UserLastName</div>
+                                <div>Position: @item.Internship.InternshipTitle</div>
+                            </td>
+                            <td>
+                                <a asp-action="ApplicationDetails" asp-route-id="@item.AppliedInternshipId">
+
+                                    Details
+                                    |
+                                </a>
+                                <a asp-action="ApplicationLike" asp-route-id="@item.AppliedInternshipId">
+                                    @{
+                                        if (item.Shortlist)
+                                        { <i class="fa fa-heart" aria-hidden="true"></i> }
+                                        else
+                                        { <i class="fa fa-heart-o" aria-hidden="true"></i>}
+                                    }
+                                    
+                                </a>
+
+                                
+
+                            </td>
+                            <td>
+                                @item.ApplicationStatus.ToString().ToUpper()
+                            </td>
+                        </tr>
+
+                    }
 
 
-
-
-
+                </table>
 
             </form>
         </div>
