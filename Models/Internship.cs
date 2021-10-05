@@ -11,6 +11,8 @@ namespace Global_Intern.Models
         public int InternshipId { get; set; }
         [Required]
         public string InternshipTitle { get; set; }
+        public string InternshipIndustry { get; set; }
+        public string InternshipLocation { get; set; }
         public string InternshipType { get; set; }
         public string InternshipDuration { get; set; }
         [Required]
@@ -32,6 +34,8 @@ namespace Global_Intern.Models
         public void SetAddorUpdateIntern(InternshipModel intern, User user, bool isUpdate = false, int InternshipID = 0)
         {
             this.InternshipTitle = intern.InternshipTitle;
+            this.InternshipIndustry = intern.InternshipIndustry;
+            this.InternshipLocation = intern.InternshipLocation;
             this.InternshipType = intern.InternshipType;
             this.InternshipDuration = intern.InternshipDuration;
             this.InternshipBody = intern.InternshipBody;
@@ -58,6 +62,8 @@ namespace Global_Intern.Models
             todaysDate = DateTime.Now;
             var nextMonth = todaysDate.AddMonths(1);
             this.InternshipTitle = intern.InternshipTitle;
+            this.InternshipIndustry = intern.InternshipIndustry;
+            this.InternshipLocation = intern.InternshipLocation;
             this.InternshipType = intern.InternshipType;
             this.InternshipDuration = intern.InternshipDuration;
             this.InternshipBody = intern.InternshipBody;
@@ -75,6 +81,8 @@ namespace Global_Intern.Models
         public Internship UpdateInternship(Internship internship, Internship _internship)
         {
             internship.InternshipTitle = _internship.InternshipTitle;
+            internship.InternshipIndustry = _internship.InternshipIndustry;
+            internship.InternshipLocation = _internship.InternshipLocation;
             internship.InternshipType = _internship.InternshipType;
             internship.InternshipDuration = _internship.InternshipDuration;
             internship.InternshipBody = _internship.InternshipBody;

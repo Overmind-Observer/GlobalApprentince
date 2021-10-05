@@ -16,5 +16,7 @@ namespace Global_Intern.Models.EmployerModels
         public string InternshipPaid { get; set; }
         public string InternshipEmail { get; set; }
         public System.DateTime InternshipExpDate { get; set; }
-    }
+		public string InternshipIndustry { get; internal set; }
+		public string InternshipLocation { get; internal set; }
+	}
 }
