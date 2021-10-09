@@ -10,17 +10,15 @@
 <div class="content">
     <main>
         <div class="container-fluid">
-            <form id="GeneralProfile" asp-action="CompanyDetails" enctype="multipart/form-data" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <h1>Intern Applications </h1>
-                <form asp-controller="DashboardEmployerController" asp-action="Index" method="get">
+                <form asp-controller="DashboardEmployer" asp-action="InternApplications" method="get">
                     <p>
-                        <select asp-for="Titles" asp-items="Model.Titles">
+                        <select asp-for="ApplicationTitle" asp-items="Model.Titles">
                             <option value="">Internship</option>
                         </select>
 
-                        <select asp-for="Status" asp-items="Model.Status">
+                        <select asp-for="ApplicationStatus" asp-items="Model.Status">
                             <option value="">Status</option>
                         </select>
 
@@ -28,6 +26,7 @@
                     </p>
                     <input type="submit" value="Filter" />
                 </form>
+                
                     <table class="table table-hover">
 
                         <thead>
@@ -73,7 +72,6 @@
 
                     </table>
 
-                </form>
 </div>
     </main>
 </div>

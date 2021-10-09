@@ -5,6 +5,7 @@ using Global_Intern.Models.EmployerModels;
 using Global_Intern.Models.Filters;
 using Global_Intern.Models.GeneralProfile;
 using Global_Intern.Models.StudentModels;
+using Global_Intern.Services;
 using Global_Intern.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -36,22 +38,23 @@ namespace Global_Intern.Controllers
         private readonly string Internship_url = "/api/Internships";
         string InternshipId;
         GlobalDBContext _context;
-
+        private readonly EmailSettings _emailSettings;
 
         private User _user;
         private UserCompany _company;
 
 
-        public DashboardEmployerController(IHttpContextAccessor httpContextAccessor, ICustomAuthManager auth, IWebHostEnvironment env, GlobalDBContext context)
+        public DashboardEmployerController(IHttpContextAccessor httpContextAccessor, IOptions<EmailSettings> emailSetting,
+            ICustomAuthManager auth, IWebHostEnvironment env, GlobalDBContext context)
         {
             _env = env;
             _httpContextAccessor = httpContextAccessor;
             host = "https://" + _httpContextAccessor.HttpContext.Request.Host.Value;
             _customAuthManager = auth;
             _context = context ;
-
+            _emailSettings = emailSetting.Value;
             // sets User _user using session
-            
+
             setUser();
             setUserCompany();
         }
@@ -74,9 +77,17 @@ namespace Global_Intern.Controllers
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 // Gets all Internship created by the user
-                var internships = _context.Internships.Where(i => i.User == _user).ToList();
+                var internships = _context
+                    .Internships.Where(i => i.User == _user)
+                    .ToList();
 
-                
+                    var applications = _context.AppliedInternships
+                    .Include(a => a.Internship)
+                    .Include(a => a.User)
+                    .Where(i => i.Internship.User == _user)
+                    .Where(a=> a.ApplicationStatus == InternshipApplicationStatus.Unviewed)
+                    .ToList();
+                ViewBag.newApplications = applications.Count();
 
                 return View(internships);
             }
@@ -508,36 +519,11 @@ namespace Global_Intern.Controllers
         }
 
 
-        //Create CreateInternController  
-        //public  IActionResult CreateInternships()
-        //{
-
-        //    DashboardOptions();
-        //    return View();
-        //}
-        //[HttpPost]
-        //public IActionResult CreateInternships(Internship internship)
-        //{
-
-        //    DashboardOptions();
-        //    return View();
-        //}
-
 
 
 
         //From here is Intern Applications methods
-        //public IActionResult InternApplications()
-        //{
-        //    DashboardOptions();
-
-        //    var applications = _context.AppliedInternships
-        //        .Include(a=>a.Internship)
-        //        .Include(a=>a.User)
-        //        .Where(i => i.Internship.User == _user);
-        //    return View(applications);
-        //}
-        public IActionResult InternApplications(string title, string status)
+        public async Task<IActionResult> InternApplications(string applicationTitle, string applicationStatus)
         {
             DashboardOptions();
             IQueryable<string> titleQuery = from i in _context.AppliedInternships
@@ -550,21 +536,32 @@ namespace Global_Intern.Controllers
                 .Include(a => a.Internship)
                 .Include(a => a.User)
                 .Where(i => i.Internship.User == _user);
-            if (!string.IsNullOrEmpty(title))
+            
+            if (!string.IsNullOrEmpty(applicationTitle))
             {
-                applications = applications.Where(a => a.Internship.InternshipTitle == title);
+                applications = applications.Where(a => a.Internship.InternshipTitle == applicationTitle);
             }
-            if (!string.IsNullOrEmpty(status))
+            if (!string.IsNullOrEmpty(applicationStatus))
             {
-                applications = applications.Where(a => a.ApplicationStatus.ToString() == status);
+                var status = (InternshipApplicationStatus)Enum.Parse(typeof(InternshipApplicationStatus), applicationStatus);
+                applications = applications
+                    .Where(a => a.ApplicationStatus == status);
             }
-            var applicationsVM = new ApplicationsFilter()
-            {
-                Titles = new SelectList( titleQuery.Distinct().ToList() ),
-                Status = new SelectList(statusQuery.Distinct().ToList()),
-                Applications = applications.ToList()
+
+            ApplicationsFilter applicationsVM = new ApplicationsFilter() { 
+            Titles = new SelectList(await titleQuery.Distinct().ToListAsync()),
+            Status= new SelectList(await statusQuery.Distinct().ToListAsync()),
+            Applications = await applications.OrderBy(a => (int)a.ApplicationStatus).ToListAsync()
             };
             return View(applicationsVM);
+        }
+        public IActionResult TEST(string title, string status)
+        {
+            DashboardOptions();
+            Console.WriteLine(title);
+            Console.WriteLine(status);
+            return RedirectToAction(nameof(Index));
+
         }
         public IActionResult ApplicationDetails(int? id)
         {
@@ -586,9 +583,9 @@ namespace Global_Intern.Controllers
                 return NotFound();
             }
 
-            if (application.ApplicationStatus == InternshipApplicationStatus.unviewed)
+            if (application.ApplicationStatus == InternshipApplicationStatus.Unviewed)
             {
-                application.ApplicationStatus = InternshipApplicationStatus.viewed;
+                application.ApplicationStatus = InternshipApplicationStatus.Viewed;
                 _context.Update(application);
                 _context.SaveChanges();
             }
@@ -643,9 +640,16 @@ namespace Global_Intern.Controllers
             }
 
 
-            application.ApplicationStatus = InternshipApplicationStatus.accepted;
+            application.ApplicationStatus = InternshipApplicationStatus.Accepted;
             _context.Update(application);
             _context.SaveChanges();
+            string company = _context.UserCompany.SingleOrDefault(c => c.User == _user).UserCompanyName;
+
+            SendEmail email = new SendEmail(_emailSettings);
+            string fullName = application.User.UserFirstName + application.User.UserLastName;
+            string userEmail = application.User.UserEmail;
+            string msg = $"Congratulations, your Internship application ID to Company {company} for position of  has been accepted.";
+            email.SendEmailtoUser(fullName, userEmail, "Application status update", msg);
 
             //todo: Sendemmail to interns
 
@@ -670,7 +674,7 @@ namespace Global_Intern.Controllers
             }
 
 
-            application.ApplicationStatus = InternshipApplicationStatus.declined;
+            application.ApplicationStatus = InternshipApplicationStatus.Declined;
             _context.Update(application);
             _context.SaveChanges();
 
@@ -724,8 +728,11 @@ namespace Global_Intern.Controllers
                 Console.WriteLine(success);
                 ViewBag.Success = Int32.Parse(success);
             }
-            
-            return View(_context.StudentInternProfiles.Include(s=>s.User).ToList());
+            var paid = _context.UserCompany.SingleOrDefault(c => c.User == _user).PaidAccount;
+            ViewBag.paid = paid;
+            return View(_context.StudentInternProfiles
+                .Include(s=>s.User)
+                .ToList());
         }
 
         public IActionResult InternDetails(int?id)
@@ -760,7 +767,8 @@ namespace Global_Intern.Controllers
             try
             {
                 User intern = _context.Users.Single(u => u.UserId == id);
-                EmployerLike newLike = new EmployerLike(_user, intern);
+                User user = _context.Users.SingleOrDefault(u => u == _user);
+                EmployerLike newLike = new EmployerLike(user,intern);
                 _context.EmployerLikes.Add(newLike);
                 _context.SaveChanges();
                 TempData["success"] = 1;
@@ -771,9 +779,9 @@ namespace Global_Intern.Controllers
                 TempData["success"] = 0;
 
             }
-            
 
-            
+
+
 
             return RedirectToAction(nameof(InternBrowser));
         }

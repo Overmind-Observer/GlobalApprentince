@@ -7,9 +7,9 @@ namespace Global_Intern.Models.AdditonalModels
 {
     public enum InternshipApplicationStatus
     {
-        unviewed,
-        viewed,
-        accepted,
-        declined,
+        Unviewed,
+        Viewed,
+        Accepted,
+        Declined,
     }
 }

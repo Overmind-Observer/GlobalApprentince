@@ -72,6 +72,7 @@ namespace Global_Intern.Data
         public DbSet<Institute> Institutes { get; set; }
         public DbSet<InstituteAdmin> InstituteAdmins { get; set; }
         public DbSet<EmployerLike> EmployerLikes { get; set; }
+        public DbSet<TestTable> Tests { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

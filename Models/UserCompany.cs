@@ -17,6 +17,7 @@ namespace Global_Intern.Models
         public string UserCompanyCountry { get; set; }
         [Required]
         public virtual User User { get; set; }
+        public bool PaidAccount { get; set; }
         public UserCompany()
         {
 

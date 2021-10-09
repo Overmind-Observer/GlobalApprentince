@@ -1,0 +1,1 @@
+﻿update AppliedInternships set ApplicationStatus=0;

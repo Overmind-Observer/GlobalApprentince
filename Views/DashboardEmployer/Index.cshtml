@@ -56,10 +56,20 @@
                         </div>
                     </div>
                 </div>
+
+
                 <div class=".col-12 col-md-4 my-3">
-                    <div class="p-3 tttCard">
-                        <h1 class="mb-2">New Card</h1>
-                    </div>
+                    @{
+                        if (ViewBag.newApplications != 0)
+                        {<a asp-action="InternApplications" style="text-decoration:none;">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+
+                                    <span class="mb-2">You have @ViewBag.newApplications new Applications, click to check.</span>
+                                </div>
+                            </a>
+                        }
+                    }
+
                 </div>
 
             </div>

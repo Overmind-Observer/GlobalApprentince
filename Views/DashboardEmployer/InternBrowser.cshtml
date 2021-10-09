@@ -12,7 +12,7 @@
             @{ if (ViewBag.Success == 1)
                 {
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                        <strong>Great!</strong> You have saved this intern.
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 }
@@ -28,37 +28,77 @@
                 <thead>
                     <tr>
                         <th>
-                            Names
+                            Name
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.User.UserGender)
+                            Email
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.User.UserEmail)
-                        </th>
-                        <th></th>
+                        
+                        <th>Top 5 Skills</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.User.UserFirstName)
-                                @Html.DisplayFor(modelItem => item.User.UserLastName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.User.UserGender)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.User.UserEmail)
-                            </td>
-                            <td>
-                                <a asp-action="InternDetails" asp-route-id="@item.StudentInternProfileId">Details</a> |
-                                <a asp-action="InternLike" asp-route-id="@item.User.UserId">Like</a>
-                            </td>
-                        </tr>
-                    }
+
+
+                    <tr>
+
+                        @{
+                            if (ViewBag.paid)
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.UserFirstName)
+                                    @Html.DisplayFor(modelItem => item.User.UserLastName)
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="block" style="background-color:rgba(122,122,122,0.5);"></td>
+                            }
+
+
+
+                        }
+
+
+
+
+                        @{ if (ViewBag.paid)
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.UserEmail)
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="block" style="background-color:rgba(122,122,122,0.5);"></td>
+                            }
+                        }
+
+
+                        <td>
+                            skill1, skill2, skill3, skill4,skill5
+                        </td>
+                        @{if (ViewBag.paid)
+                            {
+                                <td>
+                                    <a asp-action="InternDetails" asp-route-id="@item.StudentInternProfileId">Details</a> |
+                                    <a asp-action="InternLike" asp-route-id="@item.User.UserId">Like</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <span>Details</span> |
+                                    <span>Like</span> |
+                                    <a href="#">Go to pay</a>
+                                </td>
+
+                            }}
+                    </tr>
+                                }
                 </tbody>
             </table>
         </div>

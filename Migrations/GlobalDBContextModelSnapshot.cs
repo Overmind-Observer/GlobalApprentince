@@ -539,6 +539,26 @@ namespace Global_Intern.Migrations
                     b.ToTable("StudentInternProfiles");
                 });
 
+            modelBuilder.Entity("Global_Intern.Models.TestTable", b =>
+                {
+                    b.Property<int>("TestTableID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Test1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TestTableID");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Tests");
+                });
+
             modelBuilder.Entity("Global_Intern.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -670,6 +690,9 @@ namespace Global_Intern.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("PaidAccount")
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserCompanyAddress")
                         .HasColumnType("nvarchar(max)");
@@ -857,6 +880,15 @@ namespace Global_Intern.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Global_Intern.Models.TestTable", b =>
+                {
+                    b.HasOne("Global_Intern.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("Global_Intern.Models.User", b =>
