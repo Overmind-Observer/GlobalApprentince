@@ -165,3 +165,16 @@
 2021/10/10 9:38:08 ==> 0
 2021/10/10 9:38:08 ==> 0
 2021/10/10 9:38:08 ==> 0
+2021/10/10 9:51:54 ==> Test
+2021/10/10 9:51:54 ==> The startInclusive number is equal to the endInclusive number
+2021/10/10 9:51:54 ==> 3
+2021/10/10 9:56:56 ==> Test
+2021/10/10 9:56:56 ==> The end of the range is smaller than the start
+2021/10/10 10:03:35 ==> Test
+2021/10/10 10:03:35 ==> The end of the range is smaller than the start
+2021/10/10 10:09:19 ==> Test
+2021/10/10 10:09:19 ==> The end of the range is smaller than the start
+2021/10/10 10:10:50 ==> Test
+2021/10/10 10:10:50 ==> The end of the range is smaller than the start
+2021/10/10 10:14:31 ==> Test
+2021/10/10 10:14:31 ==> The end of the range is smaller than the start

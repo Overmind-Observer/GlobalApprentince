@@ -633,6 +633,7 @@ namespace Global_Intern.Controllers
 
             AppliedInternship application = _context.AppliedInternships
                 .Include(a => a.User)
+                .Include(a => a.Internship)
                 .Single(s => s.AppliedInternshipId == id);
             if (application == null)
             {
@@ -648,7 +649,7 @@ namespace Global_Intern.Controllers
             SendEmail email = new SendEmail(_emailSettings);
             string fullName = application.User.UserFirstName + application.User.UserLastName;
             string userEmail = application.User.UserEmail;
-            string msg = $"Congratulations, your Internship application ID to Company {company} for position of  has been accepted.";
+            string msg = $"Congratulations, your Internship application ID {application.Internship.InternshipId} to Company {company} for position {application.Internship.InternshipTitle} of  has been accepted.";
             email.SendEmailtoUser(fullName, userEmail, "Application status update", msg);
 
             //todo: Sendemmail to interns

@@ -36,7 +36,7 @@ namespace Global_Intern.Services
             };
 
             using SmtpClient client = new SmtpClient();
-            {
+            
 
                 // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
                 //client.ServerCertificateValidationCallback(s, c, h, e); ;
@@ -53,7 +53,7 @@ namespace Global_Intern.Services
                 client.Authenticate(_settings.Sender, _settings.Password);
                 client.Send(message);
                 client.Disconnect(true);
-            }
+            
             /*
             bool ServerCertificateValidationCallback(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
             {
