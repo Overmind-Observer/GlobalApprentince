@@ -1,0 +1,21 @@
+﻿@model Global_Intern.Models.RegisterationStudent
+
+<div class="account-type">
+    <div class="radio">
+        <input asp-for="Role.RoleId" type="radio" value="1" id="student-radio" class="account-type-radio" checked />
+        <label for="student-radio" class="ripple-effect-dark"><i class="icon-material-outline-account-circle"></i> Student</label>
+    </div>
+    <div class="radio">
+        <input asp-for="Role.RoleId" type="radio" value="2" id="employer-radio" class="account-type-radio" />
+        <label for="employer-radio" class="ripple-effect-dark"><i class="icon-material-outline-business-center"></i> Employer</label>
+    </div>
+    <div class="radio">
+        <input asp-for="Role.RoleId" type="radio" value="3" id="institute-radio" class="account-type-radio" />
+        <label for="institute-radio" class="ripple-effect-dark"><i class="icon-material-outline-location-city"></i> Institute </label>
+    </div>
+    <div class="radio">
+        <input asp-for="Role.RoleId" type="radio" value="4" id="supervisor-radio" class="account-type-radio" />
+        <label for="supervisor-radio" class="ripple-effect-dark"><i class="icon-material-outline-school"></i> Supervisor </label>
+    </div>
+</div>
+

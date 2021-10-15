@@ -1,0 +1,407 @@
+﻿<html lang="en">
+<head>
+
+    <!-- Basic Page Needs
+    ================================================== -->
+    <title>@ViewData["Title"] - Global_Intern</title>
+    <link rel="icon" href="/content/images/Gfavicon.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <!-- CSS
+    ================================================== -->
+
+    <link href="~/content/css/style.css" rel="stylesheet" />
+    <link href="~/content/css/colors/blue.css" rel="stylesheet" />
+
+</head>
+<body>
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Header Container
+    ================================================== -->
+        <header id="header-container" class="fullwidth">
+            <!-- Header -->
+            <div id="header">
+                <div class="container">
+                    <!-- Left Side Content -->
+                    <div class="left-side">
+                        <!-- Logo -->
+                        <div id="logo">
+                            <a asp-controller="Home" asp-action="Index"><img src="/content/images/new_logo.jpg" alt="logo"></a>
+                        </div>
+                        <!-- Main Navigation -->
+                        <nav id="navigation">
+                            <ul id="responsive">
+                                <li class="dropdown-nav">
+                                    <a asp-controller="Home" asp-action="Index" class="current">Home</a>
+                                    <ul class="dropdown-nav"></ul>
+                                </li>
+                                @*<li>
+                                    <a href="#">Programmes</a>
+                                    <ul class="dropdown-nav">
+                                        <li><a asp-controller="Home" asp-action="AllInternships">Internships</a></li>
+                                        <li><a asp-controller="Home" asp-action="AllCourses">Course</a></li>
+                                    </ul>
+                                </li>*@
+                                <li>
+                                    <a href="/Home/JobCategories">Job Categories</a>
+                                    <ul class="dropdown-nav" style="max-height: 100vh; overflow-x: hidden;overflow-y: scroll;">
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Accounting</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Administration & Office Support</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Advertising, Arts & Media</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Banking & Financial Services</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Call Centre & Customer Service</a>	</li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Community Services & Development</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Construction</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Consulting & Strategy</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Design & Architecture</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Education & Training</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Engineering</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Farming, Animal & Conservation</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Government & Defense</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Healthcare & Medical </a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Hospitality & Tourism </a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Human Resources & Recruitment </a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Information & Communication Technology</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Insurance & Superannuation</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Legal</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Manufacturing, Transport & Logistics</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Marketing & Communications</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Insurance & Superannuation</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Legal</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Manufacturing, Transport & Logistics</a>	</li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Marketing & Communications</a> </li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Mining, Resources & Energy</a>	</li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Real Estate & Property</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Retail & Consumer Products</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Sales</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Science & Technology</a></li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Sport & Recreation</a>	</li>
+                                        <li><a asp-controller="Home" asp-action="JobCategories">Trade & Services</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a asp-controller="Home" asp-action="Careers">Careers</a>
+                                    <ul class="dropdown-nav">
+                                        <li><a asp-controller="Home">Internships</a></li>
+                                        <li><a asp-controller="Home">Placements</a></li>
+                                        <li><a asp-controller="Home">Apprentinceships</a></li>
+                                        <li><a asp-controller="Home">Current vacancies</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a asp-controller="Home" asp-action="ContactUs">Contact us</a>
+                                    <ul class="dropdown-nav"></ul>
+                                </li>
+                                <li class="dropdown-nav">
+                                    <a asp-controller="Home" asp-action="About">About us</a>
+                                    <ul class="dropdown-nav"></ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="clearfix"></div>
+                        <!-- Main Navigation / End -->
+                    </div>
+                    <!-- Right Side Content / End -->
+                    <div class="right-side">
+                        <!--  Register Buttons -->
+                        @if (ViewData["LoggeduserName"] == null)
+                        {
+                            <div class="header-widget hide-on-mobile">
+                                <nav id="loginBtn" class="dark">
+                                    <ul>
+                                        <li><a href="/Account/Login">Log in</a></li>
+                                        <li><a href="/Account/RegisterStudent">Sign up</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        }
+                        else
+                        {
+                            var userInfo = ViewData["LoggeduserName"] as List<string>;
+                            <!--  Register Buttons / End -->
+                            <!-- User Menu -->
+                            <div class="header-widget">
+                                <!-- Messages -->
+                                <div class="header-notifications user-menu">
+                                    <div class="header-notifications-trigger">
+                                        @if (userInfo[1] != null)
+                                        {
+                                            <a href="#"><div class="user-avatar status-online"><img src="~/uploads/UserImage/@userInfo[1]" alt=""></div></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#"><div class="user-avatar status-online"><img src="/content/images/user-avatar-small-01.png" alt=""></div></a>
+                                        }
+                                    </div>
+                                    <!-- Dropdown -->
+                                    <div class="header-notifications-dropdown">
+                                        <!-- User Status -->
+                                        <div class="user-status">
+                                            <!-- User Name / Avatar -->
+                                            <div class="user-details">
+                                                @if (userInfo[1] != null)
+                                                {
+                                                    <div class="user-avatar status-online"><img src="~/uploads/UserImage/@userInfo[1]" alt=""></div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="user-avatar status-online"><img src="/content/images/user-avatar-small-01.jpg" alt=""></div>
+                                                }
+                                                <div class="user-name">
+                                                    @userInfo[0] <span></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- User Status Switcher -->
+                                            <div class="status-switch" id="snackbar-user-status">
+                                                <label class="user-online current-status">Online</label>
+                                                <label class="user-invisible">Invisible</label>
+                                                <!-- Status Indicator -->
+                                                <span class="status-indicator" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
+
+                                        <ul class="user-menu-small-nav">
+                                            <li><a href="dashboard.html"><i class="icon-material-outline-dashboard"></i> Dashboard</a></li>
+                                            <li><a href="dashboard-settings.html"><i class="icon-material-outline-settings"></i> Settings</a></li>
+                                            <li><a asp-controller="Account" asp-action="Logout"><i class="icon-material-outline-power-settings-new"></i> Logout</a></li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- User Menu / End -->
+                            <!-- Mobile Navigation Button -->
+
+                        }
+                        <span class="mmenu-trigger">
+                            <button class="hamburger hamburger--collapse" type="button">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                            </button>
+                        </span>
+                    </div>
+                    <!-- Right Side Content / End -->
+
+                </div>
+            </div>
+            <!-- Header / End -->
+        </header>
+        <div class="clearfix"></div>
+        <!-- Header Container / End -->
+        @RenderBody()
+        <!-- Spacer -->
+        <div class="margin-top-70"></div>
+        <!-- Spacer / End-->
+        <!-- Footer
+    ================================================== -->
+
+        <div id="footer">
+
+            <!-- Footer Middle Section -->
+            <div class="footer-middle-section">
+                <div class="container">
+                    <div class="row">
+
+                        <!-- Links -->
+                        <div class="col-xl-2 col-lg-2 col-md-3">
+                            <div class="footer-links">
+                                <h3>Students</h3>
+                                <ul>
+                                    <li><a href="#"><span>Internships</span></a></li>
+                                    <li><a href="#"><span>to be added</span></a></li>
+                                    <li><a href="#"><span>to be added</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Links -->
+                        <div class="col-xl-2 col-lg-2 col-md-3">
+                            <div class="footer-links">
+                                <h3>Employers</h3>
+                                <ul>
+                                    <li><a href="#"><span>Interships</span></a></li>
+                                    <li><a href="#"><span>Pricing</span></a></li>
+                                    <li><a href="#"><span>to be added</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Links -->
+                        <div class="col-xl-2 col-lg-2 col-md-3">
+                            <div class="footer-links">
+                                <h3>Institutes</h3>
+                                <ul>
+                                    <li><a href="#"><span>Course</span></a></li>
+                                    <li><a href="#"><span>Pricing</span></a></li>
+                                    <li><a href="#"><span>to be added</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Links -->
+                        <div class="col-xl-2 col-lg-2 col-md-3">
+                            <div class="footer-links">
+                                <h3>Supervisor</h3>
+                                <ul>
+                                    <li><a href="#"><span>to be added</span></a></li>
+                                    <li><a href="#"><span>to be added</span></a></li>
+                                    <li><a href="#"><span>to be added</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Newsletter -->
+                        <div class="col-xl-4 col-lg-4 col-md-12">
+                            <h3><i class="icon-feather-mail"></i> Sign Up For a Newsletter</h3>
+                            <p>Weekly breaking news, analysis and cutting edge advices on job searching.</p>
+                            <form action="#" method="get" class="newsletter">
+                                <input type="text" name="fname" placeholder="Enter your email address">
+                                <button type="submit"><i class="icon-feather-arrow-right"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer Middle Section / End -->
+            <!-- Footer Copyrights -->
+            <div class="footer-bottom-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            © 2021 <strong>Global Apprentices Interns</strong>. All Rights Reserved. <a href="#">Terms and Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer Copyrights / End -->
+
+        </div>
+        <!-- Footer / End -->
+
+    </div>
+
+
+    <!-- Wrapper / End -->
+    <!-- Scripts
+    ================================================== -->
+
+    <script src="~/content/js/jquery-3.3.1.min.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/content/js/jquery-migrate-3.0.0.min.js"></script>
+    <script src="~/content/js/mmenu.min.js"></script>
+    <script src="~/content/js/tippy.all.min.js"></script>
+    <script src="~/content/js/simplebar.min.js"></script>
+    <script src="~/content/js/bootstrap-slider.min.js"></script>
+    <script src="~/content/js/bootstrap-select.min.js"></script>
+    <script src="~/content/js/snackbar.js"></script>
+    <script src="~/content/js/clipboard.min.js"></script>
+    <script src="~/content/js/counterup.min.js"></script>
+    <script src="~/content/js/magnific-popup.min.js"></script>
+    <script src="~/content/js/slick.min.js"></script>
+    <script src="~/content/js/custom.js"></script>
+
+    <!-- Snackbar // documentation: https://www.polonel.com/snackbar/ -->
+    <script>
+        // Snackbar for user status switcher
+        $('#snackbar-user-status label').click(function () {
+            Snackbar.show({
+                text: 'Your status has been changed!',
+                pos: 'bottom-center',
+                showAction: false,
+                actionText: "Dismiss",
+                duration: 3000,
+                textColor: '#fff',
+                backgroundColor: '#383838'
+            });
+        });
+    </script>
+
+
+    <!-- Chart.js // documentation: http://www.chartjs.org/docs/latest/ -->
+    <script src="js/chart.min.js"></script>
+    <script>
+        Chart.defaults.global.defaultFontFamily = "Nunito";
+        Chart.defaults.global.defaultFontColor = '#888';
+        Chart.defaults.global.defaultFontSize = '14';
+
+        var ctx = document.getElementById('chart').getContext('2d');
+
+        var chart = new Chart(ctx, {
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: ["January", "February", "March", "April", "May", "June"],
+                // Information about the dataset
+                datasets: [{
+                    label: "Views",
+                    backgroundColor: 'rgba(42,65,232,0.08)',
+                    borderColor: '#2a41e8',
+                    borderWidth: "3",
+                    data: [196, 132, 215, 362, 210, 252],
+                    pointRadius: 5,
+                    pointHoverRadius: 5,
+                    pointHitRadius: 10,
+                    pointBackgroundColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointBorderWidth: "2",
+                }]
+            },
+
+            // Configuration options
+            options: {
+
+                layout: {
+                    padding: 10,
+                },
+
+                legend: { display: false },
+                title: { display: false },
+
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: false
+                        },
+                        gridLines: {
+                            borderDash: [6, 10],
+                            color: "#d8d8d8",
+                            lineWidth: 1,
+                        },
+                    }],
+                    xAxes: [{
+                        scaleLabel: { display: false },
+                        gridLines: { display: false },
+                    }],
+                },
+
+                tooltips: {
+                    backgroundColor: '#333',
+                    titleFontSize: 13,
+                    titleFontColor: '#fff',
+                    bodyFontColor: '#fff',
+                    bodyFontSize: 13,
+                    displayColors: false,
+                    xPadding: 10,
+                    yPadding: 10,
+                    intersect: false
+                }
+            },
+
+
+        });
+
+    </script>
+
+</body>
+</html>

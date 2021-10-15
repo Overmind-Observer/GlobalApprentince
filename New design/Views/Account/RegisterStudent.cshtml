@@ -1,0 +1,213 @@
+@model Global_Intern.Models.RegisterationStudent
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="margin-top-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-5 offset-xl-3">
+                <div class="login-register-page">
+                    <!-- Welcome Text -->
+                    <div class="welcome-text">
+                        <h3 style="font-size: 26px;">Sign up</h3>
+                        <span>We welcome all New Zealand students to join us.</span>
+                        <span>Already have an account? <a href="/Account/Login">Log In!</a></span>
+                    </div>
+                    <h3 style="color:green;">@ViewBag.Message</h3>
+
+                    <!-- Form -->
+                    <form asp-action="RegisterStudent" method="post">
+
+                        <!-- Account Type -->
+                        <div class="account-type">
+                            <div class="radio">
+                                <input asp-for="Role.RoleId" type="radio" value="1" id="student-radio" onclick="student();" class="account-type-radio" checked />
+                                <label for="student-radio" class="ripple-effect-dark"><i class="icon-material-outline-account-circle"></i> Student</label>
+                            </div>
+                            <div class="radio">
+                                <input asp-for="Role.RoleId" type="radio" value="2" id="employer-radio" onclick="employer();" class="account-type-radio" />
+                                <label for="employer-radio" class="ripple-effect-dark"><i class="icon-material-outline-business-center"></i> Employer</label>
+                            </div>
+                            <div class="radio">
+                                <input asp-for="Role.RoleId" type="radio" value="3" id="institute-radio" onclick="institute();" class="account-type-radio" />
+                                <label for="institute-radio" class="ripple-effect-dark"><i class="icon-material-outline-location-city"></i> Institute </label>
+                            </div>
+                            <div class="radio">
+                                <input asp-for="Role.RoleId" type="radio" value="4" id="supervisor-radio" onclick="supervisor();" class="account-type-radio"  />
+                                <label for="supervisor-radio" class="ripple-effect-dark"><i class="icon-material-outline-school"></i> Supervisor </label>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="firstName">
+                                <span asp-validation-for="UserFirstName" class="error"></span>
+                                <div class="input-with-icon-left">
+                                    <i class="icon-material-outline-person-pin"></i>
+                                    <h5 id="tttFirst"></h5>
+                                    <label asp-for="UserFirstName" hidden class="control-label"></label>
+                                    <input required asp-for="UserFirstName" id="FirstNameInput" type="text" class="input-text with-border" placeholder=" What's your name" />
+                                </div>
+                            </div>
+                            <div class="lastName">
+                                <span asp-validation-for="UserLastName" class="error"></span>
+                                <div class="input-with-icon-left">
+                                    <i class="icon-material-outline-person-pin"></i>
+                                    <h5 id="tttLast"></h5>
+                                    <label asp-for="UserLastName" hidden class="control-label"></label>
+                                    <input required asp-for="UserLastName" id="UserLastNameInput" type="text" class="input-text with-border" placeholder=" What's your last name" />
+                                </div>
+                            </div>
+                            <div class="gender">
+                                <span asp-validation-for="UserGender" class="error"></span>
+                                <div class="input-with-icon-left">
+                                    <i class="icon-material-outline-group"></i>
+                                    <label asp-for="UserGender" hidden class="control-label"></label>
+                                    <div class="input-text with-border ">
+                                        <select asp-for="UserGender" id="UserGenderInput" style="padding: 0px 0px 0px 65px;">
+                                            <option value="" disabled selected>What gender do you identify as?</option>
+                                            <option value="1">Male</option>
+                                            <option value="2">Female</option>
+                                            <option value="3">Identity as both</option>
+                                            <option value="4">Identity as neither</option>
+                                            <option value="5">Prefer not to disclose </option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ethnicity">
+                                <span asp-validation-for="UserEthnicity" class="error"></span>
+                                <div class="input-with-icon-left">
+                                    <i class="icon-material-outline-language"></i>
+                                    <label asp-for="UserEthnicity" hidden class="control-label"></label>
+                                    <div class="input-text with-border ">
+                                        <select asp-for="UserEthnicity" id="UserEthnicityInput" style="padding: 0px 0px 0px 65px;">
+                                            <option value="" disabled selected>What is your ethnicity?</option>
+                                            <option value="1">Pakeha</option>
+                                            <option value="2">Maori</option>
+                                            <option value="3">Pacific Islands </option>
+                                            <option value="4">Australia</option>
+                                            <option value="5">Asia</option>
+                                            <option value="6">America</option>
+                                            <option value="7">Europe</option>
+                                            <option value="8">Australia</option>
+                                            <option value="9">other</option>
+                                            <option value="10">Prefer not to disclose</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="university">
+                                <span asp-validation-for="UserUniversity" class="error"></span>
+                                <div class="input-with-icon-left">
+                                    <i class="icon-material-outline-business"></i>
+                                    <label asp-for="UserUniversity" hidden class="control-label"></label>
+                                    <div class="input-text with-border ">
+                                        <select asp-for="UserUniversity" id="UserUniversityInput" style="padding: 0px 0px 0px 65px;">
+                                            <option value="" disabled selected>What University do you/did you attend?</option>
+                                            <option value="1">Ara Institute of Canterbury</option>
+                                            <option value="2">Auckland University of Technology</option>
+                                            <option value="3">Eastern Institute of Technology </option>
+                                            <option value="4">Lincoln University  </option>
+                                            <option value="5">Manukau Institute of Technology</option>
+                                            <option value="6">Massey University</option>
+                                            <option value="7">Nelson Marlborough Inst of Technology </option>
+                                            <option value="8">North Tec </option>
+                                            <option value="9">Open Polytechnic</option>
+                                            <option value="10">Otago Polytechnic </option>
+                                            <option value="11">Southern Institute of Technology </option>
+                                            <option value="12">Tai Poutini Polytechnic </option>
+                                            <option value="13">Te Wananga O Aotearoa </option>
+                                            <option value="14">Te Wananga O Raukawa </option>
+                                            <option value="15">Te Whare Wananga O Awanuiarangi</option>
+                                            <option value="16">Toi Ohomai Institute of Technology </option>
+                                            <option value="17">Unitec New Zealand </option>
+                                            <option value="18">Universal College of Learning </option>
+                                            <option value="19">University of Auckland </option>
+                                            <option value="20">University of Canterbury </option>
+                                            <option value="21">University of Otago</option>
+                                            <option value="22">University of Waikato</option>
+                                            <option value="23">Victoria University of Wellington</option>
+                                            <option value="24">Waikato Institute of Technology</option>
+                                            <option value="25">Wellington Institute of Technology</option>
+                                            <option value="26">Western Institute of Technology Taranaki</option>
+                                            <option value="27">Whitireia Community Polytechnic</option>
+                                            <option value="28">Other - rest of New Zealand</option>
+                                            <option value="29">Other - rest of world </option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="email">
+                                <span asp-validation-for="UserEmail" class="error"></span>
+                                <div class="input-with-icon-left">
+                                    <i class="icon-material-baseline-mail-outline"></i>
+                                    <h5 id="tttEmail"></h5>
+                                    <label asp-for="UserEmail" hidden class="control-label"></label>
+                                    <input required asp-for="UserEmail" id="EmailInput" type="email" class="form-control" placeholder="Email address" />
+                                </div>
+                            </div>
+                            <div class="phoneno">
+                                <span asp-validation-for="UserPhone" class="error"></span>
+                                <div class="input-with-icon-left">
+                                    <i class="icon-feather-phone"></i>
+                                    <h5 id="tttPhone"></h5>
+                                    <label asp-for="UserPhone" hidden class="control-label"></label>
+                                    <input required asp-for="UserPhone" id="PhoneInput" type="tel" class="form-control" placeholder="Phone number" />
+                                </div>
+                            </div>
+                            <div class="password">
+                                <span asp-validation-for="UserPassword" class="error"></span>
+                                <div class="input-with-icon-left">
+                                    <i class="icon-material-outline-lock"></i>
+                                    <h5 id="tttPassword"></h5>
+                                    <label asp-for="UserPassword" hidden class="control-label"></label>
+                                    <input required asp-for="UserPassword" id="PasswordInput" type="password" class="form-control" placeholder="Password" />
+                                </div>
+                            </div>
+                            <div class="cpassword">
+                                <span asp-validation-for="UserCPassword" class="error"></span>
+                                <div class="input-with-icon-left">
+                                    <i class="icon-material-outline-lock"></i>
+                                    <h5 id="tttCPassword"></h5>
+                                    <label asp-for="UserCPassword" hidden class="control-label"></label>
+                                    <input required asp-for="UserCPassword" id="ConfirmPasswordInput" type="password" class="form-control" placeholder="Re-enter your Password" />
+
+                                </div>
+                            </div>
+                            <div class="g-recaptcha" data-sitekey="@ViewBag.key"></div>
+                        </div>
+
+                        
+                        <!-- Button -->
+                        <input type="submit" class="button full-width button-sliding-icon ripple-effect margin-top-10" value="Register">
+
+                    </form>
+
+                    <!-- Social Login -->
+                    <div class="back-to-home-separator"><span><a asp-controller="Home" asp-action="Index">Back to Home!</a></span></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function employer() {
+        window.location.replace("/Account/RegisterEmployer");
+    }
+    function student() {
+        window.location.replace("/Account/RegisterStudent");
+    }
+    function institute() {
+        window.location.replace("/Account/RegisterInstitute");
+    }
+    function supervisor() {
+        window.location.replace("/Account/RegisterSupervisor");
+    }
+</script>
+
