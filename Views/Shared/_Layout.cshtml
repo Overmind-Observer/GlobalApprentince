@@ -24,44 +24,32 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav mr-auto">
-                    <div class="nav" style="grid-row-start:auto; float:left" >
-                        <p class="nav-item" style="margin:auto">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home<span class="sr-only">(current)</span></a>
-                        </p>
+					<div class="nav" style="grid-row-start:auto; float:left">
+						<p class="nav-item" style="margin:auto">
+							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home<span class="sr-only">(current)</span></a>
+						</p>
 
-                        <p class="dropdown, nav-item" style="margin:auto">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Programmes</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AllInternships">Internships </a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AllCourses">Course</a>
-                            </div>
-                        </p>
+						<p class="nav-item" style="margin:auto">
+							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
+						</p>
+						<!--
+	<li class="nav-item">
+		<a class="nav-link" asp-area="" asp-controller="Internship" asp-action="Create">Create Internship</a>
+	</li>
+	-->
 
-                        <!--
-    <li class="nav-item">
-        <a class="nav-link" asp-area="" asp-controller="Internship" asp-action="Create">Create Internship</a>
-    </li>
-    -->
+						<p class="dropdown, nav-item" style="margin:auto">
+							<a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Careers</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="CurrentVacancies">Current Vacancies</a>
+								<a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="OurBenefits">Our Benefits</a>
+							</div>
+						</p>
 
-                        <p class="dropdown, nav-item" style="margin:auto">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Careers</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="CurrentVacancies">Current Vacancies</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="OurBenefits">Our Benefits</a>
-                            </div>
-                        </p>
-
-
-
-                        <p class="nav-item" style="margin:auto">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact</a>
-                        </p>
-                        <p class="nav-item" style="margin:auto">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
-                        </p>
-
-
-                    </div>
+						<p class="nav-item" style="margin:auto">
+							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact</a>
+						</p>
+					</div>
 
                 </div>
                 <div class="userControlles" style="float:right">

@@ -1,53 +1,50 @@
 @model Global_Intern.Models.UserDocument;
 @{
-    ViewData["Title"] = "CompleteProfile";
-    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+	ViewData["Title"] = "Documents";
+	Layout = "~/Views/Shared/_LayoutDashBoardStudent.cshtml";
 }
 
 
 
 
 <main>
-    <div class="content">
-        <div class="container-fluid" style="margin-top:56px;">
-            <form id="Documents" asp-action="Documents" enctype="multipart/form-data" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<div class="content">
+		<div class="container-fluid" style="margin-top:56px;">
+			<form id="Documents" asp-controller="DashboardStudent" asp-action="Documents" enctype="multipart/form-data" method="post">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div class="alert alert-danger  alert-dismissible fade show" role="alert">
+					@ViewBag.NoFileUploadedErrorMessage		
+				</div>
+				<div class="alert alert-success" role="alert">
+					@ViewBag.SuccessMessage					
+				</div>
+				<div class="content">
+					<main>
+						<div class="container-fluid" style="margin-top:56px;">
+							<div id="GeneralProfile" asp-action="GeneralProfile" enctype="multipart/form-data" method="post">
+								<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="content">
-                    <main>
-                        <div class="container-fluid" style="margin-top:56px;">
-                            <div id="GeneralProfile" asp-action="GeneralProfile" enctype="multipart/form-data" method="post">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+								<label for="CL">Upload your Cover Letter:</label>
 
-                                <label for="CL">Upload your Covering Letter Here:</label>
+								<div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+									<input type="file" ID="UserCLFile" name="UserCLFile" asp-for="UserCL">
+									<p style="color:red">@ViewBag.CLFileExtErrorMessage</p>
+								</div>
 
-                                <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
-                                    <input id="upload" asp-for="UserCL" onchange="readURL(this);" class="form-control border-0">
-                                    <label id="upload-label" asp-for="UserCL" class="font-weight-light text-muted">Choose CL</label>
-                                    <div class="input-group-append">
-                                        <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
-                                    </div>
-                                </div>
+								<label for="CV">Upload your Resume:</label>
 
-                                <label for="CV">Upload your Resume File here :</label>
+								<div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+									<input type="file" ID="UserCVFile" name="UserCVFile" asp-for="UserCV">
+									<p style="color:red">@ViewBag.CVFileExtErrorMessage</p>
+								</div>
 
-                                <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
-                                    <input  type="file"  name="filetest" >
-                                    <label id="upload-label" asp-for="UserCV" class="font-weight-light text-muted">Choose CVttttt</label>
-                                    <div class="input-group-append">
-                                        <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
-                                    </div>
-                                </div>
+							</div>
+						</div>
+					</main>
+				</div>
+				<input type="submit" value="Save" class="btn btn-info">
 
-
-                                
-                            </div>
-                        </div>
-                    </main>
-                </div>
-                <input type="submit" value="Save" class="btn btn-info">
-
-            </form>
-        </div>
-    </div>
+			</form>
+		</div>
+	</div>
 </main>

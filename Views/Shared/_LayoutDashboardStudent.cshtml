@@ -1,0 +1,177 @@
+﻿<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css"
+          integrity="sha256-x8PYmLKD83R9T/sYmJn1j3is/chhJdySyhet/JuHnfY="
+          crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/dashboard.css">
+    <style type="text/css" media="screen">
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler sideMenuToggler" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">Global Intern</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home<span class="sr-only">(current)</span></a>
+					</li>
+
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Programmes</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" asp-area="" asp-controller="DashboardStudent" asp-action="AllInternships">Internships </a>
+							<a class="dropdown-item" asp-area="" asp-controller="DashboardStudent" asp-action="AllCourses">Courses</a>
+						</div>
+					</li>
+
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Careers</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" asp-area="" asp-controller="DashboardStudent" asp-action="CurrentVacancies">Current Vacancies</a>
+							<a class="dropdown-item" asp-area="" asp-controller="DashboardStudent" asp-action="OurBenefits">Our Benefits</a>
+						</div>
+					</li>
+				</ul>
+            </div>
+            <!--
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="Internship" asp-action="Create">Create Internship</a>
+        </li>
+        -->
+            
+            
+
+
+            <form class="form-inline my-2 my-lg-0 d-flex" >
+                @if (ViewData["LoggeduserName"] != null)
+                {
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item d-flex">
+                            @{
+                                var userInfo = ViewData["LoggeduserName"] as List<string>;
+                            }
+
+                            @if (userInfo[1] != null)
+                            {
+                                <img class="circleImg" src="~/uploads/UserImage/@userInfo[1]" alt="Avatar">
+                            }
+                            else
+                            {
+                                <img class="circleImg" src="~/uploads/defaut-person.png" alt="Avatar">
+                            }
+
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@userInfo[0]</a>
+
+                        </li>
+                    </ul>
+                    <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Logout">Logout</button>
+                }
+                else
+                {
+                    <div class="d-flex">
+                        <button class="btn btn-outline-success my-2 my-sm-0 mr-1" asp-area="" asp-controller="Account" asp-action="Login">Log In</button>
+
+                        <button class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Register">Sign Up</button>
+                    </div>
+
+                }
+            </form>
+        </div>
+    </nav>
+ 
+    <main>
+        <div class="wrapper d-flex">
+            <div class="sideMenu">
+                <div class="sidebar">
+                    <ul class="navbar-nav">
+
+                        @foreach (var each in @ViewData["menuItems"] as dynamic)
+                        {
+                            if (@each["field"] == "Dashboard")
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="Index" class="nav-link sidebarLinks">
+                                        <i class="material-icons icon">@each["icon"]</i>
+                                        <span class="text">@each["field"]</span>
+                                    </a>
+                                </li>
+                            }
+                            else if (@each["field"] == "Profile")
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="GeneralProfile" class="nav-link sidebarLinks">
+                                        <i class="material-icons icon">@each["icon"]</i>
+                                        <span class="text">@each["field"]</span>
+                                    </a>
+
+                                </li>
+                            }
+                            @*else if (@each["field"] == "Settings")
+                                {
+                                    <li class="nav-item">
+                                        <a asp-action="Settings" class="nav-link sidebarLinks">
+                                            <i class="material-icons icon">@each["icon"]</i>
+                                            <span class="text">@each["field"]</span>
+                                        </a>
+
+                                    </li>
+                                }*@
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="@each["field"]" class="nav-link sidebarLinks">
+                                        <i class="material-icons icon">@each["icon"]</i>
+                                        <span class="text">@each["field"]</span>
+                                    </a>
+                                </li>
+                            }
+                            if (@each["subfields"] != null)
+                            {
+                                <li class="nav-item">
+                                    <ul class="navbar-nav ulsubmenu">
+                                        @foreach (string subItem in @each["subfields"] as dynamic)
+                                        {
+                                            <li class="nav-item">
+                                                <a asp-action="@subItem.Replace(" ", "")" style="padding-left:15px;" class="sidebarSubLinks nav-link">
+                                                    <i class="material-icons icon">play_arrow</i>
+                                                    <span class="text">@subItem</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            @RenderBody()
+        </div>
+    </main>
+
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>
