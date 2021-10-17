@@ -21,21 +21,15 @@ namespace Global_Intern.Models
         [Required]
        
         
-        // =========== add validation requirements ============
         [Required]
-        [RegularExpression(@"/^[a-zA-Z]+([a-zA-Z]+)+$")]
-        [StringLength(50, MinimumLength = 3)]
         public string UserFirstName { get; set; }
         
         
         [Required]
-        [RegularExpression(@"/^[a-zA-Z]+([a-zA-Z]+)+$")]
-        [StringLength(50, MinimumLength = 3)]
         public string UserLastName { get; set; }
        
         
         [Required]
-        [RegularExpression(@"^[a-zA-Z0-9.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", ErrorMessage = "Invalid Email Format")]
         public string UserEmail { get; set; }
         
         
@@ -47,8 +41,7 @@ namespace Global_Intern.Models
         public int UserZip { get; set; } //CP
         
         
-        //password must contain at least a number, one uppder case, 8 characters long
-        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage ="Password must contain at least a number, one upper case and 8 characters long")] 
+       
         [Required]
         public string UserPassword { get; set; }
         
@@ -67,37 +60,7 @@ namespace Global_Intern.Models
         public string UserGender { get; set; } // Could be use full for User with student role.
 
 
-         // ========== new definition for sign up pages===================
-
-        [Required]
-        public string UserEthnicity { get; set; } 
-
-        [Required]
-        public string UserEducation { get; set; }
-
-        [Required]
-        public string OrganisationName { get; set; }
-
-        [Required]
-        [RegularExpression(@"/^(?=\d{13}$)(9)\d+/+$", ErrorMessage ="NZBN must contains 13 digits.")]      //@"^[0 - 9] +$"
-        public string NzbnNumber { get; set; }
-
-        [Required]
-        public string OrganisationSize { get; set; }
-
-        [Required]
-        public string CompanyBased { get; set; }
-
-        [Required]
-        public string InstituteName { get; set; }
-
-        [Required]
-        public string InstituteBased { get; set; }
-
-        [Required]
-        public string Occupation{ get; set; }
-
-
+       
         
         
         
