@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 
 namespace Global_Intern.Models
 {
-    public class UserCL
+    public partial class UserCL
     {
-        public int UserCLId { get; set; }
-        public string UserCLFullPath { get; set; }
-        public DateTime CLCreatedAt { get; set; }
+        public int UserClid { get; set; }
+        public string UserClfullPath { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public int? UserId { get; set; }
+
         public virtual User User { get; set; }
     }
 }

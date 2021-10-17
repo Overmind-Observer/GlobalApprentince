@@ -12,6 +12,7 @@ namespace Global_Intern.Models
         public User()
         {
             this.CreatedAt = DateTime.UtcNow;
+            UserCLs = new List<UserCL>();
         }
         // CP-> Complete Prfile - fields which will be filled after the email has been verfied
         // Auto -> fields which gets filled by the system
@@ -51,6 +52,7 @@ namespace Global_Intern.Models
         public List<InternStudent> InternStudents { get; set; } // list of students who are working in some internships
         public List<AppliedInternship> appliedInternships { get; set; } // list of user applyed for intership
         public List<InstituteAdmin> InstituteAdmins { get; set; }
+        public List<UserCL> UserCLs { get; set; }
 
         // add on 6th 10 2020
         public List<Course> Course { get; set; }
