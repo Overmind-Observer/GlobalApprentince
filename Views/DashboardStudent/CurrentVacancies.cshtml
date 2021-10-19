@@ -1,201 +1,228 @@
 ﻿@model IEnumerable<Global_Intern.Models.Internship>
 
-  @{
-	  ViewData["Title"] = "Current Vacancies";
-	  Layout = "~/Views/Shared/_LayoutDashboardStudent.cshtml";
-    }
+@{
+	ViewData["Title"] = "Current Vacancies";
+	Layout = "~/Views/Shared/_LayoutDashboardStudent.cshtml";
+}
 
-    <div class="content">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="job_filter white-bg">
-                        <div class="form_inner white-bg">
-                            <h3>Filter</h3>
-                            <form asp-action="CurrentVacancies" asp-controller="DashboardStudent" method="get">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="single_field">
-                                            <div class="input-group">
-                                                <input type="search" placeholder="Enter Internship here" name="searchTerm" value="@ViewData["SearchTerm"]" />
-                                                <button class="btn btn-primary" type="submit">Search</button>
-                                                <span class="myColors">
-                                                    @Html.ValidationMessage("KeywordNotFound", new { @class = "myColors" })
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="single_field">
-                                            <select class="wide">
-                                                <option data-display="Location">Location</option>
-                                                <option value="1">Northland</option>
-                                                <option value="2">Auckland</option>
-                                                <option value="3">Waikato</option>
-                                                <option value="4">Bay of Plenty</option>
-                                                <option value="5">Gisborne</option>
-                                                <option value="6">Hawke's Bay</option>
-                                                <option value="7">Taranaki</option>
-                                                <option value="8">Manuwatu/Whanganui</option>
-                                                <option value="9">Wellington</option>
-                                                <option value="10">Nelson/Tasman</option>
-                                                <option value="11">Malborough</option>
-                                                <option value="12">West Coast</option>
-                                                <option value="13">Christchurch</option>
-                                                <option value="14">Dunedin</option>
-                                                <option value="15">Southland</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="single_field">
-                                            <select class="wide">
-                                                <option data-display="Industry">Industry</option>
-                                                <option value="1">Accounting</option>
-                                                <option value="2">Administration & Office Support</option>
-                                                <option value="3">Advertising, Arts & Media</option>
-                                                <option value="2">Banking & Financial Services</option>
-                                                <option value="2">Call Centre & Customer Service</option>
-                                                <option value="2">Community Services & Development</option>
-                                                <option value="2">Construction</option>
-                                                <option value="2">Consulting & Strategy</option>
-                                                <option value="2">Design & Architecture</option>
-                                                <option value="2">Education & Training</option>
-                                                <option value="2">Engineering</option>
-                                                <option value="2">Farming, Animal & Conservation</option>
-                                                <option value="2">Government & Defence</option>
-                                                <option value="2">Healthcare & Medical</option>
-                                                <option value="2">Hospitality & Tourism</option>
-                                                <option value="2">Human Resources & Recruitment</option>
-                                                <option value="2">Information & Communication Technology</option>
-                                                <option value="2">Insurance & Superannuation</option>
-                                                <option value="2">Legal</option>
-                                                <option value="2">Manufacturing, Transport & Logistics</option>
-                                                <option value="2">Marketing & Communications</option>
-                                                <option value="2">Mining, Resources & Energy</option>
-                                                <option value="2">Real Estate & Property</option>
-                                                <option value="2">Retail & Consumer Products</option>
-                                                <option value="2">Sales</option>
-                                                <option value="2">Science & Technology</option>
-                                                <option value="2">Sport & Recreation</option>
-                                                <option value="2">Trade & Services</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="single_field">
-                                            <select class="wide">
-                                                <option data-display="Job type">Job type</option>
-                                                <option value="1">Full time</option>
-                                                <option value="2">Part time</option>
-                                                <option value="2">Contract/Temp</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+<div class="content">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3">
+				<div class="job_filter white-bg">
+					<div class="form_inner white-bg">
+						<h3>Filter</h3>
+						<form asp-action="CurrentVacancies" asp-controller="DashboardStudent" method="get">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="single_field">
+										<div class="input-group">
+											<input type="search" placeholder="Enter Internship here" name="searchTerm" value="@ViewData["SearchTerm"]" />
+											<button class="btn btn-primary" type="submit">Search</button>
+											<span class="myColors">
+												@Html.ValidationMessage("KeywordNotFound", new { @class = "myColors" })
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12">
+									<div class="single_field">
+										<select class="wide">
+											<option data-display="Location">Location</option>
+											<option value="1">Northland</option>
+											<option value="2">Auckland</option>
+											<option value="3">Waikato</option>
+											<option value="4">Bay of Plenty</option>
+											<option value="5">Gisborne</option>
+											<option value="6">Hawke's Bay</option>
+											<option value="7">Taranaki</option>
+											<option value="8">Manuwatu/Whanganui</option>
+											<option value="9">Wellington</option>
+											<option value="10">Nelson/Tasman</option>
+											<option value="11">Malborough</option>
+											<option value="12">West Coast</option>
+											<option value="13">Christchurch</option>
+											<option value="14">Dunedin</option>
+											<option value="15">Southland</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-lg-12">
+									<div class="single_field">
+										<select class="wide">
+											<option data-display="Industry">Industry</option>
+											<option value="1">Accounting</option>
+											<option value="2">Administration & Office Support</option>
+											<option value="3">Advertising, Arts & Media</option>
+											<option value="2">Banking & Financial Services</option>
+											<option value="2">Call Centre & Customer Service</option>
+											<option value="2">Community Services & Development</option>
+											<option value="2">Construction</option>
+											<option value="2">Consulting & Strategy</option>
+											<option value="2">Design & Architecture</option>
+											<option value="2">Education & Training</option>
+											<option value="2">Engineering</option>
+											<option value="2">Farming, Animal & Conservation</option>
+											<option value="2">Government & Defence</option>
+											<option value="2">Healthcare & Medical</option>
+											<option value="2">Hospitality & Tourism</option>
+											<option value="2">Human Resources & Recruitment</option>
+											<option value="2">Information & Communication Technology</option>
+											<option value="2">Insurance & Superannuation</option>
+											<option value="2">Legal</option>
+											<option value="2">Manufacturing, Transport & Logistics</option>
+											<option value="2">Marketing & Communications</option>
+											<option value="2">Mining, Resources & Energy</option>
+											<option value="2">Real Estate & Property</option>
+											<option value="2">Retail & Consumer Products</option>
+											<option value="2">Sales</option>
+											<option value="2">Science & Technology</option>
+											<option value="2">Sport & Recreation</option>
+											<option value="2">Trade & Services</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-lg-12">
+									<div class="single_field">
+										<select class="wide">
+											<option data-display="Job type">Job type</option>
+											<option value="1">Full time</option>
+											<option value="2">Part time</option>
+											<option value="2">Contract/Temp</option>
+										</select>
+									</div>
+								</div>
+							</div>
 
-                            </form>
-                        </div>
-                        <form asp-action="CurrentVacancies" asp-controller="Home" method="get">
-                            <div class="reset_btn">
-                                <button class="btn btn-primary" type="submit">Reset</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="recent_joblist_wrap">
-                        <div class="recent_joblist white-bg ">
-                            <div class="row align-items-center">
-                                <div class="col-md-6">
-                                    <h3>Internship Listing</h3>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="serch_cat d-flex justify-content-end">
-                                        <select>
-                                            <option data-display="Sort">Sort: Best Match</option>
-                                            <option value="1">Latest jobs</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+						</form>
+					</div>
+					<form asp-action="CurrentVacancies" asp-controller="Home" method="get">
+						<div class="reset_btn">
+							<button class="btn btn-primary" type="submit">Reset</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="col-lg-9">
+				<div class="recent_joblist_wrap">
+					<div class="recent_joblist white-bg ">
+						<div class="row align-items-center">
+							<div class="col-md-6">
+								<h3>Internship Listing</h3>
+							</div>
+							<div class="col-md-6">
+								<div class="serch_cat d-flex justify-content-end">
+									<select>
+										<option data-display="Sort">Sort: Best Match</option>
+										<option value="1">Latest jobs</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-                    <div class="job_lists m-0">
-                        <div class="row">
-                            @foreach (var item in Model)
-                            {
-                            <div class="col-lg-12 col-md-12">
-                                <div class="single_jobs white-bg d-flex justify-content-between">
-                                    <div class="jobs_left d-flex align-items-center">
-                                        <div class="thumb">
-                                            <img src="/img/logo.png" alt="">
-                                        </div>
-                                        <div class="jobs_conetent">
-                                            <a asp-controller="Home" asp-action="Internship" asp-route-id="@item.InternshipId" style="text-align:left;"><h4>@Html.DisplayFor(modelItem => item.InternshipTitle)</h4></a>
-                                            <div class="links_locat d-flex align-items-center">
-                                                <div class="location">
-                                                    <p>@Html.DisplayFor(modelItem => item.InternshipLocation)</p>
-                                                </div>
-                                                <div class="jobType">
-                                                    <p>@Html.DisplayFor(modelItem => item.InternshipType)</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="jobs_right">
-                                        <div class="apply_now">
-                                            <!-- <a href="job_details.html" class="boxed-btn1">Apply Now</a>  -->
-                                        </div>
-                                        <div class="date">
-                                            <p>Listed: @Html.DisplayFor(modelItem => item.InternshipCreatedAt)</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            }
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="pagination_wrap">
-                                    <ul>
-                                        @{
-                                        int prev = @ViewBag.currentPage - 1;
-                                        int next = @ViewBag.currentPage + 1;
-                                        }
-                                        @if (prev != 0)
-                                        {
-                                        <li><a class="pageLinks" href="/Home/AllInternships?pageNumber=@prev&pageSize=10"> Prev </a></li>
-                                        }
-                                        @for (int i = 1; i < Convert.ToInt32(ViewBag.totalPages) + 1; i++)
-                                        {
-                                        var parms = new Dictionary
-                                        <string, string>
-                                            {
-                                            { "pageNumber", Convert.ToString(i) },
-                                            { "pageSize", Convert.ToString(ViewBag.pageSize) }
-                                            };
-                                            if (@ViewBag.currentPage == i)
-                                            {
-                                            <li style="background-color:skyblue;"><a class="pageLinks" asp-controller="Home" asp-action="CurrentVacancies" asp-all-route-data="parms"><span>@i</span></a></li>
-                                            }
-                                            else
-                                            {
-                                            <li><a class="pageLinks" asp-controller="Home" asp-action="CurrentVacancies" asp-all-route-data="parms"><span>@i</span></a></li>
-                                            }
+				<div class="job_lists m-0">
+					<div class="row">
+						@foreach (var item in Model)
+						{
+							<div class="col-lg-12 col-md-12">
+								<div class="single_jobs white-bg d-flex justify-content-between">
+									<div class="jobs_left d-flex align-items-center">
+										<div class="thumb">
+											<img src="/img/logo.png" alt="">
+										</div>
+										<div class="jobs_conetent">
+											<a asp-controller="Home" asp-action="Internship" asp-route-id="@item.InternshipId" style="text-align:left;"><h4>@Html.DisplayFor(modelItem => item.InternshipTitle)</h4></a>
+											<div class="links_locat d-flex align-items-center">
+												<div class="location">
+													<p>@Html.DisplayFor(modelItem => item.InternshipLocation)</p>
+												</div>
+												<div class="jobType">
+													<p>@Html.DisplayFor(modelItem => item.InternshipType)</p>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="jobs_right">
+										<div class="apply_now">
+											<!-- <a href="job_details.html" class="boxed-btn1">Apply Now</a>  -->
+										</div>
+										<div class="date">
+											<p>Listed: @Html.DisplayFor(modelItem => item.InternshipCreatedAt)</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						}
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="pagination_wrap">
+								<ul>
+									@{
+										int prev = @ViewBag.currentPage - 1;
+										int next = @ViewBag.currentPage + 1;
+									}
+									@if (prev != 0)
+									{
+										<li><a class="pageLinks" href="/Home/AllInternships?pageNumber=@prev&pageSize=10"> Prev </a></li>
+									}
+									@for (int i = 1; i < Convert.ToInt32(ViewBag.totalPages) + 1; i++)
+									{
+										var parms = new Dictionary
+										<string, string>
+																	{
+											{ "pageNumber", Convert.ToString(i) },
+											{ "pageSize", Convert.ToString(ViewBag.pageSize) }
+											};
+										if (@ViewBag.currentPage == i)
+										{
+											<li style="background-color:skyblue;"><a class="pageLinks" asp-controller="Home" asp-action="CurrentVacancies" asp-all-route-data="parms"><span>@i</span></a></li>
+										}
+										else
+										{
+											<li><a class="pageLinks" asp-controller="Home" asp-action="CurrentVacancies" asp-all-route-data="parms"><span>@i</span></a></li>
+										}
 
-                                            }
-                                            @if (ViewBag.totalPages != @ViewBag.currentPage)
-                                            {
-                                            <li><a class="pageLinks" href="/Home/CurrentVacancies?pageNumber=@next&pageSize=10"> Next </a></li>
-                                            }
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+									}
+									@if (ViewBag.totalPages != @ViewBag.currentPage)
+									{
+										<li><a class="pageLinks" href="/Home/CurrentVacancies?pageNumber=@next&pageSize=10"> Next </a></li>
+									}
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.js" integrity="sha512-37SbZHAnGzLuZV850k61DfQdZ5cnahfloYHizjpEwDgZGw49+D6oswdI8EX3ogzKelDLjckhvlK0QZsY/7oxYg==" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function () {
+
+		$('.sideMenuToggler').on('click', function () {
+			console.log("clicked");
+			$('.wrapper').toggleClass('active');
+		});
+
+		var adjustSidebar = function () {
+			$('.sidebar').slimScroll({
+				height: document.documentElement.clientHeight - $('.navbar').outerHeight()
+			});
+		};
+
+		adjustSidebar();
+		$(window).resize(function () {
+			adjustSidebar();
+		});
+	});
+</script>
