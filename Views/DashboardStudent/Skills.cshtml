@@ -1,0 +1,79 @@
+@model IEnumerable<Global_Intern.Models.Skill>
+
+@{
+	ViewData["Title"] = "Skills";
+	Layout = "~/Views/Shared/_LayoutDashBoardStudent.cshtml";
+}
+
+<div class="content">
+	<main>
+		<div class="container-fluid" style="margin-top:56px;">
+			<div class="row">
+				<div class=".col-12 col-md-8 my-3">
+					<div class="p-3 tttCard">
+						<h1 class="mb-2">Skills</h1>
+						<div class="userExperience">
+							<p>
+								@Html.ActionLink("Add Skill", "AddSkill")
+							</p>
+							<div class="table-responsive">
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th scope="col">Skill</th>
+											<th scope="col">Skill Level</th>											
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var skill in @Model.ToList())
+										{
+										<tr>
+											<td>@skill.SkillName</td>
+											<td>@skill.SkillLevel</td>											
+											<td>
+												<div class="d-flex">
+													<a asp-action="UpdateSkill" asp-route-id="@skill.SkillID" class="btn btn-secondary w-75 m-1">Update</a>
+													<a asp-action="DeleteSkill" asp-route-id="@skill.SkillID" class="btn btn-danger w-75 m-1">Delete</a>
+												</div>
+											</td>
+										</tr>
+										}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.js" integrity="sha512-37SbZHAnGzLuZV850k61DfQdZ5cnahfloYHizjpEwDgZGw49+D6oswdI8EX3ogzKelDLjckhvlK0QZsY/7oxYg==" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function () {
+
+		$('.sideMenuToggler').on('click', function () {
+			console.log("clicked");
+			$('.wrapper').toggleClass('active');
+		});
+
+		var adjustSidebar = function () {
+			$('.sidebar').slimScroll({
+				height: document.documentElement.clientHeight - $('.navbar').outerHeight()
+			});
+		};
+
+		adjustSidebar();
+		$(window).resize(function () {
+			adjustSidebar();
+		});
+	});
+</script>

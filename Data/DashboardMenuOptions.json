@@ -26,7 +26,7 @@
         {
           "icon": "person",
           "field": "Profile",
-          "subfields": [ "General Profile", "Documents", "Qualifications", "Experience", "My Applications" ]
+          "subfields": [ "General Profile", "Documents", "Qualifications", "Experience", "Skills", "My Applications" ]
         },
         {
           "icon": "settings",
