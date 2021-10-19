@@ -1,7 +1,7 @@
 ﻿@model Global_Intern.Models.Experience;
 
 @{
-	ViewData["Title"] = "Add Experience";
+	ViewData["Title"] = "UpdateExperience";
 	Layout = "~/Views/Shared/_LayoutDashBoardStudent.cshtml";
 }
 
@@ -9,7 +9,7 @@
 <div class="container">
 	<main>
 		<div class="login-content">
-			<form id="GeneralProfile" asp-action="AddExperience" enctype="multipart/form-data" method="post">
+			<form id="GeneralProfile" asp-action="UpdateExperience" enctype="multipart/form-data" method="post">
 				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 				<div class="content">
 					<main>
@@ -19,8 +19,8 @@
 								<!-- The courses view like card views. -->
 								<div class=" row py-4">
 									<div class="col-lg-6">
-										<h1>Add Qualification</h1>
-										<h3 style="color:green;">@ViewBag.Message</h3>
+										<h1>Update Experience</h1>
+										<p style="color:green;">@ViewBag.SuccessMessage</p>
 									</div>
 								</div>
 
@@ -54,6 +54,7 @@
 
 					</main>
 				</div>
+
 			</form>
 		</div>
 	</main>
