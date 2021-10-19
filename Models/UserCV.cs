@@ -12,5 +12,13 @@ namespace Global_Intern.Models
         public string UserCVFullPath { get; set; }
         public DateTime CVCreatedAt { get; set; }
         public virtual User User { get; set; }
+
+        public void AddNewCV(UserCV NewCV, User user)
+        {
+            this.UserCVFullPath = NewCV.UserCVFullPath;
+            this.CVCreatedAt = DateTime.UtcNow;
+            this.User = user;
+        }
+
     }
 }
