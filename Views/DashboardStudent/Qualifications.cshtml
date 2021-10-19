@@ -1,123 +1,103 @@
-@*@model Global_Intern.Models.GeneralProfile.GeneralProfile;*@
+@model IEnumerable<Global_Intern.Models.Qualification>
+
 @{
-	ViewData["Title"] = "Qualifications";
-	Layout = "~/Views/Shared/_LayoutDashboardStudent.cshtml";
+	ViewData["Title"] = "Qualification";
+	Layout = "~/Views/Shared/_LayoutDashBoardStudent.cshtml";
 }
 
-
-
-
 <div class="content">
-    <main>
-        <div class="container-fluid" style="margin-top:56px;">
-			<div id="GeneralProfile" asp-action="GeneralProfile" enctype="multipart/form-data" method="post">
-				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-				<h2>"Qualifications</h2>
-
-				<p>
-					@Html.ActionLink("Add Qualifcation", "Create")
-				</p>
-
-				<p>Add your relevant qualifications here.</p>
-
-				<form action="/action_page.php">
-					<label for="QualificationLevel">Choose a qualification</label>
-					<select id="qualification" name="qualification">
-						<option value="Level 4">Certificate Level 4</option>
-						<option value="Level 5">Diploma Level 5</option>
-						<option value="Level 6">Diploma Level 6</option>
-						<option value="Level 7">Diploma Level 7</option>
-						<option value="Level 7">Gradute Diploma Level 7</option>
-						<option value="Level 8">PostGradute Diploma Level 8</option>
-						<option value="B.D.">Bachelor Degree</option>
-						<option value="M.D.">Master Degree</option>
-						<option value="PhD">PhD Degree</option>
-					</select>
-
-				</form>
-
-				<div class="form-group">
-					<label for="FieldofStudy">Field of Study</label>
-					<input class="form-control">
-
+	<main>
+		<div class="container-fluid" style="margin-top:56px;">
+			<div class="row">
+				<div class=".col-12 col-md-8 my-3">
+					<div class="p-3 tttCard">
+						<p style="color:green;">
+							@ViewBag.SuccessMessage
+						</p>
+						<h1 class="mb-2">Qualification</h1>
+						<div class="userQualifications">
+							<p>
+								@Html.ActionLink("Add Qualifcation", "AddQualification")
+							</p>
+							<div class="table-responsive">
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th scope="col">Qualification</th>
+											<th scope="col">Institute</th>
+											<th scope="col">Start Date</th>
+											<th scope="col">End Date</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var qualification in @Model.ToList())
+										{
+											<tr>
+												<td>@qualification.QualificationTitle</td>
+												<td>@qualification.QualificationSchool</td>
+												<td>@qualification.StartDate.Date.ToString("dd/MM/yyyy")</td>
+												@if (qualification.QualificationStillStudying == true)
+												{
+													<td>Present</td>
+												}
+												else
+												{
+													<td>@qualification.EndDate.Date.ToString("dd/MM/yyyy")</td>
+												}
+												<td>
+													<div class="d-flex">
+														<a asp-action="UpdateQualification" asp-route-id="@qualification.QualificationId" class="btn btn-secondary w-75 m-1">Update</a>
+														<a asp-action="DeleteQualification" asp-route-id="@qualification.QualificationId" onclick="return validate();" value="@ViewBag.DeleteMessage" class="btn btn-danger w-75 m-1">Delete</a>
+													</div>
+												</td>
+											</tr>
+										}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="form-group">
-					<label for="QualificationSchool">Qualification School</label>
-					<input class="form-control">
-
-				</div>
-
-				<div class="form-group">
-					<label for="Grade">Grade</label>
-					<input class="form-control">
-				</div>
-
-				<div class="form-group">
-					<label for="StartDate">Start Date</label>
-					<input class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="EndDate">End Date</label>
-					<input class="form-control">
-				</div>
-
-				<form action="/action_page.php">
-					<input type="checkbox" id="StillStudying" name="StillStudying" value="StillStudying">
-					<label for="QualificationStillStudying"> I Still Studying in This Qualification</label><br>
-				</form>
-
-
-
-				<h3>Have an additional qualification?</h3>
-
-				<form action="/action_page.php">
-					<label for="Additionalqualification">Additional qualification</label>
-					<select id="Additionalqualification" name="Additionalqualification" size="3" multiple>
-						<option value="Level 5">Diploma Level 5</option>
-						<option value="Level 6">Diploma Level 6</option>
-						<option value="Level 7">Diploma Level 7</option>
-						<option value="Level 7">Gradute Diploma Level 7</option>
-						<option value="Level 8">PostGradute Diploma Level 8</option>
-						<option value="B.D.">Bachelor Degree</option>
-						<option value="M.D.">Master Degree</option>
-						<option value="PhD">PhD Degree</option>
-					</select><br><br>
-				</form>
-
-				<div class="form-group">
-					<label for="FieldofStudy">Field of Study</label>
-					<input class="form-control">
-
-				</div>
-				<div class="form-group">
-					<label for="QualificationSchool">Qualification School</label>
-					<input class="form-control">
-
-				</div>
-
-				<div class="form-group">
-					<label for="Grade">Grade</label>
-					<input class="form-control">
-				</div>
-
-				<div class="form-group">
-					<label for="StartDate">Start Date</label>
-					<input class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="EndDate">End Date</label>
-					<input class="form-control">
-				</div>
-
-				<form action="/action_page.php">
-					<input type="checkbox" id="StillStudying" name="StillStudying" value="StillStudying">
-					<label for="QualificationStillStudying"> I Still Studying in This Qualification</label><br>
-				</form>
-
-				<button type="submit" onclick="alert('Data be saved, Thank you!')">Submit</button>
 			</div>
-            </div>
-        </div>
-    </main>
+		</div>
+	</main>
 </div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.js" integrity="sha512-37SbZHAnGzLuZV850k61DfQdZ5cnahfloYHizjpEwDgZGw49+D6oswdI8EX3ogzKelDLjckhvlK0QZsY/7oxYg==" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function () {
+
+		$('.sideMenuToggler').on('click', function () {
+			console.log("clicked");
+			$('.wrapper').toggleClass('active');
+		});
+
+		var adjustSidebar = function () {
+			$('.sidebar').slimScroll({
+				height: document.documentElement.clientHeight - $('.navbar').outerHeight()
+			});
+		};
+
+		adjustSidebar();
+		$(window).resize(function () {
+			adjustSidebar();
+		});
+	});
+</script>
+<script type="text/javascript">
+	   function validate(){
+		   if (confirm("@ViewBag.DeleteMessage") == true) {
+			   return true;
+		   }
+		   else {
+			   return false;
+		   }
+		}
+</script>

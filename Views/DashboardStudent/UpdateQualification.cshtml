@@ -1,0 +1,96 @@
+@model Global_Intern.Models.Qualification;
+
+@{
+	ViewData["Title"] = "Add Qualification";
+	Layout = "~/Views/Shared/_LayoutDashBoardStudent.cshtml";
+}
+
+
+<div class="container">
+	<main>
+		<div class="login-content">
+			<form id="GeneralProfile" asp-action="UpdateQualification" enctype="multipart/form-data" method="post">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div class="content">
+					<main>
+						<section class="NewQualificationDetails">
+							<div class="form-group">
+
+								<!-- The courses view like card views. -->
+								<div class=" row py-4">
+									<div class="col-lg-6">
+										<h1>Update Qualification</h1>
+										<p style="color:green;">@ViewBag.SuccessMessage</p>
+									</div>
+								</div>
+
+							</div>
+							<div class="form-group">
+								<label for="QualificationSchool">Qualification School</label>
+								<input class="form-control" asp-for="QualificationSchool">
+							</div>
+							<div class="form-group">
+								<label for="QualificationTitle">Qualification Title</label>
+								<input class="form-control" asp-for="QualificationTitle">
+							</div>
+							<div class="form-group">
+								<label for="QualificationType">Qualification Type</label>
+								<input class="form-control" asp-for="QualificationType">
+							</div>
+							<div class="form-group">
+								<label for="FieldofStudy">Field of Study</label>
+								<input class="form-control" asp-for="FieldofStudy">
+							</div>
+							<div class="form-group">
+								<label for="Grade">Grade</label>
+								<input class="form-control" asp-for="Grade">
+							</div>
+							<div class="form-group">
+								<label for="StartDate">Start Date</label>
+								<input class="form-control" type="date" asp-for="StartDate">
+							</div>
+							<div class="form-group">
+								<label for="EndDate">End Date</label>
+								<input class="form-control" type="date" asp-for="EndDate">
+							</div>
+							<div class="form-group">
+								<label for="QualificationStillStudying">Still Studying</label>
+								<input class="form-control" type="checkbox" checked="checked" asp-for="QualificationStillStudying">
+							</div>
+						</section>
+						<input type="submit" class="btn btn-info" value="Save">
+
+					</main>
+				</div>
+
+			</form>
+		</div>
+	</main>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.js" integrity="sha512-37SbZHAnGzLuZV850k61DfQdZ5cnahfloYHizjpEwDgZGw49+D6oswdI8EX3ogzKelDLjckhvlK0QZsY/7oxYg==" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function () {
+
+		$('.sideMenuToggler').on('click', function () {
+			console.log("clicked");
+			$('.wrapper').toggleClass('active');
+		});
+
+		var adjustSidebar = function () {
+			$('.sidebar').slimScroll({
+				height: document.documentElement.clientHeight - $('.navbar').outerHeight()
+			});
+		};
+
+		adjustSidebar();
+		$(window).resize(function () {
+			adjustSidebar();
+		});
+	});
+</script>
