@@ -7,8 +7,6 @@ namespace Global_Intern.Models.StudentModels
 {
     public class StudentInternProfile
     {
-
-        
         public int StudentInternProfileId { get; set; }
         public string StudentType { get; set; } //Domestic, International
         public string StudentWorkingRight { get; set; } // yes, no
@@ -20,9 +18,6 @@ namespace Global_Intern.Models.StudentModels
         public string StudentEthnic { get; set; } //Asian
         public virtual User User { get; set; }
         public List<Skill> Skills { get; set; }
-
-
-
 
     }
 

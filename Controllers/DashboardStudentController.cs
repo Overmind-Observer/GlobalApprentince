@@ -3,6 +3,7 @@ using Global_Intern.Models;
 using Global_Intern.Models.GeneralProfile;
 using Global_Intern.Models.StudentModels;
 using Global_Intern.Util;
+using Global_Intern.Util.pagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -13,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -26,10 +28,15 @@ namespace Global_Intern.Controllers
 		private readonly IHttpContextAccessor _httpContextAccessor; // Accessor allows access to session and cookies - System defined instance
 		private readonly ICustomAuthManager _customAuthManager; // User defined instance ( Created by Developer )
 		private readonly string Internship_url = "/api/Internships";
+		private readonly GlobalDBContext _context;
+		private readonly string _table;
+		string Qualification_url = "/api/Qualifications";
 		private readonly string host;
 		StudentInternProfile studentIntern = null;
-		GlobalDBContext _context;
-		
+		GlobalDBContext context = new GlobalDBContext();
+		int QualificationId;
+		int ExperienceId;
+
 
 		private readonly HttpClient _client = new HttpClient(); // Used to access API -> Internship.
 		//private readonly string Internship_url = "/api/Internships"; - does not used!?
@@ -157,10 +164,6 @@ namespace Global_Intern.Controllers
 					// File of code need to be Tested
 					//string file_Path = HelpersFunctions.StoreFile(uploadFolder, generalProfile.UserImage);
 
-
-
-
-
 					string uniqueFileName = Guid.NewGuid().ToString() + "_" + updatedUser.UserImage.FileName;
 					// Delete previous uploaded Image
 					if (!String.IsNullOrEmpty(updatedUser.UserImage.ToString()))
@@ -184,9 +187,7 @@ namespace Global_Intern.Controllers
 					updatedUser.UserImageName = uniqueFileName;
 
 					// if new image is uploaded with other user info
-					
-
-					
+									
 				}
 
 				if (updatedUser.UserImageName==null)
@@ -299,58 +300,123 @@ namespace Global_Intern.Controllers
 		}
 
 
-		
-		
-		
-		// Qualifications page works on 17 Oct 2020.
 		public IActionResult Qualifications()
 		{
 			DashboardOptions();
 
 
-			return View();
-
-			
-
-		}
-		[HttpPost]
-		public IActionResult Qualifications(Qualification qualification)
-		{
-			
-
 			using (GlobalDBContext _context = new GlobalDBContext())
 			{
-				// additional codes?
+				// Gets all qualifications created by the user
+				var qualifications = _context.Qualifications.ToList();
+
+				return View(qualifications);
 			}
 
-			return View();
+
 		}
-		public IActionResult Create()
+		//[HttpPost]
+		//public IActionResult Qualifications(int id)
+		//{
+		//	DashboardOptions();
+
+
+		//	using (GlobalDBContext _context = new GlobalDBContext())
+		//	{
+				
+		//		Qualification qualification = context.Qualifications.Find(id);
+		//		ViewBag.DeleteMessage = "Are you sure you want to delete qualification at " + qualification.QualificationSchool + "?";
+		//		return View();
+		//	}
+
+
+		//}
+
+
+		public IActionResult AddQualification()
 		{
 			DashboardOptions();
-			return View("AddQualifications", new Qualification());
+
+			return View();
 		}
 
-		public IActionResult ProcessCreate(Qualification qualificationModel)
+
+		[HttpPost]
+		public IActionResult AddQualification(Qualification NewQualification)
 		{
-			// Save to the db
-			GlobalDBContext context = new GlobalDBContext();
-			//context.Qualification.Add(qualificationModel);
-			//context.SaveChanges();
-			//return View("Qualifications", qualificationModel);
+			DashboardOptions();
+
+			var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+
 			using (GlobalDBContext _context = new GlobalDBContext())
 			{
-				_context.Add(qualificationModel);
+
+				Qualification nQualification = new Qualification();
+				User user = _context.Users.Find(User_id);
+
+				// This creates the new qualification and updates the database
+				nQualification.AddNewQualification(NewQualification, user);
+				_context.Qualifications.Add(nQualification);
 				_context.SaveChanges();
-				return View("Qualifications", qualificationModel);
+
+				ViewBag.Message = "Your qualification was successfully added. Please check the qualifications table to see if it has been created";
+
 			}
-
-
-
-
+			return View();
 		}
 
-		public IActionResult Documents()
+
+		public IActionResult UpdateQualification(int id)
+		{
+			DashboardOptions();
+
+			_httpContextAccessor.HttpContext.Session.SetString("QualificationId", Convert.ToString(id));
+			using (GlobalDBContext context = new GlobalDBContext())
+			{
+				Qualification qualification = context.Qualifications.Find(id);
+				return View(qualification);
+			}
+		}
+
+		[HttpPost]
+		public IActionResult UpdateQualification(Qualification UpdatedQualification)
+		{
+			DashboardOptions();
+
+			using (GlobalDBContext context = new GlobalDBContext())
+			{
+
+				QualificationId = Convert.ToInt32(_httpContextAccessor.HttpContext.Session.GetString("QualificationId"));
+
+				Qualification _qualification = context.Qualifications.FirstOrDefault(k => k.QualificationId == QualificationId);
+				Qualification qualification = new Qualification();
+				qualification = qualification.UpdateQualification(_qualification, UpdatedQualification);
+				context.Qualifications.Update(qualification);
+				context.SaveChanges();
+
+				ViewBag.SuccessMessage = "Your qualification at " + qualification.QualificationSchool + " has been updated successfully";
+
+				return View(qualification);
+			}
+		}
+
+
+		public IActionResult DeleteQualification(int id)
+		{
+			DashboardOptions();
+
+			_httpContextAccessor.HttpContext.Session.SetString("QualificationId", Convert.ToString(id));
+			using (GlobalDBContext context = new GlobalDBContext())
+			{
+				
+				Qualification qualification = context.Qualifications.Find(id);
+				context.Entry(qualification).State = EntityState.Deleted;
+				context.SaveChanges();
+			}	
+			return Redirect("/DashboardStudent/Qualifications");
+		}
+
+			public IActionResult Documents()
 		{
 			DashboardOptions();
 
@@ -369,250 +435,305 @@ namespace Global_Intern.Controllers
 		public IActionResult Documents(UserDocument document, IFormFile UserCLFile, IFormFile UserCVFile)
 		{
 			DashboardOptions();
+			var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
 
-			
 			string uniqueCLFileName = null;
 			string uniqueCVFileName = null;
 
-			// This checks if the user has not selected a file to upload
-			if (UserCLFile == null && UserCVFile == null)
+			using (GlobalDBContext _context = new GlobalDBContext())
 			{
-				// User will receive error message to upload a file.
-				ViewBag.NoFileUploadedErrorMessage = "No files selected. Please select a file to upload";
+				// This checks if the user has not selected a file to upload
+				if (UserCLFile == null && UserCVFile == null)
+				{
+					// User will receive error message to upload a file.
+					ViewBag.NoFileUploadedErrorMessage = "No files selected. Please select a file to upload";
+				}
+
+				// This checks if the user has selected to upload a Cover Letter AND CV
+				if (UserCLFile != null && UserCLFile.Length > 0 && UserCVFile != null && UserCVFile.Length > 0)
+				{
+					Console.WriteLine(UserCLFile.FileName);
+					Console.WriteLine(UserCVFile.FileName);
+
+					// Check the file type - only accept PDF or Word. Receive error message if file is incorrect
+					string CLfileExtension = System.IO.Path.GetExtension(UserCLFile.FileName);
+					string CVfileExtension = System.IO.Path.GetExtension(UserCVFile.FileName);// Get the file extension and store as variable
+
+					// Check if the Cover Letter file extension is PDF or Word
+					if (CLfileExtension.ToLower() != ".doc" && CLfileExtension.ToLower() != ".docx" && CLfileExtension.ToLower() != ".pdf")
+					{
+						// User will receive error message if the file is not a Word or PDF document
+						ViewBag.CLFileExtErrorMessage = "Files with .doc, .docx and .pdf allowed only.";
+					}
+					else
+					{
+						UserCL newUserCL = new UserCL();
+						User user = _context.Users.Find(User_id);
+
+						uniqueCLFileName = Guid.NewGuid().ToString() + "_" + UserCLFile.FileName;
+						string folderPath = _env.WebRootPath + @"\uploads\UserCL\";
+						string CLFilePath = folderPath + uniqueCLFileName;
+
+						FileStream stream = new FileStream(CLFilePath, FileMode.Create);
+						UserCLFile.CopyTo(stream);
+						stream.Dispose();															
+
+						// This creates the new cover letter and updates the database
+						newUserCL.AddNewCL(newUserCL, user);
+						_context.UserCL.Add(newUserCL);
+						_context.SaveChanges();
+					}
+
+					// Check if the CV file extensions is PDF or Word
+					if (CVfileExtension.ToLower() != ".doc" && CVfileExtension.ToLower() != ".docx" && CVfileExtension.ToLower() != ".pdf")
+					{
+						// User will receive error message if the file is not a Word or PDF document
+						ViewBag.CVFileExtErrorMessage = "Files with .doc, .docx and .pdf allowed only.";
+					}
+					else
+					{
+						UserCV newUserCV = new UserCV();
+						User user = _context.Users.Find(User_id);
+
+						uniqueCVFileName = Guid.NewGuid().ToString() + "_" + UserCVFile.FileName;
+						string folderPath = _env.WebRootPath + @"\uploads\UserCV\";
+						string CVFilePath = folderPath + uniqueCVFileName;
+						FileStream stream = new FileStream(CVFilePath, FileMode.Create);
+						UserCVFile.CopyTo(stream);
+						stream.Dispose();
+						newUserCV.UserCVFullPath = CVFilePath;
+
+						// This creates the new CV and updates the database
+						newUserCV.AddNewCV(newUserCV, user);
+						_context.UserCV.Add(newUserCV);
+						_context.SaveChanges();
+					}
+
+					ViewBag.SuccessMessage = "Your Cover Letter and CV was successfully uploaded.";
+
+				}
+
+				// Check if the user only wants to upload their Cover Letter
+				if (UserCLFile != null && UserCLFile.Length > 0 && UserCVFile == null)
+				{
+					Console.WriteLine(UserCLFile.FileName);
+					// 2. Check the file type - only accept PDF or Word. Receive error message if file is incorrect
+					string CLfileExtension = System.IO.Path.GetExtension(UserCLFile.FileName); // Get the file extension and store as variable
+
+					// Check if the file extensions is PDF or Word
+					if (CLfileExtension.ToLower() != ".doc" && CLfileExtension.ToLower() != ".docx" && CLfileExtension.ToLower() != ".pdf")
+					{
+						ViewBag.CLFileExtErrorMessage = "Files with .doc, .docx and .pdf allowed only.";
+					}
+					else
+					{
+						UserCL newUserCL = new UserCL();
+						User user = _context.Users.Find(User_id);
+
+						uniqueCLFileName = Guid.NewGuid().ToString() + "_" + UserCLFile.FileName;
+						string folderPath = _env.WebRootPath + @"\uploads\UserCL\";
+						string CLFilePath = folderPath + uniqueCLFileName;
+
+						Console.WriteLine(newUserCL);
+						FileStream stream = new FileStream(CLFilePath, FileMode.Create);
+						UserCLFile.CopyTo(stream);
+						stream.Dispose();
+
+						newUserCL.UserClfullPath = CLFilePath;
+
+						// This creates the new cover letter and updates the database
+						newUserCL.AddNewCL(newUserCL, user);
+						_context.UserCL.Add(newUserCL);
+						_context.SaveChanges();
+
+						ViewBag.SuccessMessage = "Your Cover Letter was successfully uploaded.";
+					}
+				}
+
+				// Check if the user only wants to upload their CV
+				if (UserCLFile == null && UserCVFile != null && UserCVFile.Length > 0)
+				{
+					//1.Check if there is a file
+
+					Console.WriteLine(UserCVFile.FileName);
+					// 2. Check the file type - only accept PDF or Word. Receive error message if file is incorrect
+					string CVfileExtension = System.IO.Path.GetExtension(UserCVFile.FileName); // Get the file extentsion and store as ariable
+
+					// Check if the file extensions is PDF or Word
+					if (CVfileExtension.ToLower() != ".doc" && CVfileExtension.ToLower() != ".docx" && CVfileExtension.ToLower() != ".pdf")
+					{
+						ViewBag.CVFileExtErrorMessage = "Files with .doc, .docx and .pdf allowed only.";
+					}
+					else
+					{
+						UserCV newUserCV = new UserCV();
+						User user = _context.Users.Find(User_id);
+
+						uniqueCVFileName = Guid.NewGuid().ToString() + "_" + UserCVFile.FileName;
+						string folderPath = _env.WebRootPath + @"\uploads\UserCV\";
+						string CVFilePath = folderPath + uniqueCVFileName;
+						FileStream stream = new FileStream(CVFilePath, FileMode.Create);
+						UserCVFile.CopyTo(stream);
+						stream.Dispose();
+						newUserCV.UserCVFullPath = CVFilePath;
+
+						// This creates the new CV and updates the database
+						newUserCV.AddNewCV(newUserCV, user);
+						_context.UserCV.Add(newUserCV);
+						_context.SaveChanges();
+
+
+						ViewBag.SuccessMessage = "Your CV was successfully uploaded.";
+					}
+				}
+
+				return View(document);
 			}
-
-			// This checks if the user has selected to upload a Cover Letter AND CV
-			if (UserCLFile != null && UserCLFile.Length > 0 && UserCVFile != null && UserCVFile.Length > 0)
-			{
-				Console.WriteLine(UserCLFile.FileName);
-				Console.WriteLine(UserCVFile.FileName);
-
-				// Check the file type - only accept PDF or Word. Receive error message if file is incorrect
-				string CLfileExtension = System.IO.Path.GetExtension(UserCLFile.FileName);
-				string CVfileExtension = System.IO.Path.GetExtension(UserCVFile.FileName);// Get the file extension and store as variable
-
-				// Check if the Cover Letter file extension is PDF or Word
-				if (CLfileExtension.ToLower() != ".doc" && CLfileExtension.ToLower() != ".docx" && CLfileExtension.ToLower() != ".pdf")
-				{
-					// User will receive error message if the file is not a Word or PDF document
-					ViewBag.CLFileExtErrorMessage = "Files with .doc, .docx and .pdf allowed only.";
-				}
-				else
-				{
-					UserCL userCL = new UserCL();	
-					uniqueCLFileName = Guid.NewGuid().ToString() + "_" + UserCLFile.FileName;
-					string folderPath = _env.WebRootPath + @"\uploads\UserCL\";
-					string CLFilePath = folderPath + uniqueCLFileName;
-						
-						
-					FileStream stream = new FileStream(CLFilePath, FileMode.Create);
-					UserCLFile.CopyTo(stream);
-					stream.Dispose();
-
-					userCL.UserClfullPath = CLFilePath;
-
-					_context.Add(userCL);
-					_context.SaveChanges();
-						
-				}
-
-				// Check if the CV file extensions is PDF or Word
-				if (CVfileExtension.ToLower() != ".doc" && CVfileExtension.ToLower() != ".docx" && CVfileExtension.ToLower() != ".pdf")
-				{
-					ViewBag.CVFileExtErrorMessage = "Files with .doc, .docx and .pdf allowed only.";
-				}
-				else
-				{
-					// User will receive error message if the file is not a Word or PDF documen
-					uniqueCVFileName = Guid.NewGuid().ToString() + "_" + UserCVFile.FileName;
-					string folderPath = _env.WebRootPath + @"\uploads\UserCV\";
-					string CVFilePath = folderPath + uniqueCVFileName;
-					FileStream stream = new FileStream(CVFilePath, FileMode.Create);
-					UserCLFile.CopyTo(stream);
-					stream.Dispose();
-					document.UserCVName = CVFilePath;
-				}
-
-				ViewBag.SuccessMessage = "Your Cover Letter and CV was successfully uploaded.";
-
-			}
-
-			// Check if the user only wants to upload their Cover Letter
-			if (UserCLFile != null && UserCLFile.Length > 0 && UserCVFile == null)
-			{
-				Console.WriteLine(UserCLFile.FileName);
-				// 2. Check the file type - only accept PDF or Word. Receive error message if file is incorrect
-				string CLfileExtension = System.IO.Path.GetExtension(UserCLFile.FileName); // Get the file extension and store as variable
-
-				// Check if the file extensions is PDF or Word
-				if (CLfileExtension.ToLower() != ".doc" && CLfileExtension.ToLower() != ".docx" && CLfileExtension.ToLower() != ".pdf")
-				{
-					ViewBag.CLFileExtErrorMessage = "Files with .doc, .docx and .pdf allowed only.";
-				}
-				else
-				{
-					UserCL newUserCL = new UserCL();
-					uniqueCLFileName = Guid.NewGuid().ToString() + "_" + UserCLFile.FileName;
-					string folderPath = _env.WebRootPath + @"\uploads\UserCL\";
-					string CLFilePath = folderPath + uniqueCLFileName;
-
-					Console.WriteLine(newUserCL);
-					FileStream stream = new FileStream(CLFilePath, FileMode.Create);
-					UserCLFile.CopyTo(stream);
-					stream.Dispose();
-
-					newUserCL.UserClfullPath = CLFilePath;
-
-					_context.UserCL.Add(newUserCL);
-					_context.SaveChanges();
-					ViewBag.SuccessMessage = "Your Cover Letter was successfully uploaded.";
-				}
-			}
-
-			// Check if the user only wants to upload their CV
-			if (UserCLFile == null && UserCVFile != null && UserCVFile.Length > 0)
-			{
-				//1.Check if there is a file
-
-				Console.WriteLine(UserCVFile.FileName);
-				// 2. Check the file type - only accept PDF or Word. Receive error message if file is incorrect
-				string CVfileExtension = System.IO.Path.GetExtension(UserCVFile.FileName); // Get the file extentsion and store as ariable
-
-				// Check if the file extensions is PDF or Word
-				if (CVfileExtension.ToLower() != ".doc" && CVfileExtension.ToLower() != ".docx" && CVfileExtension.ToLower() != ".pdf")
-				{
-					ViewBag.CVFileExtErrorMessage = "Files with .doc, .docx and .pdf allowed only.";
-				}
-				else
-				{
-					//UserCV newUserCV = new UserCV;
-					uniqueCVFileName = Guid.NewGuid().ToString() + "_" + UserCVFile.FileName;
-					string folderPath = _env.WebRootPath + @"\uploads\UserCV\";
-					string CVFilePath = folderPath + uniqueCVFileName;
-					FileStream stream = new FileStream(CVFilePath, FileMode.Create);
-					UserCVFile.CopyTo(stream);
-					stream.Dispose();
-					//document.UserCVName = CVfilePath;
-					document.UserCVName = "jnh";
-					ViewBag.SuccessMessage = "Your CV was successfully uploaded.";
-				}
-			}
-			   
-			return View(document);
-			}
-		
+		}
+				
 	
-
-		// Documents page works on 17 Oct 2020.
-		//public IActionResult Documents(UserDocument document, IFormFile filetest)
-		//{
-		//    DashboardOptions();
-
-		//    string uniqueCVFileName = null;
-
-		//    string uniqueCLFileName = null;
-
-		//    using (GlobalDBContext context = new GlobalDBContext())
-		//    {
-		//        if (filetest.Length!=0 || document.UserCL.Length != 0)
-		//        {
-		//            string uploadFolder = _env.WebRootPath + @"\uploads\UserImage\";
-
-
-		//            // File of code need to be Tested
-		//            //string file_Path = HelpersFunctions.StoreFile(uploadFolder, generalProfile.UserImage);
-
-
-
-		//            if (filetest.Length != 0)
-		//            {
-		//                uniqueCVFileName = Guid.NewGuid().ToString() + "_" + filetest.FileName;
-
-		//                // Delete previous uploaded Image
-		//                if (!String.IsNullOrEmpty(filetest.ToString()))
-		//                {
-		//                    string imagePath = uploadFolder + filetest.FileName;
-		//                    if (System.IO.File.Exists(imagePath))
-		//                    {
-		//                        // If file found, delete it    
-		//                        System.IO.File.Delete(imagePath);
-		//                        Console.WriteLine("File deleted.");
-		//                    }
-		//                }
-		//                string CVfilePath = uploadFolder + uniqueCVFileName;
-		//                FileStream stream = new FileStream(CVfilePath, FileMode.Create);
-		//                filetest.CopyTo(stream);
-		//                stream.Dispose();
-		//                //document.UserCVName = CVfilePath;
-		//                document.UserCVName = "jnh";
-		//            }
-
-		//            if (document.UserCL.Length != 0)
-		//            {
-		//                uniqueCLFileName = Guid.NewGuid().ToString() + "_" + document.UserCL.FileName;
-
-		//                // Delete previous uploaded Image
-		//                if (!String.IsNullOrEmpty(document.UserCL.ToString()))
-		//                {
-		//                    string imagePath = uploadFolder + _user.UserImage;
-		//                    if (System.IO.File.Exists(imagePath))
-		//                    {
-		//                        // If file found, delete it    
-		//                        System.IO.File.Delete(imagePath);
-		//                        Console.WriteLine("File deleted.");
-		//                    }
-		//                }
-		//                string CLfilePath = uploadFolder + uniqueCLFileName;
-		//                FileStream stream1 = new FileStream(CLfilePath, FileMode.Create);
-		//                document.UserCL.CopyTo(stream1);
-		//                stream1.Dispose();
-		//                //document.UserCLName = CLfilePath;
-		//                document.UserCLName = "rffff";
-		//            }
-
-		//            List<Document> documents = context.Document.Where(u => u.User == _user).ToList();
-
-		//            Document document1 = new Document();
-
-		//            if (documents.Count == 0)
-		//            {
-		//                Document document2 = new Document();
-		//                var temp = new List<Document>();
-		//                documents.Add(document2);
-		//                document1 = document.CreateOrUpdateDocuments(document1, document, _user);
-
-
-		//                document1.User.Role = null;
-		//                document1.User.UserId = 0;
-		//                context.Document.Add(document1);
-		//            }
-
-
-
-		//            else
-		//            {
-		//                document1 = document.CreateOrUpdateDocuments(documents[0], document, _user);
-		//                context.Document.Update(document1);
-		//            }
-		//            context.SaveChanges();
-
-		//        }
-		//    }
-
-		//    return View(document);
-		//}
-
-
-
-
-		// Experience page works on 17 Oct 2020.
 		public IActionResult Experience()
+		{
+			DashboardOptions();
+
+			using (GlobalDBContext _context = new GlobalDBContext())
+			{
+				// Gets all experiences created by the user
+				var experience = _context.Experiences.ToList();
+				return View(experience);
+			}
+		}
+
+		public IActionResult AddExperience()
 		{
 			DashboardOptions();
 
 			return View();
 		}
 
+
+		[HttpPost]
+		public IActionResult AddExperience(Experience NewExperience)
+		{
+			DashboardOptions();
+
+			var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+
+			using (GlobalDBContext _context = new GlobalDBContext())
+			{
+
+				Experience nExperience = new Experience();
+				User user = _context.Users.Find(User_id);
+
+				// This creates the new experience and updates the database
+				nExperience.AddNewExperience(NewExperience, user);
+				_context.Experiences.Add(nExperience);
+				_context.SaveChanges();
+
+				ViewBag.Message = "Your experience was successfully added. Please check the experiences table to see if it has been created";
+
+			}
+			return Redirect("/DashboardStudent/Experience");
+		}
+
+		public IActionResult UpdateExperience(int id)
+		{
+			DashboardOptions();
+
+			_httpContextAccessor.HttpContext.Session.SetString("ExperienceId", Convert.ToString(id));
+			using (GlobalDBContext context = new GlobalDBContext())
+			{
+				Experience experience = context.Experiences.Find(id);
+				return View(experience);
+			}
+		}
+
+		[HttpPost]
+		public IActionResult UpdateExperience(Experience UpdatedExperience)
+		{
+			DashboardOptions();
+
+			using (GlobalDBContext context = new GlobalDBContext())
+			{
+
+				ExperienceId = Convert.ToInt32(_httpContextAccessor.HttpContext.Session.GetString("ExperienceId"));
+
+				Experience _experience = context.Experiences.FirstOrDefault(k => k.ExperienceId == ExperienceId);
+				Experience experience = new Experience();
+				experience = experience.UpdateExperience(_experience, UpdatedExperience);
+				context.Experiences.Update(experience);
+				context.SaveChanges();
+
+				ViewBag.SuccessMessage = "Your experience at " + experience.ExperienceCompany + " has been updated successfully";
+
+				return View(experience);
+			}
+		}
+
+		public IActionResult DeleteExperience(int id)
+		{
+			DashboardOptions();
+
+			_httpContextAccessor.HttpContext.Session.SetString("ExperienceId", Convert.ToString(id));
+			using (GlobalDBContext context = new GlobalDBContext())
+			{
+
+				Experience experience = context.Experiences.Find(id);
+				context.Entry(experience).State = EntityState.Deleted;
+				context.SaveChanges();
+			}
+			return Redirect("/DashboardStudent/Experience");
+		}
+
+		public IActionResult Skills()
+		{
+			DashboardOptions();
+
+			using (GlobalDBContext _context = new GlobalDBContext())
+			{
+				// Gets all skills created by the user
+				var skills = _context.Skills.ToList();
+				return View(skills);
+			}
+		}
+		public IActionResult AddSkill()
+		{
+			DashboardOptions();
+
+			return View();
+		}
+
+
+		[HttpPost]
+		public IActionResult AddSkill(Skill NewSkill)
+		{
+			DashboardOptions();
+
+			var User_id = _customAuthManager.Tokens.FirstOrDefault().Value.Item3;
+
+			using (GlobalDBContext _context = new GlobalDBContext())
+
+			{
+				User user = _context.Users.Find(User_id);
+				Console.WriteLine(user);
+
+				StudentInternProfile intern = context.StudentInternProfiles.FirstOrDefault(k => k.User.UserId == User_id);
+				Skill nSkill = new Skill();
+				Console.WriteLine(nSkill.SkillID);
+				Console.WriteLine(intern.StudentInternProfileId);
+				
+				
+
+				// This creates the new skill and updates the database
+				nSkill.AddNewSkill(NewSkill, intern);
+				_context.Skills.Add(nSkill);
+				_context.SaveChanges(); // Getting error: SqlException: Cannot insert explicit value for identity column in table 'StudentInternProfiles' when IDENTITY_INSERT is set to OFF.
+
+				ViewBag.Message = "Your skill was successfully added. Please check the skill table to see if it has been created";
+
+			}
+			return View();
+		}
 
 
 		// MyApplications page works on 17 Oct 2020.

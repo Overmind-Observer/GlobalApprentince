@@ -10,6 +10,45 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\uploads\UserCL\09634546-edb0-443e-8c3e-c187b549b0c3_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\24bee608-8f41-4f4a-ae92-256ef19e51b0_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\38986288-06e4-41fa-b594-196aaa4d7a12_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\475787fe-254a-4728-be67-81223645b74d_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\477a6cde-5c58-4aee-846d-375bdb9ef981_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\4e5cb521-0a9d-4124-a4a0-923ebed5d00a_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\519a9e9a-ebdc-455d-9473-d95b5cf98698_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\5695425b-81d6-4a8a-9118-1581c0667722_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\593f30bf-2038-4a15-a885-85b7893b9bc0_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\5ad0a018-e9bf-478d-9c6c-27507bc57ab5_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\627b4240-d14f-48d6-b5fe-71f10a0b5865_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\7d5e7019-65d2-4dc1-9829-80065962cc9a_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\804c5d2d-d369-4915-bba2-3f117d815b46_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\8dfff80c-daa9-49d8-8084-595138d83ee0_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\a1dce46b-ef78-49b3-a845-d1aba06bc041_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\b11efa83-d152-4900-ab86-a1db64e0cbd7_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\cec2e3e7-1447-4df1-865a-fb48c491be50_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\cfcff1bd-c6be-4486-a210-5c621e91f2fd_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\d25d904f-d75a-4479-b6eb-923bea1fbac2_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\d9518aff-942e-4098-b4b1-7e706f937826_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\da953bdb-1372-4bdd-a8c7-b62a339782fc_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\dcc338a3-5e7c-4faa-8561-cbf331d4aa6a_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\e0834655-55df-48fc-a17e-262e82f90758_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\e1f21df4-4404-4e0c-9ab2-2ebfed7adcb1_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\e5fed6c7-66e5-4500-b005-08719c45b699_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\ec4629f0-a86e-4ccd-83bc-ceed19729136_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\f383a0b0-4b56-479b-9e2e-926fecf5f2b3_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCL\fc4d130e-75aa-40ec-99fc-aa3b29925c44_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCV\0620f606-16b6-4aca-a066-cd553bb7e478_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCV\411b2408-2438-4ba6-9c18-904cf6dd5374_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCV\60a4dc8d-9bdf-40ab-aaa8-8580e1392170_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCV\944970eb-82f9-45fc-8337-38a7f2237235_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCV\c1904ad1-791b-4b77-80d2-862cb92f079b_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCV\cd209020-6d88-462e-98c9-3e9616745a0f_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCV\cfca509b-b0bf-4b0d-8045-ba33ec2bf3c4_CV example.pdf" />
+    <Content Remove="wwwroot\uploads\UserCV\fa67cc25-dfaf-41be-b741-c431809b6b72_CV example.pdf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MailKit" Version="2.15.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Analyzers" Version="2.2.0" />
@@ -27,6 +66,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\uploads\CompanyLogos\" />
+    <Folder Include="wwwroot\uploads\UserCL\" />
   </ItemGroup>
 
 </Project>
