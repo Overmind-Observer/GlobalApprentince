@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Global_Intern.Models.Internship>
+﻿@model Global_Intern.Models.EmployerModels.PaginatedList<Internship>
 
 @{
     ViewData["Title"] = "Employer DashBoard";
@@ -25,7 +25,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var intern in @Model.ToList())
+                                        @foreach (var intern in @Model)
                                         {
                                             <tr>
                                                 <th scope="row">@intern.InternshipId</th>
@@ -35,28 +35,79 @@
                                                     </div>
                                                 </td>
                                                 @*<td>
-                                                    <div class="ed_InternBodyView">
-                                                        @intern.InternshipBody
-                                                        <div class="ed_InternBodyViewShadow"></div>
-                                                    </div>
-                                                </td>*@
+                            <div class="ed_InternBodyView">
+                                @intern.InternshipBody
+                                <div class="ed_InternBodyViewShadow"></div>
+                            </div>
+                        </td>*@
                                                 <td>@intern.InternshipExpDate</td>
                                                 <td>
                                                     <a asp-action="Internship" asp-route-id="@intern.InternshipId" class="btn btn-info" style="width:100%">View</a>
                                                     <div class="d-flex">
-                                                        <a asp-action="UpdateInternship" asp-route-id="@intern.InternshipId"  class="btn btn-secondary w-75 m-1">Update</a>
-                                                        <a asp-action="Settings" asp-route-id="@intern.InternshipId"  class="btn btn-danger w-75 m-1">Delete</a>
+                                                        <a asp-action="UpdateInternship" asp-route-id="@intern.InternshipId" class="btn btn-secondary w-75 m-1">Update</a>
+                                                        <a asp-action="Settings" asp-route-id="@intern.InternshipId" class="btn btn-danger w-75 m-1">Delete</a>
                                                     </div>
                                                 </td>
                                             </tr>
                                         }
                                     </tbody>
                                 </table>
+                                @{
+                                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                                    var total = @Model.TotalPages;
+                                    var index = @Model.PageIndex;
+
+                                }
+                                <a asp-action="Index"
+                                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                                   class="btn btn-default @prevDisabled">
+                                    Previous
+                                </a>
+                                @{
+                                    if (total <= 5)
+                                    {
+                                        for (var i = 1; i <= total; i++)
+                                        {
+                                            string disabled = (i == index) ? "disabled" : "";
+                                            <a asp-action="Index"
+                                               asp-route-pageNumber="@i"
+                                               class="btn btn-default @disabled">
+                                                @i
+                                            </a>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var start = (index-2)>=1 ? (index - 2) : 1;
+                                        var strict = index >= 3 ? index : 3;
+                                        for (var i = start; i <= strict; i++)
+                                        {
+                                            string disabled = (i == index) ? "disabled" : "";
+                                            <a asp-action="Index"
+                                               asp-route-pageNumber="@i"
+                                               class="btn btn-default @disabled">
+                                                @i
+                                            </a>
+                                        }
+                                        <span>.....</span>
+                                        <a asp-action="Index"
+                                           asp-route-pageNumber="@total"
+                                           class="btn btn-default">
+                                            @total
+                                        </a>
+                                    }
+                                }
+                                <a asp-action="Index"
+                                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                                   class="btn btn-default @nextDisabled">
+                                    Next
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-
+              
 
                 <div class=".col-12 col-md-4 my-3">
                     @{

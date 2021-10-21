@@ -7,6 +7,7 @@ using Global_Intern.Models.GeneralProfile;
 using Global_Intern.Models.StudentModels;
 using Global_Intern.Services;
 using Global_Intern.Util;
+using Global_Intern.Util.pagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -70,16 +71,18 @@ namespace Global_Intern.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
             DashboardOptions();
 
             using (GlobalDBContext _context = new GlobalDBContext())
             {
                 // Gets all Internship created by the user
-                var internships = _context
-                    .Internships.Where(i => i.User == _user)
-                    .ToList();
+                var internships = from i in _context.Internships
+                                  select i;
+
+                internships.Where(i => i.User == _user);
+                    
 
                     var applications = _context.AppliedInternships
                     .Include(a => a.Internship)
@@ -88,8 +91,10 @@ namespace Global_Intern.Controllers
                     .Where(a=> a.ApplicationStatus == InternshipApplicationStatus.Unviewed)
                     .ToList();
                 ViewBag.newApplications = applications.Count();
-
-                return View(internships);
+                ViewBag.total = internships.Count();
+                 
+                int pageSize = 5;
+                return View(await PaginatedList<Internship>.CreateAsync(internships.AsNoTracking(), pageNumber??1,pageSize));
             }
         }
 
@@ -547,6 +552,11 @@ namespace Global_Intern.Controllers
                 applications = applications
                     .Where(a => a.ApplicationStatus == status);
             }
+            List<AppliedInternship> applicationList = await applications.OrderBy(a => (int)a.ApplicationStatus).ToListAsync();
+            var data = PaginationQuery<AppliedInternship>.CreateAsync(applicationList, 1, 5);
+            ViewBag.pagesize = data.PageSize;
+            ViewBag.totalpage = data.TotalPages;
+            ViewBag.currentpage = data.PageNumber;
 
             ApplicationsFilter applicationsVM = new ApplicationsFilter() { 
             Titles = new SelectList(await titleQuery.Distinct().ToListAsync()),
@@ -554,14 +564,6 @@ namespace Global_Intern.Controllers
             Applications = await applications.OrderBy(a => (int)a.ApplicationStatus).ToListAsync()
             };
             return View(applicationsVM);
-        }
-        public IActionResult TEST(string title, string status)
-        {
-            DashboardOptions();
-            Console.WriteLine(title);
-            Console.WriteLine(status);
-            return RedirectToAction(nameof(Index));
-
         }
         public IActionResult ApplicationDetails(int? id)
         {
@@ -605,6 +607,7 @@ namespace Global_Intern.Controllers
 
             AppliedInternship application = _context.AppliedInternships
                 .Include(a => a.User)
+                .Include(a => a.Internship)
                 .Single(s => s.AppliedInternshipId == id);
             if (application == null)
             {
@@ -615,6 +618,15 @@ namespace Global_Intern.Controllers
                 application.Shortlist = !application.Shortlist;
                 _context.Update(application);
                 _context.SaveChanges();
+
+            string company = _context.UserCompany.SingleOrDefault(c => c.User == _user).UserCompanyName;
+
+            SendEmail email = new SendEmail(_emailSettings);
+            string fullName = application.User.UserFirstName + application.User.UserLastName;
+            string userEmail = application.User.UserEmail;
+            string msg = $"Congratulations, your Internship application ID {application.Internship.InternshipId} to Company {company} for position {application.Internship.InternshipTitle} of  has been Shortlisted.";
+            email.SendEmailtoUser(fullName, userEmail, "Application status update", msg);
+
 
             TempData["ApplicationID"] = id;
             return RedirectToAction(nameof(ApplicationDetails));
@@ -668,6 +680,7 @@ namespace Global_Intern.Controllers
 
             AppliedInternship application = _context.AppliedInternships
                 .Include(a => a.User)
+                .Include(a => a.Internship)
                 .Single(s => s.AppliedInternshipId == id);
             if (application == null)
             {
@@ -679,7 +692,14 @@ namespace Global_Intern.Controllers
             _context.Update(application);
             _context.SaveChanges();
 
-            //todo: Sendemmail to interns
+            string company = _context.UserCompany.SingleOrDefault(c => c.User == _user).UserCompanyName;
+
+            SendEmail email = new SendEmail(_emailSettings);
+            string fullName = application.User.UserFirstName + application.User.UserLastName;
+            string userEmail = application.User.UserEmail;
+            string msg = $"Sorry, your Internship application ID {application.Internship.InternshipId} to Company {company} for position of {application.Internship.InternshipTitle} has been Declined.";
+            email.SendEmailtoUser(fullName, userEmail, "Application status update", msg);
+
 
             return RedirectToAction(nameof(InternApplications));
         }
@@ -696,6 +716,7 @@ namespace Global_Intern.Controllers
 
             AppliedInternship application = _context.AppliedInternships
                 .Include(a => a.User)
+                .Include(a => a.Internship)
                 .Single(s => s.AppliedInternshipId == id);
             if (application == null)
             {

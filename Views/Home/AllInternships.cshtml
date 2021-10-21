@@ -151,7 +151,7 @@
                                         @for (int i = 1; i < Convert.ToInt32(ViewBag.totalPages) + 1; i++)
                                         {
                                             var parms = new Dictionary<string, string>
-                                                                                                                                 {
+                                                                                                                                                             {
                                                 { "pageNumber", Convert.ToString(i) },
                                                 { "pageSize", Convert.ToString(ViewBag.pageSize) }
                                             };
